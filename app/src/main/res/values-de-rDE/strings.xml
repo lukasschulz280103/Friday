@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="leave_app">Wirklich verlassen?</string>
+    <string name="action_leave">Verlassen</string>
+    <string name="nav_main_profile">Profil</string>
+    <string name="nav_main_history">Nutzungsverlauf</string>
+</resources>
