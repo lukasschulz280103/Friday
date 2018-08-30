@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">RBPIE Client</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="app_name" translatable="false">RBPI Client</string>
+    <string name="title_activity_splash_screen" translatable="false">SplashScreen</string>
+    <string name="leave_app">Do you really want to leave the app?</string>
+    <string name="action_leave">Leave</string>
+    <string name="nav_main_profile">Profile</string>
+    <string name="nav_main_history">Usage history</string>
+    <string name="nav_project_title" translatable="false">Raspberry PI Android Client</string>
 </resources>
