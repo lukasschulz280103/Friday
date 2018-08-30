@@ -1,0 +1,2 @@
+*.lm filter=lfs diff=lfs merge=lfs -text
+sync/** filter=lfs diff=lfs merge=lfs -text
