@@ -4,8 +4,6 @@
     <string name="action_leave">Verlassen</string>
     <string name="nav_main_profile">Profil</string>
     <string name="nav_main_history">Nutzungsverlauf</string>
-    <string name="state_connected">Verbunden mit Raspberry PI</string>
-    <string name="state_disconnected">Nicht mit RaspBerry PI verbunden</string>
     <string name="main_nav_dashboard">Übersicht</string>
-    <string name="msg_connected_to_remote">Erfolgreich mit Raspberry PI verbunden</string>
+    <string name="hint_rotate_phone">Um diese App zu nutzen muss das Handy sich im Horizontalmodus befinden.</string>
 </resources>

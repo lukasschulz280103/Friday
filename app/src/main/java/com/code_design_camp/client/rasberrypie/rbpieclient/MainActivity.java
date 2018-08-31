@@ -1,5 +1,10 @@
 package com.code_design_camp.client.rasberrypie.rbpieclient;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -9,24 +14,23 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
 import android.view.MenuItem;
+import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 public class MainActivity extends AppCompatActivity {
+    private static final int ORIENTATION_0 = 0;
+    private static final int ORIENTATION_90 = 3;
+    private static final int ORIENTATION_270 = 1;
     DrawerLayout drawer;
     NavigationView navelems;
     ViewSwitcher vswitcher;
-    FirebaseDatabase fbdb;
 
-    TextView statusview;
+    TextView warning_rotation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +42,19 @@ public class MainActivity extends AppCompatActivity {
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
         drawer = findViewById(R.id.main_drawer);
         navelems = findViewById(R.id.navigation_view_main);
-        statusview = findViewById(R.id.connection_state);
-        drawer.addDrawerListener(ondrawerdraw);
+        warning_rotation = findViewById(R.id.rotation_warn);
         navelems.setNavigationItemSelectedListener(draweritemlistener);
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int screenRotation = display.getRotation();
+        switch (screenRotation)
+        {
+            default:
+                warning_rotation.setVisibility(View.GONE);
+                break;
+            case ORIENTATION_0:
+                warning_rotation.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     @Override
