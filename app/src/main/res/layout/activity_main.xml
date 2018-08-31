@@ -36,14 +36,14 @@
                 android:background="@color/colorPrimary"
                 android:elevation="8dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+            <include
+                layout="@layout/activity_main_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
         </FrameLayout>
 
     </android.support.v4.widget.DrawerLayout>
-
-    <include
-        layout="@layout/activity_main_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 
 </LinearLayout>
