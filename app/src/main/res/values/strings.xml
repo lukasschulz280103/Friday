@@ -6,8 +6,6 @@
     <string name="nav_main_profile">Profile</string>
     <string name="nav_main_history">Usage history</string>
     <string name="nav_project_title" translatable="false">Raspberry PI Android Client</string>
-    <string name="state_connected">Connected to Raspberry PI</string>
-    <string name="state_disconnected">Disconnected from RaspBerry PI</string>
     <string name="main_nav_dashboard">Dashboard</string>
-    <string name="msg_connected_to_remote">Succesfully connected to remote device</string>
+    <string name="hint_rotate_phone">To use this app, rotate your phone to landscape mode.</string>
 </resources>
