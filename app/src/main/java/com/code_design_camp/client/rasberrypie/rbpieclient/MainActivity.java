@@ -20,6 +20,7 @@ import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 import android.widget.ViewSwitcher;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ORIENTATION_270 = 1;
     DrawerLayout drawer;
     NavigationView navelems;
-    ViewSwitcher vswitcher;
+    ViewFlipper vswitcher;
 
     TextView warning_rotation;
     @Override
@@ -38,21 +39,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar t = findViewById(R.id.toolbar_main);
         setSupportActionBar(t);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
         drawer = findViewById(R.id.main_drawer);
         navelems = findViewById(R.id.navigation_view_main);
         warning_rotation = findViewById(R.id.rotation_warn);
         navelems.setNavigationItemSelectedListener(draweritemlistener);
+        vswitcher = findViewById(R.id.main_view_flipper);
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int screenRotation = display.getRotation();
         switch (screenRotation)
         {
             default:
                 warning_rotation.setVisibility(View.GONE);
+                actionbar.setDisplayHomeAsUpEnabled(true);
                 break;
             case ORIENTATION_0:
                 warning_rotation.setVisibility(View.VISIBLE);
+                actionbar.setDisplayHomeAsUpEnabled(false);
                 break;
         }
     }
