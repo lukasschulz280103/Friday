@@ -26,11 +26,7 @@ import android.widget.ViewSwitcher;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ORIENTATION_0 = 0;
-    private static final int ORIENTATION_90 = 3;
-    private static final int ORIENTATION_270 = 1;
     private static final String LOGTAG = "FridayMainActivity";
-    DrawerLayout drawer;
-    NavigationView navelems;
     ViewFlipper vswitcher;
 
     TextView warning_rotation;
@@ -38,14 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar t = findViewById(R.id.toolbar_main);
-        setSupportActionBar(t);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        drawer = findViewById(R.id.main_drawer);
-        navelems = findViewById(R.id.navigation_view_main);
         warning_rotation = findViewById(R.id.rotation_warn);
-        navelems.setNavigationItemSelectedListener(draweritemlistener);
         vswitcher = findViewById(R.id.main_view_flipper);
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int screenRotation = display.getRotation();
@@ -55,12 +44,10 @@ public class MainActivity extends AppCompatActivity {
         {
             default:
                 warning_rotation.setVisibility(View.GONE);
-                actionbar.setDisplayHomeAsUpEnabled(true);
                 break;
             case ORIENTATION_0:
 
                 warning_rotation.setVisibility(View.VISIBLE);
-                actionbar.setDisplayHomeAsUpEnabled(false);
                 break;
         }
     }
@@ -80,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:{
-                drawer.openDrawer(GravityCompat.START);
                 return true;
             }
         }
