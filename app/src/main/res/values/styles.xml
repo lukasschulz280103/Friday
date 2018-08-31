@@ -23,4 +23,12 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+    <style name="PageTitle">
+        <item name="android:textSize">60sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    <style name="HeaderMiddle" parent="PageTitle">
+        <item name="android:textSize">20sp</item>
+
+    </style>
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">FRYDAY</string>
+    <string name="app_name" translatable="false">friday</string>
     <string name="title_activity_splash_screen" translatable="false">SplashScreen</string>
     <string name="leave_app">Do you really want to leave the app?</string>
     <string name="action_leave">Leave</string>
@@ -8,4 +8,5 @@
     <string name="nav_project_title" translatable="false">Raspberry PI Android Client</string>
     <string name="main_nav_dashboard">Dashboard</string>
     <string name="hint_rotate_phone">To use this app, rotate your phone to landscape mode.</string>
+    <string name="friday_use_help">To use firday, you have to put this phone into the provided case.</string>
 </resources>
