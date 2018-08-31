@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.Surface;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ORIENTATION_0 = 0;
     private static final int ORIENTATION_90 = 3;
     private static final int ORIENTATION_270 = 1;
+    private static final String LOGTAG = "FridayMainActivity";
     DrawerLayout drawer;
     NavigationView navelems;
     ViewFlipper vswitcher;
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         vswitcher = findViewById(R.id.main_view_flipper);
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int screenRotation = display.getRotation();
+        Log.d(LOGTAG,"screenRotation:"+screenRotation);
+        vswitcher.setDisplayedChild(0);
         switch (screenRotation)
         {
             default:
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 actionbar.setDisplayHomeAsUpEnabled(true);
                 break;
             case ORIENTATION_0:
+
                 warning_rotation.setVisibility(View.VISIBLE);
                 actionbar.setDisplayHomeAsUpEnabled(false);
                 break;
