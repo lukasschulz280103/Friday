@@ -9,4 +9,10 @@
     <string name="main_nav_dashboard">Dashboard</string>
     <string name="hint_rotate_phone">To use this app, rotate your phone to landscape mode.</string>
     <string name="friday_use_help">To use firday, you have to put this phone into the provided case.</string>
+    <string name="nav_history_short">history</string>
+    <string name="nav_profile_lower">profile</string>
+
+    <string name="title_activity_fullscreen_action">FullscreenActionActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
