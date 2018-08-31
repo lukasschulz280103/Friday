@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">RBPI Client</string>
+    <string name="app_name" translatable="false">FRYDAY</string>
     <string name="title_activity_splash_screen" translatable="false">SplashScreen</string>
     <string name="leave_app">Do you really want to leave the app?</string>
     <string name="action_leave">Leave</string>

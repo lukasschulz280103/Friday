@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".SplashScreen">
@@ -19,7 +20,10 @@
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Raspberry PI Client" />
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:fontFamily="casual"
+            android:text="@string/app_name" />
     </LinearLayout>
 
 </LinearLayout>
