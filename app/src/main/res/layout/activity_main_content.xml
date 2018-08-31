@@ -3,10 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ViewSwitcher
+    <ViewFlipper
+        android:id="@+id/main_view_flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <include layout="@layout/page_main" />
         <include layout="@layout/page_profile"/>
         <include layout="@layout/page_history"/>
-    </ViewSwitcher>
+    </ViewFlipper>
 </LinearLayout>
