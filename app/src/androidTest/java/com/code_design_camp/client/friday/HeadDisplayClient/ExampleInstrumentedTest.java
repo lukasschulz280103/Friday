@@ -1,4 +1,4 @@
-package com.code_design_camp.client.rasberrypie.rbpieclient;
+package com.code_design_camp.client.friday.HeadDisplayClient;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
