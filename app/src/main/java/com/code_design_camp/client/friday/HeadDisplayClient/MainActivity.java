@@ -1,9 +1,10 @@
-package com.code_design_camp.client.rasberrypie.rbpieclient;
+package com.code_design_camp.client.friday.HeadDisplayClient;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = "FridayMainActivity";
     ViewFlipper vswitcher;
     BottomNavigationView main_nav;
+    FloatingActionButton lets_go;
 
     TextView warning_rotation;
     @Override
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         warning_rotation = findViewById(R.id.rotation_warn);
         vswitcher = findViewById(R.id.main_view_flipper);
         main_nav = findViewById(R.id.main_bottom_nav);
+        lets_go = findViewById(R.id.start_actionmode);
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int screenRotation = display.getRotation();
         Log.d(LOGTAG,"screenRotation:"+screenRotation);
@@ -39,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
                 warning_rotation.setVisibility(View.GONE);
                 break;
             case ORIENTATION_0:
-
                 warning_rotation.setVisibility(View.VISIBLE);
                 break;
         }
         main_nav.setOnNavigationItemSelectedListener(navselected);
+        lets_go.setOnClickListener(startVR);
     }
 
     @Override
@@ -81,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             return true;
+        }
+    };
+    FloatingActionButton.OnClickListener startVR = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent i = new Intent(MainActivity.this,FullscreenActionActivity.class);
+            startActivity(i);
         }
     };
 }

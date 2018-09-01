@@ -1,6 +1,10 @@
-package com.code_design_camp.client.rasberrypie.rbpieclient;
+package com.code_design_camp.client.friday.HeadDisplayClient;
 
 import android.annotation.SuppressLint;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentContainer;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +13,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.Button;
 import android.widget.FrameLayout;
+
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -17,6 +24,9 @@ import android.widget.FrameLayout;
  */
 public class FullscreenActionActivity extends AppCompatActivity {
     FrameLayout mContentView;
+    FrameLayout fragment_container;
+    Fragment vrfragment;
+    Button backbtn;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -53,17 +63,6 @@ public class FullscreenActionActivity extends AppCompatActivity {
         }
     };
     private View mControlsView;
-    private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-            mControlsView.setVisibility(View.VISIBLE);
-        }
-    };
     private boolean mVisible;
     private final Runnable mHideRunnable = new Runnable() {
         @Override
@@ -97,9 +96,23 @@ public class FullscreenActionActivity extends AppCompatActivity {
         }
 
         mVisible = true;
-
         // Set up the user interaction to manually show or hide the system UI.
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragment_container = findViewById(R.id.vrcontent_container);
+        vrfragment = fragmentManager.findFragmentById(R.id.vrcontent);
+        if(fragment_container != null){
+            fragmentTransaction.replace(R.id.vrcontent_container,new VRContentFragment().newInstance(FullscreenActionActivity.this,null));
+            fragmentTransaction.commit();
+        }
         mContentView = findViewById(R.id.root_fullscreen);
+        backbtn = findViewById(R.id.back);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,18 +130,6 @@ public class FullscreenActionActivity extends AppCompatActivity {
         // are available.
         delayedHide(100);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button.
-            NavUtils.navigateUpFromSameTask(this);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void toggle() {
         if (mVisible) {
             hide();
@@ -138,29 +139,18 @@ public class FullscreenActionActivity extends AppCompatActivity {
     }
 
     private void hide() {
-        // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-        mControlsView.setVisibility(View.GONE);
         mVisible = false;
-
+        backbtn.setVisibility(View.GONE);
         // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
     @SuppressLint("InlinedApi")
     private void show() {
-        // Show the system bar
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         mVisible = true;
-
+        backbtn.setVisibility(View.VISIBLE);
         // Schedule a runnable to display UI elements after a delay
         mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
     /**
