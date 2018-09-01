@@ -65,7 +65,6 @@ public class FullscreenActionActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-    private View mControlsView;
     private boolean mVisible;
     private final Runnable mHideRunnable = new Runnable() {
         @Override
