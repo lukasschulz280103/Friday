@@ -18,6 +18,9 @@ import android.widget.FrameLayout;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -88,8 +91,9 @@ public class FullscreenActionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_fullscreen_action);
+        mContentView = findViewById(R.id.root_fullscreen);
+        mContentView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -102,10 +106,10 @@ public class FullscreenActionActivity extends AppCompatActivity {
         fragment_container = findViewById(R.id.vrcontent_container);
         vrfragment = fragmentManager.findFragmentById(R.id.vrcontent);
         if(fragment_container != null){
-            fragmentTransaction.replace(R.id.vrcontent_container,new VRContentFragment().newInstance(FullscreenActionActivity.this,null));
+            VRContentFragment contentFragment = VRContentFragment.newInstance(FullscreenActionActivity.this,null);
+            fragmentTransaction.replace(R.id.vrcontent_container,contentFragment);
             fragmentTransaction.commit();
         }
-        mContentView = findViewById(R.id.root_fullscreen);
         backbtn = findViewById(R.id.back);
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +146,7 @@ public class FullscreenActionActivity extends AppCompatActivity {
         mVisible = false;
         backbtn.setVisibility(View.GONE);
         // Schedule a runnable to remove the status and navigation bar after a delay
+        mHideHandler.removeCallbacks(mHidePart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
@@ -150,7 +155,12 @@ public class FullscreenActionActivity extends AppCompatActivity {
         mVisible = true;
         backbtn.setVisibility(View.VISIBLE);
         // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
+        mHideHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hide();
+            }
+        }, AUTO_HIDE_DELAY_MILLIS);
     }
 
     /**
