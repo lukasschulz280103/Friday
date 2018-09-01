@@ -7,4 +7,6 @@
     <string name="main_nav_dashboard">Übersicht</string>
     <string name="hint_rotate_phone">Um diese App zu nutzen muss das Handy sich im Horizontalmodus befinden.</string>
     <string name="friday_use_help">Um FRIDAY zu nutzen musst du dir die vorbereitete Brille aufsetzen.</string>
+    <string name="nav_history_short">verlauf</string>
+    <string name="nav_profile_lower">profil</string>
 </resources>

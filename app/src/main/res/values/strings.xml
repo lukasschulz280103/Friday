@@ -12,7 +12,10 @@
     <string name="nav_history_short">history</string>
     <string name="nav_profile_lower">profile</string>
 
-    <string name="title_activity_fullscreen_action">FullscreenActionActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_fullscreen_action" translatable="false">FullscreenActionActivity</string>
+    <string name="app_back">Back</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit_vr">Edit VR Layout</string>
 </resources>
