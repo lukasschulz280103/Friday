@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.view.DateWidget;
 import com.code_design_camp.client.friday.HeadDisplayClient.view.viewpackage.VRViewHolder;
 
 import org.json.JSONException;
@@ -41,6 +42,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -86,6 +88,11 @@ public class VRContentFragment extends Fragment {
             try {
                 configfile.createNewFile();
                 JSONObject rootjson = new JSONObject();
+                HashMap<String,Object> keys = new HashMap<>();
+                keys.put("left",50);
+                keys.put("top",50);
+                keys.put("widgetType", DateWidget.TYPE_SIMPLE);
+                rootjson.put("DateWidget",keys);
                 if(configfile.canWrite()){
                     FileOutputStream writer = new FileOutputStream(configfile);
                     writer.write(rootjson.toString().getBytes());
@@ -94,6 +101,8 @@ public class VRContentFragment extends Fragment {
                     Toast.makeText(context, "Error: couldn't write VR configuration File", Toast.LENGTH_SHORT).show();
                 }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
