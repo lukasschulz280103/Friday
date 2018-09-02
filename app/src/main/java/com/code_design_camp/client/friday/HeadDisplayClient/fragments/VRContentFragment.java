@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.Snackbar;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.view.DateWidget;
+import com.code_design_camp.client.friday.HeadDisplayClient.view.Widget;
 import com.code_design_camp.client.friday.HeadDisplayClient.view.viewpackage.VRViewHolder;
 
 import org.json.JSONException;
@@ -46,21 +49,18 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VRContentFragment extends Fragment {
+public class VRContentFragment extends Fragment implements Widget.OnVRViewCreatedCallback{
     private static final String LOGTAG = "FllScreenActionActivity";
-    private static final int WARNING_MAX_MILLISECONDS = 5000;
-    private static final int WARNING_MAX_SECONDS = 5;
     private static AlertDialog.Builder warn;
     private static AlertDialog warndialog;
     private static Context mContext;
     private Activity mActivity;
-    static Handler handler;
-    ViewGroup parent;
-    public static boolean isAlreadyCalled = false;
+    private static Handler handler;
+    private ViewGroup parent;
     public VRContentFragment() {
         // Required empty public constructor
     }
-    static Runnable updateWarnDialog = new Runnable() {
+    private static Runnable updateWarnDialog = new Runnable() {
         int currentsec = 5;
         @Override
         public void run() {
@@ -146,35 +146,15 @@ public class VRContentFragment extends Fragment {
         View fragmentlayout = inflater.inflate(R.layout.fragment_vrcontent, container, false);
         mActivity = getActivity();
         parent = (ViewGroup) fragmentlayout;
-        addTextView("Beispiel Text",100,150);
+        Log.d("VRFragment","Context is "+mActivity);
+        new DateWidget(mActivity,parent,100,150,DateWidget.TYPE_SIMPLE).createWidget();
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         return fragmentlayout;
     }
-    private void addTextView(String text,int left,int top){
-        /*if(isAlreadyCalled){
-            return;
-        }
 
-        isAlreadyCalled = true;*/
-        TextView newText = new TextView(getContext());
-        newText.setText(text);
-        newText.setTextColor(Color.WHITE);
-        newText.setId(View.generateViewId());
-        newText.setTextSize(20);
-        ConstraintLayout mConstraintLayout  = parent.findViewById(R.id.content_vr_container);
-        Log.d(LOGTAG,"mConstraintLayout = " + mConstraintLayout.toString());
-        Log.d(LOGTAG,"newTextID = " + newText.getId());
-        Log.d(LOGTAG,"mConstraintLayoutID = " + mConstraintLayout.getId());
-        ConstraintSet set = new ConstraintSet();
-        mConstraintLayout.addView(newText);
-
-        set.clone(mConstraintLayout);
-        set.connect(newText.getId(),ConstraintSet.START,mConstraintLayout.getId(),ConstraintSet.START,left);
-        set.connect(newText.getId(),ConstraintSet.TOP,mConstraintLayout.getId(),ConstraintSet.TOP,top);
-        set.applyTo(mConstraintLayout);
-    }
-    private void addClockView(int left,int top){
-
+    @Override
+    public void onCreatedWidgets() {
+        Log.d("VRFragment","Creted widgets");
     }
 }
