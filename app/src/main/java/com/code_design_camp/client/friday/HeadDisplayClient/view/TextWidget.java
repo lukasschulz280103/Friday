@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 
 class TextWidget extends Widget{
+    private TextView newText;
     private String text;
     private int textSize;
     private Color textColor;
@@ -36,6 +37,7 @@ class TextWidget extends Widget{
 
     public void setText(String text) {
         this.text = text;
+        newText.setText(text);
     }
 
     public int getTextSize() {
@@ -55,7 +57,7 @@ class TextWidget extends Widget{
     }
     public void createWidget() {
         Widget w = new Widget(parent,getLeft(),getTop());
-        TextView newText = new TextView(context);
+        newText = new TextView(context);
         newText.setText(text);
         newText.setTextColor(Color.WHITE);
         newText.setId(View.generateViewId());

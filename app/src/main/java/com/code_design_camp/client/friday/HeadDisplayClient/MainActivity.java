@@ -2,10 +2,13 @@ package com.code_design_camp.client.friday.HeadDisplayClient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +50,19 @@ public class MainActivity extends AppCompatActivity {
         }
         main_nav.setOnNavigationItemSelectedListener(navselected);
         lets_go.setOnClickListener(startVR);
+        checkForFirstUse();
+    }
+
+    private void checkForFirstUse() {
+        SharedPreferences settingsfile = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        if(settingsfile.getBoolean("isFirstUse",true)){
+            AlertDialog.Builder notifieffirstuse = new AlertDialog.Builder(MainActivity.this);
+            notifieffirstuse.setTitle("Welcome to friday");
+            notifieffirstuse.setMessage("Thank you for downloading friday.\n\nRemember that you are in a pre-release of our app - Some features may not work properly or this app will crash at some points.");
+            notifieffirstuse.setPositiveButton(android.R.string.ok,null);
+            notifieffirstuse.create().show();
+            settingsfile.edit().putBoolean("isFirstUse",false).apply();
+        }
     }
 
     @Override
