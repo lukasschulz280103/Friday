@@ -1,3 +1,4 @@
+Read in [english](README.en.md)
 ## Projekt "friday"
 Friday ist ein AR-Projekt, mithilfe dessen das Handy zur praktischen AR-Brille wird.
 
