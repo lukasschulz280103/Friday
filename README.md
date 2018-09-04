@@ -7,7 +7,7 @@ Die Appversion von Friday ist nur für Android 5.0(API Level 22) oder höher ver
 ## Funktionen
 > Die aktuelle App-Version ist ein Entwickler-release und kann instabil laufen, dessen Funktionen ebenfalls.
 - Derzeit unterstützt friday einen BETA AR-Modus, welcher probehalber eine Zeitanzeige unterstützt.
-###### Nächste Geplante Features
+#### Nächste Geplante Features
 - [ ] Sprachsteuerung
 - [ ] AR Layout Editor
 - [ ] Aktualisiertes Zeit&Datums - Widget
