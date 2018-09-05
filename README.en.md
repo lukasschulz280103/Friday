@@ -14,7 +14,7 @@ The app-version of friday is available on Android 5.0(Lollipop:API Lvl 22) and h
 - [ ] Voice control
 - [ ] AR Layout Editor
 - [ ] Updated Time&Date widget
-- [ ] More new widgets(See [this](#widgets)
+- [ ] More new widgets(See [this](#widgets))
 - [ ] Connect to Google Account and synchronize
 - [ ] Refactor the source code
 
