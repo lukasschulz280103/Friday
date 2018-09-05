@@ -18,7 +18,7 @@ The app-version of friday is available on Android 5.0(Lollipop:API Lvl 22) and h
 - [ ] Connect to Google Account and synchronize
 - [ ] Refactor the source code
 
-##Widgets
+## Widgets
 Widget | available | description
 -------|-----------|-------------
 Time&Date|Yes|This widget is used to display time, date or depending on the configuration both at a time.
