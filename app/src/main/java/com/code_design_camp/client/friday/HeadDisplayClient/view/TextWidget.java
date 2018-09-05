@@ -21,14 +21,15 @@ class TextWidget extends Widget{
     private ViewGroup parent;
     TextWidget(@NonNull Context context, @NonNull ViewGroup parent, int left, int top, String text){
         super(parent,left,top);
+        newText = new TextView(context);
         this.context = context;
         this.setText(text);
         this.parent = parent;
     }
     TextWidget(@NonNull Context context, @NonNull ViewGroup parent,int left,int top){
         super(parent,left,top);
+        newText = new TextView(context);
         this.context = context;
-        this.setText(text);
         this.parent = parent;
     }
     public String getText() {
@@ -57,7 +58,6 @@ class TextWidget extends Widget{
     }
     public void createWidget() {
         Widget w = new Widget(parent,getLeft(),getTop());
-        newText = new TextView(context);
         newText.setText(text);
         newText.setTextColor(Color.WHITE);
         newText.setId(View.generateViewId());
