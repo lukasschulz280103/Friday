@@ -1,5 +1,6 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.view;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -10,10 +11,24 @@ import android.view.ViewGroup;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 
 public class Widget {
+    private View widgetView;
     private int left;
     private int top;
     private ViewGroup parent;
-    public Widget(@NonNull ViewGroup parent, int left, int top){
+    Widget(){
+        Log.w("Widget","Using an argumentless constructor is not recommended.");
+    }
+
+    public View getWidgetView() {
+        return widgetView;
+    }
+
+    public void setWidgetView(View widgetView) {
+        this.widgetView = widgetView;
+    }
+
+    Widget(Context context, @NonNull ViewGroup parent, int left, int top){
+        this.widgetView = widgetView;
         this.parent = parent;
         this.left = left;
         this.top = top;
@@ -34,7 +49,7 @@ public class Widget {
     public void setTop(int top) {
         this.top = top;
     }
-    public void createWidget(View widgetView){
+    void createWidget(){
         ConstraintLayout mConstraintLayout  = parent.findViewById(R.id.content_vr_container);
         ConstraintSet set = new ConstraintSet();
         mConstraintLayout.addView(widgetView);

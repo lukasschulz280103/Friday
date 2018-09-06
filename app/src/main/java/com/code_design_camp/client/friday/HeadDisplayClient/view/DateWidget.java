@@ -4,86 +4,158 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.INotificationSideChannel;
-import android.support.v7.view.SupportActionModeWrapper;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class DateWidget extends TextWidget{
     public static final int TYPE_SIMPLE = 0;
-    public static final int TYPE_MEDIUM = 1;
-    public static final int TYPE_BIG = 2;
-    public static String HOUR;
-    public static String MINUTE;
+    public static final int TYPE_EXPANDED = 1;
+    public static final int TYPE_FULL = 2;
+    public static final int TYPE_DATE_DEFAULT = 3;
+    //These are of type String to make the formatting easier (and we don't need these to be datatype int)
+    private String HOUR;
+    private String MINUTE;
+    private String SECOND;
+    private String DAY;
+    private String MONTH;
+    private int YEAR;
+    private String DAY_NAME;
+    private String MONTH_NAME;
+    private Calendar timecalendar;
+    private final Handler handler = new Handler();
     private int relativeTop;
     private ViewGroup parent;
-    final TextWidget widget;
+    private TextWidget widget;
     private int relativeLeft;
     private int type;
     private Context context;
     private Resources res;
-    Runnable updateTime = new Runnable() {
+    private Runnable updateTime = new Runnable() {
         @Override
         public void run() {
-            Calendar time = Calendar.getInstance();
-            MINUTE = Integer.toString(time.get(Calendar.MINUTE));
-            HOUR = Integer.toString(time.get(Calendar.HOUR_OF_DAY));
+            MINUTE = Integer.toString(timecalendar.get(Calendar.MINUTE));
+            HOUR = Integer.toString(timecalendar.get(Calendar.HOUR_OF_DAY));
+            SECOND = Integer.toString(timecalendar.get(Calendar.SECOND));
+            DAY  = Integer.toString(timecalendar.get(Calendar.DAY_OF_MONTH));
+            MONTH = Integer.toString(timecalendar.get(Calendar.MONTH));
+            DAY_NAME = timecalendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG, Locale.GERMAN);
+            MONTH_NAME = timecalendar.getDisplayName(Calendar.MONTH,Calendar.LONG,Locale.GERMAN);
             if(MINUTE.length() < 2){
                 MINUTE = "0" + MINUTE;
             }
             if(HOUR.length() < 2){
                 HOUR = "0" + HOUR;
             }
-            widget.setText(res.getString(R.string.string_time,HOUR,MINUTE));
+            if(SECOND.length() < 2){
+                SECOND = "0" + SECOND;
+            }
         }
     };
     public DateWidget(@NonNull Context context, @NonNull ViewGroup parent, int left, int top, int type){
         super(context, parent, left, top);
-        widget = new TextWidget(context,parent,left,top);
         this.parent = parent;
         this.relativeLeft = left;
         this.relativeTop = top;
         this.type = type;
         this.context = context;
         this.res = context.getResources();
+        this.timecalendar = new GregorianCalendar();
         Log.d("DateWidget","Context is "+context);
+    }
+    private final TimerTask updateMinuteTask = new TimerTask() {
+        @Override
+        public void run() {
+            handler.post(updateTime);
+        }
+    };
+    private final TimerTask updateHourTask = new TimerTask() {
+        @Override
+        public void run() {
+            handler.post(updateTime);
+        }
+    };
+    private final TimerTask updateSecondsTask = new TimerTask() {
+        @Override
+        public void run() {
+
+        }
+    };
+    public int getRelativeTop() {
+        return relativeTop;
+    }
+
+    public void setRelativeTop(int relativeTop) {
+        this.relativeTop = relativeTop;
     }
 
     @Override
-    public void createWidget() {
-        final Calendar time = Calendar.getInstance();
-        MINUTE = Integer.toString(time.get(Calendar.MINUTE));
-        HOUR = Integer.toString(time.get(Calendar.HOUR_OF_DAY));
-        widget.setText(res.getString(R.string.string_time,HOUR,MINUTE));
+    public ViewGroup getParent() {
+        return parent;
+    }
+
+    public void setParent(ViewGroup parent) {
+        this.parent = parent;
+    }
+
+    public int getRelativeLeft() {
+        return relativeLeft;
+    }
+
+    public void setRelativeLeft(int relativeLeft) {
+        this.relativeLeft = relativeLeft;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+    public void start(){
         Timer updaterMinute = new Timer();
         Timer updaterHour = new Timer();
-        final Handler handler = new Handler();
-        TimerTask updateMinuteTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(updateTime);
-            }
-        };
-        TimerTask updateHourTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(updateTime);
-            }
-        };
+        Timer updateSeconds = new Timer();
         int delaymin = 60-Calendar.getInstance().get(Calendar.SECOND);
-        int delayhours = 60-Integer.valueOf(MINUTE);
+        int delayhours = 60-timecalendar.get(Calendar.MINUTE);
+        int delayseconds = 1000-timecalendar.get(Calendar.MILLISECOND);
+        YEAR = timecalendar.get(Calendar.YEAR);
         updaterMinute.scheduleAtFixedRate(updateMinuteTask,delaymin,60000);
         updaterHour.scheduleAtFixedRate(updateHourTask,delayhours,360000);
-        widget.createWidget();
+        updateSeconds.scheduleAtFixedRate(updateSecondsTask,delayseconds,1000);
+    }
+    @Override
+    public void createWidget() {
+        updateTime.run();
+        start();
+        if (type == TYPE_SIMPLE) {
+            super.setText(res.getString(R.string.string_time,HOUR,MINUTE));
+        } else if (type == TYPE_EXPANDED) {
+            super.setText(res.getString(R.string.string_time_expanded,DAY_NAME,MINUTE,SECOND));
+        } else if (type == TYPE_FULL) {
+            Date date = new Date();
+            super.setText(date.toString());
+        } else if (type == TYPE_DATE_DEFAULT){
+            super.setText(res.getString(R.string.string_date_default,DAY,MONTH,YEAR));
+        }
+        super.createWidget();
     }
 }
