@@ -10,4 +10,20 @@
     <string name="nav_history_short">verlauf</string>
     <string name="nav_profile_lower">profil</string>
     <string name="app_back">Zurück</string>
+    <string name="dismiss_btn_seconds">Verstanden und Nutzung bestätigen (%d)</string>
+    <string name="dismiss_btn">Verstanden und Nutzung bestätigen</string>
+    <string name="dialog_warn_title">Bitte sorgfältig lesen</string>
+    <string name="tou_content">
+        Nutzen sie friday niemals in einer Umgebung, in der friday für risikoreichen Konzentrationsverlust, gefährliche Situation und Unfälle sorgen könnte.
+
+friay übernimmt keine Verantwortung für Fehler oder anderes menchliches Versagen das in nachweisbarem/nicht nachweisbarem Zusamenhang mit diesem Produkt steht.
+
+Durch die Nutzung dieses Produkts akzeptieren sie, dass diese App eventuell falsche Informationen und Daten enthalten kann. Wir übernehmen keine Verantwortung für die Richtigkeit von Information, die durch Drittanbieter an diese App weitergegeben wird, wie z.B. Kartendaten oder aktuelle Nachrichten.
+
+Wir sammeln keine persönlichen Daten des Nutzers außer in folgenden Fällen unter Zustimmung:
+	- Bug-reporting: Um unseren Service weiterhin konstant zu verbessern, werden automatisch Dateien an den Entwickler gesendet, die Nutzungsdaten beeinhalten(Nutzungshäufigkeit jeder Features, Android Version, Gerätenamen und Metadaten[,welche Funktion die App zum crash führt)
+	- Smarte features: Der Nutzer erlaubt die Nutzung von Kontakten, Standortdaten, Kamera, Mikrofon, Benachrichtigungen
+
+In dem sie "Verstanden und Nutzung bestätigen" auswählen, akzeptieren sie, die Nutzungsedingungen und die Datenschutzbestimmung gelesen zu haben und akzeptieren diese.
+    </string>
 </resources>
