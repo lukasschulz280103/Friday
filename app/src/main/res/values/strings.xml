@@ -14,10 +14,28 @@
 
     <string name="title_activity_fullscreen_action" translatable="false">FullscreenActionActivity</string>
     <string name="app_back">Back</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="title_activity_edit_vr" translatable="false">Edit VR Layout</string>
-    <string name="ok_btn_seconds" translatable="false">Ok (%d)</string>
+    <string name="dismiss_btn_seconds">I understood and agree (%d)</string>
+    <string name="dismiss_btn">I understood and agree</string>
     <string name="string_time" translatable="false">%s:%s</string>
+    <string name="string_time_seconds" translatable="false">%d:%d:%d</string>
+    <string name="string_time_expanded" translatable="false">%s, %s:%s</string>
+    <string name="string_date_default" translatable="false">%s.%s.%d</string>
+    <string name="dialog_warn_title">Please read carefully</string>
+    <string name="tou_content">
+        Never you use Friday in an enviroment, where the usage of it causes lack of concentration which may lead into mistakes or any other kind dangerous situations.
+
+        friday does not take responsibility for mistakes or any other kind of human failure caused by the use of this product.
+
+        By using this product you agree that this app may contains wrong information when gettings information from our app, widgets etc. We are not responsible for information passed by third-party widgets, or widgets which use third-party sources, such as maps or news.
+
+        We don\'t collect personal data or data from your phone, except in these cases:
+            - Bug-reporting: To constantly improve the quality of our service, we will collect data about your app-usage(Which 	  features you use, android version, device name,app version[, the feature which caused the app to crash])
+              You can turn off bug-reporting in the app-settings
+
+            - Smart features: The user agreed to the use contacts, location service, camera, microphone, notifications
+
+        By clicking "i understood and agree" you agree that you read the terms of using(above) our privacy policy and accept these.
+    </string>
 </resources>
