@@ -26,4 +26,29 @@ Wir sammeln keine persönlichen Daten des Nutzers außer in folgenden Fällen un
 
 In dem sie "Verstanden und Nutzung bestätigen" auswählen, akzeptieren sie, die Nutzungsedingungen und die Datenschutzbestimmung gelesen zu haben und akzeptieren diese.
     </string>
+    <string name="app_settings">Einstellungen</string>
+    <string name="app_feedback">Feedback</string>
+    <string name="signin_choice">oder</string>
+    <string name="mail_invalid_error">Die Formatierung ist nicht korrekt.</string>
+    <string name="warning_decline">Ablehnen</string>
+    <string name="signin_welcome">Willkommen zurück, %s</string>
+    <string name="internal_error_title">Interner Fehler</string>
+    <string name="internal_error_message">Beim bearbeiten der Anfrage ist ein Fehler aufgetreten.</string>
+    <string name="switch_feedback_info">Debuginfo hinzufügen</string>
+    <string name="pref_header_data_sync">Account und Synchronisation</string>
+    <string name="pref_title_sync_frequency">Synchronisations-Frequenz</string>
+    <string name="pref_title_system_sync_settings">System-Synchronisationseinstellungen</string>
+    <string name="pref_header_notifications">Benachrichtigungen</string>
+    <string name="pref_title_new_message_notifications">Neue Version</string>
+    <string name="pref_header_general">Allgemein</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="pref_title_display_name">Nutzername</string>
+    <string name="sign_out">Abmelden</string>
+    <string name="more_sync_settings">Mehr Synchronisationseinstellungen</string>
+    <string name="delete_account">Account löschen</string>
+    <string name="confirm_signout_title">Abmelden</string>
+    <string name="confirm_signout_message">Wollen sie sich wirklich abmelden?</string>
+    <string name="sign_out_success">Erfolgeich abgemeldet</string>
+    <string name="confirm_deletion_title">Löschung bestätigen</string>
+    <string name="confirm_deletion_message">Durch das Löschen dieses Accounts bestätigen sie, dass ihnen klar ist, dass jegliche Daten, die mit diesem Account verknüpft sind, gelöscht werden.</string>
 </resources>
