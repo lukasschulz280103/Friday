@@ -2,6 +2,7 @@ package com.code_design_camp.client.friday.HeadDisplayClient.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Layout;
 import android.util.Log;
@@ -117,6 +119,12 @@ public class VRContentFragment extends Fragment implements Widget.OnVRViewCreate
         warn.setTitle(R.string.dialog_warn_title);
         warn.setMessage(R.string.tou_content);
         warn.setPositiveButton(android.R.string.ok,null);
+        warn.setNegativeButton(R.string.warning_decline, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ((FragmentActivity) mContext).finish();
+            }
+        });
         warn.setCancelable(false);
         Log.d(LOGTAG,"Showing warn dialog");
         warndialog = warn.create();

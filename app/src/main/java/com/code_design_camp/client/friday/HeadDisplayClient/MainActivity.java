@@ -8,6 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.transition.Transition;
+import android.support.transition.TransitionValues;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,25 +21,43 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.AuthDialog;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ORIENTATION_0 = 0;
     private static final String LOGTAG = "FridayMainActivity";
+    boolean isSigninShown = false;
     ViewFlipper vswitcher;
     BottomNavigationView main_nav;
     FloatingActionButton lets_go;
 
+    Button sigininbtn;
+    Button tosettings;
+    Button tofeedback;
+
+
+    AuthDialog authDialogFragment;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
     TextView warning_rotation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseAuth fauth = FirebaseAuth.getInstance();
         warning_rotation = findViewById(R.id.rotation_warn);
         vswitcher = findViewById(R.id.main_view_flipper);
         main_nav = findViewById(R.id.main_bottom_nav);
         lets_go = findViewById(R.id.start_actionmode);
+        sigininbtn = findViewById(R.id.sign_in_user_btn);
+        tosettings = findViewById(R.id.tosettings);
+        tofeedback = findViewById(R.id.tofeedback);
+
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int screenRotation = display.getRotation();
         Log.d(LOGTAG,"screenRotation:"+screenRotation);
@@ -51,6 +74,27 @@ public class MainActivity extends AppCompatActivity {
         main_nav.setOnNavigationItemSelectedListener(navselected);
         lets_go.setOnClickListener(startVR);
         checkForFirstUse();
+        sigininbtn.setOnClickListener(showSigninDialog);
+        final Intent tosettingsintent = new Intent(MainActivity.this,SettingsActivity.class);
+        final Intent tofeedbackintent = new Intent(MainActivity.this,Feedback.class);
+        tosettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(tosettingsintent);
+            }
+        });
+        tofeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(tofeedbackintent);
+            }
+        });
+        if(fauth.getCurrentUser() != null){
+            sigininbtn.setVisibility(View.GONE);
+        }
+        else{
+            promptSignin();
+        }
     }
 
     private void checkForFirstUse() {
@@ -67,13 +111,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Snackbar.make(findViewById(R.id.main_root_layout),getString(R.string.leave_app),Snackbar.LENGTH_SHORT)
-                .setAction(getString(R.string.action_leave), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        finishAffinity();
-                    }
-                }).show();
+        if(isSigninShown){
+            dismissSinginPrompt();
+        }
+        else {
+            Snackbar.make(findViewById(R.id.main_root_layout), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
+                    .setAction(getString(R.string.action_leave), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finishAffinity();
+                        }
+                    }).show();
+        }
     }
 
     @Override
@@ -109,4 +158,26 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         }
     };
+    Button.OnClickListener showSigninDialog = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            promptSignin();
+        }
+    };
+    public void promptSignin(){
+        Log.d("FirebaseAuth","showing auth dialog");
+        fragmentManager = getSupportFragmentManager();
+        authDialogFragment = new AuthDialog();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.slide_up,R.anim.slide_down);
+        fragmentTransaction.replace(android.R.id.content,authDialogFragment).commit();
+        isSigninShown = true;
+    }
+    public void dismissSinginPrompt(){
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_up,R.anim.slide_down)
+                .replace(android.R.id.content,new Fragment())
+                .commit();
+        isSigninShown = false;
+    }
 }
