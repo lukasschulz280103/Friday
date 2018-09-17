@@ -2,56 +2,33 @@ package com.code_design_camp.client.friday.HeadDisplayClient.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.res.ResourcesCompat;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TableRow;
-import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.view.DateWidget;
 import com.code_design_camp.client.friday.HeadDisplayClient.view.Widget;
 import com.code_design_camp.client.friday.HeadDisplayClient.view.WidgetInflater;
-import com.code_design_camp.client.friday.HeadDisplayClient.view.viewpackage.VRViewHolder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 public class VRContentFragment extends Fragment implements Widget.OnVRViewCreatedCallback{
     private static final String LOGTAG = "FllScreenActionActivity";
@@ -83,7 +60,8 @@ public class VRContentFragment extends Fragment implements Widget.OnVRViewCreate
             currentsec -= 1;
         }
     };
-    public static VRContentFragment newInstance(final Context context, VRViewHolder holder) {
+
+    public static VRContentFragment newInstance(final Context context) {
         VRContentFragment fragment = new VRContentFragment();
         mContext = context;
         File dir = context.getFilesDir();

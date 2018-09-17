@@ -3,19 +3,19 @@ package com.code_design_camp.client.friday.HeadDisplayClient.view;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.ViewGroup;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import androidx.annotation.NonNull;
 
 public class DateWidget extends TextWidget{
     public static final int TYPE_SIMPLE = 0;

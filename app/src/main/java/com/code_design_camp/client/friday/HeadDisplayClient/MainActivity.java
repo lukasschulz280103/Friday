@@ -1,80 +1,77 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.transition.Transition;
-import android.support.transition.TransitionValues;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.AuthDialog;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ORIENTATION_0 = 0;
     private static final String LOGTAG = "FridayMainActivity";
     boolean isSigninShown = false;
-    ViewFlipper vswitcher;
+    ViewFlipper vswitcher_main;
+
     BottomNavigationView main_nav;
     FloatingActionButton lets_go;
 
-    Button sigininbtn;
     Button tosettings;
     Button tofeedback;
-
-
     AuthDialog authDialogFragment;
+
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
-    TextView warning_rotation;
+    FirebaseAuth fauth = FirebaseAuth.getInstance();
+    BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.main_nav_dashboard:
+                    vswitcher_main.setDisplayedChild(0);
+                    break;
+                case R.id.main_nav_history:
+                    vswitcher_main.setDisplayedChild(2);
+                    break;
+                case R.id.main_nav_profile:
+                    vswitcher_main.setDisplayedChild(1);
+                    break;
+            }
+            return true;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseAuth fauth = FirebaseAuth.getInstance();
-        warning_rotation = findViewById(R.id.rotation_warn);
-        vswitcher = findViewById(R.id.main_view_flipper);
+        vswitcher_main = findViewById(R.id.main_view_flipper);
         main_nav = findViewById(R.id.main_bottom_nav);
         lets_go = findViewById(R.id.start_actionmode);
-        sigininbtn = findViewById(R.id.sign_in_user_btn);
         tosettings = findViewById(R.id.tosettings);
         tofeedback = findViewById(R.id.tofeedback);
 
-        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int screenRotation = display.getRotation();
-        Log.d(LOGTAG,"screenRotation:"+screenRotation);
-        vswitcher.setDisplayedChild(0);
-        switch (screenRotation)
-        {
-            default:
-                warning_rotation.setVisibility(View.GONE);
-                break;
-            case ORIENTATION_0:
-                warning_rotation.setVisibility(View.VISIBLE);
-                break;
-        }
+        vswitcher_main.setDisplayedChild(0);
         main_nav.setOnNavigationItemSelectedListener(navselected);
         lets_go.setOnClickListener(startVR);
         checkForFirstUse();
-        sigininbtn.setOnClickListener(showSigninDialog);
         final Intent tosettingsintent = new Intent(MainActivity.this,SettingsActivity.class);
         final Intent tofeedbackintent = new Intent(MainActivity.this,Feedback.class);
         tosettings.setOnClickListener(new View.OnClickListener() {
@@ -89,12 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(tofeedbackintent);
             }
         });
-        if(fauth.getCurrentUser() != null){
-            sigininbtn.setVisibility(View.GONE);
-        }
-        else{
-            promptSignin();
-        }
     }
 
     private void checkForFirstUse() {
@@ -110,12 +101,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void onBackPressed() {
         if(isSigninShown){
             dismissSinginPrompt();
         }
         else {
-            Snackbar.make(findViewById(R.id.main_root_layout), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
+            Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
                     .setAction(getString(R.string.action_leave), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -124,44 +130,11 @@ public class MainActivity extends AppCompatActivity {
                     }).show();
         }
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{
-                return true;
-            }
-        }
-        return false;
-    }
-    BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch(item.getItemId()){
-                case R.id.main_nav_dashboard:
-                    vswitcher.setDisplayedChild(0);
-                    break;
-                case R.id.main_nav_history:
-                    vswitcher.setDisplayedChild(2);
-                    break;
-                case R.id.main_nav_profile:
-                    vswitcher.setDisplayedChild(1);
-                    break;
-            }
-            return true;
-        }
-    };
     FloatingActionButton.OnClickListener startVR = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent i = new Intent(MainActivity.this,FullscreenActionActivity.class);
             startActivity(i);
-        }
-    };
-    Button.OnClickListener showSigninDialog = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            promptSignin();
         }
     };
     public void promptSignin(){

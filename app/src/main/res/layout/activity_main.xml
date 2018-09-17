@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/include_pages"
-        layout="@layout/activity_main_content"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_bottom_nav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/viewflipperparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
-    <android.support.design.widget.BottomNavigationView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/start_actionmode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:src="@drawable/google_cardboard" />
+
+        <ViewFlipper
+            android:id="@+id/main_view_flipper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/page_main" />
+
+            <include layout="@layout/page_profile" />
+
+            <include layout="@layout/page_history" />
+
+            <include layout="@layout/page_error" />
+        </ViewFlipper>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_bottom_nav"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        app:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         app:menu="@menu/menu_main_nav">
 
-    </android.support.design.widget.BottomNavigationView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/start_actionmode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/main_bottom_nav"
-        app:layout_constraintEnd_toEndOf="@+id/main_bottom_nav"
-        app:srcCompat="@drawable/google_cardboard" />
-
-</android.support.constraint.ConstraintLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+</LinearLayout>
