@@ -1,12 +1,7 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.view;
 
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
-import android.view.InflateException;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import org.json.JSONException;
@@ -16,13 +11,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 public class WidgetInflater {
     private static final String LOGTAG = "WidgetInflater";

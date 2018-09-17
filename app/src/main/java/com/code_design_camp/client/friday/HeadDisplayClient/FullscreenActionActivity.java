@@ -1,25 +1,20 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
 import android.annotation.SuppressLint;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentContainer;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -105,7 +100,7 @@ public class FullscreenActionActivity extends AppCompatActivity {
         fragment_container = findViewById(R.id.vrcontent_container);
         vrfragment = fragmentManager.findFragmentById(R.id.vrcontent);
         if(fragment_container != null){
-            VRContentFragment contentFragment = VRContentFragment.newInstance(FullscreenActionActivity.this,null);
+            VRContentFragment contentFragment = VRContentFragment.newInstance(FullscreenActionActivity.this);
             fragmentTransaction.replace(R.id.vrcontent_container,contentFragment);
             fragmentTransaction.commit();
         }

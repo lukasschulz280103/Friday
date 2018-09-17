@@ -51,4 +51,15 @@ In dem sie "Verstanden und Nutzung bestätigen" auswählen, akzeptieren sie, die
     <string name="sign_out_success">Erfolgeich abgemeldet</string>
     <string name="confirm_deletion_title">Löschung bestätigen</string>
     <string name="confirm_deletion_message">Durch das Löschen dieses Accounts bestätigen sie, dass ihnen klar ist, dass jegliche Daten, die mit diesem Account verknüpft sind, gelöscht werden.</string>
+    <string name="loading_dialog_msg">Bitte warten...</string>
+    <string name="confirm_deletion_positive">Bestätigen und \"%s\" löschen</string>
+    <string name="deletion_success">Account gelöscht</string>
+    <string name="deletion_error_canceled_title">Löschvorgang wurd unterbrochen</string>
+    <string name="deletion_error_canceled_message">Der Löschvorgang wurde unterbrochen. Dieser Fehler ist darauf zurückzuführen, dass eine Internetverindung nicht vorhanden oder instabil ist</string>
+    <string name="deletion_error_unknown_title">Account konnte nicht gelöscht werden</string>
+    <string name="warning_auto_account_creation">Sollte noch kein Account vorhanden sein, wird automatisch ein neuer Account erstellt.</string>
+    <string name="delete_dialog_loading_text">Lösche Profildaten...</string>
+    <string name="made_by">by\\nLukas Faber\\nLukas Schmitz</string>
+    <string name="feature_soon">"Dieses feature ist in der aktuellen Version leider noch nicht verfügbar. "</string>
+    <string name="page_profile_header_text">Hallo, %s</string>
 </resources>
