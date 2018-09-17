@@ -2,15 +2,11 @@ package com.code_design_camp.client.friday.HeadDisplayClient.view;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import androidx.annotation.NonNull;
 
 class TextWidget extends Widget{
     private String text;

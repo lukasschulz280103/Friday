@@ -1,16 +1,14 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.fragments;
 
+
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatImageButton;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,29 +29,65 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.DialogFragment;
+
 import static android.content.ContentValues.TAG;
+
 
 public class AuthDialog extends DialogFragment {
     private static final int RC_SIGN_IN = 9001;
     Dialog dialog;
+    AlertDialog.Builder loading_dialog_builder;
+    AlertDialog loading_dialog;
     TextInputEditText emailinput;
     TextInputLayout email_input_wrapper;
     AppCompatImageButton submit_form;
     SignInButton google_signin;
     GoogleSignInClient mSignInClient;
+    Activity mActivity;
     View fragmentview;
     private FirebaseAuth mAuth;
+    ImageButton.OnClickListener dismissdialog = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ((MainActivity) mActivity).dismissSinginPrompt();
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        mActivity = getActivity();
+    }
+
+    /**
+     * The system calls this only when creating the layout in a dialog.
+     */
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // The only reason you might override this method when using onCreateView() is
+        // to modify any dialog characteristics. For example, the dialog includes a
+        // title by default, but your custom layout might not need it. So here you can
+        // remove the dialog title, but you must call the superclass to get the Dialog.
+        Log.d("AuthDialog", "oncreatedialog getDialog = " + getDialog());
+        Log.d("AuthDialog", "onCreateDialog");
+        dialog = super.onCreateDialog(savedInstanceState);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
     }
 
     @Override
@@ -65,7 +99,7 @@ public class AuthDialog extends DialogFragment {
                 .requestIdToken("993428557619-nh2tmbaj3o4c8rppmskjg6hd6bu39md8.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
-        mSignInClient = GoogleSignIn.getClient(getActivity(),gso);
+        mSignInClient = GoogleSignIn.getClient(mActivity, gso);
         fragmentview = inflater.inflate(R.layout.signin_layout, container, false);
 
         ImageButton dismissbtn = fragmentview.findViewById(R.id.close_signin_dialog);
@@ -80,26 +114,6 @@ public class AuthDialog extends DialogFragment {
         dismissbtn.setOnClickListener(dismissdialog);
         return fragmentview;
     }
-
-    /** The system calls this only when creating the layout in a dialog. */
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // The only reason you might override this method when using onCreateView() is
-        // to modify any dialog characteristics. For example, the dialog includes a
-        // title by default, but your custom layout might not need it. So here you can
-        // remove the dialog title, but you must call the superclass to get the Dialog.
-        Log.d("AuthDialog","oncreatedialog getDialog = "+getDialog());
-        Log.d("AuthDialog","onCreateDialog");
-        dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
-    }
-    ImageButton.OnClickListener dismissdialog = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            ((MainActivity) getActivity()).dismissSinginPrompt();
-        }
-    };
     @Override
     public void onActivityCreated(Bundle arg0) {
         super.onActivityCreated(arg0);
@@ -154,6 +168,11 @@ public class AuthDialog extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        loading_dialog_builder = new AlertDialog.Builder(getContext());
+        loading_dialog_builder.setView(R.layout.loading_dialog);
+        loading_dialog_builder.setCancelable(false);
+        loading_dialog = loading_dialog_builder.create();
+        loading_dialog.show();
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -163,6 +182,7 @@ public class AuthDialog extends DialogFragment {
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+                loading_dialog.dismiss();
                 AlertDialog.Builder apierrrdialog = new AlertDialog.Builder(getContext());
                 apierrrdialog.setTitle(e.getStatusCode()+ ": " + getString(R.string.internal_error_title));
                 apierrrdialog.setMessage(R.string.internal_error_message);
@@ -175,21 +195,33 @@ public class AuthDialog extends DialogFragment {
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(mActivity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            Log.d("CONTEXT", "Activity is " + mActivity);
+                            DownloadManager downloadManager = (DownloadManager) mActivity.getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Snackbar.make(getActivity().findViewById(R.id.main_bottom_nav),getString(R.string.signin_welcome,user.getDisplayName()),Snackbar.LENGTH_SHORT).show();
+                            DownloadManager.Request dmrequest = new DownloadManager.Request(user.getPhotoUrl());
+                            dmrequest.setVisibleInDownloadsUi(false);
+                            dmrequest.setDestinationInExternalFilesDir(getContext(), "profile", "avatar.jpg");
+                            mActivity.registerReceiver(new BroadcastReceiver() {
+                                @Override
+                                public void onReceive(Context context, Intent intent) {
+                                    loading_dialog.dismiss();
+                                    ((MainActivity) mActivity).dismissSinginPrompt();
+                                }
+                            }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+                            long downloadReference = downloadManager.enqueue(dmrequest);
+                            Snackbar.make(mActivity.findViewById(R.id.main_bottom_nav), getString(R.string.signin_welcome, user.getDisplayName()), Snackbar.LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Snackbar.make(getActivity().findViewById(R.id.main_bottom_nav),"Sign in error.",Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(mActivity.findViewById(R.id.main_bottom_nav), "Sign in error.", Snackbar.LENGTH_SHORT).show();
                         }
                     }
                 });

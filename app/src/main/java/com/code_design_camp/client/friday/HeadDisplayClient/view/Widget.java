@@ -1,14 +1,15 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.view;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 public class Widget {
     private View widgetView;

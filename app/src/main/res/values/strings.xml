@@ -68,37 +68,6 @@
 
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Account and sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
@@ -117,5 +86,23 @@
     <string name="sign_out_success">Succesfully signed out.</string>
     <string name="confirm_deletion_title">Confirm deletion</string>
     <string name="confirm_deletion_message">By deleting your account you agree that all data which is part of this account will be deleted forever.</string>
-    <string name="confirm_deletion_positive">Confirm and delete \'%s\'</string>
+    <string name="confirm_deletion_positive">Confirm and delete \"%s\"</string>
+    <string name="loading_dialog_msg">Loading...</string>
+    <string name="deletion_success">Account deleted</string>
+    <string name="deletion_error_canceled_title">Deletion was canceled</string>
+    <string name="deletion_error_canceled_message">The deletion process was canceled. This error may occurs because the internet connection is unstable or not existant</string>
+    <string name="deletion_error_unknown_title">Could not delete account</string>
+    <string name="warning_auto_account_creation">If no account is existant, we wil automatically create a new one.</string>
+    <string name="delete_dialog_loading_text">Deleting Account...</string>
+    <string name="pref_header_info" translatable="false">Info</string>
+    <string name="info_phrase_love" translatable="false">Made with ❤ in 2018</string>
+    <string name="made_by">by\n
+        Lukas Faber\n
+        Lukas Schmitz</string>
+    <string name="app_version" translatable="false">Version 1.0.0-beta01</string>
+    <string name="checking_version" translatable="false">Checking...</string>
+    <string name="feature_soon">This feature is non-existant in the current version</string>
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string name="page_profile_header_text">Hello, %s</string>
+    <string name="version_text">Version %s</string>
 </resources>
