@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class AccountPreference extends Preference {
@@ -33,7 +32,7 @@ public class AccountPreference extends Preference {
     @Override
     public View getView(View convertView, ViewGroup parent) {
         v = super.getView(convertView, parent);
-        AppCompatButton signin = v.findViewById(R.id.signin_button_preference);
+        TextView signin = v.findViewById(R.id.account_preference_text_not_signed_in);
         ConstraintLayout content = v.findViewById(R.id.account_preference_content);
         if (firebaseUser != null) {
             signin.setVisibility(View.GONE);

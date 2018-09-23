@@ -11,7 +11,7 @@
             android:title="@string/sign_out" />
         <Preference
             android:key="delete_account"
-            android:layout="@layout/account_preference_delete" />
+            android:title="@string/delete_account" />
     </PreferenceCategory>
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->

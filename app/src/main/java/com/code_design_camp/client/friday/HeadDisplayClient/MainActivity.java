@@ -15,7 +15,6 @@ import com.code_design_camp.client.friday.HeadDisplayClient.fragments.AuthDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -32,14 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView main_nav;
     FloatingActionButton lets_go;
-
     Button tosettings;
     Button tofeedback;
     AuthDialog authDialogFragment;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
-    FirebaseAuth fauth = FirebaseAuth.getInstance();
     BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         lets_go.setOnClickListener(startVR);
         checkForFirstUse();
         final Intent tosettingsintent = new Intent(MainActivity.this,SettingsActivity.class);
-        final Intent tofeedbackintent = new Intent(MainActivity.this,Feedback.class);
+        final Intent tofeedbackintent = new Intent(MainActivity.this, FeedbackSenderActivity.class);
         tosettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
