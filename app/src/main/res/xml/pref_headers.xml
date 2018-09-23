@@ -6,6 +6,13 @@
         android:icon="@drawable/ic_person_black_24dp"
         android:title="@string/pref_header_data_sync" />
     <header
+        android:icon="@drawable/ic_system_update_black_24dp"
+        android:title="@string/changelog">
+        <intent
+            android:targetClass="com.code_design_camp.client.friday.HeadDisplayClient.ChangeLogViewer"
+            android:targetPackage="com.code_design_camp.client.friday.HeadDisplayClient" />
+    </header>
+    <header
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_info">
         <intent

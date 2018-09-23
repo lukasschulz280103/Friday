@@ -13,6 +13,7 @@
     <string name="dismiss_btn_seconds">Verstanden und Nutzung bestätigen (%d)</string>
     <string name="dismiss_btn">Verstanden und Nutzung bestätigen</string>
     <string name="dialog_warn_title">Bitte sorgfältig lesen</string>
+
     <string name="tou_content">
         Nutzen sie friday niemals in einer Umgebung, in der friday für risikoreichen Konzentrationsverlust, gefährliche Situation und Unfälle sorgen könnte.
 
@@ -59,7 +60,55 @@ In dem sie "Verstanden und Nutzung bestätigen" auswählen, akzeptieren sie, die
     <string name="deletion_error_unknown_title">Account konnte nicht gelöscht werden</string>
     <string name="warning_auto_account_creation">Sollte noch kein Account vorhanden sein, wird automatisch ein neuer Account erstellt.</string>
     <string name="delete_dialog_loading_text">Lösche Profildaten...</string>
-    <string name="made_by">by\\nLukas Faber\\nLukas Schmitz</string>
+    <string name="made_by">by\nLukas Faber\nLukas Schmitz</string>
     <string name="feature_soon">"Dieses feature ist in der aktuellen Version leider noch nicht verfügbar. "</string>
     <string name="page_profile_header_text">Hallo, %s</string>
+    <string name="info_up_to_date">Aktuell</string>
+    <string name="version_text">Version %s</string>
+    <string name="info_update_to">Aktualisieren auf %s</string>
+    <string name="check_update_error">Überprüfung fehlgeschlagen</string>
+    <string name="note_not_signed_in">Sie sind nicht angemeldet</string>
+    <string name="email_signin_not_supported">Derzeit werden Emailadressen als Anmeldemethode nicht unterstützt.</string>
+    <string name="new_file_attached">Anhang %s hinzugefügt</string>
+    <string name="changed_attached_file">Anhang geändet zu %s</string>
+    <string name="smth_went_wrong">Etwas ist schief gelaufen</string>
+    <string name="feedback_submit_success">Feedback erfolgreich abgeschickt.\nVielen Dank!</string>
+    <string name="checking_version">Überprüfen</string>
+    <string name="feedback_submit_image_upload">Anhänge hochladen...</string>
+    <string name="feedback_submit_logfiles_upload">Log-Dateien hochladen...</string>
+    <string name="debug_check_device_info">Gerätedaten</string>
+    <string name="debug_usage_data">Nutzungsdaten</string>
+    <string name="header_usage_data_info">Diese Nutzungsdaten können wir erheben:</string>
+    <string name="usage_data_feature_usage_data">Allgemeine Nutzungsdaten über Features die durch feedback und automatische Error-Reports als instabil auffallen</string>
+    <string name="usage_data_usage_time">Tägliche Nutzungszeit der App sowie Nutzungszeit einelner Features</string>
+    <string name="usage_data_ar_feature">Nutzungszeit-und weise des AR-Features</string>
+    <string name="usage_data_necesssarity">Wir erheben lediglich Nutzungsdaten, die wir für wichtig zur Weiterentwicklung und Verbesserung unserer App als nützlich betrachten. Alle übermittelten Daten werden nach einer Überfprüfung durch Mitarbeiter unwiedrruflich gelöscht.</string>
+    <string name="header_device_data_info">Wir erheben folgende Metadaten über ihr Gerät:</string>
+    <string name="device_data_info_device">Name des Geräts</string>
+    <string name="device_data_info_model">Modellname des Geräts</string>
+    <string name="device_data_info_brand">Die Marke des Geräts</string>
+    <string name="device_data_info_sdkversion">Die Android SDK Version des Geräts</string>
+    <string name="device_data_info_android_version">Die Android Version des Geräts</string>
+    <string name="device_data_info_manufacturer">Hersteller des Geräts</string>
+    <string name="simple_action_error_title">Ein Fehler ist aufgetreten :(</string>
+    <string name="simple_action_error_message">Bei dem Bearbeiten der Anfrage ist ein Fehler aufgetreten.</string>
+    <string name="error_network_missing_info">Bitte überprüfen sie, ob sie eine Email-Adresse angegeben haben und ob sie mit einem Internet verbunden sind.</string>
+    <string name="retry">Wiederholen</string>
+    <string name="network_error_title">Netzwerkfehler</string>
+    <string name="attach_file">Anhang hinzufügen</string>
+    <string name="placeholder_add_debug_body">Detailliertere Informationen hinzufügen</string>
+    <string name="header_how_to_use">Wie benutze ich friday?</string>
+    <string name="app_welcome">Willkommen bei Friday</string>
+    <string name="app_friday_description">
+        friday ist voller potential.Wir verwandeln dein Gerät komplett in ein HeadUp Display, dass vor allem mit unseren hauseigenen AR-Brillen kompatibel ist.
+        Nute \"Widgets\" um frida in deinen AR-Brillen Assistenten zu konvertieren - lass dir jede info von simplen Text bis zu Google Kalender Terminen anzeigen, während du ohne Beeinträchtigung an deiner Aufgabe weiterarbeitest.
+    </string>
+    <string name="app_language">Sprache</string>
+    <string name="changelog">Changelog</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_edit_vr">Layout Editor</string>
+    <string name="pref_header_info">Info</string>
+    <string name="info_phrase_love">Made with ❤ in 2018</string>
+    <string name="locale_sys">Systemsprache(%s)</string>
+    <string name="network_error_title_short">Keine Verbindung</string>
 </resources>

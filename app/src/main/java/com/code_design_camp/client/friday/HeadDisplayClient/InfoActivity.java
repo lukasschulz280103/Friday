@@ -7,12 +7,14 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.Util.Connectivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,23 +45,27 @@ public class InfoActivity extends AppCompatActivity {
         }
         db = FirebaseDatabase.getInstance();
         versionref = db.getReference("version");
+        if (!Connectivity.isConnected(InfoActivity.this)) {
+            update_btn.setEnabled(false);
+            update_btn.setText(R.string.network_error_title_short);
+        }
         versionref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.d("dataSnapshot", dataSnapshot.getValue().toString());
                 version_number_server = (String) dataSnapshot.getValue();
                 if (!version_number_server.equals(version_number_local)) {
                     update_btn.setEnabled(true);
-                    update_btn.setText("Update to " + version_number_server);
+                    update_btn.setText(getString(R.string.info_update_to, version_number_server));
                 } else {
                     update_btn.setEnabled(false);
-                    update_btn.setText("Up to date");
+                    update_btn.setText(R.string.info_up_to_date);
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                version.setText("Could not check for updates");
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                version.setText(R.string.check_update_error);
             }
         });
 

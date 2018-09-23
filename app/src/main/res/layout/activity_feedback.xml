@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Feedback">
+    tools:context=".FeedbackSenderActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
@@ -41,13 +41,6 @@
             android:gravity="top"
             android:hint="Add more additional debug infos" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_add_feedbackinfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/switch_feedback_info" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,14 +48,19 @@
             android:paddingStart="16dp">
 
             <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/feedback_device_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Geräteinfo" />
+                android:checked="true"
+                android:longClickable="true"
+                android:text="@string/debug_check_device_info" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/feedback_usage_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="App-Nutzungsdaten" />
+                android:checked="true"
+                android:text="@string/debug_usage_data" />
         </LinearLayout>
     </LinearLayout>
 
