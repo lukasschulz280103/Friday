@@ -153,13 +153,14 @@ public class AuthDialog extends DialogFragment {
         }
     };
     private void validateEmail(){
-        String text = emailinput.getText().toString();
+/*        String text = emailinput.getText().toString();
         if(!text.contains(".")||!text.contains("@")){
             email_input_wrapper.setError(getString(R.string.mail_invalid_error));
         }
         else{
             email_input_wrapper.setError("");
-        }
+        }*/
+        emailinput.setError(getString(R.string.email_signin_not_supported));
     }
 /*    private void validatePassword(){
 
