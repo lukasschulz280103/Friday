@@ -41,6 +41,7 @@ public class DataSyncPreferenceFragment extends PreferenceFragment {
                     auth.signOut();
                     deleteLocalUserData();
                     Toast.makeText(getActivity(), getString(R.string.sign_out_success), Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
                 }
             });
             confirm_signout.setNegativeButton(android.R.string.no, null);
@@ -112,6 +113,8 @@ public class DataSyncPreferenceFragment extends PreferenceFragment {
         if (user == null) {
             sign_out.setEnabled(false);
             del_account.setEnabled(false);
+        } else {
+            del_account.setLayoutResource(R.layout.account_preference_delete);
         }
     }
 
