@@ -1,9 +1,12 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,6 +31,15 @@ public class InfoActivity extends AppCompatActivity {
 
     String version_number_server;
     String version_number_local;
+    private View.OnClickListener updatePageRedirect = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent redirect = new Intent();
+            redirect.setAction(Intent.ACTION_VIEW);
+            redirect.setData(Uri.parse("https://github.com/lukasschulz280103/Friday/releases/download/v" + version_number_server + "/app-release-stable.apk"));
+            startActivity(redirect);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +69,7 @@ public class InfoActivity extends AppCompatActivity {
                 if (!version_number_server.equals(version_number_local)) {
                     update_btn.setEnabled(true);
                     update_btn.setText(getString(R.string.info_update_to, version_number_server));
+                    update_btn.setOnClickListener(updatePageRedirect);
                 } else {
                     update_btn.setEnabled(false);
                     update_btn.setText(R.string.info_up_to_date);

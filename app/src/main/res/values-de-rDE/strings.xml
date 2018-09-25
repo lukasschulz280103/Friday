@@ -15,17 +15,17 @@
     <string name="dialog_warn_title">Bitte sorgfältig lesen</string>
 
     <string name="tou_content">
-        Nutzen sie friday niemals in einer Umgebung, in der friday für risikoreichen Konzentrationsverlust, gefährliche Situation und Unfälle sorgen könnte.
+        Nutzen sie friday niemals in einer Umgebung, in der friday für risikoreichen Konzentrationsverlust, gefährliche Situation und Unfälle sorgen könnte.\n\n
 
-friay übernimmt keine Verantwortung für Fehler oder anderes menchliches Versagen das in nachweisbarem/nicht nachweisbarem Zusamenhang mit diesem Produkt steht.
+friday übernimmt keine Verantwortung für Fehler oder anderes menchliches Versagen das in nachweisbarem/nicht nachweisbarem Zusamenhang mit diesem Produkt steht.\n\n
 
-Durch die Nutzung dieses Produkts akzeptieren sie, dass diese App eventuell falsche Informationen und Daten enthalten kann. Wir übernehmen keine Verantwortung für die Richtigkeit von Information, die durch Drittanbieter an diese App weitergegeben wird, wie z.B. Kartendaten oder aktuelle Nachrichten.
+Durch die Nutzung dieses Produkts akzeptieren sie, dass diese App eventuell falsche Informationen und Daten enthalten kann. Wir übernehmen keine Verantwortung für die Richtigkeit von Information, die durch Drittanbieter an diese App weitergegeben wird, wie z.B. Kartendaten oder aktuelle Nachrichten.\n\n
 
-Wir sammeln keine persönlichen Daten des Nutzers außer in folgenden Fällen unter Zustimmung:
-	- Bug-reporting: Um unseren Service weiterhin konstant zu verbessern, werden automatisch Dateien an den Entwickler gesendet, die Nutzungsdaten beeinhalten(Nutzungshäufigkeit jeder Features, Android Version, Gerätenamen und Metadaten[,welche Funktion die App zum crash führt)
-	- Smarte features: Der Nutzer erlaubt die Nutzung von Kontakten, Standortdaten, Kamera, Mikrofon, Benachrichtigungen
+Wir sammeln keine persönlichen Daten des Nutzers außer in folgenden Fällen unter Zustimmung:\n
+        \t<b>- Bug-reporting</b>: Um unseren Service weiterhin konstant zu verbessern, werden automatisch Dateien an den Entwickler gesendet, die Nutzungsdaten beeinhalten(Nutzungshäufigkeit jeder Features, Android Version, Gerätenamen und Metadaten[,welche Funktion die App zum crash führt)\n
+        \t<b>- Smarte features:</b> Der Nutzer erlaubt die Nutzung von Kontakten, Standortdaten, Kamera, Mikrofon, Benachrichtigungen\n\n
 
-In dem sie "Verstanden und Nutzung bestätigen" auswählen, akzeptieren sie, die Nutzungsedingungen und die Datenschutzbestimmung gelesen zu haben und akzeptieren diese.
+In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren sie, die Nutzungsedingungen und die Datenschutzbestimmung gelesen zu haben und akzeptieren diese.
     </string>
     <string name="app_settings">Einstellungen</string>
     <string name="app_feedback">Feedback</string>
@@ -111,4 +111,5 @@ In dem sie "Verstanden und Nutzung bestätigen" auswählen, akzeptieren sie, die
     <string name="info_phrase_love">Made with ❤ in 2018</string>
     <string name="locale_sys">Systemsprache(%s)</string>
     <string name="network_error_title_short">Keine Verbindung</string>
+    <string name="version_update">Update %s</string>
 </resources>
