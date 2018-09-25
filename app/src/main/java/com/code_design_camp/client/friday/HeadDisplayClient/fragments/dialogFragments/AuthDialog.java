@@ -1,4 +1,4 @@
-package com.code_design_camp.client.friday.HeadDisplayClient.fragments;
+package com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments;
 
 
 import android.app.Activity;
