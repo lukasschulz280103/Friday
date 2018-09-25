@@ -3,6 +3,7 @@ package com.code_design_camp.client.friday.HeadDisplayClient;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -11,7 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ViewFlipper;
 
-import com.code_design_camp.client.friday.HeadDisplayClient.fragments.AuthDialog;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.ChangelogDialogFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    SharedPreferences defaut_pref;
+    PackageInfo pkgInf = new PackageInfo();
     BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         lets_go = findViewById(R.id.start_actionmode);
         tosettings = findViewById(R.id.tosettings);
         tofeedback = findViewById(R.id.tofeedback);
+        defaut_pref = PreferenceManager.getDefaultSharedPreferences(this);
 
         vswitcher_main.setDisplayedChild(0);
         main_nav.setOnNavigationItemSelectedListener(navselected);
@@ -71,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         checkForFirstUse();
         final Intent tosettingsintent = new Intent(MainActivity.this,SettingsActivity.class);
         final Intent tofeedbackintent = new Intent(MainActivity.this, FeedbackSenderActivity.class);
+        if (!defaut_pref.getString("version", "1.0.0").equals(pkgInf.versionName)) {
+            ChangelogDialogFragment changelogdialog = new ChangelogDialogFragment();
+            changelogdialog.show(getSupportFragmentManager(), "ChangeLogDialog");
+        }
         tosettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

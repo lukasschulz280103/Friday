@@ -28,19 +28,19 @@
     <string name="string_date_default" translatable="false">%s.%s.%d</string>
     <string name="dialog_warn_title">Please read carefully</string>
     <string name="tou_content">
-        Never you use Friday in an enviroment, where the usage of it causes lack of concentration which may lead into mistakes or any other kind dangerous situations.
+        Never you use Friday in an enviroment, where the usage of it causes lack of concentration which may lead into mistakes or any other kind dangerous situations.\n\n
 
-        friday does not take responsibility for mistakes or any other kind of human failure caused by the use of this product.
+        friday does not take responsibility for mistakes or any other kind of human failure caused by the use of this product.\n\n
 
-        By using this product you agree that this app may contains wrong information when gettings information from our app, widgets etc. We are not responsible for information passed by third-party widgets, or widgets which use third-party sources, such as maps or news.
+        By using this product you agree that this app may contains wrong information when gettings information from our app, widgets etc. We are not responsible for information passed by third-party widgets, or widgets which use third-party sources, such as maps or news.\n\n
 
-        We don\'t collect personal data or data from your phone, except in these cases:
-            - Bug-reporting: To constantly improve the quality of our service, we will collect data about your app-usage(Which 	  features you use, android version, device name,app version[, the feature which caused the app to crash])
-              You can turn off bug-reporting in the app-settings
+        We don\'t collect personal data or data from your phone, except in these cases:\n
+            \t<b>- Bug-reporting</b>: To constantly improve the quality of our service, we will collect data about your app-usage(Which 	  features you use, android version, device name,app version[, the feature which caused the app to crash])
+              You can turn off bug-reporting in the app-settings\n
 
-            - Smart features: The user agreed to the use contacts, location service, camera, microphone, notifications
+            \t<b>- Smart features</b>: The user agreed to the use contacts, location service, camera, microphone, notifications\n\n\n
 
-        By clicking "i understood and agree" you agree that you read the terms of using(above) our privacy policy and accept these.
+        By clicking <i>\"i understood and agree\"</i> you agree that you read the terms of using(above) our privacy policy and accept these.
     </string>
     <string name="app_settings">Settings</string>
     <string name="app_feedback">Feedback</string>
@@ -138,4 +138,5 @@
     <string name="changelog">Changelog</string>
     <string name="locale_sys">System language(%s)</string>
     <string name="network_error_title_short">No connection</string>
+    <string name="version_update">Update %s</string>
 </resources>
