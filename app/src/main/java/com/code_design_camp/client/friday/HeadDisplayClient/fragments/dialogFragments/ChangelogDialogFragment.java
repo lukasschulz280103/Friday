@@ -63,6 +63,7 @@ public class ChangelogDialogFragment extends DialogFragment {
                 loadingbar.setVisibility(View.GONE);
                 Log.e(LOGTAG, e.getLocalizedMessage(), e);
             }
+            dismiss.setEnabled(true);
         }
     };
 
@@ -117,6 +118,7 @@ public class ChangelogDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+        dismiss.setEnabled(false);
         return dialogview;
     }
 
