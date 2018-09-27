@@ -4,6 +4,7 @@ package com.code_design_camp.client.friday.HeadDisplayClient;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     SharedPreferences defaut_pref;
-    PackageInfo pkgInf = new PackageInfo();
+    PackageInfo pkgInf;
     BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -69,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
         tosettings = findViewById(R.id.tosettings);
         tofeedback = findViewById(R.id.tofeedback);
         defaut_pref = PreferenceManager.getDefaultSharedPreferences(this);
+        try {
+            pkgInf = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        Log.d(LOGTAG, "SharedPref versionName is " + defaut_pref.getString("version", "1.0.0"));
 
         vswitcher_main.setDisplayedChild(0);
         main_nav.setOnNavigationItemSelectedListener(navselected);
@@ -76,9 +83,12 @@ public class MainActivity extends AppCompatActivity {
         checkForFirstUse();
         final Intent tosettingsintent = new Intent(MainActivity.this,SettingsActivity.class);
         final Intent tofeedbackintent = new Intent(MainActivity.this, FeedbackSenderActivity.class);
-        if (!defaut_pref.getString("version", "1.0.0").equals(pkgInf.versionName)) {
+        if (!defaut_pref.getString("version", "0").equals(pkgInf.versionName)) {
             ChangelogDialogFragment changelogdialog = new ChangelogDialogFragment();
             changelogdialog.show(getSupportFragmentManager(), "ChangeLogDialog");
+            SharedPreferences.Editor editor = defaut_pref.edit();
+            editor.putString("version", pkgInf.versionName);
+            editor.commit();
         }
         tosettings.setOnClickListener(new View.OnClickListener() {
             @Override
