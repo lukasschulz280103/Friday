@@ -6,7 +6,7 @@
     <string name="nav_main_history">Nutzungsverlauf</string>
     <string name="main_nav_dashboard">Übersicht</string>
     <string name="hint_rotate_phone">Um diese App zu nutzen muss das Handy sich im Horizontalmodus befinden.</string>
-    <string name="friday_use_help">Um FRIDAY zu nutzen musst du dir die vorbereitete Brille aufsetzen.</string>
+    <string name="friday_use_help">Um friday zu nutzen musst du dir die vorbereitete Brille aufsetzen.</string>
     <string name="nav_history_short">verlauf</string>
     <string name="nav_profile_lower">profil</string>
     <string name="app_back">Zurück</string>
@@ -101,7 +101,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="app_welcome">Willkommen bei Friday</string>
     <string name="app_friday_description">
         friday ist voller potential.Wir verwandeln dein Gerät komplett in ein HeadUp Display, dass vor allem mit unseren hauseigenen AR-Brillen kompatibel ist.
-        Nute \"Widgets\" um frida in deinen AR-Brillen Assistenten zu konvertieren - lass dir jede info von simplen Text bis zu Google Kalender Terminen anzeigen, während du ohne Beeinträchtigung an deiner Aufgabe weiterarbeitest.
+        Nutze \"Widgets\" um friday in deinen AR-Brillen Assistenten zu konvertieren - lass dir jede Info von simplen Text bis zu Google Kalender Terminen anzeigen, während du ohne Beeinträchtigung an deiner Aufgabe weiterarbeitest.
     </string>
     <string name="app_language">Sprache</string>
     <string name="changelog">Changelog</string>
