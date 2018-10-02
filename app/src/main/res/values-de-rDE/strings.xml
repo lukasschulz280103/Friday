@@ -112,4 +112,5 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="locale_sys">Systemsprache(%s)</string>
     <string name="network_error_title_short">Keine Verbindung</string>
     <string name="version_update">Update %s</string>
+    <string name="missing_inputs">Sie müssen entweder Gerätedaten anhängen oder genauere Informationen angeben</string>
 </resources>

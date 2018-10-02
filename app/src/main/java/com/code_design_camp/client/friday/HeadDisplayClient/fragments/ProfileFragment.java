@@ -12,15 +12,19 @@ import android.widget.ViewSwitcher;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.MainActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import androidx.annotation.Nullable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
-    FirebaseAuth fauth = FirebaseAuth.getInstance();
-    FirebaseUser fuser = fauth.getCurrentUser();
+    FirebaseAuth fauth;
+    FirebaseUser fuser;
+    MainActivity mainActivity;
 
     Button signinButton;
 
@@ -33,10 +37,17 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fauth = FirebaseAuth.getInstance();
+        fuser = fauth.getCurrentUser();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mainActivity = (MainActivity) getActivity();
         View fragmentview = inflater.inflate(R.layout.fragment_profile, container, false);
         viewSwitcher = fragmentview.findViewById(R.id.page_profile_account_vswitcher);
         emailtext = fragmentview.findViewById(R.id.page_profile_email);
@@ -45,7 +56,17 @@ public class ProfileFragment extends Fragment {
         signinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).promptSignin();
+                mainActivity.promptSignin();
+                mainActivity.getAuthDialogFragment().setOnAuthListener(new AuthDialog.onAuthCompletedListener() {
+                    @Override
+                    public void onAuthCompleted() {
+                        if (fuser != null) {
+                            viewSwitcher.setDisplayedChild(1);
+                            setupSigninScreen();
+                            mainActivity.dismissSinginPrompt();
+                        }
+                    }
+                });
             }
         });
         if (fauth.getCurrentUser() == null) {
