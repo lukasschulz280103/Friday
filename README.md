@@ -17,7 +17,7 @@ Die Appversion von Friday ist nur für Android 5.0(API Level 22) oder höher ver
 Name | Feature-Version | App-Version
 -----|-----------------|------------
 Verbindung mit Google Account und Synchronisation | 1.0 | v1.1.0
-Datums-und Zeitwidget | 1.2 | v1.1.0
+Datums-und Zeitwidget | 1.2 | 1.0.0-beta01
 
 #### Widgets
 Widget | Verfügbar | Beschreibung
