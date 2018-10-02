@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <application
         android:name=".FridayApplication"
         android:allowBackup="true"
@@ -59,7 +59,9 @@
         <activity
             android:name=".FeedbackSenderActivity"
             android:label="@string/app_feedback" />
-        <activity android:name=".InfoActivity" />
+        <activity
+            android:name=".InfoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
