@@ -13,12 +13,13 @@ The app-version of friday is available on Android 5.0(Lollipop:API Lvl 22) and h
 #### Geplante features
 - [ ] Voice control
 - [ ] AR Layout Editor
-- [ ] Updated Time&Date widget
-- [ ] More new widgets(See [this](#widgets))
-- [ ] Connect to Google Account and synchronize
-- [ ] Refactor the source code
-
-## Widgets
+- [ ] More new widgets(See [this](#widgets)
+#### Available features
+Name | Feature-version | App-version
+-----|-----------------|------------
+Google accoung signin and sync | 1.0 | v1.1.0
+Date&time widget | 1.2 | 1.0.0-beta01
+#### Widgets
 Widget | available | description
 -------|-----------|-------------
 Time&Date|Yes|This widget is used to display time, date or depending on the configuration both at a time.
