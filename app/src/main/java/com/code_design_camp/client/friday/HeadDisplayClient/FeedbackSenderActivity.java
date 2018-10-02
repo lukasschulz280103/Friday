@@ -162,39 +162,46 @@ public class FeedbackSenderActivity extends AppCompatActivity {
     }
 
     private boolean submitFeedback() {
-        try {
-            File device_info_file = LogUtil.createDebugInfoFile(this, "email", feedback_email.getText().toString(), "body", feedback_body.getText().toString());
-            final String folder_name = createTimeStampString();
-            UploadTask upload_device_info_file = null;
-            fileUploadDialog = new ProgressDialog(this, "Uploading Log files...");
-            fileUploadDialog.show();
-            upload_device_info_file = feedback_log_folder.child(folder_name + "/device_info.json").putBytes(LogUtil.fileToString(device_info_file).getBytes());
-            upload_device_info_file.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onComplete(Task<UploadTask.TaskSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        if (attachedFile != null) {
-                            Log.d(LOGTAG, "File uri is " + attachedFile.toPath());
-                            ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
-                            attachedImageBitmpap.compress(Bitmap.CompressFormat.PNG, 50, bytestream);
-                            attachedImageBitmpap.recycle();
-                            fileUploadDialog.setMessage(R.string.feedback_submit_image_upload);
-                            UploadTask upload_image_file = feedback_log_folder.child(folder_name + "/feedback-image.jpg").putBytes(bytestream.toByteArray());
-                            upload_image_file.addOnCompleteListener(attachment_upload);
+        if (feedback_debug_add_device_info.isChecked() || !feedback_body.getText().toString().trim().isEmpty()) {
+            try {
+                File device_info_file = LogUtil.createDebugInfoFile(this, "email", feedback_email.getText().toString(), "body", feedback_body.getText().toString());
+                final String folder_name = createTimeStampString();
+                UploadTask upload_device_info_file = null;
+                fileUploadDialog = new ProgressDialog(this, "Uploading Log files...");
+                fileUploadDialog.show();
+                upload_device_info_file = feedback_log_folder.child(folder_name + "/device_info.json").putBytes(LogUtil.fileToString(device_info_file).getBytes());
+                upload_device_info_file.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onComplete(Task<UploadTask.TaskSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (attachedFile != null) {
+                                Log.d(LOGTAG, "File uri is " + attachedFile.toPath());
+                                ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
+                                attachedImageBitmpap.compress(Bitmap.CompressFormat.PNG, 50, bytestream);
+                                attachedImageBitmpap.recycle();
+                                fileUploadDialog.setMessage(R.string.feedback_submit_image_upload);
+                                UploadTask upload_image_file = feedback_log_folder.child(folder_name + "/feedback-image.jpg").putBytes(bytestream.toByteArray());
+                                upload_image_file.addOnCompleteListener(attachment_upload);
+                            } else {
+                                Toast.makeText(FeedbackSenderActivity.this, R.string.feedback_submit_success, Toast.LENGTH_LONG).show();
+                                Log.d(LOGTAG, "Submitted log without attached file");
+                                finish();
+                            }
                         } else {
-                            Toast.makeText(FeedbackSenderActivity.this, R.string.feedback_submit_success, Toast.LENGTH_LONG).show();
-                            Log.d(LOGTAG, "Submitted log without attached file");
-                            finish();
+                            Exception e = task.getException();
+                            Log.e(LOGTAG, e.getLocalizedMessage(), e);
                         }
-                    } else {
-                        Exception e = task.getException();
-                        Log.e(LOGTAG, e.getLocalizedMessage(), e);
                     }
-                }
-            });
-        } catch (FileNotFoundException e) {
-            Log.e(LOGTAG, e.getLocalizedMessage(), e);
+                });
+            } catch (FileNotFoundException e) {
+                Log.e(LOGTAG, e.getLocalizedMessage(), e);
+            }
+        } else {
+            AlertDialog.Builder missinginputserror = new AlertDialog.Builder(this);
+            missinginputserror.setMessage(R.string.missing_inputs);
+            missinginputserror.setPositiveButton(android.R.string.ok, null);
+            missinginputserror.create().show();
         }
         return true;
     }

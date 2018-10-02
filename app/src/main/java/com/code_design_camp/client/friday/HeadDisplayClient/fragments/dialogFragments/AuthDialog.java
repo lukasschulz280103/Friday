@@ -66,6 +66,7 @@ public class AuthDialog extends DialogFragment {
             ((MainActivity) mActivity).dismissSinginPrompt();
         }
     };
+    private onAuthCompletedListener mOnAuthListener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +88,12 @@ public class AuthDialog extends DialogFragment {
         Log.d("AuthDialog", "onCreateDialog");
         dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         return dialog;
+    }
+
+    public void setOnAuthListener(onAuthCompletedListener mOnAuthListener) {
+        this.mOnAuthListener = mOnAuthListener;
     }
 
     @Override
@@ -96,7 +102,7 @@ public class AuthDialog extends DialogFragment {
         Log.d("AuthDialog","getDialog = "+getDialog());
         Log.d("AuthDialog","Creating auth dialog");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("993428557619-nh2tmbaj3o4c8rppmskjg6hd6bu39md8.apps.googleusercontent.com")
+                .requestIdToken("993428557619-umbmutm9i238kmtth7vcoa4nhfedvemg.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         mSignInClient = GoogleSignIn.getClient(mActivity, gso);
@@ -182,11 +188,11 @@ public class AuthDialog extends DialogFragment {
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
+                Log.e(TAG, "Google sign in failed", e);
                 loading_dialog.dismiss();
                 AlertDialog.Builder apierrrdialog = new AlertDialog.Builder(getContext());
                 apierrrdialog.setTitle(e.getStatusCode()+ ": " + getString(R.string.internal_error_title));
-                apierrrdialog.setMessage(R.string.internal_error_message);
+                apierrrdialog.setMessage(e.getMessage());
                 apierrrdialog.setPositiveButton(android.R.string.ok,null);
                 apierrrdialog.create().show();
 
@@ -209,12 +215,13 @@ public class AuthDialog extends DialogFragment {
                             FirebaseUser user = mAuth.getCurrentUser();
                             DownloadManager.Request dmrequest = new DownloadManager.Request(user.getPhotoUrl());
                             dmrequest.setVisibleInDownloadsUi(false);
+                            dmrequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
                             dmrequest.setDestinationInExternalFilesDir(getContext(), "profile", "avatar.jpg");
                             mActivity.registerReceiver(new BroadcastReceiver() {
                                 @Override
                                 public void onReceive(Context context, Intent intent) {
                                     loading_dialog.dismiss();
-                                    ((MainActivity) mActivity).dismissSinginPrompt();
+                                    mOnAuthListener.onAuthCompleted();
                                 }
                             }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
                             long downloadReference = downloadManager.enqueue(dmrequest);
@@ -226,5 +233,9 @@ public class AuthDialog extends DialogFragment {
                         }
                     }
                 });
+    }
+
+    public interface onAuthCompletedListener {
+        void onAuthCompleted();
     }
 }
