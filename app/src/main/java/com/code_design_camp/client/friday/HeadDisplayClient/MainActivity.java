@@ -169,4 +169,8 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
         isSigninShown = false;
     }
+
+    public AuthDialog getAuthDialogFragment() {
+        return authDialogFragment;
+    }
 }

@@ -88,8 +88,8 @@
     <string name="warning_auto_account_creation">If no account is existant, we wil automatically create a new one.</string>
     <string name="delete_dialog_loading_text">Deleting Account...</string>
     <string name="pref_header_info">Info</string>
-    <string name="info_phrase_love">Made with ❤ in 2018</string>
-    <string name="made_by">by \nLukas Faber \nLukas Schmitz</string>
+    <string name="info_phrase_love">© 2018 Stark Industries</string>
+    <string name="made_by"><b>by \nLukas Faber \nLukas Schmitz</b></string>
     <string name="checking_version">Checking...</string>
     <string name="feature_soon">This feature is non-existant in the current version</string>
     <string name="pref_title_sync_frequency">Sync frequency</string>
@@ -139,4 +139,5 @@
     <string name="locale_sys">System language(%s)</string>
     <string name="network_error_title_short">No connection</string>
     <string name="version_update">Update %s</string>
+    <string name="missing_inputs">You either need to allow the collection of device usage data or specify your feedback in the feedback body.</string>
 </resources>
