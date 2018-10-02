@@ -11,10 +11,13 @@ Die Appversion von Friday ist nur für Android 5.0(API Level 22) oder höher ver
 #### Nächste Geplante Features
 - [ ] Sprachsteuerung
 - [ ] AR Layout Editor
-- [-] Aktualisiertes Zeit&Datums - Widget
 - [ ] Neue Widgets(Genaueres [hier](#widgets))
-- [-] Verbindung mit Google Account und Synchronisation
-- [-] Refactoring des Codes
+
+#### Verfügbare Features
+Name | Feature-Version | App-Version
+-----|-----------------|------------
+Verbindung mit Google Account und Synchronisation | 1.0 | v1.1.0
+Datums-und Zeitwidget | 1.2 | v1.1.0
 
 #### Widgets
 Widget | Verfügbar | Beschreibung
