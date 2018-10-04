@@ -113,4 +113,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="network_error_title_short">Keine Verbindung</string>
     <string name="version_update">Update %s</string>
     <string name="missing_inputs">Sie müssen entweder Gerätedaten anhängen oder genauere Informationen angeben</string>
+    <string name="uninstall_old_title">Ältere Versionen entfernen</string>
+    <string name="uninstall_old_body">Sie müssen die alte Beta-Version von friday zuerst deinstallieren, um mit der Nutzung dieser Version frotzufahren. \n Dies ist nötig, da grundlegende Änderungen an der App vorgenommen wurden. \n\n <b>Bei zukünftigen Versionen ist dieser Schritt nicht mehr erforderlich.</b></string>
 </resources>
