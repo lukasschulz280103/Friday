@@ -15,6 +15,7 @@ import android.widget.ViewFlipper;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.ChangelogDialogFragment;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.UninstallOldAppDialog;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Button tosettings;
     Button tofeedback;
     AuthDialog authDialogFragment;
-
+    private UninstallOldAppDialog uninstallOldDialogFragment;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     SharedPreferences defaut_pref;
@@ -90,6 +91,18 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("version", pkgInf.versionName);
             editor.commit();
         }
+        try {
+            //TODO: Remove this component in future versions.
+            PackageManager isOldAppInstalled = getPackageManager();
+            isOldAppInstalled.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES);
+            fragmentManager = getSupportFragmentManager();
+            uninstallOldDialogFragment = new UninstallOldAppDialog();
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
+            fragmentTransaction.replace(android.R.id.content, uninstallOldDialogFragment).commit();
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
         tosettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     private void checkForFirstUse() {
         SharedPreferences settingsfile = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         if(settingsfile.getBoolean("isFirstUse",true)){
@@ -170,6 +182,12 @@ public class MainActivity extends AppCompatActivity {
         isSigninShown = false;
     }
 
+    public void dismissUninstallPrompt() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
+                .replace(android.R.id.content, new Fragment())
+                .commit();
+    }
     public AuthDialog getAuthDialogFragment() {
         return authDialogFragment;
     }
