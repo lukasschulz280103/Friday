@@ -3,8 +3,6 @@ package com.code_design_camp.client.friday.HeadDisplayClient.fragments.preferenc
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +16,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.File;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragment;
 
 public class DataSyncPreferenceFragment extends PreferenceFragment {
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -119,6 +121,11 @@ public class DataSyncPreferenceFragment extends PreferenceFragment {
     }
 
     @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -129,7 +136,9 @@ public class DataSyncPreferenceFragment extends PreferenceFragment {
     }
 
     private void deleteLocalUserData() {
-        getActivity().getExternalFilesDir("profile/avatar.jpg").delete();
+        File account_file = new File(getActivity().getFilesDir(), "/profile/avatar.jpg");
+        boolean filedeleted = account_file.delete();
+        Log.d("ProfilePage", "Account image file was deleted:" + filedeleted);
     }
 
 }
