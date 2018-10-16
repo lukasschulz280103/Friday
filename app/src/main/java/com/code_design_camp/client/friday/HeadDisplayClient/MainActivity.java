@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ViewFlipper;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
@@ -35,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView main_nav;
     FloatingActionButton lets_go;
-    Button tosettings;
-    Button tofeedback;
     AuthDialog authDialogFragment;
     private UninstallOldAppDialog uninstallOldDialogFragment;
     FragmentManager fragmentManager;
@@ -68,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         vswitcher_main = findViewById(R.id.main_view_flipper);
         main_nav = findViewById(R.id.main_bottom_nav);
         lets_go = findViewById(R.id.start_actionmode);
-        tosettings = findViewById(R.id.tosettings);
-        tofeedback = findViewById(R.id.tofeedback);
         defaut_pref = PreferenceManager.getDefaultSharedPreferences(this);
         try {
             pkgInf = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -92,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             editor.commit();
         }
         try {
-            //TODO: Remove this component in future versions.
             PackageManager isOldAppInstalled = getPackageManager();
             isOldAppInstalled.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES);
             fragmentManager = getSupportFragmentManager();
@@ -103,18 +97,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
 
         }
-        tosettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(tosettingsintent);
-            }
-        });
-        tofeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(tofeedbackintent);
-            }
-        });
     }
     private void checkForFirstUse() {
         SharedPreferences settingsfile = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);

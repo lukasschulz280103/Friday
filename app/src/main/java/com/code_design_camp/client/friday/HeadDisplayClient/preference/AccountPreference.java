@@ -2,10 +2,8 @@ package com.code_design_camp.client.friday.HeadDisplayClient.preference;
 
 import android.content.Context;
 import android.net.Uri;
-import android.preference.Preference;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,9 +13,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceViewHolder;
 
 public class AccountPreference extends Preference {
-    View v;
+    TextView accountname;
+    TextView accountmail;
+    ImageView account_provider;
+    ImageView account_image;
+    TextView signin;
+    ConstraintLayout content;
+
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser firebaseUser = auth.getCurrentUser();
 
@@ -30,19 +36,18 @@ public class AccountPreference extends Preference {
     }
 
     @Override
-    public View getView(View convertView, ViewGroup parent) {
-        v = super.getView(convertView, parent);
-        TextView signin = v.findViewById(R.id.account_preference_text_not_signed_in);
-        ConstraintLayout content = v.findViewById(R.id.account_preference_content);
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        account_image = (ImageView) holder.findViewById(R.id.account_img);
+        account_provider = (ImageView) holder.findViewById(R.id.account_preference_provider);
+        accountname = (TextView) holder.findViewById(R.id.account_pref_name);
+        accountmail = (TextView) holder.findViewById(R.id.account_preference_email);
+        signin = (TextView) holder.findViewById(R.id.account_preference_text_not_signed_in);
+        content = (ConstraintLayout) holder.findViewById(R.id.account_preference_content);
         if (firebaseUser != null) {
             signin.setVisibility(View.GONE);
-            ImageView account_image = v.findViewById(R.id.account_img);
-            ImageView account_provider = v.findViewById(R.id.account_preference_provider);
-            TextView accountname = v.findViewById(R.id.account_pref_name);
-            TextView accountmail = v.findViewById(R.id.account_preference_email);
             accountname.setText(firebaseUser.getDisplayName());
             accountmail.setText(firebaseUser.getEmail());
-            account_image.setImageURI(Uri.parse(getContext().getExternalFilesDir("profile") + "/avatar.jpg"));
+            account_image.setImageURI(Uri.parse(getContext().getFilesDir() + "/profile/avatar.jpg"));
             for (UserInfo user : FirebaseAuth.getInstance().getCurrentUser().getProviderData()) {
                 switch (user.getProviderId()) {
                     case "google.com": {
@@ -53,6 +58,5 @@ public class AccountPreference extends Preference {
         } else {
             content.setVisibility(View.GONE);
         }
-        return v;
     }
 }

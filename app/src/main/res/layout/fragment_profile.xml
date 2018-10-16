@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="roboto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
     <ViewSwitcher
         android:id="@+id/page_profile_account_vswitcher"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,33 +28,139 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/common_signin_button_text" />
+
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/page_profile_email"
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:text="TextView" />
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/page_profile_image_account"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="16dp"
+                app:civ_border="true"
+                app:civ_border_color="@color/civ_border"
+                app:civ_border_width="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/page_profile_header"
                 style="@android:style/TextAppearance.Material.Headline"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                android:text="TextView" />
-        </LinearLayout>
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/page_profile_image_account" />
+
+            <TextView
+                android:id="@+id/page_profile_email"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/page_profile_header" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ViewSwitcher>
-</FrameLayout>
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:columnCount="2"
+        android:rowCount="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/main_layout_editor"
+            style="@style/ProfilePageItem">
+
+            <ImageView
+                style="@style/ProfilePageItemIcon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_photo_size_select_small_black_24dp" />
+
+            <TextView
+                style="@style/ProfilePageItem.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/layout_edit_title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_settings"
+            style="@style/ProfilePageItem">
+
+            <ImageView
+                style="@style/ProfilePageItemIcon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_settings_black_24dp" />
+
+            <TextView
+                style="@style/ProfilePageItem.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_settings" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_help"
+            style="@style/ProfilePageItem">
+
+            <ImageView
+                style="@style/ProfilePageItemIcon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_live_help_black_24dp" />
+
+            <TextView
+                style="@style/ProfilePageItem.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_feedback"
+            style="@style/ProfilePageItem">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                style="@style/ProfilePageItemIcon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_feedback_black_24dp" />
+
+            <TextView
+                style="@style/ProfilePageItem.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_feedback" />
+        </LinearLayout>
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
