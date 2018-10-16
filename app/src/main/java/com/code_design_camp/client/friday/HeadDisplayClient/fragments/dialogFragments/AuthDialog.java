@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.MainActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.Util.FileUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,6 +38,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.io.File;
+import java.io.IOException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -216,11 +220,18 @@ public class AuthDialog extends DialogFragment {
                             DownloadManager.Request dmrequest = new DownloadManager.Request(user.getPhotoUrl());
                             dmrequest.setVisibleInDownloadsUi(false);
                             dmrequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
-                            dmrequest.setDestinationInExternalFilesDir(getContext(), "profile", "avatar.jpg");
+                            dmrequest.setDestinationInExternalFilesDir(getContext(), "profile", "/avatar.jpg");
                             mActivity.registerReceiver(new BroadcastReceiver() {
                                 @Override
                                 public void onReceive(Context context, Intent intent) {
                                     loading_dialog.dismiss();
+                                    File avatar_temp = new File(getActivity().getExternalFilesDir("profile"), "avatar.jpg");
+                                    File avatar_dest = new File(getActivity().getFilesDir() + "/profile/", "avatar.jpg");
+                                    try {
+                                        FileUtil.moveFile(avatar_temp, avatar_dest);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                     mOnAuthListener.onAuthCompleted();
                                 }
                             }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));

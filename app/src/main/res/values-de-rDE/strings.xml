@@ -60,7 +60,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="deletion_error_unknown_title">Account konnte nicht gelöscht werden</string>
     <string name="warning_auto_account_creation">Sollte noch kein Account vorhanden sein, wird automatisch ein neuer Account erstellt.</string>
     <string name="delete_dialog_loading_text">Lösche Profildaten...</string>
-    <string name="made_by">by\nLukas Faber\nLukas Schmitz</string>
+    <string name="made_by">by\nLukas Faber\nLukas Schultz</string>
     <string name="feature_soon">"Dieses feature ist in der aktuellen Version leider noch nicht verfügbar. "</string>
     <string name="page_profile_header_text">Hallo, %s</string>
     <string name="info_up_to_date">Aktuell</string>
@@ -115,4 +115,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="missing_inputs">Sie müssen entweder Gerätedaten anhängen oder genauere Informationen angeben</string>
     <string name="uninstall_old_title">Ältere Versionen entfernen</string>
     <string name="uninstall_old_body">Sie müssen die alte Beta-Version von friday zuerst deinstallieren, um mit der Nutzung dieser Version frotzufahren. \n Dies ist nötig, da grundlegende Änderungen an der App vorgenommen wurden. \n\n <b>Bei zukünftigen Versionen ist dieser Schritt nicht mehr erforderlich.</b></string>
+    <string name="help">Hilfe</string>
+    <string name="layout_edit_title">Layout Editor</string>
 </resources>
