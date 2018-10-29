@@ -1,5 +1,6 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
+
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -20,7 +21,6 @@ import androidx.appcompat.widget.Toolbar;
 public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
     private AppCompatDelegate mDelegate;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getDelegate().installViewFactory();

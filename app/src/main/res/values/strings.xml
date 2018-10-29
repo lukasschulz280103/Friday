@@ -72,7 +72,7 @@
 
     <string name="switch_feedback_info">Add additional info</string>
     <string name="sign_out">Sign out</string>
-    <string name="more_sync_settings">More sync settings</string>
+    <string name="more_sync_settings">Synchronization</string>
     <string name="delete_account">Delete Account</string>
     <string name="confirm_signout_title">Sign out</string>
     <string name="confirm_signout_message">Do you really want to sign out?</string>
@@ -144,7 +144,7 @@
     <string name="uninstall_old_body">You can\'t use this version of friday with an older version installed at the same time. \n \n <b>You only have to do this once.</b></string>
     <string name="layout_edit_title">Layout Editor</string>
     <string name="help">Help</string>
-    <string name="theme">Theme</string>
+    <string name="design">Design</string>
     <string name="theme_dialog_title">Select theme</string>
     <string-array name="theme_entry_values">
         <item>Light Theme</item>
@@ -160,4 +160,11 @@
         <item>orange</item>
         <item>blue</item>
     </string-array>
+    <string name="auto_sync">Synchronize with cloud</string>
+    <string name="auto_check_update">Automatically check for updates</string>
+    <string name="theme">Theme</string>
+    <string name="select_theme">Select Theme</string>
+    <string name="update_notif_channel_descr">This channel is used to notify about new Updates.</string>
+    <string name="app_update_title">Friday Update</string>
+    <string name="app_update_description">Friday is ready to update to %s !</string>
 </resources>
