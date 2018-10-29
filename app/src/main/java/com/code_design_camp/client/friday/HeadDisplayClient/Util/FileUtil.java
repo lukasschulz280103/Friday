@@ -12,11 +12,7 @@ public class FileUtil {
     private static final String LOGTAG = "FileUtility";
 
     public static void moveFile(File f, File dest) throws IOException {
-        if (!dest.exists()) {
-            if (!dest.mkdir()) {
-                return;
-            }
-        }
+        dest.getParentFile().mkdirs();
         FileChannel inChannel = null;
         FileChannel outChannel = null;
         try {
@@ -30,6 +26,7 @@ public class FileUtil {
                 inChannel.close();
             if (outChannel != null)
                 outChannel.close();
+            f.getParentFile().delete();
         }
     }
 }

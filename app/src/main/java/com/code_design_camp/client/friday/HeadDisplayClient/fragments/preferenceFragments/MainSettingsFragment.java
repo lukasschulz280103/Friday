@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.SettingsActivity;
+import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.dialog.ProgressDialog;
+import com.code_design_camp.client.friday.HeadDisplayClient.preference.ThemeSelectPreference;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,17 +23,32 @@ import java.io.File;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceFragmentCompat;
 
-public class DataSyncPreferenceFragment extends PreferenceFragment {
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    ProgressDialog loadingdialog;
-    View account_pref_view;
-    Preference account_pref;
-    Preference sign_out;
-    Preference del_account;
-    Preference.OnPreferenceClickListener sign_out_click = new Preference.OnPreferenceClickListener() {
+public class MainSettingsFragment extends PreferenceFragmentCompat {
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private ProgressDialog loadingdialog;
+    private View account_pref_view;
+    private Preference account_pref;
+    private Preference sign_out;
+    private Preference del_account;
+    private Preference select_theme_pref;
+    private ThemeSelectPreference.OnSelectedTheme themeSelected = new ThemeSelectPreference.OnSelectedTheme() {
+        @Override
+        public void onSelectedTheme(Theme t) {
+
+        }
+    };
+    private Preference.OnPreferenceClickListener select_theme_pref_click = new Preference.OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            ThemeSelectPreference pref = (ThemeSelectPreference) preference;
+            pref.showDialog(themeSelected);
+            return true;
+        }
+    };
+    private Preference.OnPreferenceClickListener sign_out_click = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
             AlertDialog.Builder confirm_signout = new AlertDialog.Builder(getActivity());
@@ -51,7 +68,7 @@ public class DataSyncPreferenceFragment extends PreferenceFragment {
             return true;
         }
     };
-    OnCompleteListener deletioncallback = new OnCompleteListener() {
+    private OnCompleteListener deletioncallback = new OnCompleteListener() {
         AlertDialog.Builder faildeletedialog;
 
         @Override
@@ -76,7 +93,7 @@ public class DataSyncPreferenceFragment extends PreferenceFragment {
             }
         }
     };
-    Preference.OnPreferenceClickListener deletionlistener = new Preference.OnPreferenceClickListener() {
+    private Preference.OnPreferenceClickListener deletionlistener = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
             AlertDialog.Builder confirmdeletion = new AlertDialog.Builder(getActivity());
@@ -103,15 +120,18 @@ public class DataSyncPreferenceFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.pref_data_sync);
+        addPreferencesFromResource(R.xml.pref_main);
         setHasOptionsMenu(true);
+
 
         account_pref = findPreference("account_main_preference");
         del_account = findPreference("delete_account");
         sign_out = findPreference("pref_sign_out");
+        select_theme_pref = findPreference("dialog_theme_pref");
 
         del_account.setOnPreferenceClickListener(deletionlistener);
         sign_out.setOnPreferenceClickListener(sign_out_click);
+        select_theme_pref.setOnPreferenceClickListener(select_theme_pref_click);
         if (user == null) {
             sign_out.setEnabled(false);
             del_account.setEnabled(false);
@@ -136,7 +156,7 @@ public class DataSyncPreferenceFragment extends PreferenceFragment {
     }
 
     private void deleteLocalUserData() {
-        File account_file = new File(getActivity().getFilesDir(), "/profile/avatar.jpg");
+        File account_file = new File(getContext().getFilesDir(), "/profile/avatar.jpg");
         boolean filedeleted = account_file.delete();
         Log.d("ProfilePage", "Account image file was deleted:" + filedeleted);
     }

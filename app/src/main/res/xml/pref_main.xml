@@ -12,17 +12,20 @@
             android:key="delete_account"
             android:title="@string/delete_account" />
     </androidx.preference.PreferenceCategory>
-    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
-         dismiss it. -->
-    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-
-    <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
-         design guidelines. -->
     <androidx.preference.PreferenceCategory android:title="@string/more_sync_settings">
-
+        <androidx.preference.SwitchPreference
+            android:key="sync_account_auto"
+            android:title="@string/auto_sync" />
+        <androidx.preference.CheckBoxPreference
+            android:key="check_update_auto"
+            android:title="@string/auto_check_update" />
         <androidx.preference.Preference android:title="@string/pref_title_system_sync_settings">
             <intent android:action="android.settings.SYNC_SETTINGS" />
         </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
-
+    <androidx.preference.PreferenceCategory>
+        <com.code_design_camp.client.friday.HeadDisplayClient.preference.ThemeSelectPreference
+            android:key="dialog_theme_pref"
+            android:title="@string/design" />
+    </androidx.preference.PreferenceCategory>
 </androidx.preference.PreferenceScreen>

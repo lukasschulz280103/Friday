@@ -45,7 +45,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_title_display_name">Nutzername</string>
     <string name="sign_out">Abmelden</string>
-    <string name="more_sync_settings">Mehr Synchronisationseinstellungen</string>
+    <string name="more_sync_settings">Synchronisation</string>
     <string name="delete_account">Account löschen</string>
     <string name="confirm_signout_title">Abmelden</string>
     <string name="confirm_signout_message">Wollen sie sich wirklich abmelden?</string>
@@ -117,4 +117,13 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="uninstall_old_body">Sie müssen die alte Beta-Version von friday zuerst deinstallieren, um mit der Nutzung dieser Version frotzufahren. \n Dies ist nötig, da grundlegende Änderungen an der App vorgenommen wurden. \n\n <b>Bei zukünftigen Versionen ist dieser Schritt nicht mehr erforderlich.</b></string>
     <string name="help">Hilfe</string>
     <string name="layout_edit_title">Layout Editor</string>
+    <string name="auto_sync">Automatisch Account synchronisieren</string>
+    <string name="auto_check_update">Automatisch nach Updates suchen</string>
+    <string name="theme_dialog_title">Theme auswählen</string>
+    <string name="design">Design</string>
+    <string name="select_theme">Theme auswählen</string>
+    <string name="theme">Theme</string>
+    <string name="update_notif_channel_descr">Dier Channel wird genutzt, um über neue Updates zu benachrichtigen</string>
+    <string name="app_update_title">Friday Update</string>
+    <string name="app_update_description">Friday kann jetzt auf %s geupdated werden</string>
 </resources>

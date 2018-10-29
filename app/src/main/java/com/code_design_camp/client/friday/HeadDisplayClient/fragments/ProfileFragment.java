@@ -138,8 +138,8 @@ public class ProfileFragment extends Fragment {
 
     private void setupSigninScreen() {
         try {
-            Uri account_image_uri = Uri.parse("file://" + getActivity().getFilesDir() + "/profile/avatar.jpg");
-            Bitmap bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), account_image_uri);
+            Uri account_image_uri = Uri.parse("file://" + getContext().getFilesDir() + "/profile/avatar.jpg");
+            Bitmap bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), account_image_uri);
             Palette p = Palette.from(bm).generate();
             account_image.setBorderColor(p.getDominantColor(Color.GRAY));
             account_image.setImageURI(account_image_uri);
