@@ -1,6 +1,8 @@
-package com.code_design_camp.client.friday.HeadDisplayClient;
+package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.os.Bundle;
+
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 

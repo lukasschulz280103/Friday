@@ -1,6 +1,5 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.fragments.preferenceFragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,10 +8,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
-import com.code_design_camp.client.friday.HeadDisplayClient.SettingsActivity;
-import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.dialog.ProgressDialog;
+import com.code_design_camp.client.friday.HeadDisplayClient.dialog.ThemeDialog;
 import com.code_design_camp.client.friday.HeadDisplayClient.preference.ThemeSelectPreference;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.SettingsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,43 +29,29 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private ProgressDialog loadingdialog;
     private View account_pref_view;
-    private Preference account_pref;
-    private Preference sign_out;
-    private Preference del_account;
-    private Preference select_theme_pref;
-    private ThemeSelectPreference.OnSelectedTheme themeSelected = new ThemeSelectPreference.OnSelectedTheme() {
-        @Override
-        public void onSelectedTheme(Theme t) {
+    private Preference account_pref, sign_out, del_account, select_theme_pref;
 
-        }
+    private ThemeDialog.OnSelectedTheme themeSelected = t -> {
+        Log.d("SetttingsActivity", "onThemeSelected");
     };
-    private Preference.OnPreferenceClickListener select_theme_pref_click = new Preference.OnPreferenceClickListener() {
-        @Override
-        public boolean onPreferenceClick(Preference preference) {
-            ThemeSelectPreference pref = (ThemeSelectPreference) preference;
-            pref.showDialog(themeSelected);
-            return true;
-        }
+    private Preference.OnPreferenceClickListener select_theme_pref_click = preference -> {
+        ThemeSelectPreference pref = (ThemeSelectPreference) preference;
+        pref.showDialog(themeSelected);
+        return true;
     };
-    private Preference.OnPreferenceClickListener sign_out_click = new Preference.OnPreferenceClickListener() {
-        @Override
-        public boolean onPreferenceClick(Preference preference) {
-            AlertDialog.Builder confirm_signout = new AlertDialog.Builder(getActivity());
-            confirm_signout.setTitle(R.string.confirm_signout_title);
-            confirm_signout.setMessage(R.string.confirm_signout_message);
-            confirm_signout.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    auth.signOut();
-                    deleteLocalUserData();
-                    Toast.makeText(getActivity(), getString(R.string.sign_out_success), Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-                }
-            });
-            confirm_signout.setNegativeButton(android.R.string.no, null);
-            confirm_signout.create().show();
-            return true;
-        }
+    private Preference.OnPreferenceClickListener sign_out_click = preference -> {
+        AlertDialog.Builder confirm_signout = new AlertDialog.Builder(getActivity());
+        confirm_signout.setTitle(R.string.confirm_signout_title);
+        confirm_signout.setMessage(R.string.confirm_signout_message);
+        confirm_signout.setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
+            auth.signOut();
+            deleteLocalUserData();
+            Toast.makeText(getActivity(), getString(R.string.sign_out_success), Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+        });
+        confirm_signout.setNegativeButton(android.R.string.no, null);
+        confirm_signout.create().show();
+        return true;
     };
     private OnCompleteListener deletioncallback = new OnCompleteListener() {
         AlertDialog.Builder faildeletedialog;
@@ -101,14 +86,11 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
             confirmdeletion.setTitle(R.string.confirm_deletion_title);
             confirmdeletion.setMessage(R.string.confirm_deletion_message);
             confirmdeletion.setView(R.layout.deletion_dialog_feedback);
-            confirmdeletion.setPositiveButton(getString(R.string.confirm_deletion_positive, user.getDisplayName()), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    loadingdialog = new ProgressDialog(getActivity(), getString(R.string.delete_dialog_loading_text));
-                    loadingdialog.show();
-                    Task<Void> deletiontask = user.delete();
-                    deletiontask.addOnCompleteListener(deletioncallback);
-                }
+            confirmdeletion.setPositiveButton(getString(R.string.confirm_deletion_positive, user.getDisplayName()), (dialogInterface, i) -> {
+                loadingdialog = new ProgressDialog(getActivity(), getString(R.string.delete_dialog_loading_text));
+                loadingdialog.show();
+                Task<Void> deletiontask = user.delete();
+                deletiontask.addOnCompleteListener(deletioncallback);
             });
             confirmdeletion.setNegativeButton(android.R.string.cancel, null);
             confirmdeletion.create().show();

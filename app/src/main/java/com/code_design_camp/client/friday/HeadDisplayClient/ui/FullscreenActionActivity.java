@@ -1,17 +1,23 @@
-package com.code_design_camp.client.friday.HeadDisplayClient;
+package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,28 +27,35 @@ import androidx.fragment.app.FragmentTransaction;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActionActivity extends AppCompatActivity {
-    FrameLayout mContentView;
-    FrameLayout fragment_container;
-    Fragment vrfragment;
-    Button backbtn;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
-
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
     /**
      * Some older devices needs a small delay between UI widget updates
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
+    /**
+     * Touch listener to use for in-layout UI controls to delay hiding the
+     * system UI. This is to prevent the jarring behavior of controls going away
+     * while interacting with activity UI.
+     */
+    private final View.OnTouchListener mDelayHideTouchListener = (view, motionEvent) -> {
+        if (AUTO_HIDE) {
+            delayedHide(AUTO_HIDE_DELAY_MILLIS);
+        }
+        view.performClick();
+        return true;
+    };
+    FrameLayout mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -60,27 +73,11 @@ public class FullscreenActionActivity extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
+    FrameLayout fragment_container;
+    Fragment vrfragment;
+    Button backbtn;
     private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
+    private final Runnable mHideRunnable = this::hide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,24 +96,24 @@ public class FullscreenActionActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragment_container = findViewById(R.id.vrcontent_container);
         vrfragment = fragmentManager.findFragmentById(R.id.vrcontent);
-        if(fragment_container != null){
+        if (fragment_container != null) {
             VRContentFragment contentFragment = VRContentFragment.newInstance(FullscreenActionActivity.this);
-            fragmentTransaction.replace(R.id.vrcontent_container,contentFragment);
+            fragmentTransaction.replace(R.id.vrcontent_container, contentFragment);
             fragmentTransaction.commit();
         }
         backbtn = findViewById(R.id.back);
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
+        backbtn.setOnClickListener(view -> finish());
+        mContentView.setOnClickListener(view -> toggle());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(FullscreenActionActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(FullscreenActionActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(FullscreenActionActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, 1);
+        }
     }
 
     @Override
@@ -128,6 +125,16 @@ public class FullscreenActionActivity extends AppCompatActivity {
         // are available.
         delayedHide(100);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == -1) {
+                Toast.makeText(FullscreenActionActivity.this, "Declined permission", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void toggle() {
         if (mVisible) {
             hide();
@@ -149,12 +156,7 @@ public class FullscreenActionActivity extends AppCompatActivity {
         mVisible = true;
         backbtn.setVisibility(View.VISIBLE);
         // Schedule a runnable to display UI elements after a delay
-        mHideHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hide();
-            }
-        }, AUTO_HIDE_DELAY_MILLIS);
+        mHideHandler.postDelayed(this::hide, AUTO_HIDE_DELAY_MILLIS);
     }
 
     /**
