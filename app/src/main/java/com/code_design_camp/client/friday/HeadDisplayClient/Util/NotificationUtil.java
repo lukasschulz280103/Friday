@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
-import com.code_design_camp.client.friday.HeadDisplayClient.InfoActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.InfoActivity;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;

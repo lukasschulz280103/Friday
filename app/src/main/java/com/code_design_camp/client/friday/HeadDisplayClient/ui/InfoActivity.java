@@ -1,4 +1,4 @@
-package com.code_design_camp.client.friday.HeadDisplayClient;
+package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -7,15 +7,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.Connectivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,7 +48,9 @@ public class InfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(Theme.getCurrentAppTheme(this));
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_info);
         update_btn = findViewById(R.id.info_preference_update_btn);
         version = findViewById(R.id.info_version);
@@ -64,7 +71,7 @@ public class InfoActivity extends AppCompatActivity {
         versionref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("dataSnapshot", dataSnapshot.getValue().toString());
+                Log.d("dataSnapshot", Objects.requireNonNull(dataSnapshot.getValue()).toString());
                 version_number_server = (String) dataSnapshot.getValue();
                 if (!version_number_server.equals(version_number_local)) {
                     update_btn.setEnabled(true);

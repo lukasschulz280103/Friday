@@ -41,4 +41,10 @@
             android:text="@string/app_friday_description" />
     </LinearLayout>
 
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goToStore"
+        android:text="visit store" />
 </androidx.constraintlayout.widget.ConstraintLayout>

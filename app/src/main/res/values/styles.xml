@@ -15,6 +15,68 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="AppTheme.Custom" parent="AppTheme" />
+
+    <style name="AppTheme.Custom.Magenta">
+        <item name="colorPrimary">@color/MagentaPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/MagentaPrimaryDarkColor</item>
+        <item name="colorSecondary">@color/MagentaSecondaryColor</item>
+        <item name="android:textColorPrimary">@color/MagentaPrimaryTextColor</item>
+        <item name="android:textColorSecondary">@color/MagentaSecondaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.Custom.Pink">
+        <item name="colorPrimary">@color/PinkPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/PinkPrimaryDarkColor</item>
+        <item name="colorSecondary">@color/PinkSecondaryColor</item>
+        <item name="android:textColorPrimary">@color/PinkPrimaryTextColor</item>
+        <item name="android:textColorSecondary">@color/PinkSecondaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.Custom.Green">
+        <item name="colorPrimary">@color/GreenPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/GreenPrimaryDarkColor</item>
+        <item name="colorSecondary">@color/GreenSecondaryColor</item>
+        <item name="android:textColorPrimary">@color/GreenPrimaryTextColor</item>
+        <item name="android:textColorSecondary">@color/GreenSecondaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.Custom.Blue">
+        <item name="colorPrimary">@color/BluePrimaryColor</item>
+        <item name="colorPrimaryDark">@color/BluePrimaryDarkColor</item>
+        <item name="colorSecondary">@color/BlueSecondaryColor</item>
+        <item name="android:textColorPrimary">@color/BluePrimaryTextColor</item>
+        <item name="android:textColorSecondary">@color/BlueSecondaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.Custom.Red">
+        <item name="colorPrimary">@color/RedPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/RedPrimaryDarkColor</item>
+        <item name="colorSecondary">@color/RedSecondaryColor</item>
+        <item name="android:textColorPrimary">@color/RedPrimaryTextColor</item>
+        <item name="android:textColorSecondary">@color/RedSecondaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.Custom.Dark">
+        <item name="colorPrimary">@color/DarkPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/DarkPrimaryDarkColor</item>
+        <item name="colorSecondary">@color/DarkSecondaryColor</item>
+        <item name="android:textColorPrimary">@color/DarkPrimaryTextColor</item>
+        <item name="android:textColorSecondary">@color/DarkSecondaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.Custom.Magenta.ActionBar" parent="AppTheme" />
+
+    <style name="AppTheme.Custom.Pink.ActionBar" parent="AppTheme" />
+
+    <style name="AppTheme.Custom.Red.ActionBar" parent="AppTheme" />
+
+    <style name="AppTheme.Custom.Blue.ActionBar" parent="AppTheme" />
+
+    <style name="AppTheme.Custom.Green.ActionBar" parent="AppTheme" />
+
+    <style name="AppTheme.Custom.Dark.ActionBar" parent="AppTheme" />
     <style name="AppTheme.AppBarOverlay" parent="Base.Theme.MaterialComponents.Light.DarkActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
@@ -123,9 +185,45 @@
         <item name="android:layout_margin">0dp</item>
         <item name="android:textSize">30sp</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:elevation">8dp</item>
     </style>
 
     <style name="ThemeSelectDialog">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
 
+    <style name="ThemeSelectDialog.Item" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_height">75dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textViewStyle">@style/ThemeSelectDialog.Item.Title</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+    </style>
+
+    <style name="ThemeSelectDialog.Item.Title">
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+    </style>
+
+    <style name="Store" parent="AppTheme.NoActionBar">
+
+    </style>
+
+    <style name="Store.Detail" parent="Store">
+
+    </style>
+
+    <style name="Store.Detail.Group">
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="Store.Detail.Group.GroupHead">
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>

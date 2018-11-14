@@ -1,4 +1,4 @@
-package com.code_design_camp.client.friday.HeadDisplayClient;
+package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,8 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.Connectivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.LogUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.Validator;
@@ -56,26 +59,23 @@ public class FeedbackSenderActivity extends AppCompatActivity {
     ProgressDialog fileUploadDialog;
 
     Bitmap attachedImageBitmpap;
-    View.OnLongClickListener showInfo = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View view) {
-            int id = view.getId();
-            AlertDialog.Builder infoDialog = new AlertDialog.Builder(FeedbackSenderActivity.this);
-            infoDialog.setPositiveButton(android.R.string.ok, null);
-            switch (id) {
-                case R.id.feedback_usage_data:
-                    infoDialog.setView(R.layout.infodialog_debug_usage_data);
-                    break;
-                case R.id.feedback_device_info:
-                    infoDialog.setView(R.layout.infodialog_debug_device);
-                    break;
-                default:
-                    Log.w(LOGTAG, "view id didn't match cases");
-                    break;
-            }
-            infoDialog.create().show();
-            return false;
+    View.OnLongClickListener showInfo = view -> {
+        int id = view.getId();
+        AlertDialog.Builder infoDialog = new AlertDialog.Builder(FeedbackSenderActivity.this);
+        infoDialog.setPositiveButton(android.R.string.ok, null);
+        switch (id) {
+            case R.id.feedback_usage_data:
+                infoDialog.setView(R.layout.infodialog_debug_usage_data);
+                break;
+            case R.id.feedback_device_info:
+                infoDialog.setView(R.layout.infodialog_debug_device);
+                break;
+            default:
+                Log.w(LOGTAG, "view id didn't match cases");
+                break;
         }
+        infoDialog.create().show();
+        return false;
     };
     private File attachedFile;
     private OnCompleteListener<UploadTask.TaskSnapshot> attachment_upload = new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -93,7 +93,9 @@ public class FeedbackSenderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(Theme.getCurrentAppTheme(this));
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_feedback);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Toolbar t = findViewById(R.id.toolbar2);

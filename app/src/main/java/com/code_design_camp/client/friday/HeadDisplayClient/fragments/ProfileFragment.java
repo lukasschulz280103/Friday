@@ -16,12 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.code_design_camp.client.friday.HeadDisplayClient.FeedbackSenderActivity;
-import com.code_design_camp.client.friday.HeadDisplayClient.LayoutEditorActivity;
-import com.code_design_camp.client.friday.HeadDisplayClient.MainActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
-import com.code_design_camp.client.friday.HeadDisplayClient.SettingsActivity;
-import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.FeedbackSenderActivity;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.LayoutEditorActivity;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -36,40 +35,30 @@ import androidx.palette.graphics.Palette;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
-    FirebaseAuth fauth;
-    FirebaseUser fuser;
-    MainActivity mainActivity;
+    private FirebaseAuth fauth;
+    private FirebaseUser fuser;
+    private MainActivity mainActivity;
 
-    Button signinButton;
+    private CircularImageView account_image;
+    private TextView emailtext, welcometext;
 
-    CircularImageView account_image;
-    TextView emailtext;
-    TextView welcometext;
-
-    ViewSwitcher viewSwitcher;
-    private LinearLayout tolayouteditor;
-    private LinearLayout tosettings;
-    private LinearLayout tohelp;
-    private LinearLayout tofeedback;
-    private View.OnClickListener intentmanager = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.main_layout_editor: {
-                    startActivity(new Intent(getActivity(), LayoutEditorActivity.class));
-                    break;
-                }
-                case R.id.main_settings: {
-                    startActivity(new Intent(getActivity(), SettingsActivity.class));
-                    break;
-                }
-                case R.id.main_help: {
-                    break;
-                }
-                case R.id.main_feedback: {
-                    startActivity(new Intent(getActivity(), FeedbackSenderActivity.class));
-                    break;
-                }
+    private ViewSwitcher viewSwitcher;
+    private View.OnClickListener intentmanager = view -> {
+        switch (view.getId()) {
+            case R.id.main_layout_editor: {
+                startActivity(new Intent(getActivity(), LayoutEditorActivity.class));
+                break;
+            }
+            case R.id.main_settings: {
+                startActivityForResult(new Intent(getActivity(), SettingsActivity.class), 0);
+                break;
+            }
+            case R.id.main_help: {
+                break;
+            }
+            case R.id.main_feedback: {
+                startActivity(new Intent(getActivity(), FeedbackSenderActivity.class));
+                break;
             }
         }
     };
@@ -94,26 +83,20 @@ public class ProfileFragment extends Fragment {
         emailtext = fragmentview.findViewById(R.id.page_profile_email);
         account_image = fragmentview.findViewById(R.id.page_profile_image_account);
         welcometext = fragmentview.findViewById(R.id.page_profile_header);
-        signinButton = fragmentview.findViewById(R.id.page_profile_signin_button);
-        tofeedback = fragmentview.findViewById(R.id.main_feedback);
-        tosettings = fragmentview.findViewById(R.id.main_settings);
-        tolayouteditor = fragmentview.findViewById(R.id.main_layout_editor);
-        tohelp = fragmentview.findViewById(R.id.main_help);
-        signinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.promptSignin();
-                mainActivity.getAuthDialogFragment().setOnAuthListener(new AuthDialog.onAuthCompletedListener() {
-                    @Override
-                    public void onAuthCompleted() {
-                        if (fuser != null) {
-                            viewSwitcher.setDisplayedChild(1);
-                            setupSigninScreen();
-                            mainActivity.dismissSinginPrompt();
-                        }
-                    }
-                });
-            }
+        Button signinButton = fragmentview.findViewById(R.id.page_profile_signin_button);
+        LinearLayout tofeedback = fragmentview.findViewById(R.id.main_feedback);
+        LinearLayout tosettings = fragmentview.findViewById(R.id.main_settings);
+        LinearLayout tolayouteditor = fragmentview.findViewById(R.id.main_layout_editor);
+        LinearLayout tohelp = fragmentview.findViewById(R.id.main_help);
+        signinButton.setOnClickListener(view -> {
+            mainActivity.promptSignin();
+            mainActivity.getAuthDialogFragment().setOnAuthListener(() -> {
+                if (fuser != null) {
+                    viewSwitcher.setDisplayedChild(1);
+                    setupSigninScreen();
+                    mainActivity.dismissSinginPrompt();
+                }
+            });
         });
         if (fauth.getCurrentUser() == null) {
             viewSwitcher.setDisplayedChild(0);
