@@ -9,14 +9,14 @@
         android:icon="@drawable/ic_system_update_black_24dp"
         android:title="@string/changelog">
         <intent
-            android:targetClass="com.code_design_camp.client.friday.HeadDisplayClient.ChangeLogViewer"
+            android:targetClass="com.code_design_camp.client.friday.HeadDisplayClient.ui.ChangeLogViewer"
             android:targetPackage="com.code_design_camp.client.friday.HeadDisplayClient" />
     </header>
     <header
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_info">
         <intent
-            android:targetClass="com.code_design_camp.client.friday.HeadDisplayClient.InfoActivity"
+            android:targetClass="com.code_design_camp.client.friday.HeadDisplayClient.ui.InfoActivity"
             android:targetPackage="com.code_design_camp.client.friday.HeadDisplayClient" />
     </header>
 
