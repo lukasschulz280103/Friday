@@ -7,6 +7,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature android:name="android.hardware.camera.ar" />
+
+
     <application
         android:name=".FridayApplication"
         android:allowBackup="true"
@@ -15,18 +21,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".ui.StoreDetailActivity"
+            android:theme="@style/Store.Detail" />
+
         <receiver android:name=".Util.BootReciever">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <activity android:name=".LayoutEditorActivity"></activity>
-        <activity android:name=".ChangeLogViewer" />
+
+        <activity android:name=".ui.LayoutEditorActivity" />
+        <activity android:name=".ui.ChangeLogViewer" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".ui.SplashScreen"
             android:theme="@style/SplashScreenTranslucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,40 +47,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FullscreenActionActivity"
+            android:name=".ui.FullscreenActionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_action"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.code_design_camp.client.friday.HeadDisplayClient.MainActivity" />
+                android:value="com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity" />
         </activity>
         <activity
             android:name=".creator.EditVR"
             android:label="@string/title_activity_edit_vr"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.code_design_camp.client.friday.HeadDisplayClient.MainActivity" />
+                android:value="com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/PreferenceActivityStyle">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.code_design_camp.client.friday.HeadDisplayClient.MainActivity" />
+                android:value="com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".FeedbackSenderActivity"
+            android:name=".ui.FeedbackSenderActivity"
             android:label="@string/app_feedback" />
         <activity
-            android:name=".InfoActivity"
+            android:name=".ui.InfoActivity"
             android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
     </application>
 
 </manifest>

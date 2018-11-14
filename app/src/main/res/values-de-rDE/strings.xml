@@ -126,4 +126,19 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="update_notif_channel_descr">Dier Channel wird genutzt, um über neue Updates zu benachrichtigen</string>
     <string name="app_update_title">Friday Update</string>
     <string name="app_update_description">Friday kann jetzt auf %s geupdated werden</string>
+    <string name="store_flag_widget">Melden</string>
+    <string name="store_add_wishlist">Auf meine Liste setzen</string>
+    <string name="store_detail_review_header">Bewertungen</string>
+    <string name="store_download">Herunterladen</string>
+    <string name="store_detail_update_notes">Update-Info</string>
+    <string name="store_add_review">Bewertung hinzufügen</string>
+    <string name="store_detail_version">Version %s</string>
+    <string name="theme_default">Standart Design</string>
+    <string name="theme_pink">Pink</string>
+    <string name="theme_magenta">Lila</string>
+    <string name="theme_blue">Blau</string>
+    <string name="theme_green">Grün</string>
+    <string name="theme_red">Rot</string>
+    <string name="theme_dark">Nacht</string>
+    <string name="theme_error">Design konnte nicht angewendet werden. Um die Änderungen zu sehen, starten sie bitte die app neu.</string>
 </resources>
