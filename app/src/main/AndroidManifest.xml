@@ -39,7 +39,7 @@
             android:theme="@style/FullscreenTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.code_design_camp.client.friday.HeadDisplayClient.MainActivity" />
+                android:value="com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity" />
         </activity>
         <activity
             android:name=".creator.EditVR"
@@ -48,7 +48,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.code_design_camp.client.friday.HeadDisplayClient.MainActivity" />
+                android:value="com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity" />
         </activity>
         <activity
             android:name=".SettingsActivity"
@@ -57,7 +57,7 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.code_design_camp.client.friday.HeadDisplayClient.MainActivity" />
+                android:value="com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity" />
         </activity>
         <activity
             android:name=".FeedbackSenderActivity"
