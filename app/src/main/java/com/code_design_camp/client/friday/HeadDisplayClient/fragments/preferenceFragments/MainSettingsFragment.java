@@ -3,15 +3,12 @@ package com.code_design_camp.client.friday.HeadDisplayClient.fragments.preferenc
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.dialog.ProgressDialog;
 import com.code_design_camp.client.friday.HeadDisplayClient.dialog.ThemeDialog;
 import com.code_design_camp.client.friday.HeadDisplayClient.preference.ThemeSelectPreference;
-import com.code_design_camp.client.friday.HeadDisplayClient.ui.SettingsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,13 +22,14 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class MainSettingsFragment extends PreferenceFragmentCompat {
+    private static final String LOGTAG = "SettingsFragment";
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private ProgressDialog loadingdialog;
-    private View account_pref_view;
     private Preference account_pref, sign_out, del_account, select_theme_pref;
+    private Intent themeResultIntent;
 
-    private ThemeDialog.OnSelectedTheme themeSelected = t -> {
+    private ThemeDialog.OnSelectedTheme themeSelected = (t, r) -> {
         Log.d("SetttingsActivity", "onThemeSelected");
     };
     private Preference.OnPreferenceClickListener select_theme_pref_click = preference -> {
@@ -127,20 +125,13 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            startActivity(new Intent(getActivity(), SettingsActivity.class));
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void deleteLocalUserData() {
         File account_file = new File(getContext().getFilesDir(), "/profile/avatar.jpg");
         boolean filedeleted = account_file.delete();
         Log.d("ProfilePage", "Account image file was deleted:" + filedeleted);
     }
 
+    public Intent getThemeResultIntent() {
+        return this.themeResultIntent;
+    }
 }
