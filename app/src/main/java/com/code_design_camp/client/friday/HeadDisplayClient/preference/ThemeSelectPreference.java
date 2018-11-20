@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 
 public class ThemeSelectPreference extends Preference {
+    ThemeDialog d = new ThemeDialog();
 
     public ThemeSelectPreference(Context c, AttributeSet attrs) {
         super(c, attrs);
@@ -18,7 +19,6 @@ public class ThemeSelectPreference extends Preference {
 
     public void showDialog(ThemeDialog.OnSelectedTheme listener) {
         FragmentManager fm = ((SettingsActivity) ((ContextThemeWrapper) getContext()).getBaseContext()).getSupportFragmentManager();
-        ThemeDialog d = new ThemeDialog();
         d.setOnApplyThemeListener(listener);
         d.show(fm, "test");
     }
