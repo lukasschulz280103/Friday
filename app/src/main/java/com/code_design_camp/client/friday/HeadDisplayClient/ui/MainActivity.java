@@ -24,7 +24,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.ArCoreApk;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -113,15 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d(LOGTAG, String.valueOf(resultCode));
-        if (resultCode == RESULT_OK && requestCode == 0 && data.hasExtra("themechange")) {
-            recreate();
-        }
-    }
-
     private void checkForFirstUse() {
         SharedPreferences settingsfile = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         if (settingsfile.getBoolean("isFirstUse", true)) {
@@ -132,11 +122,6 @@ public class MainActivity extends AppCompatActivity {
             notifieffirstuse.create().show();
             settingsfile.edit().putBoolean("isFirstUse", false).apply();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override

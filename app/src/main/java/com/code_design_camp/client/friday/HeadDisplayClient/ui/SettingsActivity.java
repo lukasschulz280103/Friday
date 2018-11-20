@@ -9,12 +9,14 @@ import com.code_design_camp.client.friday.HeadDisplayClient.fragments.preference
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
+    public static final String LOGTAG = "SettingsActivity";
+    MainSettingsFragment msf = new MainSettingsFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getCurrentAppTheme(this));
         super.onCreate(savedInstanceState);
         getSupportFragmentManager().beginTransaction().replace(android.R.id.content,
-                new MainSettingsFragment()).commit();
+                msf).commit();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
     }
@@ -32,5 +34,4 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
-
 }

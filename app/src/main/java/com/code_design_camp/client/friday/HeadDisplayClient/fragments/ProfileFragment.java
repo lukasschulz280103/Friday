@@ -1,6 +1,7 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.fragments;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -130,6 +131,14 @@ public class ProfileFragment extends Fragment {
             welcometext.setText(getString(R.string.page_profile_header_text, fuser.getDisplayName()));
         } catch (IOException e) {
             Log.e("ProfilePage", e.getLocalizedMessage(), e);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("ProfileFragment", "onActivityresult - resultCodeOk:" + (resultCode == Activity.RESULT_OK));
+        if (resultCode == Activity.RESULT_OK && requestCode == 0) {
+            getActivity().recreate();
         }
     }
 }

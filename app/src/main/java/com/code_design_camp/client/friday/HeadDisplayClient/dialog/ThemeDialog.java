@@ -1,6 +1,5 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,16 +29,9 @@ public class ThemeDialog extends DialogFragment {
     private Context context;
     private OnSelectedTheme mListener;
     private SharedPreferences preferences;
-    private View.OnClickListener doneclick = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            dismiss();
-            getActivity().recreate();
-            Intent result = new Intent();
-            result.putExtra("themechange", true);
-            getActivity().setResult(Activity.RESULT_OK, result);
-            mListener.onSelectedTheme(new Theme(context));
-        }
+    private View.OnClickListener doneclick = view -> {
+        dismiss();
+        getActivity().recreate();
     };
 
     @Override
@@ -77,7 +69,7 @@ public class ThemeDialog extends DialogFragment {
     }
 
     public interface OnSelectedTheme {
-        void onSelectedTheme(Theme t);
+        void onSelectedTheme(Theme t, Intent result);
     }
 
     private class ThemeSelectItemAdapter extends ArrayAdapter<Theme> {
