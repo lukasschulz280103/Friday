@@ -9,7 +9,7 @@ import com.code_design_camp.client.friday.HeadDisplayClient.fragments.preference
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
-    public static final String LOGTAG = "SettingsActivity";
+    private static final String LOGTAG = "SettingsActivity";
     MainSettingsFragment msf = new MainSettingsFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

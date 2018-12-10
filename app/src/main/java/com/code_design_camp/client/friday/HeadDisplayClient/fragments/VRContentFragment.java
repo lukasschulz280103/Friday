@@ -15,18 +15,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
-import com.code_design_camp.client.friday.HeadDisplayClient.view.DateWidget;
 import com.code_design_camp.client.friday.HeadDisplayClient.view.Widget;
 import com.code_design_camp.client.friday.HeadDisplayClient.view.WidgetInflater;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -66,25 +61,11 @@ public class VRContentFragment extends Fragment implements Widget.OnVRViewCreate
         mContext = context;
         File dir = context.getFilesDir();
         File configfile = new File(dir,"vrconfig.json");
+        //Creating file with example widget
         if(!configfile.getAbsoluteFile().exists()){
             try {
                 configfile.createNewFile();
-                JSONObject rootjson = new JSONObject();
-                HashMap<String,Object> keys = new HashMap<>();
-                keys.put("left",50);
-                keys.put("top",50);
-                keys.put("widgetType", DateWidget.TYPE_DATE_DEFAULT);
-                rootjson.put("DateWidget",keys);
-                if(configfile.canWrite()){
-                    FileOutputStream writer = new FileOutputStream(configfile);
-                    writer.write(rootjson.toString().getBytes());
-                }
-                else{
-                    Toast.makeText(context, "Error: couldn't write VR configuration File", Toast.LENGTH_SHORT).show();
-                }
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -93,16 +74,12 @@ public class VRContentFragment extends Fragment implements Widget.OnVRViewCreate
             WidgetInflater inflater = new WidgetInflater(mContext,parent);
             inflater.fromFile(configfile);
         }
+
         warn = new AlertDialog.Builder(context);
         warn.setTitle(R.string.dialog_warn_title);
         warn.setMessage(R.string.tou_content);
         warn.setPositiveButton(android.R.string.ok,null);
-        warn.setNegativeButton(R.string.warning_decline, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                ((FragmentActivity) mContext).finish();
-            }
-        });
+        warn.setNegativeButton(R.string.warning_decline, (dialogInterface, i) -> ((FragmentActivity) mContext).finish());
         warn.setCancelable(false);
         Log.d(LOGTAG,"Showing warn dialog");
         warndialog = warn.create();
@@ -118,7 +95,7 @@ public class VRContentFragment extends Fragment implements Widget.OnVRViewCreate
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentlayout = inflater.inflate(R.layout.fragment_vrcontent, container, false);
