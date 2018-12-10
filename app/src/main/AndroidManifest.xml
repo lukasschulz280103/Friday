@@ -31,14 +31,10 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.LayoutEditorActivity" />
         <activity android:name=".ui.ChangeLogViewer" />
         <activity
             android:name=".ui.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.SplashScreen"
-            android:theme="@style/SplashScreenTranslucent">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -46,6 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.SplashScreen"
+            android:theme="@style/SplashScreenTranslucent"></activity>
         <activity
             android:name=".ui.FullscreenActionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -58,7 +57,7 @@
                 android:value="com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".creator.EditVR"
+            android:name=".ui.LayoutEditorActivity"
             android:label="@string/title_activity_edit_vr"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

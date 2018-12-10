@@ -28,4 +28,9 @@
             android:key="dialog_theme_pref"
             android:title="@string/design" />
     </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/app_name">
+        <androidx.preference.Preference
+            android:key=""
+            android:title="@string/info"></androidx.preference.Preference>
+    </androidx.preference.PreferenceCategory>
 </androidx.preference.PreferenceScreen>

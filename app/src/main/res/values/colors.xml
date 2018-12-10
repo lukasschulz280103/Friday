@@ -67,4 +67,6 @@
     <color name="DarkSecondaryTextColor">#ffffff</color>
 
     <color name="selection_green">#43A047</color>
+
+    <color name="highlight_orange">#f47b00</color>
 </resources>

@@ -11,7 +11,27 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+/*
+ * (C) Copyright 2018 Lukas Faber
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Contributors:
+ *     Lukas Faber
+ */
+
 public class Widget {
+    private boolean isCentered = false;
     private View widgetView;
     private int left;
     private int top;
@@ -29,7 +49,6 @@ public class Widget {
     }
 
     Widget(Context context, @NonNull ViewGroup parent, int left, int top){
-        this.widgetView = widgetView;
         this.parent = parent;
         this.left = left;
         this.top = top;
@@ -57,8 +76,17 @@ public class Widget {
         set.clone(mConstraintLayout);
         set.connect(widgetView.getId(),ConstraintSet.START,mConstraintLayout.getId(),ConstraintSet.START,this.getLeft());
         set.connect(widgetView.getId(),ConstraintSet.TOP,mConstraintLayout.getId(),ConstraintSet.TOP,this.getTop());
+        if (isCentered) {
+            set.connect(widgetView.getId(), ConstraintSet.END, mConstraintLayout.getId(), ConstraintSet.END, 0);
+            set.centerVertically(widgetView.getId(), mConstraintLayout.getId());
+            set.centerHorizontally(widgetView.getId(), mConstraintLayout.getId());
+        }
         set.applyTo(mConstraintLayout);
         Log.d("WidgetClass","Creating widget from view:"+widgetView);
+    }
+
+    void setIsCentered(boolean isCentered) {
+        this.isCentered = isCentered;
     }
 
     public ViewGroup getParent() {
