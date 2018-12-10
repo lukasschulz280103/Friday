@@ -141,4 +141,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="theme_red">Rot</string>
     <string name="theme_dark">Nacht</string>
     <string name="theme_error">Design konnte nicht angewendet werden. Um die Änderungen zu sehen, starten sie bitte die app neu.</string>
+    <string name="save_success">Gespeichert</string>
+    <string name="info">Info</string>
+    <string name="prefs_help_manually_check_update">Um manuell auf ausstehende Updates zu überprüfen, öffnen sie die \'Info\' Seite der App.</string>
 </resources>

@@ -185,4 +185,7 @@
     <string name="theme_default">Default Theme</string>
     <string name="theme_pink">Pink</string>
     <string name="theme_error">Could not apply theme at runtime. Please restart the app to see the changes.</string>
+    <string name="save_success">Saved</string>
+    <string name="info">Info</string>
+    <string name="prefs_help_manually_check_update">You can manually check for updates by opening the \'About\' page of this app.</string>
 </resources>

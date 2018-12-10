@@ -26,7 +26,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private ProgressDialog loadingdialog;
-    private Preference account_pref, sign_out, del_account, select_theme_pref;
+    private Preference account_pref, sign_out, del_account, select_theme_pref, auto_check_update;
     private Intent themeResultIntent;
 
     private ThemeDialog.OnSelectedTheme themeSelected = (t, r) -> {
@@ -96,6 +96,14 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
             return false;
         }
     };
+    private Preference.OnPreferenceChangeListener autoCheckUpdateChangeListener = (preference
+            , o) -> {
+        Boolean isChecked = (Boolean) o;
+        if (!isChecked) {
+            Toast.makeText(getContext(), getString(R.string.prefs_help_manually_check_update), Toast.LENGTH_LONG).show();
+        }
+        return true;
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,10 +116,12 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         del_account = findPreference("delete_account");
         sign_out = findPreference("pref_sign_out");
         select_theme_pref = findPreference("dialog_theme_pref");
+        auto_check_update = findPreference("check_update_auto");
 
         del_account.setOnPreferenceClickListener(deletionlistener);
         sign_out.setOnPreferenceClickListener(sign_out_click);
         select_theme_pref.setOnPreferenceClickListener(select_theme_pref_click);
+        auto_check_update.setOnPreferenceChangeListener(autoCheckUpdateChangeListener);
         if (user == null) {
             sign_out.setEnabled(false);
             del_account.setEnabled(false);
