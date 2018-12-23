@@ -24,9 +24,8 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends FridayActivity {
     Button update_btn;
     FirebaseDatabase db;
     DatabaseReference versionref;

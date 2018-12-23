@@ -6,9 +6,7 @@ import android.view.MenuItem;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.preferenceFragments.MainSettingsFragment;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends FridayActivity {
     private static final String LOGTAG = "SettingsActivity";
     MainSettingsFragment msf = new MainSettingsFragment();
     @Override

@@ -16,14 +16,11 @@
         <androidx.preference.SwitchPreference
             android:key="sync_account_auto"
             android:title="@string/auto_sync" />
-        <androidx.preference.CheckBoxPreference
+        <androidx.preference.SwitchPreference
             android:key="check_update_auto"
             android:title="@string/auto_check_update" />
-        <androidx.preference.Preference android:title="@string/pref_title_system_sync_settings">
-            <intent android:action="android.settings.SYNC_SETTINGS" />
-        </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="">
         <com.code_design_camp.client.friday.HeadDisplayClient.preference.ThemeSelectPreference
             android:key="dialog_theme_pref"
             android:title="@string/design" />
@@ -31,6 +28,8 @@
     <androidx.preference.PreferenceCategory android:title="@string/app_name">
         <androidx.preference.Preference
             android:key=""
-            android:title="@string/info"></androidx.preference.Preference>
+            android:title="@string/info">
+            <intent android:action="com.code_design_camp.client.friday.HeadDisplayClient.ui.InfoActivity" />
+        </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
 </androidx.preference.PreferenceScreen>

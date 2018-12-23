@@ -11,22 +11,18 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
-import com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActionActivity extends AppCompatActivity {
+public class FullscreenActionActivity extends FridayActivity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -91,19 +87,11 @@ public class FullscreenActionActivity extends AppCompatActivity {
         }
 
         mVisible = true;
-        // Set up the user interaction to manually show or hide the system UI.
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // Set up the user interaction to manually show or hide the system UI
         fragment_container = findViewById(R.id.vrcontent_container);
-        vrfragment = fragmentManager.findFragmentById(R.id.vrcontent);
-        if (fragment_container != null) {
-            VRContentFragment contentFragment = VRContentFragment.newInstance(FullscreenActionActivity.this);
-            fragmentTransaction.replace(R.id.vrcontent_container, contentFragment);
-            fragmentTransaction.commit();
-        }
         backbtn = findViewById(R.id.back);
         backbtn.setOnClickListener(view -> finish());
-        mContentView.setOnClickListener(view -> toggle());
+        fragment_container.setOnClickListener(view -> toggle());
     }
 
     @Override
