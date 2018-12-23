@@ -22,7 +22,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <com.code_design_camp.client.friday.HeadDisplayClient.view.custom.CodeFormatEditText
         android:id="@+id/contentedittext"
         android:layout_width="0dp"
         android:layout_height="0dp"

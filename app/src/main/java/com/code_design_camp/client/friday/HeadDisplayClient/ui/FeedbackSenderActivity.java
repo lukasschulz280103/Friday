@@ -40,12 +40,11 @@ import java.util.GregorianCalendar;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
 
-public class FeedbackSenderActivity extends AppCompatActivity {
+public class FeedbackSenderActivity extends FridayActivity {
     private static final String LOGTAG = "FeedbackSenderActivity";
     AppCompatEditText feedback_email;
     AppCompatEditText feedback_body;

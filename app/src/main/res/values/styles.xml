@@ -88,15 +88,13 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
-    <style name="PageTitle" parent="TextAppearance.AppCompat.Headline">
+
+    <style name="PageTitle">
         <item name="android:textSize">60sp</item>
-        <item name="android:textColor">@android:color/black</item>
-        <item name="textAllCaps">false</item>
     </style>
 
-    <style name="HeaderMiddle" parent="PageTitle">
+    <style name="HeaderMiddle">
         <item name="android:textSize">20sp</item>
-
     </style>
 
     <style name="Body1" parent="TextAppearance.MaterialComponents.Body1">

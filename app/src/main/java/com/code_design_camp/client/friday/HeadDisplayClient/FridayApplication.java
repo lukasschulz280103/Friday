@@ -1,8 +1,10 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -40,6 +42,19 @@ public class FridayApplication extends Application {
             UpdateUtil updateUtil = new UpdateUtil(this);
             updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(this, versionNumberServer));
         }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        Drawable warnicon = getDrawable(R.drawable.ic_warning_black_24dp);
+        warnicon.setTint(getResources().getColor(R.color.highlight_orange));
+        builder.setIcon(warnicon);
+        builder.setTitle(R.string.low_memory_title);
+        builder.setMessage(R.string.low_memory_message);
+        builder.setNeutralButton(android.R.string.ok, null);
+        builder.create().show();
     }
 
     private void createNotificationChannels() {

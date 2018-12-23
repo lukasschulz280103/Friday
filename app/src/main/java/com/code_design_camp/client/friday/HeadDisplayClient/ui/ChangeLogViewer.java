@@ -4,9 +4,7 @@ import android.os.Bundle;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class ChangeLogViewer extends AppCompatActivity {
+public class ChangeLogViewer extends FridayActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
