@@ -36,10 +36,9 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class StoreDetailActivity extends AppCompatActivity {
+public class StoreDetailActivity extends FridayActivity {
     private static final String LOGTAG = "StoreDetailActivity";
     final long ONE_MB = 1024 * 1024;
     final long FIVE_MB = 5242880;

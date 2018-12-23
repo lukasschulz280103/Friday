@@ -6,9 +6,7 @@ import android.os.Handler;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends FridayActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,12 +20,11 @@
         android:layout_height="match_parent">
 
         <fragment
-            android:id="@+id/vrcontent"
-            android:name="com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment"
-            class="com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment"
+            android:id="@+id/ux_fragment"
+            android:name="com.google.ar.sceneform.ux.ArFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_vrcontent" />
+            android:layout_height="match_parent" />
+
     </FrameLayout>
 
 </FrameLayout>

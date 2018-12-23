@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,12 +27,11 @@ import com.google.ar.core.ArCoreApk;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FridayActivity {
     private static final int ORIENTATION_0 = 0;
     private static final String LOGTAG = "FridayMainActivity";
     boolean isSigninShown = false;
@@ -111,6 +112,16 @@ public class MainActivity extends AppCompatActivity {
         if (availability.isSupported()) {
 
         }
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        assert pm != null;
+        if (pm.isPowerSaveMode()) {
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            builder.setTitle(R.string.energy_saver_warn_title);
+            builder.setMessage(R.string.energy_saver_warn_msg);
+            builder.setPositiveButton(R.string.deactivate, (dialogInterface, i) -> startActivity(new Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)));
+            builder.setNegativeButton(R.string.later, null);
+            builder.create().show();
+        }
     }
     private void checkForFirstUse() {
         SharedPreferences settingsfile = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -152,6 +163,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
         fragmentTransaction.replace(android.R.id.content, authDialogFragment).commit();
         isSigninShown = true;
+    }
+
+    public AuthDialog.OnAuthCompletedListener getSigninOnAuthCompletedListener() {
+        return authDialogFragment.getOnAuthListener();
     }
 
     public void dismissSinginPrompt() {
