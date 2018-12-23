@@ -21,8 +21,8 @@
 
         <fragment
             android:id="@+id/vrcontent"
-            android:name="com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment"
-            class="com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment"
+            android:name="com.code_design_camp.client.friday.HeadDisplayClient.fragments.ARContentFragment"
+            class="com.code_design_camp.client.friday.HeadDisplayClient.fragments.ARContentFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_vrcontent" />
