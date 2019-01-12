@@ -69,4 +69,8 @@ public class FridayApplication extends Application {
             nm.createNotificationChannel(update_channel);
         }
     }
+
+    public class Jobs {
+        public static final int JOB_FEEDBACK = 1;
+    }
 }

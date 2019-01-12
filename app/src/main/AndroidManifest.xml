@@ -83,6 +83,9 @@
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
+        <service
+            android:name=".service.FeedbackService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

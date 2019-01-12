@@ -217,4 +217,13 @@
     <string name="auth_send_reset_pswd_email">Send reset email</string>
     <string name="email_reset_succes">Email sent succesfully</string>
     <string name="email_reset_error">Could not send reset email: %s</string>
+    <string name="reason_bad_experience">Bad experience with the software</string>
+    <string name="reason_login_issues">Issues while trying to log in</string>
+    <string name="reason_app_useless">The app is useless to me</string>
+    <string name="reason_missing_hardware">I don\'t have got the required hardware (such as AR-lasses etc.)</string>
+    <string name="reason_other">Other...</string>
+    <string name="reason_header">Why are you leaving us?</string>
+    <string name="leave_action_activity">Do you want to terminate this session?</string>
+    <string name="help_hint_vertical_plane_detection_title">Vertical surface detection</string>
+    <string name="help_hint_vertical_plane_detection_msg">This app supports vertical plane detection. To make it work, you should search for remarkable surfaces such as brick-walls, or walls with images, posterrs etc. Detected walls will show the same indicator as horizontal detected surfaces.</string>
 </resources>
