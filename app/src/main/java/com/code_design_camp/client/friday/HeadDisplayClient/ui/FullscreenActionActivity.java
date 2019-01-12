@@ -1,22 +1,46 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
+import android.animation.Animator;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.code_design_camp.client.friday.HeadDisplayClient.R;
-
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
+
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.google.ar.core.Anchor;
+import com.google.ar.core.HitResult;
+import com.google.ar.core.Plane;
+import com.google.ar.core.Session;
+import com.google.ar.core.exceptions.UnavailableApkTooOldException;
+import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
+import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
+import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
+import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Vector3;
+import com.google.ar.sceneform.rendering.ModelRenderable;
+import com.google.ar.sceneform.rendering.ViewRenderable;
+import com.google.ar.sceneform.ux.ArFragment;
+import com.google.ar.sceneform.ux.TransformableNode;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -39,59 +63,99 @@ public class FullscreenActionActivity extends FridayActivity {
      */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private final View.OnTouchListener mDelayHideTouchListener = (view, motionEvent) -> {
-        if (AUTO_HIDE) {
-            delayedHide(AUTO_HIDE_DELAY_MILLIS);
-        }
-        view.performClick();
-        return true;
-    };
     FrameLayout mContentView;
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-            // Delayed removal of status and navigation bar
-
-            // Note that some of these constants are new as of API 16 (Jelly Bean)
-            // and API 19 (KitKat). It is safe to use them, as they are inlined
-            // at compile-time and do nothing on earlier devices.
-            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
-    };
-    FrameLayout fragment_container;
-    Fragment vrfragment;
-    Button backbtn;
+    LinearLayout hintView;
+    ArFragment arFragment;
     private boolean mVisible;
-    private final Runnable mHideRunnable = this::hide;
+    Session mArCoreSession;
+    private ModelRenderable andyRenderable;
+    private ViewRenderable settingsRenderable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen_action);
         mContentView = findViewById(R.id.root_fullscreen);
-        mContentView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        hintView = findViewById(R.id.helphint);
         ActionBar actionBar = getSupportActionBar();
+        Intent returnOnErrorIntent = new Intent();
+        Bundle errorInfoBundle = returnOnErrorIntent.getExtras();
+        try {
+            mArCoreSession = new Session(FullscreenActionActivity.this);
+        } catch (UnavailableArcoreNotInstalledException e) {
+            errorInfoBundle.putString("errtype", "TYPE_NOT_INSTALLED");
+        } catch (UnavailableApkTooOldException e) {
+            errorInfoBundle.putString("errtype", "TYPE_OLD_APK");
+        } catch (UnavailableSdkTooOldException e) {
+            errorInfoBundle.putString("errtype", "TYPE_OLD_SDK_TOOL");
+        } catch (UnavailableDeviceNotCompatibleException e) {
+            errorInfoBundle.putString("errtype", "TYPE_DEVICE_INCOMPATIBLE");
+        }
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        hintView.setOnClickListener(view -> {
+            TextView hint_content = view.findViewById(R.id.hint_content);
+            ImageView hint_icon = view.findViewById(R.id.hint_icon);
+            if (hint_content.isShown()) {
+                hint_content.setVisibility(View.GONE);
+                animateImageResourceChange(hint_icon, R.drawable.ic_live_help_black_24dp);
+            } else {
+                hint_content.setVisibility(View.VISIBLE);
+                animateImageResourceChange(hint_icon, R.drawable.ic_keyboard_arrow_down_black_24dp);
+            }
+        });
         mVisible = true;
         // Set up the user interaction to manually show or hide the system UI
-        fragment_container = findViewById(R.id.vrcontent_container);
-        backbtn = findViewById(R.id.back);
-        backbtn.setOnClickListener(view -> finish());
-        fragment_container.setOnClickListener(view -> toggle());
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
+        //Following code is for the example
+        ModelRenderable.builder()
+                .setSource(this, R.raw.andy)
+                .build()
+                .thenAccept(renderable -> andyRenderable = renderable)
+                .exceptionally(
+                        throwable -> {
+                            Toast toast =
+                                    Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                            return null;
+                        });
+        arFragment.setOnTapArPlaneListener(
+                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+                    if (andyRenderable == null) {
+                        return;
+                    }
+                    CompletableFuture<ViewRenderable> settingsStage = ViewRenderable.builder().setView(FullscreenActionActivity.this, R.layout.ar_settings_layout).build();
+                    settingsStage.thenAccept(viewRenderable -> {
+                        try {
+                            settingsRenderable = settingsStage.get();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Node solarControls = new Node();
+                        Anchor anchor = hitResult.createAnchor();
+                        AnchorNode parent = new AnchorNode(anchor);
+                        parent.setParent(arFragment.getArSceneView().getScene());
+                        solarControls.setParent(parent);
+                        solarControls.setRenderable(settingsRenderable);
+                        solarControls.setLocalPosition(new Vector3(0.5f, 0.5f, 0.0f));
+                    });
+                    // Create the Anchor.
+                    Anchor anchor = hitResult.createAnchor();
+                    AnchorNode anchorNode = new AnchorNode(anchor);
+                    anchorNode.setParent(arFragment.getArSceneView().getScene());
+
+                    // Create the transformable andy and add it to the anchor.
+                    TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
+                    andy.setParent(anchorNode);
+                    andy.setRenderable(andyRenderable);
+                    andy.select();
+                });
+        arFragment.getArSceneView().getScene().addOnUpdateListener(frameTime -> {
+        });
     }
 
     @Override
@@ -105,13 +169,13 @@ public class FullscreenActionActivity extends FridayActivity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(100);
+    public void onBackPressed() {
+        AlertDialog confirmBack = new AlertDialog.Builder(this)
+                .setTitle(R.string.leave_action_activity)
+                .setPositiveButton(R.string.action_leave, (dialog, dinterface) -> finish())
+                .setNegativeButton(android.R.string.no, null)
+                .create();
+        confirmBack.show();
     }
 
     @Override
@@ -123,36 +187,28 @@ public class FullscreenActionActivity extends FridayActivity {
         }
     }
 
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
-        }
-    }
+    private void animateImageResourceChange(ImageView view, @DrawableRes int res) {
+        view.animate().alpha(0).setDuration(50).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
 
-    private void hide() {
-        mVisible = false;
-        backbtn.setVisibility(View.GONE);
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
-    }
+            }
 
-    @SuppressLint("InlinedApi")
-    private void show() {
-        mVisible = true;
-        backbtn.setVisibility(View.VISIBLE);
-        // Schedule a runnable to display UI elements after a delay
-        mHideHandler.postDelayed(this::hide, AUTO_HIDE_DELAY_MILLIS);
-    }
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                view.setImageDrawable(getDrawable(res));
+                view.animate().alpha(1).setDuration(50).start();
+            }
 
-    /**
-     * Schedules a call to hide() in delay milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        }).start();
     }
 }

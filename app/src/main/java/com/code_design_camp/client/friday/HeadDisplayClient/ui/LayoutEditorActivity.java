@@ -1,14 +1,21 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
@@ -25,17 +32,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatEditText;
-
 public class LayoutEditorActivity extends FridayActivity {
     private static final String LOGTAG = "LayoutEditor";
-    AppCompatEditText edit_area;
+    EditText edit_area;
     ArrayList<CharSequence> changeBackstack = new ArrayList<>();
     private Menu mMenu;
     private int tabmultiplier;
     private Resources res;
     private File configfile;
+    private boolean isPrettyPrinting = false;
     TextWatcher editorWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -49,6 +54,31 @@ public class LayoutEditorActivity extends FridayActivity {
 
         @Override
         public void afterTextChanged(Editable editable) {
+            if (!isPrettyPrinting) {
+                SpannableStringBuilder stb = new SpannableStringBuilder(edit_area.getEditableText());
+                boolean isString = false;
+                isPrettyPrinting = true;
+                int stringStartPos = 0;
+                int lastPointerPos = edit_area.getSelectionStart();
+                for (int i = 0; i < stb.length(); i++) {
+                    char c = stb.charAt(i);
+                    if (c == ',' && !isString) {
+                        stb.setSpan(new ForegroundColorSpan(res.getColor(R.color.highlight_orange)), i, i + 1, 0);
+                    } else if (c == '\"' || c == '\'') {
+                        if (isString) {
+                            stb.setSpan(new ForegroundColorSpan(Color.GREEN), stringStartPos, i + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                            stringStartPos = 0;
+                            isString = false;
+                        } else {
+                            isString = true;
+                            stringStartPos = i;
+                        }
+                    }
+                }
+                edit_area.setText(stb);
+                edit_area.setSelection(lastPointerPos);
+                isPrettyPrinting = false;
+            }
         }
     };
 

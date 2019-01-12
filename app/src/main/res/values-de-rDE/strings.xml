@@ -173,4 +173,11 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="auth_send_reset_pswd_email">Mail senden</string>
     <string name="email_reset_succes">Email wurde erfolgreich versendet</string>
     <string name="email_reset_error">Zurücksetzungs-mail konnte nicht versandt werden: %s</string>
+    <string name="reason_bad_experience">Schlechte Erfahrung mit der Software</string>
+    <string name="reason_login_issues">Probleme bei Anmeldeversuchen</string>
+    <string name="reason_app_useless">Für mich ist diese App nutzlos</string>
+    <string name="reason_missing_hardware">Mir fehlt die benötigte Hardware (wie zum Beispiel eine AR-Brille)</string>
+    <string name="reason_other">Andere...</string>
+    <string name="reason_header">Warum verlässt du uns?</string>
+    <string name="leave_action_activity">Wollen sie die Sitzung beenden?</string>
 </resources>
