@@ -11,6 +11,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.Connectivity;
@@ -21,9 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class InfoActivity extends FridayActivity {
     Button update_btn;
@@ -87,6 +87,10 @@ public class InfoActivity extends FridayActivity {
                 version.setText(R.string.check_update_error);
             }
         });
+    }
 
+    public void onClickLicense(View v) {
+        Intent intent = new Intent(this, LicenseActivity.class);
+        startActivity(intent);
     }
 }

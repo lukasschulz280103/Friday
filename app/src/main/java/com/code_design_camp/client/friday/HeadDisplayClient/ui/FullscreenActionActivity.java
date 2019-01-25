@@ -4,8 +4,15 @@ import android.Manifest;
 import android.animation.Animator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.ImageFormat;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
+import android.media.Image;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,24 +28,31 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.palette.graphics.Palette;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.Session;
+import com.google.ar.core.exceptions.NotYetAvailableException;
 import com.google.ar.core.exceptions.UnavailableApkTooOldException;
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -47,36 +61,53 @@ import java.util.concurrent.ExecutionException;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActionActivity extends FridayActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
-    private static final int UI_ANIMATION_DELAY = 300;
-    private final Handler mHideHandler = new Handler();
-    FrameLayout mContentView;
-    LinearLayout hintView;
-    ArFragment arFragment;
+    private FirebaseAuth auth;
+    private FrameLayout mContentView;
+    private LinearLayout hintView;
+    private TextView time, user_email;
+    private ArFragment arFragment;
     private boolean mVisible;
-    Session mArCoreSession;
+    private Session mArCoreSession;
     private ModelRenderable andyRenderable;
     private ViewRenderable settingsRenderable;
+    private Scene.OnUpdateListener UiStyleUpdateListener = new Scene.OnUpdateListener() {
+        @Override
+        public void onUpdate(FrameTime frameTime) {
+            try {
+                //Acquire an image from the arcore fragment
+                Image img = arFragment.getArSceneView().getArFrame().acquireCameraImage();
+                //create a buffer array out of it
+                byte[] bytes = new byte[img.getPlanes()[0].getBuffer().capacity()];
+                img.getPlanes()[0].getBuffer().get(bytes, 0, img.getPlanes()[0].getBuffer().capacity());
+                ByteArrayOutputStream baOutputStream = new ByteArrayOutputStream();
+                //convert YUV-format image to JPEG(only the JPEG-format can be decoded from a byte-array
+                YuvImage yuvImage = new YuvImage(bytes, ImageFormat.NV21, img.getWidth(), img.getHeight(), null);
+                yuvImage.compressToJpeg(new Rect(0, 0, img.getWidth(), img.getHeight()), 50, baOutputStream);
+                //release acquired image
+                img.close();
+                byte[] byteForBitmap = baOutputStream.toByteArray();
+                //create bitmap and let the palette analyze it
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteForBitmap, 0, byteForBitmap.length);
+                Palette.Builder palette = new Palette.Builder(bitmap);
+                palette.generate(palette1 -> {
+                    //decide wether the font-color should be black or white
+                    if (isColorBright(palette1.getDominantColor(Color.WHITE))) {
+                        time.setTextColor(Color.BLACK);
+                    } else {
+                        time.setTextColor(Color.WHITE);
+                    }
+                });
+            } catch (NotYetAvailableException e) {
+                Log.w("ArFragment", "Fragment not yet available");
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen_action);
-        mContentView = findViewById(R.id.root_fullscreen);
-        hintView = findViewById(R.id.helphint);
+        init();
         ActionBar actionBar = getSupportActionBar();
         Intent returnOnErrorIntent = new Intent();
         Bundle errorInfoBundle = returnOnErrorIntent.getExtras();
@@ -91,6 +122,7 @@ public class FullscreenActionActivity extends FridayActivity {
         } catch (UnavailableDeviceNotCompatibleException e) {
             errorInfoBundle.putString("errtype", "TYPE_DEVICE_INCOMPATIBLE");
         }
+        Collection<Anchor> mAnchors = mArCoreSession.getAllAnchors();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -106,9 +138,7 @@ public class FullscreenActionActivity extends FridayActivity {
             }
         });
         mVisible = true;
-        // Set up the user interaction to manually show or hide the system UI
-        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
-        //Following code is for the example
+        //Following code is an example
         ModelRenderable.builder()
                 .setSource(this, R.raw.andy)
                 .build()
@@ -154,8 +184,8 @@ public class FullscreenActionActivity extends FridayActivity {
                     andy.setRenderable(andyRenderable);
                     andy.select();
                 });
-        arFragment.getArSceneView().getScene().addOnUpdateListener(frameTime -> {
-        });
+        arFragment.getArSceneView().getScene().addOnUpdateListener(UiStyleUpdateListener);
+        user_email.setText(auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : "Nicht angemeldet");
     }
 
     @Override
@@ -187,6 +217,15 @@ public class FullscreenActionActivity extends FridayActivity {
         }
     }
 
+    private void init() {
+        mContentView = findViewById(R.id.root_fullscreen);
+        hintView = findViewById(R.id.helphint);
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
+        time = findViewById(R.id.timetext);
+        user_email = findViewById(R.id.signedin_user_text);
+        auth = FirebaseAuth.getInstance();
+    }
+
     private void animateImageResourceChange(ImageView view, @DrawableRes int res) {
         view.animate().alpha(0).setDuration(50).setListener(new Animator.AnimatorListener() {
             @Override
@@ -210,5 +249,14 @@ public class FullscreenActionActivity extends FridayActivity {
 
             }
         }).start();
+    }
+
+    private boolean isColorBright(int color) {
+        if (android.R.color.transparent == color) {
+            return true;
+        }
+        int[] rgb = {Color.red(color), Color.green(color), Color.blue(color)};
+        int brightness = (int) Math.sqrt(rgb[0] * rgb[0] * .241 + rgb[1] * rgb[1] * .691 + rgb[2] * rgb[2] * .068);
+        return brightness >= 200;
     }
 }

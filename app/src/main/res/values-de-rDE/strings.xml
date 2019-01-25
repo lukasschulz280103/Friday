@@ -180,4 +180,11 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="reason_other">Andere...</string>
     <string name="reason_header">Warum verlässt du uns?</string>
     <string name="leave_action_activity">Wollen sie die Sitzung beenden?</string>
+    <string name="help_hint_vertical_plane_detection_msg">Diese App unterstützt vertikale Flächenerkennung. Sehen sie sich dazu nach vertikalen Flächen mit auffäligen Texturen.</string>
+    <string name="help_hint_vertical_plane_detection_title">Vertikale Flächenerkennung</string>
+    <string name="licenses">Lizenzen</string>
+    <string name="errtype_not_installed">Die benötigte App ArCore ist nicht installiert. Bitte installieren sie Google ArCore aus dem PlayStore und wiederholen sie den Versuch.</string>
+    <string name="errtype_arcore_apk_too_old">Die installierte Version von ArCore ist veraltet. Bitte überprüfen sie, ob eine neue Version installierbar ist, falls ja installieren sie diese und wiederholen sie den Vorgang.</string>
+    <string name="errtype_sdk_too_old">Die genutzte SDK-Version ist zu alt. Bitte überprüfen sie, ob friday auf die neueste Version aktualisiert ist. Sollte das Problem weiterhin bestehen, können sie versuchen uns zu kontaktieren. Dieser Fehler beruht wahrscheinlich nicht auf ihrem Gerät und wird demnaächst behoben.</string>
+    <string name="errtype_device_incompatible">Dieses Gerät ist mit der installierten Version von ArCore nicht kompatibel.</string>
 </resources>

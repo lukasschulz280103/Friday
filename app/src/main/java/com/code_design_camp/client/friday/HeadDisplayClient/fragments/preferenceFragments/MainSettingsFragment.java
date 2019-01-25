@@ -123,15 +123,16 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
                 }
             });
             confirmdeletion.setView(R.layout.deletion_dialog_feedback);
-            confirmdeletion.setPositiveButton(getString(R.string.confirm_deletion_positive, user.getDisplayName()), (dialogInterface, i) -> {
+            confirmdeletion.setPositiveButton(getString(R.string.confirm_deletion_positive, user.getDisplayName() != null ? user.getDisplayName() : user.getEmail()), (dialogInterface, i) -> {
                 loadingdialog = new ProgressDialog(getActivity(), getString(R.string.delete_dialog_loading_text));
                 loadingdialog.show();
                 JobScheduler scheduler = (JobScheduler) getActivity().getSystemService(Context.JOB_SCHEDULER_SERVICE);
                 PersistableBundle extra = new PersistableBundle();
                 extra.putString("reason", reasonKeyword.toString());
+                extra.putString("uid", user.getUid());
                 JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_FEEDBACK, new ComponentName(getContext(), FeedbackService.class))
                         .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                        .setBackoffCriteria(60000 * 30, JobInfo.BACKOFF_POLICY_LINEAR)
+                        .setBackoffCriteria(30000, JobInfo.BACKOFF_POLICY_LINEAR)
                         .setExtras(extra)
                         .build();
                 scheduler.schedule(info);
@@ -164,7 +165,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         sign_out = findPreference("pref_sign_out");
         select_theme_pref = findPreference("dialog_theme_pref");
         auto_check_update = findPreference("check_update_auto");
-        auto_sync_account = findPreference("sync_account_Auto");
+        auto_sync_account = findPreference("sync_account_auto");
 
         del_account.setOnPreferenceClickListener(deletionlistener);
         sign_out.setOnPreferenceClickListener(sign_out_click);

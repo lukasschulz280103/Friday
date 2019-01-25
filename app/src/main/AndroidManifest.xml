@@ -12,14 +12,15 @@
 
     <uses-feature android:name="android.hardware.camera.ar" />
 
-
     <application
         android:name=".FridayApplication"
         android:allowBackup="true"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".ui.LicenseActivity"></activity>
         <activity
             android:name=".ui.StoreDetailActivity"
             android:theme="@style/Store.Detail" />
@@ -43,7 +44,7 @@
         </activity>
         <activity
             android:name=".ui.SplashScreen"
-            android:theme="@style/SplashScreenTranslucent"></activity>
+            android:theme="@style/SplashScreenTranslucent" />
         <activity
             android:name=".ui.FullscreenActionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -78,11 +79,18 @@
             android:label="@string/app_feedback" />
         <activity
             android:name=".ui.InfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.example.myapp.activities.MyActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
+
         <service
             android:name=".service.FeedbackService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
