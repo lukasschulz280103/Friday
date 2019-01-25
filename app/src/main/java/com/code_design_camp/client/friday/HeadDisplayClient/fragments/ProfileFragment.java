@@ -17,6 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.palette.graphics.Palette;
+
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.FeedbackSenderActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.LayoutEditorActivity;
@@ -27,10 +31,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.io.IOException;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.palette.graphics.Palette;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -92,11 +92,11 @@ public class ProfileFragment extends Fragment {
         signinButton.setOnClickListener(view -> {
             mainActivity.promptSignin();
             mainActivity.getAuthDialogFragment().setOnAuthListener(() -> {
-                if (fuser != null) {
-                    viewSwitcher.setDisplayedChild(1);
-                    setupSigninScreen();
-                    mainActivity.dismissSinginPrompt();
-                }
+                Log.d("ONAUTHCOMPLETED", "AUTH COMPLETED");
+                fuser = fauth.getCurrentUser();
+                viewSwitcher.setDisplayedChild(1);
+                setupSigninScreen();
+                mainActivity.dismissSinginPrompt();
             });
         });
         if (fauth.getCurrentUser() == null) {

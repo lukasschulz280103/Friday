@@ -10,18 +10,19 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
 
-import com.code_design_camp.client.friday.HeadDisplayClient.R;
-import com.code_design_camp.client.friday.HeadDisplayClient.fragments.DefaultSigninFragment;
-import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.DefaultSigninFragment;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
+
 
 public class AuthDialog extends DialogFragment {
     Dialog dialog;
+
     ImageButton.OnClickListener dismissdialog = view -> ((MainActivity) getActivity()).dismissSinginPrompt();
     private OnAuthCompletedListener mOnAuthListener;
 

@@ -10,7 +10,6 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="android:fontFamily">@font/questrial_regular</item>
     </style>
-
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

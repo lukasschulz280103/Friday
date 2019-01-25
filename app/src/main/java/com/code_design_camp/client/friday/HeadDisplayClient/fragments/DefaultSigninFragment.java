@@ -13,6 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.FileUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
@@ -34,15 +43,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.io.File;
 import java.io.IOException;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import static android.content.ContentValues.TAG;
 
@@ -105,7 +105,7 @@ public class DefaultSigninFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mOnAuthCompletedListener = ((MainActivity) getActivity()).getSigninOnAuthCompletedListener();
+        mOnAuthCompletedListener = ((MainActivity) mActivity).getSigninOnAuthCompletedListener();
     }
 
     @Override
