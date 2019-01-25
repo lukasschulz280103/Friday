@@ -15,6 +15,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ViewFlipper;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
@@ -25,14 +32,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.ArCoreApk;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 public class MainActivity extends FridayActivity {
-    private static final int ORIENTATION_0 = 0;
+    private static final int FULLSCREEN_REQUEST_CODE = 22;
     private static final String LOGTAG = "FridayMainActivity";
     boolean isSigninShown = false;
     ViewFlipper vswitcher_main;
@@ -63,7 +64,7 @@ public class MainActivity extends FridayActivity {
     };
     FloatingActionButton.OnClickListener startVR = view -> {
         Intent i = new Intent(MainActivity.this, FullscreenActionActivity.class);
-        startActivity(i);
+        startActivityForResult(i, FULLSCREEN_REQUEST_CODE);
     };
     private UninstallOldAppDialog uninstallOldDialogFragment;
 
@@ -155,6 +156,33 @@ public class MainActivity extends FridayActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == FULLSCREEN_REQUEST_CODE && data != null) {
+            String errtype = data.getStringExtra("errtype");
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setPositiveButton(android.R.string.ok, null);
+            alertDialog.setNeutralButton(R.string.app_feedback, (dialogInterface, i) -> startActivity(new Intent(MainActivity.this, FeedbackSenderActivity.class)));
+            switch (errtype) {
+                case "TYPE_NOT_INSTALLED": {
+                    alertDialog.setMessage(R.string.errtype_not_installed);
+                }
+                case "TYPE_OLD_APK": {
+                    alertDialog.setMessage(R.string.errtype_arcore_apk_too_old);
+                }
+                case "TYPE_OLD_SDK_TOOL": {
+                    alertDialog.setMessage(R.string.errtype_sdk_too_old);
+                }
+                case "TYPE_DEVICE_INCOMPATIBLE": {
+                    alertDialog.setMessage(R.string.errtype_device_incompatible);
+                }
+            }
+            alertDialog.create().show();
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
     public void promptSignin() {
         Log.d("FirebaseAuth", "showing auth dialog");
         fragmentManager = getSupportFragmentManager();
@@ -170,10 +198,11 @@ public class MainActivity extends FridayActivity {
     }
 
     public void dismissSinginPrompt() {
+        Log.d("ONAUTHCOMPLETED", "SIGNIN PROMPT DISMISSED");
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
                 .replace(android.R.id.content, new Fragment())
-                .commit();
+                .commitNow();
         isSigninShown = false;
     }
 

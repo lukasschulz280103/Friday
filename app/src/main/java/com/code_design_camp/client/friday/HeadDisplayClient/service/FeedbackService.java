@@ -13,7 +13,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class FeedbackService extends JobService {
     public static final String LOGTAG = "FeedbackService";
@@ -27,12 +26,11 @@ public class FeedbackService extends JobService {
         new Thread() {
             @Override
             public void run() {
-                String feedback_obj_id = UUID.randomUUID().toString();
                 Map<String, Object> data = new HashMap<>();
                 Map<String, Object> childData = new HashMap<>();
                 childData.put("reason_value", extras.getString("reason"));
                 childData.put("timestamp", new Timestamp(new Date()));
-                data.put(feedback_obj_id, childData);
+                data.put(extras.getString("uid"), childData);
                 Task updateFeedback = docRef.set(data);
                 updateFeedback.addOnCompleteListener(task -> {
                     Log.d(LOGTAG, "Submitted feedback:" + task.isSuccessful());

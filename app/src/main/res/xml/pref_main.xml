@@ -29,7 +29,7 @@
         <androidx.preference.Preference
             android:key=""
             android:title="@string/info">
-            <intent android:targetClass="com.code_design_camp.client.friday.HeadDisplayClient.ui.InfoActivity" />
+            <intent android:action="com.example.myapp.activities.MyActivity" />
         </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
 </androidx.preference.PreferenceScreen>
