@@ -32,4 +32,7 @@
             <intent android:action="com.example.myapp.activities.MyActivity" />
         </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
+    <androidx.preference.Preference key="devmode_">
+
+    </androidx.preference.Preference>
 </androidx.preference.PreferenceScreen>
