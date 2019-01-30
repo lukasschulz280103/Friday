@@ -258,7 +258,7 @@ public class FullscreenActionActivity extends FridayActivity {
                                 mic_indicator.animate()
                                         .scaleXBy(0.3f)
                                         .scaleYBy(0.3f)
-                                        .yBy(1.5f)
+                                        .yBy(1f)
                                         .setInterpolator(new AccelerateDecelerateInterpolator())
                                         .setDuration(200)
                                         .start();
