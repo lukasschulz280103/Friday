@@ -1,11 +1,13 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -13,6 +15,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -22,6 +29,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
@@ -36,15 +44,52 @@ public class MainActivity extends FridayActivity {
     private static final int FULLSCREEN_REQUEST_CODE = 22;
     private static final String LOGTAG = "FridayMainActivity";
     boolean isSigninShown = false;
-    ViewFlipper vswitcher_main;
+    private ViewFlipper vswitcher_main;
 
-    BottomNavigationView main_nav;
-    FloatingActionButton lets_go;
-    AuthDialog authDialogFragment;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-    SharedPreferences defaut_pref;
-    PackageInfo pkgInf;
+    private BottomNavigationView main_nav;
+    private FloatingActionButton lets_go;
+    private AuthDialog authDialogFragment;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private SharedPreferences defaut_pref;
+    private FridayApplication app;
+    private PackageInfo pkgInf;
+    private LinearLayout assetLoaderLayout;
+    private TextSwitcher assetLoaderText;
+    private ProgressBar loadingBar;
+    FridayApplication.OnAssetsLoadedListener mAssetsLoadedListener = new FridayApplication.OnAssetsLoadedListener() {
+        @Override
+        public void onAssetLoaded() {
+            loadingBar.setIndeterminateDrawable(getDrawable(R.drawable.ic_cloud_done_black_24dp));
+            assetLoaderText.setText(getString(R.string.asset_loader_loading_success));
+            Handler h = new Handler();
+            h.postDelayed(() -> assetLoaderLayout.animate()
+                    .alpha(0)
+                    .setDuration(500)
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animator) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animator) {
+                            assetLoaderLayout.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animator) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animator) {
+
+                        }
+                    })
+                    .start(), 2000);
+        }
+    };
     BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -66,7 +111,6 @@ public class MainActivity extends FridayActivity {
         Intent i = new Intent(MainActivity.this, FullscreenActionActivity.class);
         startActivityForResult(i, FULLSCREEN_REQUEST_CODE);
     };
-    private UninstallOldAppDialog uninstallOldDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +121,11 @@ public class MainActivity extends FridayActivity {
         vswitcher_main = findViewById(R.id.main_view_flipper);
         main_nav = findViewById(R.id.main_bottom_nav);
         lets_go = findViewById(R.id.start_actionmode);
+        assetLoaderLayout = findViewById(R.id.asset_loading_indicator_conatiner);
+        assetLoaderText = findViewById(R.id.asset_loading_text);
+        loadingBar = findViewById(R.id.asset_loading_bar);
         defaut_pref = PreferenceManager.getDefaultSharedPreferences(this);
+        app = ((FridayApplication) getApplication());
         try {
             pkgInf = getPackageManager().getPackageInfo(getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
@@ -93,13 +141,13 @@ public class MainActivity extends FridayActivity {
             changelogdialog.show(getSupportFragmentManager(), "ChangeLogDialog");
             SharedPreferences.Editor editor = defaut_pref.edit();
             editor.putString("version", pkgInf.versionName);
-            editor.commit();
+            editor.apply();
         }
         try {
             PackageManager isOldAppInstalled = getPackageManager();
             isOldAppInstalled.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES);
             fragmentManager = getSupportFragmentManager();
-            uninstallOldDialogFragment = new UninstallOldAppDialog();
+            UninstallOldAppDialog uninstallOldDialogFragment = new UninstallOldAppDialog();
             fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
             fragmentTransaction.replace(android.R.id.content, uninstallOldDialogFragment).commit();
@@ -110,9 +158,6 @@ public class MainActivity extends FridayActivity {
             defaut_pref.edit().putInt("theme", R.style.AppTheme).apply();
         }
         ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(this);
-        if (availability.isSupported()) {
-
-        }
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         assert pm != null;
         if (pm.isPowerSaveMode()) {
@@ -123,6 +168,12 @@ public class MainActivity extends FridayActivity {
             builder.setNegativeButton(R.string.later, null);
             builder.create().show();
         }
+        app.setOnAssetsLoadedListener(mAssetsLoadedListener);
+        assetLoaderLayout.setVisibility(View.VISIBLE);
+        assetLoaderText.setFactory(() -> new TextView(MainActivity.this));
+        assetLoaderText.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+        assetLoaderText.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+        assetLoaderText.setText(getString(R.string.asset_loader_loading));
     }
     private void checkForFirstUse() {
         SharedPreferences settingsfile = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
@@ -134,16 +185,6 @@ public class MainActivity extends FridayActivity {
             notifieffirstuse.create().show();
             settingsfile.edit().putBoolean("isFirstUse", false).apply();
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

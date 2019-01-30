@@ -231,4 +231,7 @@
     <string name="errtype_arcore_apk_too_old">The installed version arcore is outdated to  be used with this app. Please ensure that the newest version of ArCore is installed and retry.</string>
     <string name="errtype_sdk_too_old">The SDK is outdated for the installed version of ArCore. Please ensure that the newest version of friday is installed. If this problem persists, you can try to contact us or wait until this app recieves an update.</string>
     <string name="errtype_device_incompatible">Your device is incompatible with ArCore.</string>
+    <string name="mic_hint">Say \"friday\"</string>
+    <string name="asset_loader_loading">Loading data...</string>
+    <string name="asset_loader_loading_success">Ready</string>
 </resources>

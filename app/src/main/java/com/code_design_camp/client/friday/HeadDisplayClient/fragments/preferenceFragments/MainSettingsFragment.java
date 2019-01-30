@@ -1,10 +1,10 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.fragments.preferenceFragments;
 
+import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -30,15 +30,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MainSettingsFragment extends PreferenceFragmentCompat {
     private static final String LOGTAG = "SettingsFragment";
+    private Activity mActivity;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private ProgressDialog loadingdialog;
-    private Preference account_pref, sign_out, del_account, select_theme_pref, auto_check_update, auto_sync_account;
-    private Intent themeResultIntent;
 
     private ThemeDialog.OnSelectedTheme themeSelected = (t, r) -> {
         Log.d("SetttingsActivity", "onThemeSelected");
@@ -49,14 +49,14 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         return true;
     };
     private Preference.OnPreferenceClickListener sign_out_click = preference -> {
-        AlertDialog.Builder confirm_signout = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder confirm_signout = new AlertDialog.Builder(mActivity);
         confirm_signout.setTitle(R.string.confirm_signout_title);
         confirm_signout.setMessage(R.string.confirm_signout_message);
         confirm_signout.setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
             auth.signOut();
             deleteLocalUserData();
             Toast.makeText(getActivity(), getString(R.string.sign_out_success), Toast.LENGTH_SHORT).show();
-            getActivity().finish();
+            mActivity.finish();
         });
         confirm_signout.setNegativeButton(android.R.string.no, null);
         confirm_signout.create().show();
@@ -67,12 +67,12 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
 
         @Override
         public void onComplete(@NonNull Task task) {
-            faildeletedialog = new AlertDialog.Builder(getActivity());
+            faildeletedialog = new AlertDialog.Builder(mActivity);
             loadingdialog.dismiss();
             if (task.isSuccessful()) {
                 deleteLocalUserData();
                 Toast.makeText(getActivity(), getString(R.string.deletion_success), Toast.LENGTH_LONG).show();
-                getActivity().finish();
+                mActivity.finish();
             } else if (task.isCanceled()) {
                 faildeletedialog.setTitle(R.string.deletion_error_canceled_title);
                 faildeletedialog.setMessage(R.string.deletion_error_canceled_message);
@@ -80,7 +80,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
                 faildeletedialog.create().show();
             } else {
                 faildeletedialog.setTitle(R.string.deletion_error_unknown_title);
-                faildeletedialog.setMessage(task.getException().getMessage());
+                faildeletedialog.setMessage(Objects.requireNonNull(task.getException()).getMessage());
                 faildeletedialog.setPositiveButton(android.R.string.ok, null);
                 faildeletedialog.create().show();
                 Log.e("AccountDeletion", "Could not delete account", task.getException());
@@ -90,7 +90,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     private Preference.OnPreferenceClickListener deletionlistener = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
-            AlertDialog.Builder confirmdeletion = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder confirmdeletion = new AlertDialog.Builder(mActivity);
             confirmdeletion.setIcon(R.drawable.ic_warning_black_24dp);
             confirmdeletion.setTitle(R.string.confirm_deletion_title);
             confirmdeletion.setMessage(R.string.confirm_deletion_message);
@@ -130,11 +130,12 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
                 PersistableBundle extra = new PersistableBundle();
                 extra.putString("reason", reasonKeyword.toString());
                 extra.putString("uid", user.getUid());
-                JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_FEEDBACK, new ComponentName(getContext(), FeedbackService.class))
+                JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_FEEDBACK, new ComponentName(mActivity, FeedbackService.class))
                         .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                         .setBackoffCriteria(30000, JobInfo.BACKOFF_POLICY_LINEAR)
                         .setExtras(extra)
                         .build();
+                assert scheduler != null;
                 scheduler.schedule(info);
                 Task<Void> deletiontask = user.delete();
                 deletiontask.addOnCompleteListener(deletioncallback);
@@ -159,13 +160,12 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_main);
         setHasOptionsMenu(true);
-
-        account_pref = findPreference("account_main_preference");
-        del_account = findPreference("delete_account");
-        sign_out = findPreference("pref_sign_out");
-        select_theme_pref = findPreference("dialog_theme_pref");
-        auto_check_update = findPreference("check_update_auto");
-        auto_sync_account = findPreference("sync_account_auto");
+        mActivity = getActivity();
+        Preference del_account = findPreference("delete_account");
+        Preference sign_out = findPreference("pref_sign_out");
+        Preference select_theme_pref = findPreference("dialog_theme_pref");
+        Preference auto_check_update = findPreference("check_update_auto");
+        Preference auto_sync_account = findPreference("sync_account_auto");
 
         del_account.setOnPreferenceClickListener(deletionlistener);
         sign_out.setOnPreferenceClickListener(sign_out_click);
@@ -182,7 +182,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-
+        //This method has to be implented
     }
 
     private void deleteLocalUserData() {
