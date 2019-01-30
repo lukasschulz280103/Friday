@@ -1,7 +1,7 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.Manifest;
-import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,25 +11,25 @@ import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.FrameLayout;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.palette.graphics.Palette;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
@@ -52,9 +52,18 @@ import com.google.ar.sceneform.ux.TransformableNode;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import edu.cmu.pocketsphinx.Assets;
+import edu.cmu.pocketsphinx.Hypothesis;
+import edu.cmu.pocketsphinx.RecognitionListener;
+import edu.cmu.pocketsphinx.SpeechRecognizer;
+import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -62,14 +71,48 @@ import java.util.concurrent.ExecutionException;
  */
 public class FullscreenActionActivity extends FridayActivity {
     private FirebaseAuth auth;
-    private FrameLayout mContentView;
-    private LinearLayout hintView;
-    private TextView time, user_email;
+    private ConstraintLayout mic_indicator;
+    private TextView time, user_email, mic_text;
+    private ImageView mic_img;
     private ArFragment arFragment;
-    private boolean mVisible;
     private Session mArCoreSession;
     private ModelRenderable andyRenderable;
     private ViewRenderable settingsRenderable;
+    private SpeechRecognizer recognizer, speechtoTextRecognizer;
+    private RecognitionListener stt = new RecognitionListener() {
+        @Override
+        public void onBeginningOfSpeech() {
+
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+            mic_img.setImageResource(R.drawable.ic_mic_none_green_24dp);
+        }
+
+        @Override
+        public void onPartialResult(Hypothesis hypothesis) {
+            Log.d("STTINPUT", "converting text to speech");
+            if (hypothesis != null) {
+                mic_text.setText(hypothesis.getHypstr());
+            }
+        }
+
+        @Override
+        public void onResult(Hypothesis hypothesis) {
+            mic_img.setImageResource(R.drawable.ic_mic_none_green_24dp);
+        }
+
+        @Override
+        public void onError(Exception e) {
+
+        }
+
+        @Override
+        public void onTimeout() {
+
+        }
+    };
     private Scene.OnUpdateListener UiStyleUpdateListener = new Scene.OnUpdateListener() {
         @Override
         public void onUpdate(FrameTime frameTime) {
@@ -93,8 +136,10 @@ public class FullscreenActionActivity extends FridayActivity {
                     //decide wether the font-color should be black or white
                     if (isColorBright(palette1.getDominantColor(Color.WHITE))) {
                         time.setTextColor(Color.BLACK);
+                        user_email.setTextColor(Color.BLACK);
                     } else {
                         time.setTextColor(Color.WHITE);
+                        user_email.setTextColor(Color.WHITE);
                     }
                 });
             } catch (NotYetAvailableException e) {
@@ -111,6 +156,7 @@ public class FullscreenActionActivity extends FridayActivity {
         ActionBar actionBar = getSupportActionBar();
         Intent returnOnErrorIntent = new Intent();
         Bundle errorInfoBundle = returnOnErrorIntent.getExtras();
+        assert errorInfoBundle != null;
         try {
             mArCoreSession = new Session(FullscreenActionActivity.this);
         } catch (UnavailableArcoreNotInstalledException e) {
@@ -126,18 +172,6 @@ public class FullscreenActionActivity extends FridayActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        hintView.setOnClickListener(view -> {
-            TextView hint_content = view.findViewById(R.id.hint_content);
-            ImageView hint_icon = view.findViewById(R.id.hint_icon);
-            if (hint_content.isShown()) {
-                hint_content.setVisibility(View.GONE);
-                animateImageResourceChange(hint_icon, R.drawable.ic_live_help_black_24dp);
-            } else {
-                hint_content.setVisibility(View.VISIBLE);
-                animateImageResourceChange(hint_icon, R.drawable.ic_keyboard_arrow_down_black_24dp);
-            }
-        });
-        mVisible = true;
         //Following code is an example
         ModelRenderable.builder()
                 .setSource(this, R.raw.andy)
@@ -185,7 +219,87 @@ public class FullscreenActionActivity extends FridayActivity {
                     andy.select();
                 });
         arFragment.getArSceneView().getScene().addOnUpdateListener(UiStyleUpdateListener);
+        Calendar c = Calendar.getInstance();
+        time.setText(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE));
         user_email.setText(auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : "Nicht angemeldet");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        speechtoTextRecognizer = ((FridayApplication) getApplication()).speechtotextrecognizer;
+        mic_img.setImageResource(R.drawable.ic_mic_off_black_24dp);
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask loadRecognizers = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    Assets assets = new Assets(FullscreenActionActivity.this);
+                    File assetsDir = assets.syncAssets();
+                    recognizer = SpeechRecognizerSetup.defaultSetup()
+                            .setAcousticModel(new File(assetsDir, "en-us-ptm"))
+                            .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
+                            .getRecognizer();
+                    recognizer.addListener(new RecognitionListener() {
+                        @Override
+                        public void onBeginningOfSpeech() {
+                        }
+
+                        @Override
+                        public void onEndOfSpeech() {
+                        }
+
+                        @Override
+                        public void onPartialResult(Hypothesis hypothesis) {
+                            Log.d("KEYPHRASER", "partial result");
+                            if (hypothesis != null) {
+                                mic_text.setText("...");
+                                mic_img.setImageResource(R.drawable.ic_mic_black_24dp);
+                                mic_indicator.animate()
+                                        .scaleXBy(0.3f)
+                                        .scaleYBy(0.3f)
+                                        .yBy(1.5f)
+                                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                                        .setDuration(200)
+                                        .start();
+                                recognizer.stop();
+                                recognizer.cancel();
+                                speechtoTextRecognizer.addListener(stt);
+                                speechtoTextRecognizer.startListening("input", 2000);
+                            }
+                        }
+
+                        @Override
+                        public void onResult(Hypothesis hypothesis) {
+                            Log.d("KEYPHRASER", "result");
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Log.e("KEYPHRASER", e.getLocalizedMessage(), e);
+                            Toast.makeText(FullscreenActionActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onTimeout() {
+
+                        }
+                    });
+                    recognizer.addKeywordSearch("wakeup", new File(assetsDir, "phrases/wakeup.gram"));
+                    recognizer.startListening("wakeup");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                mic_img.setImageResource(R.drawable.ic_mic_none_green_24dp);
+            }
+        };
+        loadRecognizers.execute();
     }
 
     @Override
@@ -209,6 +323,14 @@ public class FullscreenActionActivity extends FridayActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        recognizer.stop();
+        recognizer.cancel();
+        speechtoTextRecognizer.stop();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {
             if (grantResults[0] == -1) {
@@ -218,37 +340,13 @@ public class FullscreenActionActivity extends FridayActivity {
     }
 
     private void init() {
-        mContentView = findViewById(R.id.root_fullscreen);
-        hintView = findViewById(R.id.helphint);
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
         time = findViewById(R.id.timetext);
         user_email = findViewById(R.id.signedin_user_text);
         auth = FirebaseAuth.getInstance();
-    }
-
-    private void animateImageResourceChange(ImageView view, @DrawableRes int res) {
-        view.animate().alpha(0).setDuration(50).setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                view.setImageDrawable(getDrawable(res));
-                view.animate().alpha(1).setDuration(50).start();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        }).start();
+        mic_indicator = findViewById(R.id.mic_indicator);
+        mic_text = findViewById(R.id.mic_text);
+        mic_img = findViewById(R.id.mic_pic);
     }
 
     private boolean isColorBright(int color) {

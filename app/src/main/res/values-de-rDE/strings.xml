@@ -187,4 +187,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="errtype_arcore_apk_too_old">Die installierte Version von ArCore ist veraltet. Bitte überprüfen sie, ob eine neue Version installierbar ist, falls ja installieren sie diese und wiederholen sie den Vorgang.</string>
     <string name="errtype_sdk_too_old">Die genutzte SDK-Version ist zu alt. Bitte überprüfen sie, ob friday auf die neueste Version aktualisiert ist. Sollte das Problem weiterhin bestehen, können sie versuchen uns zu kontaktieren. Dieser Fehler beruht wahrscheinlich nicht auf ihrem Gerät und wird demnaächst behoben.</string>
     <string name="errtype_device_incompatible">Dieses Gerät ist mit der installierten Version von ArCore nicht kompatibel.</string>
+    <string name="mic_hint">Sage \"friday\"</string>
+    <string name="asset_loader_loading">Lade Daten</string>
+    <string name="asset_loader_loading_success">Bereit</string>
 </resources>

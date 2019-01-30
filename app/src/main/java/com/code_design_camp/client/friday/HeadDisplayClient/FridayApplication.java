@@ -1,16 +1,25 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.NotificationUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.UpdateUtil;
+
+import java.io.File;
+import java.io.IOException;
+
+import edu.cmu.pocketsphinx.Assets;
+import edu.cmu.pocketsphinx.SpeechRecognizer;
+import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
 /*
  * (C) Copyright 2018 Lukas Faber
@@ -33,6 +42,8 @@ import com.code_design_camp.client.friday.HeadDisplayClient.Util.UpdateUtil;
 
 public class FridayApplication extends Application {
     public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
+    public SpeechRecognizer speechtotextrecognizer;
+    public OnAssetsLoadedListener mOnAssetLoadedListener;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -42,6 +53,7 @@ public class FridayApplication extends Application {
             UpdateUtil updateUtil = new UpdateUtil(this);
             updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(this, versionNumberServer));
         }
+        loadSpeechRecognizer();
     }
 
     @Override
@@ -68,6 +80,45 @@ public class FridayApplication extends Application {
             NotificationManager nm = getSystemService(NotificationManager.class);
             nm.createNotificationChannel(update_channel);
         }
+    }
+
+    public void loadSpeechRecognizer() {
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask at = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    Assets assets = new Assets(FridayApplication.this);
+                    File assetsDir = assets.syncAssets();
+                    speechtotextrecognizer = SpeechRecognizerSetup.defaultSetup()
+                            .setAcousticModel(new File(assetsDir, "en-us-ptm"))
+                            .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
+                            .getRecognizer();
+                    speechtotextrecognizer.addNgramSearch("input", new File(assetsDir, "en-70k-0.1.lm"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                Log.d("FRIDAYAPPLICATION", "Loaded asset data");
+                if (mOnAssetLoadedListener != null) {
+                    mOnAssetLoadedListener.onAssetLoaded();
+                }
+            }
+        };
+        at.execute();
+    }
+
+    public void setOnAssetsLoadedListener(OnAssetsLoadedListener l) {
+        this.mOnAssetLoadedListener = l;
+    }
+
+    public interface OnAssetsLoadedListener {
+        void onAssetLoaded();
     }
 
     public class Jobs {
