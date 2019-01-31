@@ -190,4 +190,5 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="mic_hint">Sage \"friday\"</string>
     <string name="asset_loader_loading">Lade Daten</string>
     <string name="asset_loader_loading_success">Bereit</string>
+    <string name="err_assets_not_loaded">Sprachdaten werden geladen</string>
 </resources>

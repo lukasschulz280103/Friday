@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import androidx.annotation.NonNull;
 
 public class UpdateUtil {
     private Context context;
@@ -28,7 +28,7 @@ public class UpdateUtil {
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         //TODO: Change versionPre Reference to version only
-        DatabaseReference updateref = db.getReference("versionPre");
+        DatabaseReference updateref = db.getReference("version");
         updateref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
