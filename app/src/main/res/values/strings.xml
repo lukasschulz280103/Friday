@@ -234,4 +234,5 @@
     <string name="mic_hint">Say \"friday\"</string>
     <string name="asset_loader_loading">Loading data...</string>
     <string name="asset_loader_loading_success">Ready</string>
+    <string name="err_assets_not_loaded">Voice assistant loading in progress</string>
 </resources>

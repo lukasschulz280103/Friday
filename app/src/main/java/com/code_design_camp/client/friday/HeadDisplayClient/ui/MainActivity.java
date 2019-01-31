@@ -43,7 +43,8 @@ import com.google.ar.core.ArCoreApk;
 public class MainActivity extends FridayActivity {
     private static final int FULLSCREEN_REQUEST_CODE = 22;
     private static final String LOGTAG = "FridayMainActivity";
-    boolean isSigninShown = false;
+    private boolean isSigninShown = false;
+    private boolean loadedSPeechRecognizer = false;
     private ViewFlipper vswitcher_main;
 
     private BottomNavigationView main_nav;
@@ -60,6 +61,7 @@ public class MainActivity extends FridayActivity {
     FridayApplication.OnAssetsLoadedListener mAssetsLoadedListener = new FridayApplication.OnAssetsLoadedListener() {
         @Override
         public void onAssetLoaded() {
+            loadedSPeechRecognizer = true;
             loadingBar.setIndeterminateDrawable(getDrawable(R.drawable.ic_cloud_done_black_24dp));
             assetLoaderText.setText(getString(R.string.asset_loader_loading_success));
             Handler h = new Handler();
@@ -108,8 +110,12 @@ public class MainActivity extends FridayActivity {
         }
     };
     FloatingActionButton.OnClickListener startVR = view -> {
-        Intent i = new Intent(MainActivity.this, FullscreenActionActivity.class);
-        startActivityForResult(i, FULLSCREEN_REQUEST_CODE);
+        if (loadedSPeechRecognizer) {
+            Intent i = new Intent(MainActivity.this, FullscreenActionActivity.class);
+            startActivityForResult(i, FULLSCREEN_REQUEST_CODE);
+        } else {
+            Snackbar.make(findViewById(R.id.viewflipperparent), R.string.err_assets_not_loaded, Snackbar.LENGTH_SHORT).show();
+        }
     };
 
     @Override
