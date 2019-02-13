@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -39,6 +40,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private ProgressDialog loadingdialog;
+    private CheckBoxPreference devmode_show_changelog;
 
     private ThemeDialog.OnSelectedTheme themeSelected = (t, r) -> {
         Log.d("SetttingsActivity", "onThemeSelected");
@@ -154,6 +156,17 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         }
         return true;
     };
+    private Preference.OnPreferenceChangeListener devModeSwitchChange = (preference, newValue) -> {
+        Boolean val = (Boolean) newValue;
+        if(val){
+            devmode_show_changelog.setEnabled(true);
+        }
+        else{
+            devmode_show_changelog.setEnabled(false);
+            devmode_show_changelog.setChecked(false);
+        }
+        return true;
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -166,11 +179,14 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         Preference select_theme_pref = findPreference("dialog_theme_pref");
         Preference auto_check_update = findPreference("check_update_auto");
         Preference auto_sync_account = findPreference("sync_account_auto");
+        Preference devmode = findPreference("devmode");
+        devmode_show_changelog = (CheckBoxPreference) findPreference("pref_devmode_show_changelog");
 
         del_account.setOnPreferenceClickListener(deletionlistener);
         sign_out.setOnPreferenceClickListener(sign_out_click);
         select_theme_pref.setOnPreferenceClickListener(select_theme_pref_click);
         auto_check_update.setOnPreferenceChangeListener(autoCheckUpdateChangeListener);
+        devmode.setOnPreferenceChangeListener(devModeSwitchChange);
         if (user == null) {
             sign_out.setEnabled(false);
             del_account.setEnabled(false);

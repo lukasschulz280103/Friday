@@ -235,4 +235,15 @@
     <string name="asset_loader_loading">Loading data...</string>
     <string name="asset_loader_loading_success">Ready</string>
     <string name="err_assets_not_loaded">Voice assistant loading in progress</string>
+    <string name="pref_devmode">Developer mode</string>
+    <string name="pref_devmode_show_changelog">Always show changelog at appstart</string>
+    <string name="err_missing_permissions">Missing permissions</string>
+    <string name="err_unable_to_load_speech_assets">Could not load speech assets</string>
+    <string name="err_following_permissions_required">Friday requires following permissions:</string>
+    <string name="err_permission_need_explanation">We need these permissions to provide basic features.</string>
+    <string name="wizard_welcome_descr">This wizard will guide you through the setup of friday</string>
+    <string name="project_friday">Project friday</string>
+    <string name="terms_of_use">Terms of use</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="request_id_token" translatable="false">993428557619-umbmutm9i238kmtth7vcoa4nhfedvemg.apps.googleusercontent.com</string>
 </resources>

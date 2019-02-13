@@ -21,12 +21,19 @@
     <application
         android:name=".FridayApplication"
         android:allowBackup="true"
-        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.LicenseActivity"></activity>
+        <activity android:name=".ui.WizardActivity"
+            android:theme="@style/WizardTheme">
+            <intent-filter>
+                <action android:name="com.friday.Wizard" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.LicenseActivity" />
         <activity
             android:name=".ui.StoreDetailActivity"
             android:theme="@style/Store.Detail" />
@@ -84,8 +91,7 @@
             android:name=".ui.InfoActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="com.example.myapp.activities.MyActivity" />
-
+                <action android:name="com.friday.Info" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

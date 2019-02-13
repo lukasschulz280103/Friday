@@ -1,4 +1,4 @@
-package com.code_design_camp.client.friday.HeadDisplayClient;
+package com.code_design_camp.client.friday.HeadDisplayClient.activities;
 
 
 import android.content.res.Configuration;

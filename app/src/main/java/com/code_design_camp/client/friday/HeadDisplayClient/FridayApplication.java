@@ -96,7 +96,7 @@ public class FridayApplication extends Application {
                             .getRecognizer();
                     speechtotextrecognizer.addNgramSearch("input", new File(assetsDir, "en-70k-0.1.lm"));
                 } catch (IOException e) {
-                    e.printStackTrace();
+
                 }
                 return null;
             }
@@ -119,6 +119,7 @@ public class FridayApplication extends Application {
 
     public interface OnAssetsLoadedListener {
         void onAssetLoaded();
+        void onError();
     }
 
     public class Jobs {

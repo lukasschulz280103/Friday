@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,16 +42,17 @@ public class ChangelogDialogFragment extends DialogFragment {
     private String update_body;
     private Date update_timestamp;
     private FirebaseFirestore changelog = FirebaseFirestore.getInstance();
+    private PackageInfo pkgInf;
     private CollectionReference changelog_collection = changelog.collection("changelogs");
     private DocumentReference changelog_doc;
-    private PackageInfo pkgInf;
     private EventListener<DocumentSnapshot> onChangelogDocumentLoaded = new EventListener<DocumentSnapshot>() {
         @Override
         public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
             if (e == null) {
                 update_title = (String) documentSnapshot.get("title");
                 update_body = (String) documentSnapshot.get("body");
-                update_timestamp = (Date) documentSnapshot.get("release_date");
+                update_timestamp = ((Timestamp) documentSnapshot.get("release_date")).toDate();
+                Log.d(LOGTAG,Boolean.valueOf(documentSnapshot.get("release_date")==null).toString());
                 container.setVisibility(View.VISIBLE);
                 loadingbar.setVisibility(View.GONE);
                 setUpdate_title(update_title);
@@ -112,12 +114,7 @@ public class ChangelogDialogFragment extends DialogFragment {
         loadingbar = dialogview.findViewById(R.id.changelog_dialog_progress);
         this.container = dialogview.findViewById(R.id.chld_infocontainer);
         dismiss = dialogview.findViewById(R.id.chld_dismissbtn);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        dismiss.setOnClickListener(view -> dismiss());
         dismiss.setEnabled(false);
         return dialogview;
     }
