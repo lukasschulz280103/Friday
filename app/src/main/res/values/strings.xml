@@ -246,4 +246,13 @@
     <string name="terms_of_use">Terms of use</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="request_id_token" translatable="false">993428557619-umbmutm9i238kmtth7vcoa4nhfedvemg.apps.googleusercontent.com</string>
+    <string name="request_permissions">Request permissions</string>
+    <string name="grant_permission">Grant</string>
+    <string name="req_cam_retionale_title">Camera</string>
+    <string name="req_cam_rationale">The camera permission is needed to use fridays main feature: The AR-mode</string>
+    <string name="req_mic_rationale_title">Microphone</string>
+    <string name="req_files_rationale_title">File system</string>
+    <string name="req_mic_rationale">The mircophone is used to be able to use the voice assistant.</string>
+    <string name="permissions_required">These permissions are required to use this app.</string>
+    <string name="perms_granted">All needed permissions are granted.</string>
 </resources>
