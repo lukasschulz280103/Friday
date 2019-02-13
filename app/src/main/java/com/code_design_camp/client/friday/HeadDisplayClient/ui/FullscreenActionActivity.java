@@ -2,6 +2,7 @@ package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -32,6 +33,7 @@ import androidx.palette.graphics.Palette;
 import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.google.ar.core.Anchor;
+import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.Session;
@@ -40,6 +42,7 @@ import com.google.ar.core.exceptions.UnavailableApkTooOldException;
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
+import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
@@ -70,6 +73,7 @@ import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActionActivity extends FridayActivity {
+    public static final String LOGTAG = "ARActivity";
     private FirebaseAuth auth;
     private ConstraintLayout mic_indicator;
     private TextView time, user_email, mic_text;
@@ -155,18 +159,24 @@ public class FullscreenActionActivity extends FridayActivity {
         init();
         ActionBar actionBar = getSupportActionBar();
         Intent returnOnErrorIntent = new Intent();
-        Bundle errorInfoBundle = returnOnErrorIntent.getExtras();
-        assert errorInfoBundle != null;
+        ArCoreApk apk = ArCoreApk.getInstance();
         try {
             mArCoreSession = new Session(FullscreenActionActivity.this);
-        } catch (UnavailableArcoreNotInstalledException e) {
-            errorInfoBundle.putString("errtype", "TYPE_NOT_INSTALLED");
-        } catch (UnavailableApkTooOldException e) {
-            errorInfoBundle.putString("errtype", "TYPE_OLD_APK");
-        } catch (UnavailableSdkTooOldException e) {
-            errorInfoBundle.putString("errtype", "TYPE_OLD_SDK_TOOL");
-        } catch (UnavailableDeviceNotCompatibleException e) {
-            errorInfoBundle.putString("errtype", "TYPE_DEVICE_INCOMPATIBLE");
+        } catch(Exception e) {
+            Log.d(LOGTAG, "Exception ocurred");
+            if (e instanceof UnavailableArcoreNotInstalledException) {
+            } else if (e instanceof UnavailableApkTooOldException) {
+                returnOnErrorIntent.putExtra("errtype", "TYPE_OLD_APK");
+            } else if (e instanceof UnavailableSdkTooOldException) {
+                returnOnErrorIntent.putExtra("errtype", "TYPE_OLD_SDK_TOOL");
+            } else if (e instanceof UnavailableDeviceNotCompatibleException) {
+                returnOnErrorIntent.putExtra("errtype", "TYPE_DEVICE_INCOMPATIBLE");
+            } else if (e instanceof UnavailableUserDeclinedInstallationException) {
+                returnOnErrorIntent.putExtra("errtype", "USER_DELINED");
+            }
+            setResult(RESULT_CANCELED, returnOnErrorIntent);
+            finishActivity(MainActivity.FULLSCREEN_REQUEST_CODE);
+            return;
         }
         Collection<Anchor> mAnchors = mArCoreSession.getAllAnchors();
         if (actionBar != null) {
