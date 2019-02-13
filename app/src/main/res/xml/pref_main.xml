@@ -29,10 +29,23 @@
         <androidx.preference.Preference
             android:key=""
             android:title="@string/info">
-            <intent android:action="com.example.myapp.activities.MyActivity" />
+            <intent android:action="com.friday.Info" />
         </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.Preference key="devmode_">
+    <androidx.preference.PreferenceCategory>
+        <androidx.preference.SwitchPreference
+            android:title="@string/pref_devmode"
+            android:key="devmode" />
+        <androidx.preference.CheckBoxPreference
+            android:title="@string/pref_devmode_show_changelog"
+            android:key="pref_devmode_show_changelog"
+            />
+        <androidx.preference.Preference
+            android:key=""
+            android:title="Start Introduction">
+            <intent android:action="com.friday.Wizard" />
+        </androidx.preference.Preference>
+    </androidx.preference.PreferenceCategory>
 
-    </androidx.preference.Preference>
+
 </androidx.preference.PreferenceScreen>

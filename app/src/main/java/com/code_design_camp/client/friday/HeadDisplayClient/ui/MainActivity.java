@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,7 @@ public class MainActivity extends FridayActivity {
     private static final int FULLSCREEN_REQUEST_CODE = 22;
     private static final String LOGTAG = "FridayMainActivity";
     private boolean isSigninShown = false;
-    private boolean loadedSPeechRecognizer = false;
+    private boolean loadSpeechRecognizer = false;
     private ViewFlipper vswitcher_main;
 
     private BottomNavigationView main_nav;
@@ -61,7 +62,7 @@ public class MainActivity extends FridayActivity {
     FridayApplication.OnAssetsLoadedListener mAssetsLoadedListener = new FridayApplication.OnAssetsLoadedListener() {
         @Override
         public void onAssetLoaded() {
-            loadedSPeechRecognizer = true;
+            loadSpeechRecognizer = true;
             loadingBar.setIndeterminateDrawable(getDrawable(R.drawable.ic_cloud_done_black_24dp));
             assetLoaderText.setText(getString(R.string.asset_loader_loading_success));
             Handler h = new Handler();
@@ -91,7 +92,14 @@ public class MainActivity extends FridayActivity {
                     })
                     .start(), 2000);
         }
+
+        @Override
+        public void onError() {
+            loadSpeechRecognizer = false;
+            Toast.makeText(MainActivity.this,R.string.err_unable_to_load_speech_assets,Toast.LENGTH_LONG).show();
+        }
     };
+    AuthDialog.OnAuthCompletedListener mOnAuthCompleted;
     BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -110,7 +118,7 @@ public class MainActivity extends FridayActivity {
         }
     };
     FloatingActionButton.OnClickListener startVR = view -> {
-        if (loadedSPeechRecognizer) {
+        if (loadSpeechRecognizer) {
             Intent i = new Intent(MainActivity.this, FullscreenActionActivity.class);
             startActivityForResult(i, FULLSCREEN_REQUEST_CODE);
         } else {
@@ -142,7 +150,7 @@ public class MainActivity extends FridayActivity {
         main_nav.setOnNavigationItemSelectedListener(navselected);
         lets_go.setOnClickListener(startVR);
         checkForFirstUse();
-        if (!defaut_pref.getString("version", "0").equals(pkgInf.versionName)) {
+        if (!defaut_pref.getString("version", "0").equals(pkgInf.versionName)|| defaut_pref.getBoolean("pref_devmode_show_changelog", false)) {
             ChangelogDialogFragment changelogdialog = new ChangelogDialogFragment();
             changelogdialog.show(getSupportFragmentManager(), "ChangeLogDialog");
             SharedPreferences.Editor editor = defaut_pref.edit();
@@ -158,12 +166,11 @@ public class MainActivity extends FridayActivity {
             fragmentTransaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
             fragmentTransaction.replace(android.R.id.content, uninstallOldDialogFragment).commit();
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(LOGTAG, e.getLocalizedMessage(), e);
+            Log.i(LOGTAG,"no old version found");
         }
         if (defaut_pref.getInt("theme", 0) == 0) {
             defaut_pref.edit().putInt("theme", R.style.AppTheme).apply();
         }
-        ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(this);
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         assert pm != null;
         if (pm.isPowerSaveMode()) {
@@ -190,6 +197,8 @@ public class MainActivity extends FridayActivity {
             notifieffirstuse.setPositiveButton(android.R.string.ok, null);
             notifieffirstuse.create().show();
             settingsfile.edit().putBoolean("isFirstUse", false).apply();
+            Intent showWizard = new Intent(this,WizardActivity.class);
+            startActivity(showWizard);
         }
     }
 
@@ -230,20 +239,25 @@ public class MainActivity extends FridayActivity {
         }
     }
 
+    public AuthDialog.OnAuthCompletedListener getOnAuthCompletedListener() {
+        return mOnAuthCompleted;
+    }
+
+    public void setmOnAuthCompleted(AuthDialog.OnAuthCompletedListener mOnAuthCompleted) {
+        this.mOnAuthCompleted = mOnAuthCompleted;
+        authDialogFragment.setOnAuthListener(mOnAuthCompleted);
+    }
+
     public void promptSignin() {
         Log.d("FirebaseAuth", "showing auth dialog");
         fragmentManager = getSupportFragmentManager();
         authDialogFragment = new AuthDialog();
+        authDialogFragment.setOnAuthListener(mOnAuthCompleted);
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
         fragmentTransaction.replace(android.R.id.content, authDialogFragment).commit();
         isSigninShown = true;
     }
-
-    public AuthDialog.OnAuthCompletedListener getSigninOnAuthCompletedListener() {
-        return authDialogFragment.getOnAuthListener();
-    }
-
     public void dismissSinginPrompt() {
         Log.d("ONAUTHCOMPLETED", "SIGNIN PROMPT DISMISSED");
         getSupportFragmentManager().beginTransaction()
@@ -258,10 +272,6 @@ public class MainActivity extends FridayActivity {
                 .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
                 .replace(android.R.id.content, new Fragment())
                 .commit();
-    }
-
-    public AuthDialog getAuthDialogFragment() {
-        return authDialogFragment;
     }
 
     public void goToStore(View v) {

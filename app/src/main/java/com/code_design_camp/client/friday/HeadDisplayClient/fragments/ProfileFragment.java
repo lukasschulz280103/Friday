@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.palette.graphics.Palette;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.FeedbackSenderActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.LayoutEditorActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
@@ -92,12 +93,20 @@ public class ProfileFragment extends Fragment {
         LinearLayout tohelp = fragmentview.findViewById(R.id.main_help);
         signinButton.setOnClickListener(view -> {
             mainActivity.promptSignin();
-            mainActivity.getAuthDialogFragment().setOnAuthListener(() -> {
-                Log.d("ONAUTHCOMPLETED", "AUTH COMPLETED");
-                fuser = fauth.getCurrentUser();
-                viewSwitcher.setDisplayedChild(1);
-                setupSigninScreen();
-                mainActivity.dismissSinginPrompt();
+            mainActivity.setmOnAuthCompleted(new AuthDialog.OnAuthCompletedListener() {
+                @Override
+                public void onAuthCompleted() {
+                    Log.d("ONAUTHCOMPLETED", "AUTH COMPLETED");
+                    fuser = fauth.getCurrentUser();
+                    viewSwitcher.setDisplayedChild(1);
+                    setupSigninScreen();
+                    mainActivity.dismissSinginPrompt();
+                }
+
+                @Override
+                public void onCanceled() {
+
+                }
             });
         });
         if (fauth.getCurrentUser() == null) {

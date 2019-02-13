@@ -35,6 +35,7 @@ public class EmailSigninFragment extends Fragment {
     private MaterialButton backbtn, submitbtn;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private String email;
+    private DefaultSigninFragment signinFragment;
     private OnCompleteListener crnewUserCompletion = task -> {
         loader.setVisibility(View.INVISIBLE);
         setInputsEnabled(true);
@@ -53,8 +54,7 @@ public class EmailSigninFragment extends Fragment {
         setInputsEnabled(true);
         if (task.isSuccessful()) {
             Snackbar.make(getActivity().getCurrentFocus(), getString(R.string.signin_welcome, email), Snackbar.LENGTH_SHORT).show();
-            ((MainActivity) getActivity()).getSigninOnAuthCompletedListener().onAuthCompleted();
-            ((MainActivity) getActivity()).dismissSinginPrompt();
+            signinFragment.getmOnAuthCompletedListener().onAuthCompleted();
         } else {
             AlertDialog.Builder errdialogbuilder = new AlertDialog.Builder(getContext());
             try {
@@ -110,6 +110,7 @@ public class EmailSigninFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentview = inflater.inflate(R.layout.emailsignin_layout, container, false);
+       signinFragment = ((DefaultSigninFragment) getParentFragment());
         email = getArguments().getString("email");
         //"Final one element array"
         passwEdittext = fragmentview.findViewById(R.id.email_password);

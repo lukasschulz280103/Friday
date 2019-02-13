@@ -17,18 +17,22 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.DefaultSigninFragment;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.list.DashboardSimpleItem;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
 
 
 public class AuthDialog extends DialogFragment {
-    Dialog dialog;
-
-    ImageButton.OnClickListener dismissdialog = view -> ((MainActivity) getActivity()).dismissSinginPrompt();
+    private DefaultSigninFragment signinFragment;
     private OnAuthCompletedListener mOnAuthListener;
 
+    ImageButton.OnClickListener dismissdialog = view -> mOnAuthListener.onCanceled();
+
+    public AuthDialog(){
+        signinFragment = new DefaultSigninFragment();
+    }
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onStart() {
+        super.onStart();
     }
 
     /**
@@ -42,18 +46,18 @@ public class AuthDialog extends DialogFragment {
         // remove the dialog title, but you must call the superclass to get the Dialog.
         Log.d("AuthDialog", "oncreatedialog getDialog = " + getDialog());
         Log.d("AuthDialog", "onCreateDialog");
-        dialog = super.onCreateDialog(savedInstanceState);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
     }
 
     public OnAuthCompletedListener getOnAuthListener() {
-        return mOnAuthListener;
+        return signinFragment.getmOnAuthCompletedListener();
     }
 
     public void setOnAuthListener(OnAuthCompletedListener mOnAuthListener) {
-        this.mOnAuthListener = mOnAuthListener;
+        signinFragment.setOnAuthCompletedListener(mOnAuthListener);
     }
 
     @Override
@@ -69,10 +73,11 @@ public class AuthDialog extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.signin_fragment_container, new DefaultSigninFragment()).commit();
+        ft.replace(R.id.signin_fragment_container, signinFragment).commit();
     }
 
     public interface OnAuthCompletedListener {
         void onAuthCompleted();
+        void onCanceled();
     }
 }

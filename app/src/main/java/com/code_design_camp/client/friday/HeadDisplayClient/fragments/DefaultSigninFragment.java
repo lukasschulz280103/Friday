@@ -48,7 +48,7 @@ import static android.content.ContentValues.TAG;
 
 public class DefaultSigninFragment extends Fragment {
     private static final int RC_SIGN_IN = 9001;
-    public AuthDialog.OnAuthCompletedListener mOnAuthCompletedListener;
+    private AuthDialog.OnAuthCompletedListener mOnAuthCompletedListener;
     private FirebaseAuth mAuth;
     private AlertDialog.Builder loading_dialog_builder;
     private AlertDialog loading_dialog;
@@ -84,7 +84,7 @@ public class DefaultSigninFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mActivity = getActivity();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("993428557619-umbmutm9i238kmtth7vcoa4nhfedvemg.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.request_id_token))
                 .requestEmail()
                 .build();
         mSignInClient = GoogleSignIn.getClient(mActivity, gso);
@@ -100,12 +100,6 @@ public class DefaultSigninFragment extends Fragment {
         emailinput.setOnEditorActionListener(mOnEditorActionListener);
         mAuth = FirebaseAuth.getInstance();
         return fragmentview;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mOnAuthCompletedListener = ((MainActivity) mActivity).getSigninOnAuthCompletedListener();
     }
 
     @Override
@@ -135,6 +129,14 @@ public class DefaultSigninFragment extends Fragment {
             }
         }
 
+    }
+
+    public void setOnAuthCompletedListener(AuthDialog.OnAuthCompletedListener mOnAuthCompletedListener) {
+        this.mOnAuthCompletedListener = mOnAuthCompletedListener;
+    }
+
+    public AuthDialog.OnAuthCompletedListener getmOnAuthCompletedListener() {
+        return mOnAuthCompletedListener;
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {

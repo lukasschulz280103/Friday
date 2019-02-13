@@ -191,4 +191,14 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="asset_loader_loading">Lade Daten</string>
     <string name="asset_loader_loading_success">Bereit</string>
     <string name="err_assets_not_loaded">Sprachdaten werden geladen</string>
+    <string name="pref_devmode">Entwicklermodus</string>
+    <string name="pref_devmode_show_changelog">Changelog beim Appstart zeigen</string>
+    <string name="err_missing_permissions">Fehlende Zugriffsberechtigungen</string>
+    <string name="err_unable_to_load_speech_assets">Sprachdaten konnten nicht geladen werden</string>
+    <string name="err_following_permissions_required">Friday benötigt folgende Berechtigungen:</string>
+    <string name="err_permission_need_explanation">Diese Zugriffsberechtigungen werden benötigt, um grundlegende Funktionen anzubieten.</string>
+    <string name="wizard_welcome_descr">Dieser Guide führt sie durch den Setup von friday.</string>
+    <string name="project_friday">Projekt friday</string>
+    <string name="terms_of_use">Nutzungsbedinungen</string>
+    <string name="privacy_policy">Datenschutzbedingungen</string>
 </resources>
