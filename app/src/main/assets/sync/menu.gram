@@ -1,5 +1,3 @@
-#JSGF V1.0;
-
-grammar menu;
-
-public <item> = digits | forecast | phones;
+version https://git-lfs.github.com/spec/v1
+oid sha256:458ebe40241a70efb1c9c4088fbf31a5256344a36f8341f2f0dc8cdd0235affc
+size 72

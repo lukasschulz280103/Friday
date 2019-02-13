@@ -1,17 +1,3 @@
-#JSGF V1.0;
-
-grammar digits;
-
-<digit> = oh    |
-          zero  |
-          one   |
-          two   |
-          three |
-          four  |
-          five  |
-          six   |
-          seven |
-          eight |
-          nine  ;
-
-public <digits> = <digit>+;
+version https://git-lfs.github.com/spec/v1
+oid sha256:530e602dd8c9e2a88556b602fdf08f8904d1d0fa54a4cd39a65b797dcb2fe1cd
+size 257
