@@ -201,4 +201,13 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="project_friday">Projekt friday</string>
     <string name="terms_of_use">Nutzungsbedinungen</string>
     <string name="privacy_policy">Datenschutzbedingungen</string>
+    <string name="request_permissions">Berechtigungen erteilen</string>
+    <string name="grant_permission">Zugriff erlauben</string>
+    <string name="req_cam_retionale_title">Kamera</string>
+    <string name="req_cam_rationale">Die Kamera wird benötigt, damit das Hauptfeature, der AR-Modus, genutzt werden kann</string>
+    <string name="req_mic_rationale_title">Mikrofon</string>
+    <string name="req_files_rationale_title">Dateien und Speicher</string>
+    <string name="req_mic_rationale">Das Mikrofon wird genutzt, um den friday-Sprachassistenten bereitzustellen</string>
+    <string name="permissions_required">Diese Berechtigungen sind zwingend notwendig, um friday zu nutzen</string>
+    <string name="perms_granted">Alle benötigten Berechtigungen sind gegeben.</string>
 </resources>

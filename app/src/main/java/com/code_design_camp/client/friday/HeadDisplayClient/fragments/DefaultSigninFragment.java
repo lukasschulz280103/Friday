@@ -169,11 +169,11 @@ public class DefaultSigninFragment extends Fragment {
                             }
                         }, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
                         downloadManager.enqueue(dmrequest);
-                        Snackbar.make(mActivity.findViewById(R.id.main_bottom_nav), getString(R.string.signin_welcome, user.getDisplayName()), Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mActivity.findViewById(android.R.id.content), getString(R.string.signin_welcome, user.getDisplayName()), Snackbar.LENGTH_SHORT).show();
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        Snackbar.make(mActivity.findViewById(R.id.main_bottom_nav), "Sign in error.", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(mActivity.findViewById(android.R.id.content), "Sign in error.", Snackbar.LENGTH_SHORT).show();
                     }
                 });
     }
