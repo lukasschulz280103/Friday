@@ -40,9 +40,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.ArCoreApk;
+import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
+import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
 
 public class MainActivity extends FridayActivity {
-    private static final int FULLSCREEN_REQUEST_CODE = 22;
+    public static final int FULLSCREEN_REQUEST_CODE = 22;
     private static final String LOGTAG = "FridayMainActivity";
     private boolean isSigninShown = false;
     private boolean loadSpeechRecognizer = false;
@@ -222,6 +224,17 @@ public class MainActivity extends FridayActivity {
             switch (errtype) {
                 case "TYPE_NOT_INSTALLED": {
                     alertDialog.setMessage(R.string.errtype_not_installed);
+                    ArCoreApk apk = ArCoreApk.getInstance();
+                    try {
+                        if(apk.requestInstall(this,true) == ArCoreApk.InstallStatus.INSTALL_REQUESTED){
+
+                        }
+                    } catch (UnavailableDeviceNotCompatibleException e) {
+                        data.putExtra("errtype","TYPE_DEVICE_NOT_SUPPORTED");
+                        onActivityResult(requestCode,resultCode,data);
+                    } catch (UnavailableUserDeclinedInstallationException e) {
+                        e.printStackTrace();
+                    }
                 }
                 case "TYPE_OLD_APK": {
                     alertDialog.setMessage(R.string.errtype_arcore_apk_too_old);
