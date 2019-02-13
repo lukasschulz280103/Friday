@@ -188,7 +188,7 @@ public class DefaultSigninFragment extends Fragment {
             FragmentTransaction ft = fm.beginTransaction();
             ft.setCustomAnimations(R.anim.anim_slidein_right, R.anim.anim_slideout_left)
                     .addToBackStack(null)
-                    .replace(R.id.signin_fragment_container, EmailSigninFragment.newInstance(emailinput.getText().toString())).commit();
+                    .replace(R.id.signin_layout_container, EmailSigninFragment.newInstance(emailinput.getText().toString())).commit();
         }
 
     }

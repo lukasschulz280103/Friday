@@ -2,7 +2,6 @@ package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
@@ -11,10 +10,7 @@ import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFrag
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.wizard.AcceptTerms;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.wizard.PermissionRequestFragment;
 import com.github.paolorotolo.appintro.AppIntro;
-import com.github.paolorotolo.appintro.AppIntro2;
-import com.github.paolorotolo.appintro.AppIntroBase;
 import com.github.paolorotolo.appintro.AppIntroFragment;
-import com.github.paolorotolo.appintro.AppIntroViewPager;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
 
