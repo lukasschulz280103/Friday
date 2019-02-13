@@ -1,1 +1,5 @@
 *.lm filter=lfs diff=lfs merge=lfs -text
+*md5 filter=lfs diff=lfs merge=lfs -text
+*.gram filter=lfs diff=lfs merge=lfs -text
+*.dmp filter=lfs diff=lfs merge=lfs -text
+*.dict filter=lfs diff=lfs merge=lfs -text
