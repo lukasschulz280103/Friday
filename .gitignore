@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.iml
 .gradle
 /local.properties
@@ -9,3 +10,25 @@
 /captures
 .externalNativeBuild
 googleservices.json
+=======
+/build
+google-services.json
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+local.properties
+Thumbs.db
+.DS_STORE
+*.iml
+.idea
+.gradle
+build/
+.navigation
+captures/
+output.json
+obj/
+.externalNativeBuild
+>>>>>>> luke

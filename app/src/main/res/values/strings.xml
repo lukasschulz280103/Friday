@@ -72,7 +72,11 @@
 
     <string name="switch_feedback_info">Add additional info</string>
     <string name="sign_out">Sign out</string>
+<<<<<<< HEAD
     <string name="more_sync_settings">More sync settings</string>
+=======
+    <string name="more_sync_settings">Synchronization</string>
+>>>>>>> luke
     <string name="delete_account">Delete Account</string>
     <string name="confirm_signout_title">Sign out</string>
     <string name="confirm_signout_message">Do you really want to sign out?</string>
@@ -144,7 +148,11 @@
     <string name="uninstall_old_body">You can\'t use this version of friday with an older version installed at the same time. \n \n <b>You only have to do this once.</b></string>
     <string name="layout_edit_title">Layout Editor</string>
     <string name="help">Help</string>
+<<<<<<< HEAD
     <string name="theme">Theme</string>
+=======
+    <string name="design">Design</string>
+>>>>>>> luke
     <string name="theme_dialog_title">Select theme</string>
     <string-array name="theme_entry_values">
         <item>Light Theme</item>
@@ -160,4 +168,102 @@
         <item>orange</item>
         <item>blue</item>
     </string-array>
+<<<<<<< HEAD
+=======
+    <string name="auto_sync">Synchronize with cloud</string>
+    <string name="auto_check_update">Automatically check for updates</string>
+    <string name="theme">Theme</string>
+    <string name="select_theme">Select Theme</string>
+    <string name="update_notif_channel_descr">This channel is used to notify about new Updates.</string>
+    <string name="app_update_title">Friday Update</string>
+    <string name="app_update_description">Friday is ready to update to %s !</string>
+    <string name="store_flag_widget">Flag</string>
+    <string name="store_add_wishlist">Add to list</string>
+    <string name="store_download">Download</string>
+    <string name="store_detail_review_header">Reviews</string>
+    <string name="store_detail_update_notes">Update notes</string>
+    <string name="store_add_review">Add review</string>
+    <string name="lorem_ipsum_short" translatable="false">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="lorem_ipsum_long" translatable="false">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  --   Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.  Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.  Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.  At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</string>
+    <string name="store_detail_version">Version %s</string>
+    <string name="beta" translatable="false">Beta</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_red">Red</string>
+    <string name="theme_green">Green</string>
+    <string name="theme_blue">Blue</string>
+    <string name="theme_magenta">Magenta</string>
+    <string name="theme_default">Default Theme</string>
+    <string name="theme_pink">Pink</string>
+    <string name="theme_error">Could not apply theme at runtime. Please restart the app to see the changes.</string>
+    <string name="save_success">Saved</string>
+    <string name="info">Info</string>
+    <string name="prefs_help_manually_check_update">You can manually check for updates by opening the \'About\' page of this app.</string>
+    <string name="look">Look &amp; Feel</string>
+    <string name="low_memory_title">Low memory warning</string>
+    <string name="low_memory_message">The device is running on low memory, which may causes performance lags in the VR-Mode. Please try to free up space in order to guarantee a good performance.</string>
+    <string name="energy_saver_warn_title">Energy saver is on</string>
+    <string name="energy_saver_warn_msg">You need to turn of the Energysaver if you want to use the AR-Feature</string>
+    <string name="deactivate">deactivate</string>
+    <string name="later">later</string>
+    <string name="recommendation_picked_widgets_title">Picked Widgets</string>
+    <string name="more">More</string>
+    <string name="to_store">to store</string>
+    <string name="password">Password</string>
+    <string name="exception_invalid_credentials_title">Invalid Credentials</string>
+    <string name="exception_invalid_credentials_msg">You have entered invalid credentials: %s</string>
+    <string name="exception_email_title">Email error</string>
+    <string name="exception_email_in_use_title">Email already in use</string>
+    <string name="exception_email_msg">Error : %s</string>
+    <string name="exception_weak_pswd_title">Password strength validation failed</string>
+    <string name="exception_weak_pswd_msg">The given password couldn\'t pass the strength verification: %s</string>
+    <string name="exception_user_disabled_title">User account blocked</string>
+    <string name="exception_user_disabled_msg">This account was blocked by an administrator or is currently disabled</string>
+    <string name="exception_user_not_found_msg">User \"%s\" was not found. You can create a new account if you want to.</string>
+    <string name="action_createnew_account">Create account</string>
+    <string name="exception_user_not_found_title">User not found</string>
+    <string name="auth_forgot_password">Reset password</string>
+    <string name="auth_reset_pswd_msg">An password reset email will be sent to the following email-adress:</string>
+    <string name="auth_reset_pswd_explanation">The email conatins a link to a password reset site. Please also check the spam folder. The trusted sender-email should be equal to <b>account-manager-noreply@raspberry-pi-ab274.firebaseapp.com</b></string>
+    <string name="auth_send_reset_pswd_email">Send reset email</string>
+    <string name="email_reset_succes">Email sent succesfully</string>
+    <string name="email_reset_error">Could not send reset email: %s</string>
+    <string name="reason_bad_experience">Bad experience with the software</string>
+    <string name="reason_login_issues">Issues while trying to log in</string>
+    <string name="reason_app_useless">The app is useless to me</string>
+    <string name="reason_missing_hardware">I don\'t have got the required hardware (such as AR-lasses etc.)</string>
+    <string name="reason_other">Other...</string>
+    <string name="reason_header">Why are you leaving us?</string>
+    <string name="leave_action_activity">Do you want to terminate this session?</string>
+    <string name="help_hint_vertical_plane_detection_title">Vertical surface detection</string>
+    <string name="help_hint_vertical_plane_detection_msg">This app supports vertical plane detection. To make it work, you should search for remarkable surfaces such as brick-walls, or walls with images, posterrs etc. Detected walls will show the same indicator as horizontal detected surfaces.</string>
+    <string name="licenses">Licenses</string>
+    <string name="errtype_not_installed">The ArCore-Application is missing on this device. PLease visit Google Play, install Google ArCore and retry.</string>
+    <string name="errtype_arcore_apk_too_old">The installed version arcore is outdated to  be used with this app. Please ensure that the newest version of ArCore is installed and retry.</string>
+    <string name="errtype_sdk_too_old">The SDK is outdated for the installed version of ArCore. Please ensure that the newest version of friday is installed. If this problem persists, you can try to contact us or wait until this app recieves an update.</string>
+    <string name="errtype_device_incompatible">Your device is incompatible with ArCore.</string>
+    <string name="mic_hint">Say \"friday\"</string>
+    <string name="asset_loader_loading">Loading data...</string>
+    <string name="asset_loader_loading_success">Ready</string>
+    <string name="err_assets_not_loaded">Voice assistant loading in progress</string>
+    <string name="pref_devmode">Developer mode</string>
+    <string name="pref_devmode_show_changelog">Always show changelog at appstart</string>
+    <string name="err_missing_permissions">Missing permissions</string>
+    <string name="err_unable_to_load_speech_assets">Could not load speech assets</string>
+    <string name="err_following_permissions_required">Friday requires following permissions:</string>
+    <string name="err_permission_need_explanation">We need these permissions to provide basic features.</string>
+    <string name="wizard_welcome_descr">This wizard will guide you through the setup of friday</string>
+    <string name="project_friday">Project friday</string>
+    <string name="terms_of_use">Terms of use</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="request_id_token" translatable="false">993428557619-umbmutm9i238kmtth7vcoa4nhfedvemg.apps.googleusercontent.com</string>
+    <string name="request_permissions">Request permissions</string>
+    <string name="grant_permission">Grant</string>
+    <string name="req_cam_retionale_title">Camera</string>
+    <string name="req_cam_rationale">The camera permission is needed to use fridays main feature: The AR-mode</string>
+    <string name="req_mic_rationale_title">Microphone</string>
+    <string name="req_files_rationale_title">File system</string>
+    <string name="req_mic_rationale">The mircophone is used to be able to use the voice assistant.</string>
+    <string name="permissions_required">These permissions are required to use this app.</string>
+    <string name="perms_granted">All needed permissions are granted.</string>
+>>>>>>> luke
 </resources>

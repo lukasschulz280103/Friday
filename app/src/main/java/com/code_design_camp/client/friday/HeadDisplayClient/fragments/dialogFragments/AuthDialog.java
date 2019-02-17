@@ -1,6 +1,7 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments;
 
 
+<<<<<<< HEAD
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DownloadManager;
@@ -11,10 +12,16 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+=======
+import android.app.Dialog;
+import android.os.Bundle;
+import android.util.Log;
+>>>>>>> luke
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+<<<<<<< HEAD
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -77,6 +84,33 @@ public class AuthDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mActivity = getActivity();
+=======
+import android.widget.ImageButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.DefaultSigninFragment;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.list.DashboardSimpleItem;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
+
+
+public class AuthDialog extends DialogFragment {
+    private DefaultSigninFragment signinFragment;
+    private OnAuthCompletedListener mOnAuthListener;
+
+    ImageButton.OnClickListener dismissdialog = view -> mOnAuthListener.onCanceled();
+
+    public AuthDialog(){
+        signinFragment = new DefaultSigninFragment();
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+>>>>>>> luke
     }
 
     /**
@@ -90,19 +124,33 @@ public class AuthDialog extends DialogFragment {
         // remove the dialog title, but you must call the superclass to get the Dialog.
         Log.d("AuthDialog", "oncreatedialog getDialog = " + getDialog());
         Log.d("AuthDialog", "onCreateDialog");
+<<<<<<< HEAD
         dialog = super.onCreateDialog(savedInstanceState);
+=======
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+>>>>>>> luke
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
     }
 
+<<<<<<< HEAD
     public void setOnAuthListener(onAuthCompletedListener mOnAuthListener) {
         this.mOnAuthListener = mOnAuthListener;
+=======
+    public OnAuthCompletedListener getOnAuthListener() {
+        return signinFragment.getmOnAuthCompletedListener();
+    }
+
+    public void setOnAuthListener(OnAuthCompletedListener mOnAuthListener) {
+        signinFragment.setOnAuthCompletedListener(mOnAuthListener);
+>>>>>>> luke
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+<<<<<<< HEAD
         Log.d("AuthDialog","getDialog = "+getDialog());
         Log.d("AuthDialog","Creating auth dialog");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -248,5 +296,23 @@ public class AuthDialog extends DialogFragment {
 
     public interface onAuthCompletedListener {
         void onAuthCompleted();
+=======
+        View v = inflater.inflate(R.layout.signin_layout, container, false);
+        ImageButton dismissbtn = v.findViewById(R.id.close_signin_dialog);
+        dismissbtn.setOnClickListener(dismissdialog);
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.signin_fragment_container, signinFragment).commit();
+    }
+
+    public interface OnAuthCompletedListener {
+        void onAuthCompleted();
+        void onCanceled();
+>>>>>>> luke
     }
 }
