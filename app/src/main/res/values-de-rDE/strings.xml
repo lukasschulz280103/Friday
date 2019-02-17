@@ -45,7 +45,11 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_title_display_name">Nutzername</string>
     <string name="sign_out">Abmelden</string>
+<<<<<<< HEAD
     <string name="more_sync_settings">Mehr Synchronisationseinstellungen</string>
+=======
+    <string name="more_sync_settings">Synchronisation</string>
+>>>>>>> luke
     <string name="delete_account">Account löschen</string>
     <string name="confirm_signout_title">Abmelden</string>
     <string name="confirm_signout_message">Wollen sie sich wirklich abmelden?</string>
@@ -108,7 +112,11 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="title_activity_edit_vr">Layout Editor</string>
     <string name="pref_header_info">Info</string>
+<<<<<<< HEAD
     <string name="info_phrase_love">Made with ❤ in 2018</string>
+=======
+    <string name="info_phrase_love">© 2018 Stark Industries</string>
+>>>>>>> luke
     <string name="locale_sys">Systemsprache(%s)</string>
     <string name="network_error_title_short">Keine Verbindung</string>
     <string name="version_update">Update %s</string>
@@ -117,4 +125,100 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="uninstall_old_body">Sie müssen die alte Beta-Version von friday zuerst deinstallieren, um mit der Nutzung dieser Version frotzufahren. \n Dies ist nötig, da grundlegende Änderungen an der App vorgenommen wurden. \n\n <b>Bei zukünftigen Versionen ist dieser Schritt nicht mehr erforderlich.</b></string>
     <string name="help">Hilfe</string>
     <string name="layout_edit_title">Layout Editor</string>
+<<<<<<< HEAD
+=======
+    <string name="auto_sync">Automatisch Account synchronisieren</string>
+    <string name="auto_check_update">Automatisch nach Updates suchen</string>
+    <string name="theme_dialog_title">Theme auswählen</string>
+    <string name="design">Design</string>
+    <string name="select_theme">Theme auswählen</string>
+    <string name="theme">Theme</string>
+    <string name="update_notif_channel_descr">Dier Channel wird genutzt, um über neue Updates zu benachrichtigen</string>
+    <string name="app_update_title">Friday Update</string>
+    <string name="app_update_description">Friday kann jetzt auf %s geupdated werden</string>
+    <string name="store_flag_widget">Melden</string>
+    <string name="store_add_wishlist">Auf meine Liste setzen</string>
+    <string name="store_detail_review_header">Bewertungen</string>
+    <string name="store_download">Herunterladen</string>
+    <string name="store_detail_update_notes">Update-Info</string>
+    <string name="store_add_review">Bewertung hinzufügen</string>
+    <string name="store_detail_version">Version %s</string>
+    <string name="theme_default">Standart Design</string>
+    <string name="theme_pink">Pink</string>
+    <string name="theme_magenta">Lila</string>
+    <string name="theme_blue">Blau</string>
+    <string name="theme_green">Grün</string>
+    <string name="theme_red">Rot</string>
+    <string name="theme_dark">Nacht</string>
+    <string name="theme_error">Design konnte nicht angewendet werden. Um die Änderungen zu sehen, starten sie bitte die app neu.</string>
+    <string name="save_success">Gespeichert</string>
+    <string name="info">Info</string>
+    <string name="prefs_help_manually_check_update">Um manuell auf ausstehende Updates zu überprüfen, öffnen sie die \'Info\' Seite der App.</string>
+    <string name="look">Aussehen &amp; Benutzeroberfläche</string>
+    <string name="low_memory_title">Low memory warning</string>
+    <string name="low_memory_message">The device is running on low memory, which may causes performance lags in the VR-Mode. Please try to free up space in order to guarantee a good performance.</string>
+    <string name="energy_saver_warn_title">Energiesparmodus aktiviert</string>
+    <string name="energy_saver_warn_msg">Der Energiesparmodus muss deaktiviert werden, wenn die AR-Funktion genutzt wird</string>
+    <string name="deactivate">deaktivieren</string>
+    <string name="later">später</string>
+    <string name="recommendation_picked_widgets_title">Ausgewählte Widgets</string>
+    <string name="more">Mehr</string>
+    <string name="to_store">zum Store</string>
+    <string name="password">Passwort</string>
+    <string name="exception_invalid_credentials_title">Ungültige Angaben</string>
+    <string name="exception_invalid_credentials_msg">Ungültige Angaben wurde gefunden: %s</string>
+    <string name="exception_email_title">Emailfehler</string>
+    <string name="exception_email_in_use_title">Email bereits in benutz</string>
+    <string name="exception_email_msg">Fehler aufgetreten: %s</string>
+    <string name="exception_weak_pswd_title">Password zu schwach</string>
+    <string name="exception_user_disabled_title">Nutzeraccount ist geblockt</string>
+    <string name="exception_user_disabled_msg">Dieser Account wurde durch einen Administrator geperrt oder temporär deaktiviert</string>
+    <string name="exception_weak_pswd_msg">Das angegeben Passwort ist zu schwach: %s</string>
+    <string name="exception_user_not_found_msg">Nutzer \"%s\" wurde nicht gefunden. Sie können nun einen neuen Account erstellen.</string>
+    <string name="action_createnew_account">Neu registrieren</string>
+    <string name="exception_user_not_found_title">Nutzer nicht gefunden</string>
+    <string name="auth_forgot_password">Passwort zurücksetzen</string>
+    <string name="auth_reset_pswd_msg">Eine Email zur zurücksetzung ihres Passworts wird an folgende Adresse geschickt:</string>
+    <string name="auth_reset_pswd_explanation">Die Email enthält einen Link, über den sie ein neues Passwort eingeben können. Bevor sie auf den Link klicken, überprüfen sie, ob die Absenderadresse dieser Adresse gleicht: <b>account-manager-noreply@raspberry-pi-ab274.firebaseapp.com</b></string>
+    <string name="auth_send_reset_pswd_email">Mail senden</string>
+    <string name="email_reset_succes">Email wurde erfolgreich versendet</string>
+    <string name="email_reset_error">Zurücksetzungs-mail konnte nicht versandt werden: %s</string>
+    <string name="reason_bad_experience">Schlechte Erfahrung mit der Software</string>
+    <string name="reason_login_issues">Probleme bei Anmeldeversuchen</string>
+    <string name="reason_app_useless">Für mich ist diese App nutzlos</string>
+    <string name="reason_missing_hardware">Mir fehlt die benötigte Hardware (wie zum Beispiel eine AR-Brille)</string>
+    <string name="reason_other">Andere...</string>
+    <string name="reason_header">Warum verlässt du uns?</string>
+    <string name="leave_action_activity">Wollen sie die Sitzung beenden?</string>
+    <string name="help_hint_vertical_plane_detection_msg">Diese App unterstützt vertikale Flächenerkennung. Sehen sie sich dazu nach vertikalen Flächen mit auffäligen Texturen.</string>
+    <string name="help_hint_vertical_plane_detection_title">Vertikale Flächenerkennung</string>
+    <string name="licenses">Lizenzen</string>
+    <string name="errtype_not_installed">Die benötigte App ArCore ist nicht installiert. Bitte installieren sie Google ArCore aus dem PlayStore und wiederholen sie den Versuch.</string>
+    <string name="errtype_arcore_apk_too_old">Die installierte Version von ArCore ist veraltet. Bitte überprüfen sie, ob eine neue Version installierbar ist, falls ja installieren sie diese und wiederholen sie den Vorgang.</string>
+    <string name="errtype_sdk_too_old">Die genutzte SDK-Version ist zu alt. Bitte überprüfen sie, ob friday auf die neueste Version aktualisiert ist. Sollte das Problem weiterhin bestehen, können sie versuchen uns zu kontaktieren. Dieser Fehler beruht wahrscheinlich nicht auf ihrem Gerät und wird demnaächst behoben.</string>
+    <string name="errtype_device_incompatible">Dieses Gerät ist mit der installierten Version von ArCore nicht kompatibel.</string>
+    <string name="mic_hint">Sage \"friday\"</string>
+    <string name="asset_loader_loading">Lade Daten</string>
+    <string name="asset_loader_loading_success">Bereit</string>
+    <string name="err_assets_not_loaded">Sprachdaten werden geladen</string>
+    <string name="pref_devmode">Entwicklermodus</string>
+    <string name="pref_devmode_show_changelog">Changelog beim Appstart zeigen</string>
+    <string name="err_missing_permissions">Fehlende Zugriffsberechtigungen</string>
+    <string name="err_unable_to_load_speech_assets">Sprachdaten konnten nicht geladen werden</string>
+    <string name="err_following_permissions_required">Friday benötigt folgende Berechtigungen:</string>
+    <string name="err_permission_need_explanation">Diese Zugriffsberechtigungen werden benötigt, um grundlegende Funktionen anzubieten.</string>
+    <string name="wizard_welcome_descr">Dieser Guide führt sie durch den Setup von friday.</string>
+    <string name="project_friday">Projekt friday</string>
+    <string name="terms_of_use">Nutzungsbedinungen</string>
+    <string name="privacy_policy">Datenschutzbedingungen</string>
+    <string name="request_permissions">Berechtigungen erteilen</string>
+    <string name="grant_permission">Zugriff erlauben</string>
+    <string name="req_cam_retionale_title">Kamera</string>
+    <string name="req_cam_rationale">Die Kamera wird benötigt, damit das Hauptfeature, der AR-Modus, genutzt werden kann</string>
+    <string name="req_mic_rationale_title">Mikrofon</string>
+    <string name="req_files_rationale_title">Dateien und Speicher</string>
+    <string name="req_mic_rationale">Das Mikrofon wird genutzt, um den friday-Sprachassistenten bereitzustellen</string>
+    <string name="permissions_required">Diese Berechtigungen sind zwingend notwendig, um friday zu nutzen</string>
+    <string name="perms_granted">Alle benötigten Berechtigungen sind gegeben.</string>
+>>>>>>> luke
 </resources>
