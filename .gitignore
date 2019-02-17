@@ -18,4 +18,3 @@ captures/
 output.json
 obj/
 .externalNativeBuild
-*.lm
