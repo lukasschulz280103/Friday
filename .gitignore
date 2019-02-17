@@ -4,7 +4,6 @@ google-services.json
 *.ap_
 *.dex
 *.class
-*.lm
 bin/
 gen/
 local.properties
