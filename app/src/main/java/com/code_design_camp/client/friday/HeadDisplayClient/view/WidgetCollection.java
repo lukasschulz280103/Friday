@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
 /*
  * (C) Copyright 2018 Lukas Faber
  *
@@ -28,6 +30,7 @@ import java.util.List;
  *     Lukas Faber
  */
 
+>>>>>>> luke
 public class WidgetCollection {
     private static final String LOGTAG = "WidgetCollection";
     private static List<String> widgetElementNames = Arrays.asList("TextWidget","DateWidget");

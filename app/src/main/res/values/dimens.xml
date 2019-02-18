@@ -1,9 +1,12 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="toolbarheight">56dp</dimen>
+<<<<<<< HEAD
+=======
     <dimen name="store_toolbarlayoutheight">180dp</dimen>
     <dimen name="store_rating_bar_width">60dp</dimen>
     <dimen name="store_rating_bar_height">10dp</dimen>
     <dimen name="list_item_spacing">16dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>
+>>>>>>> luke
 </resources>

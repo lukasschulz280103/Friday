@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Remember that this layout will bre RTL forced, which may make this layou look a bit weird in the resources -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
+=======
     xmlns:app="http://schemas.android.com/apk/res-auto"
+>>>>>>> luke
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_fullscreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
+    tools:context=".FullscreenActionActivity">
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/app_back" />
+
+    <FrameLayout
+        android:id="@+id/vrcontent_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/vrcontent"
+            android:name="com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment"
+            class="com.code_design_camp.client.friday.HeadDisplayClient.fragments.VRContentFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_vrcontent" />
+=======
     tools:context=".ui.FullscreenActionActivity">
 
     <fragment
@@ -77,6 +103,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+>>>>>>> luke
     </FrameLayout>
 
 </FrameLayout>

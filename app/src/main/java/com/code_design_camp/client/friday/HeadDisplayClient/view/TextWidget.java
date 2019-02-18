@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+<<<<<<< HEAD
+=======
 /*
  * (C) Copyright 2018 Lukas Faber
  *
@@ -27,6 +29,7 @@ import androidx.annotation.NonNull;
  *     Lukas Faber
  */
 
+>>>>>>> luke
 class TextWidget extends Widget{
     private String text;
     private int textSize;
@@ -73,10 +76,13 @@ class TextWidget extends Widget{
     public void setTextColor(Color textColor) {
         this.textColor = textColor;
     }
+<<<<<<< HEAD
+=======
 
     public void setAlignment(int gravity_align) {
         newText.setGravity(gravity_align);
     }
+>>>>>>> luke
     public void createWidget() {
         newText.setText(text);
         newText.setTextColor(Color.WHITE);

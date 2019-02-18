@@ -17,6 +17,8 @@ import java.util.TimerTask;
 
 import androidx.annotation.NonNull;
 
+<<<<<<< HEAD
+=======
 /*
  * (C) Copyright 2018 Lukas Faber
  *
@@ -36,6 +38,7 @@ import androidx.annotation.NonNull;
  *     Lukas Faber
  */
 
+>>>>>>> luke
 public class DateWidget extends TextWidget{
     public static final int TYPE_SIMPLE = 0;
     public static final int TYPE_EXPANDED = 1;

@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+<<<<<<< HEAD
+public class Widget {
+=======
 /*
  * (C) Copyright 2018 Lukas Faber
  *
@@ -32,6 +35,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 
 public class Widget {
     private boolean isCentered = false;
+>>>>>>> luke
     private View widgetView;
     private int left;
     private int top;
@@ -49,6 +53,10 @@ public class Widget {
     }
 
     Widget(Context context, @NonNull ViewGroup parent, int left, int top){
+<<<<<<< HEAD
+        this.widgetView = widgetView;
+=======
+>>>>>>> luke
         this.parent = parent;
         this.left = left;
         this.top = top;
@@ -76,19 +84,25 @@ public class Widget {
         set.clone(mConstraintLayout);
         set.connect(widgetView.getId(),ConstraintSet.START,mConstraintLayout.getId(),ConstraintSet.START,this.getLeft());
         set.connect(widgetView.getId(),ConstraintSet.TOP,mConstraintLayout.getId(),ConstraintSet.TOP,this.getTop());
+<<<<<<< HEAD
+=======
         if (isCentered) {
             set.connect(widgetView.getId(), ConstraintSet.END, mConstraintLayout.getId(), ConstraintSet.END, 0);
             set.centerVertically(widgetView.getId(), mConstraintLayout.getId());
             set.centerHorizontally(widgetView.getId(), mConstraintLayout.getId());
         }
+>>>>>>> luke
         set.applyTo(mConstraintLayout);
         Log.d("WidgetClass","Creating widget from view:"+widgetView);
     }
 
+<<<<<<< HEAD
+=======
     void setIsCentered(boolean isCentered) {
         this.isCentered = isCentered;
     }
 
+>>>>>>> luke
     public ViewGroup getParent() {
         return parent;
     }

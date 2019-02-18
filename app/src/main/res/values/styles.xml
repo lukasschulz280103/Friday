@@ -8,13 +8,48 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorError">@color/colorError</item>
         <item name="colorSecondary">@color/colorSecondary</item>
+<<<<<<< HEAD
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+=======
         <item name="android:fontFamily">@font/questrial_regular</item>
     </style>
+>>>>>>> luke
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
+<<<<<<< HEAD
+    <style name="AppTheme.AppBarOverlay" parent="Base.Theme.MaterialComponents.Light.DarkActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="SplashScreenTranslucent" parent="AppTheme.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="roboto">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="PageTitle" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">60sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="HeaderMiddle" parent="PageTitle">
+        <item name="android:textSize">20sp</item>
+
+    </style>
+
+=======
     <style name="AppTheme.Custom" parent="AppTheme" />
 
     <style name="AppTheme.Custom.Magenta">
@@ -100,6 +135,7 @@
     <style name="Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:typeface">serif</item>
     </style>
+>>>>>>> luke
     <style name="FullscreenTheme" parent="AppTheme.NoActionBar">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
@@ -113,6 +149,8 @@
         <item name="android:backgroundTint">@android:color/transparent</item>
     </style>
 
+<<<<<<< HEAD
+=======
     <style name="PreferenceActivityStyle" parent="AppTheme">
         <item name="android:preferenceStyle">@style/PreferenceStyle</item>
     </style>
@@ -121,6 +159,7 @@
         <item name="iconSpaceReserved">false</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
+>>>>>>> luke
     <style name="FullscreenActionBarStyle" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>
@@ -163,12 +202,17 @@
     <style name="ProfilePageItem.Title" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:gravity">center</item>
         <item name="android:padding">8dp</item>
+<<<<<<< HEAD
+=======
         <item name="android:fontFamily">@font/questrial_regular</item>
+>>>>>>> luke
     </style>
 
     <style name="ProfilePageItemIcon">
         <item name="android:layout_height">match_parent</item>
     </style>
+<<<<<<< HEAD
+=======
 
     <style name="Base.Theme.MaterialComponents.Dialog.CustomAnimated">
         <item name="android:padding">0dp</item>
@@ -224,4 +268,5 @@
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:textAllCaps">true</item>
     </style>
+>>>>>>> luke
 </resources>
