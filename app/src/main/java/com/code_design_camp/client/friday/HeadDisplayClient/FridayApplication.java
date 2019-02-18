@@ -1,5 +1,11 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
+<<<<<<< HEAD
+import android.app.Application;
+import android.util.Log;
+
+public class FridayApplication extends Application {
+=======
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Application;
@@ -44,10 +50,13 @@ public class FridayApplication extends Application {
     public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
     public SpeechRecognizer speechtotextrecognizer;
     public OnAssetsLoadedListener mOnAssetLoadedListener;
+>>>>>>> luke
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d("friday", "Initializing firebaseApp");
+<<<<<<< HEAD
+=======
         createNotificationChannels();
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("check_update_auto", false)) {
             UpdateUtil updateUtil = new UpdateUtil(this);
@@ -124,5 +133,6 @@ public class FridayApplication extends Application {
 
     public class Jobs {
         public static final int JOB_FEEDBACK = 1;
+>>>>>>> luke
     }
 }

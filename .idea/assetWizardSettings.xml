@@ -3,6 +3,8 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+<<<<<<< HEAD
+=======
         <entry key="imageWizard">
           <value>
             <PersistentState>
@@ -137,6 +139,7 @@
             </PersistentState>
           </value>
         </entry>
+>>>>>>> luke
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -152,7 +155,11 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
+<<<<<<< HEAD
+                                      <entry key="url" value="jar:file:/D:/Programmieren/Android%20Studio%20CANARY/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_invert_colors_black_24dp.xml" />
+=======
                                       <entry key="url" value="jar:file:/D:/Programmieren/Android%20Studio%20BETA/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_check_black_24dp.xml" />
+>>>>>>> luke
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -162,8 +169,12 @@
                         </option>
                         <option name="values">
                           <map>
+<<<<<<< HEAD
+                            <entry key="outputName" value="ic_theme" />
+=======
                             <entry key="color" value="00ff04" />
                             <entry key="outputName" value="ic_check_green_24dp" />
+>>>>>>> luke
                             <entry key="sourceFile" value="C:\Users\Lukas" />
                           </map>
                         </option>

@@ -9,8 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+<<<<<<< HEAD
+import com.code_design_camp.client.friday.HeadDisplayClient.MainActivity;
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
+=======
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
+>>>>>>> luke
 import com.google.android.material.button.MaterialButton;
 
 import androidx.annotation.NonNull;

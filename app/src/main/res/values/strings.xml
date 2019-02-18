@@ -72,7 +72,11 @@
 
     <string name="switch_feedback_info">Add additional info</string>
     <string name="sign_out">Sign out</string>
+<<<<<<< HEAD
+    <string name="more_sync_settings">More sync settings</string>
+=======
     <string name="more_sync_settings">Synchronization</string>
+>>>>>>> luke
     <string name="delete_account">Delete Account</string>
     <string name="confirm_signout_title">Sign out</string>
     <string name="confirm_signout_message">Do you really want to sign out?</string>
@@ -144,7 +148,11 @@
     <string name="uninstall_old_body">You can\'t use this version of friday with an older version installed at the same time. \n \n <b>You only have to do this once.</b></string>
     <string name="layout_edit_title">Layout Editor</string>
     <string name="help">Help</string>
+<<<<<<< HEAD
+    <string name="theme">Theme</string>
+=======
     <string name="design">Design</string>
+>>>>>>> luke
     <string name="theme_dialog_title">Select theme</string>
     <string-array name="theme_entry_values">
         <item>Light Theme</item>
@@ -160,6 +168,8 @@
         <item>orange</item>
         <item>blue</item>
     </string-array>
+<<<<<<< HEAD
+=======
     <string name="auto_sync">Synchronize with cloud</string>
     <string name="auto_check_update">Automatically check for updates</string>
     <string name="theme">Theme</string>
@@ -255,4 +265,5 @@
     <string name="req_mic_rationale">The mircophone is used to be able to use the voice assistant.</string>
     <string name="permissions_required">These permissions are required to use this app.</string>
     <string name="perms_granted">All needed permissions are granted.</string>
+>>>>>>> luke
 </resources>
