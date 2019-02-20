@@ -51,11 +51,7 @@
         android:layout_marginBottom="32dp"
         android:gravity="center"
         android:text="@string/made_by"
-<<<<<<< HEAD
-        app:layout_constraintBottom_toTopOf="@+id/info_activity_feedback"
-=======
         app:layout_constraintBottom_toTopOf="@+id/bottom_btns"
->>>>>>> luke
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
@@ -72,26 +68,13 @@
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/info_version" />
-
-<<<<<<< HEAD
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/info_activity_feedback"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-=======
     <LinearLayout
         android:id="@+id/bottom_btns"
->>>>>>> luke
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-<<<<<<< HEAD
-        android:text="@string/app_feedback"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-=======
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

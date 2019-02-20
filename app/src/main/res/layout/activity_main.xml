@@ -7,20 +7,13 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-<<<<<<< HEAD
-    tools:context=".MainActivity">
-=======
     tools:context=".ui.MainActivity">
->>>>>>> luke
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/viewflipperparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
-
-<<<<<<< HEAD
-=======
         <LinearLayout
             android:id="@+id/asset_loading_indicator_conatiner"
             android:layout_width="wrap_content"
