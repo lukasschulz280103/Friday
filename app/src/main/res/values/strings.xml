@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">friday</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="leave_app">Do you really want to leave the app?</string>
     <string name="action_leave">Leave</string>
     <string name="nav_main_profile">Profile</string>
@@ -10,7 +9,6 @@
     <string name="hint_rotate_phone">To use this app, rotate your phone to landscape mode.</string>
     <string name="friday_use_help">To use firday, you have to put this phone into the provided case.</string>
     <string name="nav_history_short">history</string>
-    <string name="nav_profile_lower">profile</string>
     <string-array name="pref_language_entries">
         <item>sys</item>
         <item>de</item>
@@ -88,7 +86,7 @@
     <string name="warning_auto_account_creation">If no account is existant, we wil automatically create a new one.</string>
     <string name="delete_dialog_loading_text">Deleting Account...</string>
     <string name="pref_header_info">Info</string>
-    <string name="info_phrase_love">© 2018 Stark Industries</string>
+    <string name="info_phrase_love" translatable="false">© 2018 Stark Industries</string>
     <string name="made_by"><b>by \nLukas Faber \nLukas Schmitz</b></string>
     <string name="checking_version">Checking...</string>
     <string name="feature_soon">This feature is non-existant in the current version</string>
@@ -99,11 +97,10 @@
     <string name="info_update_to">Update to %s</string>
     <string name="check_update_error">Could not check for update</string>
     <string name="note_not_signed_in">You are not signed in.</string>
-    <string name="email_signin_not_supported">We currently don\'t support Email authentication.</string>
     <string name="new_file_attached">Attached file %s</string>
     <string name="changed_attached_file">Attached file changed to %s</string>
     <string name="smth_went_wrong">Something went wrong :(</string>
-    <string name="feedback_submit_success">Submitted feedack succesfully.\nThank you!</string>
+    <string name="feedback_submit_success">Submitted feedack succesfully. Thank you!</string>
     <string name="feedback_submit_image_upload">Uploading attached images...</string>
     <string name="textwidget_exmple" translatable="false">This is an example of the TextWidget.</string>
     <string name="feedback_submit_logfiles_upload">Uploading LogFiles...</string>
@@ -136,7 +133,6 @@
     </string>
     <string name="app_language">Language</string>
     <string name="changelog">Changelog</string>
-    <string name="locale_sys">System language(%s)</string>
     <string name="network_error_title_short">No connection</string>
     <string name="version_update">Update %s</string>
     <string name="missing_inputs">You either need to allow the collection of device usage data or specify your feedback in the feedback body.</string>
@@ -161,13 +157,12 @@
         <item>blue</item>
     </string-array>
     <string name="auto_sync">Synchronize with cloud</string>
-    <string name="auto_check_update">Automatically check for updates</string>
     <string name="theme">Theme</string>
     <string name="select_theme">Select Theme</string>
     <string name="update_notif_channel_descr">This channel is used to notify about new Updates.</string>
-    <string name="app_update_title">Friday Update</string>
-    <string name="app_update_description">Friday is ready to update to %s !</string>
-    <string name="store_flag_widget">Flag</string>
+    <string name="app_update_title">friday Update</string>
+    <string name="app_update_description">friday is ready to update to %s !</string>
+    <string name="store_flag_widget">flag</string>
     <string name="store_add_wishlist">Add to list</string>
     <string name="store_download">Download</string>
     <string name="store_detail_review_header">Reviews</string>
@@ -192,7 +187,7 @@
     <string name="low_memory_title">Low memory warning</string>
     <string name="low_memory_message">The device is running on low memory, which may causes performance lags in the VR-Mode. Please try to free up space in order to guarantee a good performance.</string>
     <string name="energy_saver_warn_title">Energy saver is on</string>
-    <string name="energy_saver_warn_msg">You need to turn of the Energysaver if you want to use the AR-Feature</string>
+    <string name="energy_saver_warn_msg">You need to turn of the Energysaver if you want to use the AR-feature</string>
     <string name="deactivate">deactivate</string>
     <string name="later">later</string>
     <string name="recommendation_picked_widgets_title">Picked Widgets</string>
@@ -231,7 +226,7 @@
     <string name="errtype_arcore_apk_too_old">The installed version arcore is outdated to  be used with this app. Please ensure that the newest version of ArCore is installed and retry.</string>
     <string name="errtype_sdk_too_old">The SDK is outdated for the installed version of ArCore. Please ensure that the newest version of friday is installed. If this problem persists, you can try to contact us or wait until this app recieves an update.</string>
     <string name="errtype_device_incompatible">Your device is incompatible with ArCore.</string>
-    <string name="mic_hint">Say \"friday\"</string>
+    <string name="mic_hint">Say \"Hey friday\"</string>
     <string name="asset_loader_loading">Loading data...</string>
     <string name="asset_loader_loading_success">Ready</string>
     <string name="err_assets_not_loaded">Voice assistant loading in progress</string>
@@ -252,8 +247,12 @@
     <string name="req_cam_rationale">The camera permission is needed to use fridays main feature: The AR-mode</string>
     <string name="req_mic_rationale_title">Microphone</string>
     <string name="req_files_rationale_title">File system</string>
-    <string name="req_mic_rationale">The mircophone is used to be able to use the voice assistant.</string>
+    <string name="req_mic_rationale">The mircophone is needed to be able to use the voice assistant.</string>
     <string name="permissions_required">These permissions are required to use this app.</string>
     <string name="perms_granted">All needed permissions are granted.</string>
->>>>>>> luke
+    <string name="search">Search</string>
+    <string name="store">Store</string>
+    <string name="store_soon">We are currently onto developing the store!</string>
+    <string name="auto_check_update">Automatically check for updates</string>
+    >>>>>>> luke
 </resources>

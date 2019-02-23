@@ -8,7 +8,6 @@
     <string name="hint_rotate_phone">Um diese App zu nutzen muss das Handy sich im Horizontalmodus befinden.</string>
     <string name="friday_use_help">Um friday zu nutzen musst du dir die vorbereitete Brille aufsetzen.</string>
     <string name="nav_history_short">verlauf</string>
-    <string name="nav_profile_lower">profil</string>
     <string name="app_back">Zurück</string>
     <string name="dismiss_btn_seconds">Verstanden und Nutzung bestätigen (%d)</string>
     <string name="dismiss_btn">Verstanden und Nutzung bestätigen</string>
@@ -69,7 +68,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="info_update_to">Aktualisieren auf %s</string>
     <string name="check_update_error">Überprüfung fehlgeschlagen</string>
     <string name="note_not_signed_in">Sie sind nicht angemeldet</string>
-    <string name="email_signin_not_supported">Derzeit werden Emailadressen als Anmeldemethode nicht unterstützt.</string>
     <string name="new_file_attached">Anhang %s hinzugefügt</string>
     <string name="changed_attached_file">Anhang geändet zu %s</string>
     <string name="smth_went_wrong">Etwas ist schief gelaufen</string>
@@ -106,11 +104,8 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     </string>
     <string name="app_language">Sprache</string>
     <string name="changelog">Changelog</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="title_activity_edit_vr">Layout Editor</string>
     <string name="pref_header_info">Info</string>
-    <string name="info_phrase_love">© 2018 Stark Industries</string>
-    <string name="locale_sys">Systemsprache(%s)</string>
     <string name="network_error_title_short">Keine Verbindung</string>
     <string name="version_update">Update %s</string>
     <string name="missing_inputs">Sie müssen entweder Gerätedaten anhängen oder genauere Informationen angeben</string>
@@ -188,7 +183,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="errtype_arcore_apk_too_old">Die installierte Version von ArCore ist veraltet. Bitte überprüfen sie, ob eine neue Version installierbar ist, falls ja installieren sie diese und wiederholen sie den Vorgang.</string>
     <string name="errtype_sdk_too_old">Die genutzte SDK-Version ist zu alt. Bitte überprüfen sie, ob friday auf die neueste Version aktualisiert ist. Sollte das Problem weiterhin bestehen, können sie versuchen uns zu kontaktieren. Dieser Fehler beruht wahrscheinlich nicht auf ihrem Gerät und wird demnaächst behoben.</string>
     <string name="errtype_device_incompatible">Dieses Gerät ist mit der installierten Version von ArCore nicht kompatibel.</string>
-    <string name="mic_hint">Sage \"friday\"</string>
+    <string name="mic_hint">Sage \"Hey friday\"</string>
     <string name="asset_loader_loading">Lade Daten</string>
     <string name="asset_loader_loading_success">Bereit</string>
     <string name="err_assets_not_loaded">Sprachdaten werden geladen</string>
@@ -211,5 +206,8 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="req_mic_rationale">Das Mikrofon wird genutzt, um den friday-Sprachassistenten bereitzustellen</string>
     <string name="permissions_required">Diese Berechtigungen sind zwingend notwendig, um friday zu nutzen</string>
     <string name="perms_granted">Alle benötigten Berechtigungen sind gegeben.</string>
->>>>>>> luke
+    <string name="search">Suchen</string>
+    <string name="store">Store</string>
+    <string name="store_soon">Wir entwickeln derzeit einen Marktplatz</string>
+    >>>>>>> luke
 </resources>

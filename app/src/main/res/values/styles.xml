@@ -99,9 +99,7 @@
     <style name="Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="android:typeface">serif</item>
     </style>
->>>>>>> luke
     <style name="FullscreenTheme" parent="AppTheme.NoActionBar">
-        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
@@ -119,10 +117,6 @@
     <style name="PreferenceStyle" parent="Preference.Material">
         <item name="iconSpaceReserved">false</item>
         <item name="android:background">@color/colorPrimary</item>
-    </style>
->>>>>>> luke
-    <style name="FullscreenActionBarStyle" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:background">@color/black_overlay</item>
     </style>
 
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />

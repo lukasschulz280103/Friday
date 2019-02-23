@@ -12,6 +12,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -109,7 +110,7 @@ public class MainActivity extends FridayActivity {
                 case R.id.main_nav_dashboard:
                     vswitcher_main.setDisplayedChild(0);
                     break;
-                case R.id.main_nav_history:
+                case R.id.main_nav_store:
                     vswitcher_main.setDisplayedChild(2);
                     break;
                 case R.id.main_nav_profile:
@@ -290,5 +291,11 @@ public class MainActivity extends FridayActivity {
     public void goToStore(View v) {
         Intent i = new Intent(this, StoreDetailActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.store_default_toolbar, menu);
+        return true;
     }
 }
