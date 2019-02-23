@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    android:fillViewport="true">
 
-    <com.google.android.material.card.MaterialCardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        app:cardElevation="8dp">
+        android:layout_height="match_parent"
+        tools:context=".ui.MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/store_toolbar"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
-    </com.google.android.material.card.MaterialCardView>
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:cardElevation="8dp">
 
-</RelativeLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/store_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <fragment
+                android:id="@+id/main_store_fragment_featured"
+                android:name="com.code_design_camp.client.friday.HeadDisplayClient.store.fragments.StoreFeaturedFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

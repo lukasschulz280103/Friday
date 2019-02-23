@@ -23,6 +23,7 @@ import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
 public class FridayApplication extends Application {
     public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
+    public static final String LOGTAG_STORE = "FridayMarketplace";
     public SpeechRecognizer speechtotextrecognizer;
     public OnAssetsLoadedListener mOnAssetLoadedListener;
     @Override

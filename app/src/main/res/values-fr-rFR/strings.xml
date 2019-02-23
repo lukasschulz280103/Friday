@@ -180,15 +180,15 @@
 
         friday n\'assume aucune responsabilité pour les erreurs ou tout autre type de défaillance humaine causée par l\'utilisation de ce produit.
 
-        En utilisant ce produit, vous acceptez que cette application puisse contenir des informations erronées lors de l\'obtention d'informations de notre application, widgets, etc. Nous ne sommes pas responsables des informations transmises par des widgets tiers, ou des widgets qui utilisent des sources tierces, telles que des cartes ou des nouvelles.
+        En utilisant ce produit, vous acceptez que cette application puisse contenir des informations erronées lors de l\'obtention d\'informations de notre application, widgets, etc. Nous ne sommes pas responsables des informations transmises par des widgets tiers, ou des widgets qui utilisent des sources tierces, telles que des cartes ou des nouvelles.
 
         Nous ne collectons pas de données personnelles ou de données de votre téléphone, sauf dans les cas suivants:\n
-            \t<b>- Bug-reporting</b> : Afin d'améliorer constamment la qualité de notre service, nous collecterons des données sur votre utilisation de l'application (Quelles fonctionnalités vous utilisez, version android, nom du périphérique, version de l'application[, la fonctionnalité qui a provoqué le crash de l'application])
-              Vous pouvez désactiver le rapport de bogue dans les paramètres de l'application.
+            \t<b>- Bug-reporting</b> : Afin d\'améliorer constamment la qualité de notre service, nous collecterons des données sur votre utilisation de l\'application (Quelles fonctionnalités vous utilisez, version android, nom du périphérique, version de l\'application[, la fonctionnalité qui a provoqué le crash de l\'application])
+              Vous pouvez désactiver le rapport de bogue dans les paramètres de l\'application.
 
-            \t<b>- Fonctions intelligentes</b> : L'utilisateur a accepté l'utilisation des contacts, du service de localisation, de la caméra, du microphone, des notifications\n\n\n\n\n
+            \t<b>- Fonctions intelligentes:</b> L\'utilisateur a accepté l\'utilisation des contacts, du service de localisation, de la caméra, du microphone, des notifications\n\n\n\n\n
 
-        En cliquant sur <i>\"J'ai compris et j'accepte\"</i> vous acceptez de lire les conditions d'utilisation (ci-dessus) de notre politique de confidentialité et de les accepter.
+        En cliquant sur <i>\"J\'ai compris et j\'accepte\"</i> vous acceptez de lire les conditions d\'utilisation (ci-dessus) de notre politique de confidentialité et de les accepter.
     </string>
     <string name="uninstall_old_title">Désinstaller l\'ancienne version</string>
     <string name="uninstall_old_body">Vous ne pouvez pas utiliser cette version du friday avec une version plus ancienne installée en même temps. \\n \\n \\n <b>Vous n\'avez à le faire qu\'une seule fois. </b></string>
@@ -203,4 +203,5 @@
     <string name="warning_decline">Déclin</string>
     <string name="wizard_welcome_descr">Cet assistant vous guidera tout au long de la mise en place de l\'installation de friday.</string>
     <string name="app_friday_description">"friday est puissant. Nous transformons votre téléphone en un HeadUp Display Client compétent, compatible avec nos lunettes AR de haute qualité.         Utilisez \\\"Widgets\\\" pour convertir vendredi en assistant - affichez toutes les informations dont vous avez besoin, du simple texte au calendrier google sans même toucher votre appareil. "</string>
+    <string name="store_featured">En vedette</string>
 </resources>

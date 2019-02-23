@@ -217,5 +217,19 @@
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:textAllCaps">true</item>
     </style>
->>>>>>> luke
+
+    <style name="Store.Header" parent="AppIntroPageTitle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Store.Card"></style>
+
+    <style name="Store.Card.Title">
+        <item name="android:textAppearance">@style/Store.Header</item>
+    </style>
+
+    <style name="Store.Card.Title.Middle">
+        <item name="android:textSize">26sp</item>
+    </style>
 </resources>

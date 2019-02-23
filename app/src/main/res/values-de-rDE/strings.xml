@@ -209,5 +209,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="search">Suchen</string>
     <string name="store">Store</string>
     <string name="store_soon">Wir entwickeln derzeit einen Marktplatz</string>
+    <string name="store_featured">Top</string>
     >>>>>>> luke
 </resources>
