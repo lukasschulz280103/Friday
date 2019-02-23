@@ -2,8 +2,8 @@ package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -155,6 +155,7 @@ public class FullscreenActionActivity extends FridayActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
         setContentView(R.layout.activity_fullscreen_action);
         init();
         ActionBar actionBar = getSupportActionBar();
@@ -337,7 +338,9 @@ public class FullscreenActionActivity extends FridayActivity {
         super.onStop();
         recognizer.stop();
         recognizer.cancel();
+        recognizer.shutdown();
         speechtoTextRecognizer.stop();
+
     }
 
     @Override
