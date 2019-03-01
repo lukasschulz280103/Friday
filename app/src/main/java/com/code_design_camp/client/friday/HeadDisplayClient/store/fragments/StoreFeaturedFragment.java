@@ -2,7 +2,6 @@ package com.code_design_camp.client.friday.HeadDisplayClient.store.fragments;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.dialog.ErrorDialog;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.net.ConnectionFragment;
 import com.code_design_camp.client.friday.HeadDisplayClient.store.data.WidgetInfo;
 import com.code_design_camp.client.friday.HeadDisplayClient.store.pager.CardViewPagerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,10 +24,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Map;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class StoreFeaturedFragment extends Fragment {
     public static final String LOGTAG = FridayApplication.LOGTAG_STORE;
     private FirebaseFirestore storedatafs = FirebaseFirestore.getInstance();
@@ -45,7 +42,9 @@ public class StoreFeaturedFragment extends Fragment {
             viewPager.setAdapter(new CardViewPagerAdapter(getFragmentManager(), dataList));
         } else {
             Exception e = task.getException();
-            Log.e(LOGTAG, e.getMessage(), e);
+            ErrorDialog errorDialog = new ErrorDialog(getActivity(), R.drawable.ic_warning_black_24dp, e);
+            errorDialog.show();
+            ((ConnectionFragment) getParentFragment()).onError(e);
         }
     };
 

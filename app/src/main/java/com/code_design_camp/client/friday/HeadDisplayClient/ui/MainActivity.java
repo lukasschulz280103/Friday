@@ -26,7 +26,6 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -34,10 +33,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
+import com.code_design_camp.client.friday.HeadDisplayClient.activities.FridayActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.ChangelogDialogFragment;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.UninstallOldAppDialog;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.interfaces.OnAuthCompletedListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.ArCoreApk;
@@ -63,6 +65,11 @@ public class MainActivity extends FridayActivity {
     private TextSwitcher assetLoaderText;
     private ProgressBar loadingBar;
     FridayApplication.OnAssetsLoadedListener mAssetsLoadedListener = new FridayApplication.OnAssetsLoadedListener() {
+        @Override
+        public void onStartedLoadingAssets() {
+            assetLoaderLayout.setVisibility(View.VISIBLE);
+        }
+
         @Override
         public void onAssetLoaded() {
             loadSpeechRecognizer = true;
@@ -102,7 +109,7 @@ public class MainActivity extends FridayActivity {
             Toast.makeText(MainActivity.this,R.string.err_unable_to_load_speech_assets,Toast.LENGTH_LONG).show();
         }
     };
-    AuthDialog.OnAuthCompletedListener mOnAuthCompleted;
+    OnAuthCompletedListener mOnAuthCompleted;
     BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -177,7 +184,7 @@ public class MainActivity extends FridayActivity {
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         assert pm != null;
         if (pm.isPowerSaveMode()) {
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
             builder.setTitle(R.string.energy_saver_warn_title);
             builder.setMessage(R.string.energy_saver_warn_msg);
             builder.setPositiveButton(R.string.deactivate, (dialogInterface, i) -> startActivity(new Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)));
@@ -194,7 +201,7 @@ public class MainActivity extends FridayActivity {
     private void checkForFirstUse() {
         SharedPreferences settingsfile = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         if (settingsfile.getBoolean("isFirstUse", true)) {
-            AlertDialog.Builder notifieffirstuse = new AlertDialog.Builder(MainActivity.this);
+            MaterialAlertDialogBuilder notifieffirstuse = new MaterialAlertDialogBuilder(MainActivity.this);
             notifieffirstuse.setTitle("Welcome to friday");
             notifieffirstuse.setMessage("Thank you for downloading friday.\n\nRemember that you are in a pre-release of our app - Some features may not work properly or this app will crash at some points.");
             notifieffirstuse.setPositiveButton(android.R.string.ok, null);
@@ -208,7 +215,8 @@ public class MainActivity extends FridayActivity {
     @Override
     public void onBackPressed() {
         if (isSigninShown) {
-            dismissSinginPrompt();
+            authDialogFragment.dismissDialog();
+            isSigninShown = false;
         } else {
             Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
                     .setAction(getString(R.string.action_leave), view -> finishAffinity()).show();
@@ -219,7 +227,7 @@ public class MainActivity extends FridayActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == FULLSCREEN_REQUEST_CODE && data != null) {
             String errtype = data.getStringExtra("errtype");
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            MaterialAlertDialogBuilder alertDialog = new MaterialAlertDialogBuilder(this);
             alertDialog.setPositiveButton(android.R.string.ok, null);
             alertDialog.setNeutralButton(R.string.app_feedback, (dialogInterface, i) -> startActivity(new Intent(MainActivity.this, FeedbackSenderActivity.class)));
             switch (errtype) {
@@ -253,11 +261,7 @@ public class MainActivity extends FridayActivity {
         }
     }
 
-    public AuthDialog.OnAuthCompletedListener getOnAuthCompletedListener() {
-        return mOnAuthCompleted;
-    }
-
-    public void setmOnAuthCompleted(AuthDialog.OnAuthCompletedListener mOnAuthCompleted) {
+    public void setmOnAuthCompleted(OnAuthCompletedListener mOnAuthCompleted) {
         this.mOnAuthCompleted = mOnAuthCompleted;
         authDialogFragment.setOnAuthListener(mOnAuthCompleted);
     }
@@ -272,20 +276,16 @@ public class MainActivity extends FridayActivity {
         fragmentTransaction.replace(android.R.id.content, authDialogFragment).commit();
         isSigninShown = true;
     }
-    public void dismissSinginPrompt() {
-        Log.d("ONAUTHCOMPLETED", "SIGNIN PROMPT DISMISSED");
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
-                .replace(android.R.id.content, new Fragment())
-                .commitNow();
-        isSigninShown = false;
-    }
 
     public void dismissUninstallPrompt() {
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
                 .replace(android.R.id.content, new Fragment())
                 .commit();
+    }
+
+    public AuthDialog getAuthDialogFragment() {
+        return authDialogFragment;
     }
 
     public void goToStore(View v) {

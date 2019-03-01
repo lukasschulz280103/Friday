@@ -255,5 +255,6 @@
     <string name="store_soon">We are currently onto developing the store!</string>
     <string name="auto_check_update">Automatically check for updates</string>
     <string name="store_featured">Featured</string>
+    <string name="loading_err_title" translatable="false">:%s:</string>
     >>>>>>> luke
 </resources>
