@@ -16,14 +16,22 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.Toolbar;
+
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.Connectivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.LogUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.Validator;
+import com.code_design_camp.client.friday.HeadDisplayClient.activities.FridayActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.dialog.ProgressDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,13 +44,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.Toolbar;
 
 public class FeedbackSenderActivity extends FridayActivity {
     private static final String LOGTAG = "FeedbackSenderActivity";
@@ -60,7 +61,7 @@ public class FeedbackSenderActivity extends FridayActivity {
     Bitmap attachedImageBitmpap;
     View.OnLongClickListener showInfo = view -> {
         int id = view.getId();
-        AlertDialog.Builder infoDialog = new AlertDialog.Builder(FeedbackSenderActivity.this);
+        MaterialAlertDialogBuilder infoDialog = new MaterialAlertDialogBuilder(FeedbackSenderActivity.this);
         infoDialog.setPositiveButton(android.R.string.ok, null);
         switch (id) {
             case R.id.feedback_usage_data:
@@ -134,7 +135,7 @@ public class FeedbackSenderActivity extends FridayActivity {
                         return submitFeedback();
                     }
                 } else {
-                    AlertDialog.Builder errorui = new AlertDialog.Builder(this);
+                    MaterialAlertDialogBuilder errorui = new MaterialAlertDialogBuilder(this);
                     errorui.setTitle(R.string.network_error_title);
                     errorui.setMessage(R.string.error_network_missing_info);
                     errorui.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
@@ -199,7 +200,7 @@ public class FeedbackSenderActivity extends FridayActivity {
                 Log.e(LOGTAG, e.getLocalizedMessage(), e);
             }
         } else {
-            AlertDialog.Builder missinginputserror = new AlertDialog.Builder(this);
+            MaterialAlertDialogBuilder missinginputserror = new MaterialAlertDialogBuilder(this);
             missinginputserror.setMessage(R.string.missing_inputs);
             missinginputserror.setPositiveButton(android.R.string.ok, null);
             missinginputserror.create().show();

@@ -1,4 +1,5 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
+
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.NotificationChannel;
@@ -9,10 +10,9 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.NotificationUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.UpdateUtil;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class FridayApplication extends Application {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         Drawable warnicon = getDrawable(R.drawable.ic_warning_black_24dp);
         warnicon.setTint(getResources().getColor(R.color.highlight_orange));
         builder.setIcon(warnicon);
@@ -70,6 +70,9 @@ public class FridayApplication extends Application {
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
+                    if (mOnAssetLoadedListener != null) {
+                        mOnAssetLoadedListener.onStartedLoadingAssets();
+                    }
                     Assets assets = new Assets(FridayApplication.this);
                     File assetsDir = assets.syncAssets();
                     speechtotextrecognizer = SpeechRecognizerSetup.defaultSetup()
@@ -100,6 +103,7 @@ public class FridayApplication extends Application {
     }
 
     public interface OnAssetsLoadedListener {
+        void onStartedLoadingAssets();
         void onAssetLoaded();
         void onError();
     }

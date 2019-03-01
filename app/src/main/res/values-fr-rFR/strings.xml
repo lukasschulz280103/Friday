@@ -110,7 +110,7 @@
     <string name="nav_main_profile">Profil</string>
     <string name="network_error_title">Erreur réseau</string>
     <string name="network_error_title_short">Pas de connexion</string>
-    <string name="new_file_attached">Fichier hey.txt joint</string>
+    <string name="new_file_attached">Fichier %s joint</string>
     <string name="note_not_signed_in">Vous n\'êtes pas connecté.</string>
     <string name="page_profile_header_text">Salut, %s</string>
     <string name="password">mot de passe</string>

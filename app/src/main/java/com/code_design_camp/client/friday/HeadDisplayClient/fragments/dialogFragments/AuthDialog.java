@@ -11,16 +11,16 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.DefaultSigninFragment;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.interfaces.OnAuthCompletedListener;
 
 public class AuthDialog extends DialogFragment {
     private DefaultSigninFragment signinFragment;
-    private OnAuthCompletedListener mOnAuthListener;
 
-    ImageButton.OnClickListener dismissdialog = view -> mOnAuthListener.onCanceled();
+    ImageButton.OnClickListener dismissdialog = view -> dismissDialog();
 
     public AuthDialog(){
         signinFragment = new DefaultSigninFragment();
@@ -47,6 +47,13 @@ public class AuthDialog extends DialogFragment {
         signinFragment.setOnAuthCompletedListener(mOnAuthListener);
     }
 
+    public void dismissDialog() {
+        getFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
+                .replace(android.R.id.content, new Fragment())
+                .commitNow();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,12 +66,10 @@ public class AuthDialog extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.signin_fragment_container, signinFragment).commit();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.signin_fragment_container, signinFragment)
+                .commit();
     }
 
-    public interface OnAuthCompletedListener {
-        void onAuthCompleted();
-        void onCanceled();
-    }
 }

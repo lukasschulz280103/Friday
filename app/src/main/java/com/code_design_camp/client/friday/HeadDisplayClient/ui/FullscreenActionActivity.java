@@ -32,6 +32,8 @@ import androidx.palette.graphics.Palette;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.activities.FridayActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.HitResult;
@@ -325,7 +327,7 @@ public class FullscreenActionActivity extends FridayActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog confirmBack = new AlertDialog.Builder(this)
+        AlertDialog confirmBack = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.leave_action_activity)
                 .setPositiveButton(R.string.action_leave, (dialog, dinterface) -> finish())
                 .setNegativeButton(android.R.string.no, null)
