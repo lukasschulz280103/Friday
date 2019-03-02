@@ -15,10 +15,10 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
+import com.code_design_camp.client.friday.HeadDisplayClient.activities.FridayActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -165,7 +165,7 @@ public class LayoutEditorActivity extends FridayActivity {
                     writer.close();
                     Toast.makeText(this, R.string.save_success, Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
-                    AlertDialog.Builder errorBuilder = new AlertDialog.Builder(this);
+                    MaterialAlertDialogBuilder errorBuilder = new MaterialAlertDialogBuilder(this);
                     errorBuilder.setTitle("Invalid JSON");
                     errorBuilder.setMessage(e.getMessage());
                     errorBuilder.setPositiveButton(android.R.string.ok, null);

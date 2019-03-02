@@ -10,8 +10,12 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
+import com.code_design_camp.client.friday.HeadDisplayClient.activities.FridayActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,9 +38,6 @@ import org.json.JSONObject;
 
 import java.nio.charset.Charset;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 
 public class StoreDetailActivity extends FridayActivity {
     private static final String LOGTAG = "StoreDetailActivity";

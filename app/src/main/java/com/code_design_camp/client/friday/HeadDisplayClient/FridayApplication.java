@@ -1,13 +1,6 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
-<<<<<<< HEAD
-import android.app.Application;
-import android.util.Log;
-
-public class FridayApplication extends Application {
-=======
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -19,6 +12,7 @@ import android.util.Log;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.NotificationUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.UpdateUtil;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,36 +21,15 @@ import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
-/*
- * (C) Copyright 2018 Lukas Faber
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Contributors:
- *     Lukas Faber
- */
-
 public class FridayApplication extends Application {
     public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
+    public static final String LOGTAG_STORE = "FridayMarketplace";
     public SpeechRecognizer speechtotextrecognizer;
     public OnAssetsLoadedListener mOnAssetLoadedListener;
->>>>>>> luke
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d("friday", "Initializing firebaseApp");
-<<<<<<< HEAD
-=======
         createNotificationChannels();
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("check_update_auto", false)) {
             UpdateUtil updateUtil = new UpdateUtil(this);
@@ -68,7 +41,7 @@ public class FridayApplication extends Application {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
         Drawable warnicon = getDrawable(R.drawable.ic_warning_black_24dp);
         warnicon.setTint(getResources().getColor(R.color.highlight_orange));
         builder.setIcon(warnicon);
@@ -97,6 +70,9 @@ public class FridayApplication extends Application {
             @Override
             protected Object doInBackground(Object[] objects) {
                 try {
+                    if (mOnAssetLoadedListener != null) {
+                        mOnAssetLoadedListener.onStartedLoadingAssets();
+                    }
                     Assets assets = new Assets(FridayApplication.this);
                     File assetsDir = assets.syncAssets();
                     speechtotextrecognizer = SpeechRecognizerSetup.defaultSetup()
@@ -127,12 +103,12 @@ public class FridayApplication extends Application {
     }
 
     public interface OnAssetsLoadedListener {
+        void onStartedLoadingAssets();
         void onAssetLoaded();
         void onError();
     }
 
     public class Jobs {
         public static final int JOB_FEEDBACK = 1;
->>>>>>> luke
     }
 }

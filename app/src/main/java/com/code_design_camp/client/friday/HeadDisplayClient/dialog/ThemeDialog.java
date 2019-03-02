@@ -25,6 +25,10 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * Displays a dialog to the user where he is able to choose one of six themes for friday
+ * @see Theme
+ */
 public class ThemeDialog extends DialogFragment {
     private Context context;
     private OnSelectedTheme mListener;

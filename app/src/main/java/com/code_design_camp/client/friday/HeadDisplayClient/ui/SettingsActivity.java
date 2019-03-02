@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
+import com.code_design_camp.client.friday.HeadDisplayClient.activities.FridayActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.preferenceFragments.MainSettingsFragment;
 
 public class SettingsActivity extends FridayActivity {
