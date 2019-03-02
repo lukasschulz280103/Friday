@@ -1,11 +1,14 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.store.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,16 +19,23 @@ import com.code_design_camp.client.friday.HeadDisplayClient.fragments.net.Connec
 import com.code_design_camp.client.friday.HeadDisplayClient.store.data.WidgetInfo;
 import com.code_design_camp.client.friday.HeadDisplayClient.store.pager.CardViewPagerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Shows the servers featured fragments.
+ * @see com.code_design_camp.client.friday.HeadDisplayClient.fragments.store.MainStoreFragment
+ */
 public class StoreFeaturedFragment extends Fragment {
     public static final String LOGTAG = FridayApplication.LOGTAG_STORE;
+    private Context context;
     private FirebaseFirestore storedatafs = FirebaseFirestore.getInstance();
     private DocumentReference storedata;
     private ArrayList<CollectionReference> dataList = new ArrayList<>();
@@ -41,9 +51,8 @@ public class StoreFeaturedFragment extends Fragment {
             }
             viewPager.setAdapter(new CardViewPagerAdapter(getFragmentManager(), dataList));
         } else {
-            Exception e = task.getException();
-            ErrorDialog errorDialog = new ErrorDialog(getActivity(), R.drawable.ic_warning_black_24dp, e);
-            errorDialog.show();
+            FirebaseFirestoreException e = (FirebaseFirestoreException) task.getException();
+            Log.d(LOGTAG,e.getClass().getName());
             ((ConnectionFragment) getParentFragment()).onError(e);
         }
     };
@@ -53,6 +62,12 @@ public class StoreFeaturedFragment extends Fragment {
     }
 
 
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

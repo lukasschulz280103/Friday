@@ -38,6 +38,7 @@ import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFrag
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.ChangelogDialogFragment;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.UninstallOldAppDialog;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.interfaces.OnAuthCompletedListener;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.store.MainStoreFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -142,6 +143,11 @@ public class MainActivity extends FridayActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        Theme theme = new Theme(this);
+        int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this));
+        findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex));
+        findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
+        
         vswitcher_main = findViewById(R.id.main_view_flipper);
         main_nav = findViewById(R.id.main_bottom_nav);
         lets_go = findViewById(R.id.start_actionmode);
@@ -197,7 +203,13 @@ public class MainActivity extends FridayActivity {
         assetLoaderText.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
         assetLoaderText.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
         assetLoaderText.setText(getString(R.string.asset_loader_loading));
+        //Initialize Store
+        MainStoreFragment storeFragment = new MainStoreFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.store_frag_container,storeFragment)
+                .commit();
     }
+
     private void checkForFirstUse() {
         SharedPreferences settingsfile = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         if (settingsfile.getBoolean("isFirstUse", true)) {

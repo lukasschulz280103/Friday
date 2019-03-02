@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title"
         style="@style/PageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,13 +23,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-
-        <fragment
-            android:id="@+id/store_fragment"
-            android:name="com.code_design_camp.client.friday.HeadDisplayClient.fragments.store.MainStoreFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        app:layout_constraintTop_toBottomOf="@+id/title">
     </FrameLayout>
 
 </LinearLayout>
