@@ -10,6 +10,12 @@ import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 
+/**
+ * A custom ProgressDialog.
+ * Androids internal {@link android.app.ProgressDialog} is deprecated due to the change of the material design guidelines.
+ * @see android.app.ProgressDialog
+ * @see <a href="material.io">Material guidelines</a>
+ */
 public class ProgressDialog extends AlertDialog {
     String msg;
     Context context;

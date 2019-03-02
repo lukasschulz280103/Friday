@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.DefaultSigninFragment;
-import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.AuthDialog;
+import com.code_design_camp.client.friday.HeadDisplayClient.fragments.interfaces.OnAuthCompletedListener;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.wizard.AcceptTerms;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.wizard.PermissionRequestFragment;
 import com.github.paolorotolo.appintro.AppIntro;
@@ -16,7 +16,7 @@ import com.github.paolorotolo.appintro.model.SliderPage;
 
 public class WizardActivity extends AppIntro {
 
-    AuthDialog.OnAuthCompletedListener onAuthCompletedListener = new AuthDialog.OnAuthCompletedListener() {
+    OnAuthCompletedListener onAuthCompletedListener = new OnAuthCompletedListener() {
         @Override
         public void onAuthCompleted() {
             nextButton.callOnClick();
@@ -51,6 +51,12 @@ public class WizardActivity extends AppIntro {
         addSlide(signin_fragment);
         addSlide(new PermissionRequestFragment());
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);

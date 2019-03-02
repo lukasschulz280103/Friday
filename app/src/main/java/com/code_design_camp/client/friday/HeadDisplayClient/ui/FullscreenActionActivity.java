@@ -2,8 +2,8 @@ package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +32,8 @@ import androidx.palette.graphics.Palette;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.activities.FridayActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.HitResult;
@@ -155,6 +157,7 @@ public class FullscreenActionActivity extends FridayActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
         setContentView(R.layout.activity_fullscreen_action);
         init();
         ActionBar actionBar = getSupportActionBar();
@@ -324,7 +327,7 @@ public class FullscreenActionActivity extends FridayActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog confirmBack = new AlertDialog.Builder(this)
+        AlertDialog confirmBack = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.leave_action_activity)
                 .setPositiveButton(R.string.action_leave, (dialog, dinterface) -> finish())
                 .setNegativeButton(android.R.string.no, null)
@@ -337,7 +340,9 @@ public class FullscreenActionActivity extends FridayActivity {
         super.onStop();
         recognizer.stop();
         recognizer.cancel();
+        recognizer.shutdown();
         speechtoTextRecognizer.stop();
+
     }
 
     @Override

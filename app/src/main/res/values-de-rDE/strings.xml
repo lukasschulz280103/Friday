@@ -5,10 +5,8 @@
     <string name="nav_main_profile">Profil</string>
     <string name="nav_main_history">Nutzungsverlauf</string>
     <string name="main_nav_dashboard">Übersicht</string>
-    <string name="hint_rotate_phone">Um diese App zu nutzen muss das Handy sich im Horizontalmodus befinden.</string>
     <string name="friday_use_help">Um friday zu nutzen musst du dir die vorbereitete Brille aufsetzen.</string>
     <string name="nav_history_short">verlauf</string>
-    <string name="nav_profile_lower">profil</string>
     <string name="app_back">Zurück</string>
     <string name="dismiss_btn_seconds">Verstanden und Nutzung bestätigen (%d)</string>
     <string name="dismiss_btn">Verstanden und Nutzung bestätigen</string>
@@ -45,9 +43,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="title_activity_settings">Einstellungen</string>
     <string name="pref_title_display_name">Nutzername</string>
     <string name="sign_out">Abmelden</string>
-<<<<<<< HEAD
-    <string name="more_sync_settings">Mehr Synchronisationseinstellungen</string>
-=======
     <string name="more_sync_settings">Synchronisation</string>
 >>>>>>> luke
     <string name="delete_account">Account löschen</string>
@@ -72,7 +67,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="info_update_to">Aktualisieren auf %s</string>
     <string name="check_update_error">Überprüfung fehlgeschlagen</string>
     <string name="note_not_signed_in">Sie sind nicht angemeldet</string>
-    <string name="email_signin_not_supported">Derzeit werden Emailadressen als Anmeldemethode nicht unterstützt.</string>
     <string name="new_file_attached">Anhang %s hinzugefügt</string>
     <string name="changed_attached_file">Anhang geändet zu %s</string>
     <string name="smth_went_wrong">Etwas ist schief gelaufen</string>
@@ -109,15 +103,8 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     </string>
     <string name="app_language">Sprache</string>
     <string name="changelog">Changelog</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="title_activity_edit_vr">Layout Editor</string>
     <string name="pref_header_info">Info</string>
-<<<<<<< HEAD
-    <string name="info_phrase_love">Made with ❤ in 2018</string>
-=======
-    <string name="info_phrase_love">© 2018 Stark Industries</string>
->>>>>>> luke
-    <string name="locale_sys">Systemsprache(%s)</string>
     <string name="network_error_title_short">Keine Verbindung</string>
     <string name="version_update">Update %s</string>
     <string name="missing_inputs">Sie müssen entweder Gerätedaten anhängen oder genauere Informationen angeben</string>
@@ -125,8 +112,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="uninstall_old_body">Sie müssen die alte Beta-Version von friday zuerst deinstallieren, um mit der Nutzung dieser Version frotzufahren. \n Dies ist nötig, da grundlegende Änderungen an der App vorgenommen wurden. \n\n <b>Bei zukünftigen Versionen ist dieser Schritt nicht mehr erforderlich.</b></string>
     <string name="help">Hilfe</string>
     <string name="layout_edit_title">Layout Editor</string>
-<<<<<<< HEAD
-=======
     <string name="auto_sync">Automatisch Account synchronisieren</string>
     <string name="auto_check_update">Automatisch nach Updates suchen</string>
     <string name="theme_dialog_title">Theme auswählen</string>
@@ -197,7 +182,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="errtype_arcore_apk_too_old">Die installierte Version von ArCore ist veraltet. Bitte überprüfen sie, ob eine neue Version installierbar ist, falls ja installieren sie diese und wiederholen sie den Vorgang.</string>
     <string name="errtype_sdk_too_old">Die genutzte SDK-Version ist zu alt. Bitte überprüfen sie, ob friday auf die neueste Version aktualisiert ist. Sollte das Problem weiterhin bestehen, können sie versuchen uns zu kontaktieren. Dieser Fehler beruht wahrscheinlich nicht auf ihrem Gerät und wird demnaächst behoben.</string>
     <string name="errtype_device_incompatible">Dieses Gerät ist mit der installierten Version von ArCore nicht kompatibel.</string>
-    <string name="mic_hint">Sage \"friday\"</string>
+    <string name="mic_hint">Sage \"Hey friday\"</string>
     <string name="asset_loader_loading">Lade Daten</string>
     <string name="asset_loader_loading_success">Bereit</string>
     <string name="err_assets_not_loaded">Sprachdaten werden geladen</string>
@@ -220,5 +205,21 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="req_mic_rationale">Das Mikrofon wird genutzt, um den friday-Sprachassistenten bereitzustellen</string>
     <string name="permissions_required">Diese Berechtigungen sind zwingend notwendig, um friday zu nutzen</string>
     <string name="perms_granted">Alle benötigten Berechtigungen sind gegeben.</string>
->>>>>>> luke
+    <string name="search">Suchen</string>
+    <string name="store">Store</string>
+    <string name="store_soon">Wir entwickeln derzeit einen Marktplatz</string>
+    <string name="store_featured">Top</string>
+    <string name="code_aborted">Operation unterbrochen. Wiederholen sie den Vorgang und kontaktieren sie uns, wenn dass Problem beständig bleibt.</string>
+    <string name="code_cancelled">Operation abgebrochen.</string>
+    <string name="code_data_loss">Ein Datenverlust wurde festgestellt. Versuchen sie es nocheinmal und kontaktieren sie den Support, falls das Problem bestehen bleibt.</string>
+    <string name="code_deadline_exceeded">Timeout: Die Antwort der Servers hat zu lange gedauert.</string>
+    <string name="code_exhausted">Nicht genügend Resourcen frei um Daten zu laden; Geben sie auf ihrem Handy Speicherplatz frei und versuchen sie es noch einmal.</string>
+    <string name="code_internal">Interner Fehler!\\nUnsere Entwickler wurden per automatischem Debug-Bericht informiert. Dieser Fehler liegt bei uns.</string>
+    <string name="code_invalid_arg">Ein ungültiges Argument wurde in der Anfrage übermittelt. Dieser Fehler liegt nicht bei ihnen.</string>
+    <string name="code_not_found">Beim Laden der Daten von dem Server ist ein Fehler aufgetreten. Dieser Fehler liegt bei uns. Eine Warnung wurde zu unseren Entwicklern geschickt.</string>
+    <string name="code_perm_denied">Zugriff verweigert. Dies hat mit Ihrem Konto zu tun. Dieser Fehler kann durch ein gesperrtes oder deaktiviertes Konto verursacht werden. Wenn dies nicht der Fall ist, wenden Sie sich an unseren Support.</string>
+    <string name="code_unauthenticated">Sie sind nicht angemeldet. Um diese Funktion zu verwenden, melden sie sich über \">Profil >Anmelden\" an un versuchen sie es erneut.</string>
+    <string name="code_unavailable">Service ist nicht erreichbar. Bitte überprüfen sie ihre Netzwerkverbindung und versuchen sie es später erneut.</string>
+    <string name="code_unknown">EIn unbekannter Fehler ist aufgetreten.</string>
+    >>>>>>> luke
 </resources>

@@ -13,7 +13,6 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -26,6 +25,7 @@ import com.code_design_camp.client.friday.HeadDisplayClient.preference.ThemeSele
 import com.code_design_camp.client.friday.HeadDisplayClient.service.FeedbackService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,7 +51,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         return true;
     };
     private Preference.OnPreferenceClickListener sign_out_click = preference -> {
-        AlertDialog.Builder confirm_signout = new AlertDialog.Builder(mActivity);
+        MaterialAlertDialogBuilder confirm_signout = new MaterialAlertDialogBuilder(mActivity);
         confirm_signout.setTitle(R.string.confirm_signout_title);
         confirm_signout.setMessage(R.string.confirm_signout_message);
         confirm_signout.setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
@@ -65,11 +65,11 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         return true;
     };
     private OnCompleteListener deletioncallback = new OnCompleteListener() {
-        AlertDialog.Builder faildeletedialog;
+        MaterialAlertDialogBuilder faildeletedialog;
 
         @Override
         public void onComplete(@NonNull Task task) {
-            faildeletedialog = new AlertDialog.Builder(mActivity);
+            faildeletedialog = new MaterialAlertDialogBuilder(mActivity);
             loadingdialog.dismiss();
             if (task.isSuccessful()) {
                 deleteLocalUserData();
@@ -92,7 +92,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     private Preference.OnPreferenceClickListener deletionlistener = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
-            AlertDialog.Builder confirmdeletion = new AlertDialog.Builder(mActivity);
+            MaterialAlertDialogBuilder confirmdeletion = new MaterialAlertDialogBuilder(mActivity);
             confirmdeletion.setIcon(R.drawable.ic_warning_black_24dp);
             confirmdeletion.setTitle(R.string.confirm_deletion_title);
             confirmdeletion.setMessage(R.string.confirm_deletion_message);

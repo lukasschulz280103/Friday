@@ -7,13 +7,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-<<<<<<< HEAD
-        classpath 'com.android.tools.build:gradle:3.3.0-alpha13'
-        classpath 'com.google.gms:google-services:4.0.1'
-=======
         classpath 'com.android.tools.build:gradle:3.4.0-beta03'
         classpath 'com.google.gms:google-services:4.2.0'
->>>>>>> luke
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -24,10 +19,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-<<<<<<< HEAD
-=======
         maven { url 'https://jitpack.io' }
->>>>>>> luke
     }
 }
 

@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.Connectivity;
+import com.code_design_camp.client.friday.HeadDisplayClient.activities.FridayActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
