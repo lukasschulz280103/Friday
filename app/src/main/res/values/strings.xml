@@ -6,7 +6,6 @@
     <string name="nav_main_history">Usage history</string>
     <string name="nav_project_title" translatable="false">Raspberry PI Android Client</string>
     <string name="main_nav_dashboard">Dashboard</string>
-    <string name="hint_rotate_phone">To use this app, rotate your phone to landscape mode.</string>
     <string name="friday_use_help">To use firday, you have to put this phone into the provided case.</string>
     <string name="nav_history_short">history</string>
     <string-array name="pref_language_entries">
@@ -255,6 +254,18 @@
     <string name="store_soon">We are currently onto developing the store!</string>
     <string name="auto_check_update">Automatically check for updates</string>
     <string name="store_featured">Featured</string>
-    <string name="loading_err_title" translatable="false">:%s:</string>
+    <string name="loading_err_title" translatable="false">:Code %s:</string>
+    <string name="code_cancelled">Operation was cancelled.</string>
+    <string name="code_unknown">An unknown error has occured!</string>
+    <string name="code_invalid_arg">An invalid argument was handled over in the request</string>
+    <string name="code_deadline_exceeded">Timout: Server did not respond in the given maximum reponse time</string>
+    <string name="code_not_found">There was an error while loading data fro the server. This is not your fault. Our developers automatically received a report and will take care of this problem.</string>
+    <string name="code_aborted">This operation was aborted. Try again and contact us if this problem persists.</string>
+    <string name="code_exhausted">A resource exhaustion error ocurred. Please try to free up space on your phone and try again.</string>
+    <string name="code_unavailable">Service unavailable. Please check your network connection and try again later.</string>
+    <string name="code_internal">Fatal internal error!\\nAn automatic warning was sent to our developers!</string>
+    <string name="code_data_loss">A loss of data ocurred. Try again and if this problem persists, contact our support.</string>
+    <string name="code_unauthenticated">You are not authenticated. Please sign in via \">Profile >Sign in\" first to use this feature.</string>
+    <string name="code_perm_denied">Access denied. This has to do withyour account. This may leads to an blocked or deactivated account. If this is not the case, contact our support.</string>
     >>>>>>> luke
 </resources>

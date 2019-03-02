@@ -1,29 +1,14 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.StyleRes;
 
-/*
- * (C) Copyright 2018 Lukas Faber
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Contributors:
- *     Lukas Faber
+/**
+ * Manages the apps Theme resources
  */
-
 public class Theme {
     public static int[] colors = new int[]{
             R.color.colorPrimary,
@@ -78,27 +63,84 @@ public class Theme {
         style = themeRes;
     }
 
+    /**
+     *
+     * @return Reutrns all available app themes
+     */
     public static int[] getThemes() {
         return themes;
     }
 
+    /**
+     *
+     * @param c Context to resolve saved info from
+     * @return Returns the current app themes style resource integer
+     */
     public static int getCurrentAppTheme(Context c) {
         return PreferenceManager.getDefaultSharedPreferences(c).getInt("theme", R.style.AppTheme);
     }
 
+    /**
+     *
+      * @param pos position of theme element
+     * @return return gradient colors for the theme at the specified position
+     */
     public int[] getColorsForPos(int pos) {
-        return new int[]{mContext.getResources().getColor(colors[pos]), mContext.getResources().getColor(gradientColors[pos])};
+        return new int[]{mContext.getColor(colors[pos]), mContext.getColor(gradientColors[pos])};
     }
 
+    /**
+     *
+     * @param pos position of theme element
+     * @return secondary color of theme
+     */
     public int getTextColorSecondary(int pos) {
-        return mContext.getResources().getColor(textSecondaryColors[pos]);
+        return mContext.getColor(textSecondaryColors[pos]);
     }
 
+    /**
+     *
+     * @param pos position of theme element
+     * @return get theme name at position
+     */
     public String getNameForPos(int pos) {
         return mContext.getString(names[pos]);
     }
 
+    /**
+     *
+     * @return get current app themes {@link StyleRes}
+     */
     public int getStyleRes() {
         return style;
+    }
+
+    /**
+     *
+     * @param appTheme current {@link StyleRes} int index of the apps theme
+     * @return index of the appTheme in {@link Theme} theme arrays. Returns -1 if the given theme cannot be found.
+     */
+    public int indexOf(int appTheme){
+        for(int i = 0;i<themes.length;i++){
+            if(themes[i] == appTheme) return i;
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @return Returns every themes <b>bottom left</b> gradient color(Gradient is visible in e.g. Settings>Design)
+     */
+    public static int[] getGradientColors() {
+        return gradientColors;
+    }
+
+    /**
+     *
+     * @param pos color index in theme
+     * @return gradient of the two colors at the position
+     */
+    public GradientDrawable createGradient(int pos){
+        return new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, getColorsForPos(pos));
     }
 }

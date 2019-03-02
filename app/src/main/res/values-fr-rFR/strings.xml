@@ -204,4 +204,16 @@
     <string name="wizard_welcome_descr">Cet assistant vous guidera tout au long de la mise en place de l\'installation de friday.</string>
     <string name="app_friday_description">"friday est puissant. Nous transformons votre téléphone en un HeadUp Display Client compétent, compatible avec nos lunettes AR de haute qualité.         Utilisez \\\"Widgets\\\" pour convertir vendredi en assistant - affichez toutes les informations dont vous avez besoin, du simple texte au calendrier google sans même toucher votre appareil. "</string>
     <string name="store_featured">En vedette</string>
+    <string name="code_aborted">Opération interrompue. Répétez la procédure et contactez-nous si le problème persiste.</string>
+    <string name="code_cancelled">Opération annulé.</string>
+    <string name="code_data_loss">Une perte de données a été détectée. Essayez à nouveau et contactez l\'assistance si le problème persiste.</string>
+    <string name="code_deadline_exceeded">Timeout : La réponse des serveurs a pris trop de temps.</string>
+    <string name="code_exhausted">Pas assez de ressources gratuites pour charger les données ; libérez de l\'espace sur votre téléphone et réessayez.</string>
+    <string name="code_internal">Erreur interne ! Nos développeurs ont été informés par un rapport de débogage automatique. Cet insecte est avec nous.</string>
+    <string name="code_invalid_arg">Un argument invalide a été transmis via la requête réseau. Cette erreur n\'est pas avec eux.</string>
+    <string name="code_not_found">Une erreur s\'est produite lors du chargement des données à partir du serveur. Cette erreur est avec nous. Un avertissement a été envoyé à nos développeurs.</string>
+    <string name="code_perm_denied">Accès refusé. Cette erreur peut être causée par un compte bloqué ou désactivé. Si ce n\'est pas le cas, contactez notre support.</string>
+    <string name="code_unauthenticated">Vous n\'êtes pas connecté. Pour utiliser cette fonctionnalité, connectez-vous via \">Profil >Se connecter\" et réessayez.</string>
+    <string name="code_unavailable">Service indisponible. Veuillez vérifier votre connexion réseau et réessayer plus tard.</string>
+    <string name="code_unknown">Une erreur inconnue s\'est produite !</string>
 </resources>

@@ -59,8 +59,6 @@
             <include layout="@layout/page_profile" />
 
             <include layout="@layout/page_store" />
-
-            <include layout="@layout/page_error" />
         </ViewFlipper>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

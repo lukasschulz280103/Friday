@@ -16,6 +16,7 @@ import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.net.ConnectionFragment;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.net.OnConnectionStateChangedListener;
 import com.code_design_camp.client.friday.HeadDisplayClient.store.fragments.StoreFeaturedFragment;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class MainStoreFragment extends ConnectionFragment implements OnConnectionStateChangedListener {
 
@@ -27,6 +28,7 @@ public class MainStoreFragment extends ConnectionFragment implements OnConnectio
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("storefragment","creating store view");
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main_store, container, false);
         Toolbar toolbar = v.findViewById(R.id.store_toolbar);
@@ -45,6 +47,10 @@ public class MainStoreFragment extends ConnectionFragment implements OnConnectio
     @Override
     public void onError(Exception e) {
         Log.e("StoreError", "Error occured at store");
+        getFragmentManager().beginTransaction()
+                .add(R.id.store_frag_container,new ErrorFragment((FirebaseFirestoreException) e))
+                .remove(this)
+                .commit();
     }
 
     private void addFragment(@IdRes int containerId, Fragment newFragment) {

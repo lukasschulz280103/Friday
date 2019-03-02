@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.templateClasses.ErrorFragment">
+    android:background="@android:color/white"
+    tools:context=".fragments.store.ErrorFragment">
 
     <ImageView
         android:id="@+id/flash"
@@ -15,6 +16,7 @@
         android:layout_marginBottom="8dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_flash_on_black_24dp"
+        android:tint="#6200EA"
         app:layout_constraintBottom_toTopOf="@+id/errTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -38,12 +40,29 @@
         android:id="@+id/subtitle_err"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintEnd_toEndOf="@+id/errTitle"
-        app:layout_constraintStart_toStartOf="@+id/errTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/errTitle" />
+
+    <TextView
+        android:id="@+id/fullMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textAppearance="@style/UppercaseWarn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitle_err" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/retry"
@@ -55,6 +74,6 @@
         android:text="@string/retry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subtitle_err" />
+        app:layout_constraintTop_toBottomOf="@+id/fullMessage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
