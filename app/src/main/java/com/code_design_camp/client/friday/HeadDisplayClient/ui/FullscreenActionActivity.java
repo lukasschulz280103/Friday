@@ -44,31 +44,24 @@ import com.google.ar.core.exceptions.UnavailableApkTooOldException;
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
-import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
-import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
-import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.Hypothesis;
 import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
-import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -81,14 +74,11 @@ public class FullscreenActionActivity extends FridayActivity {
     private TextView time, user_email, mic_text;
     private ImageView mic_img;
     private ArFragment arFragment;
-    private Session mArCoreSession;
-    private ModelRenderable andyRenderable;
-    private ViewRenderable settingsRenderable;
+    private ModelRenderable fridayTextRenderable;
     private SpeechRecognizer recognizer, speechtoTextRecognizer;
     private RecognitionListener stt = new RecognitionListener() {
         @Override
         public void onBeginningOfSpeech() {
-
         }
 
         @Override
@@ -98,7 +88,6 @@ public class FullscreenActionActivity extends FridayActivity {
 
         @Override
         public void onPartialResult(Hypothesis hypothesis) {
-            Log.d("STTINPUT", "converting text to speech");
             if (hypothesis != null) {
                 mic_text.setText(hypothesis.getHypstr());
             }
@@ -111,12 +100,12 @@ public class FullscreenActionActivity extends FridayActivity {
 
         @Override
         public void onError(Exception e) {
-
+            recognizer.stop();
         }
 
         @Override
         public void onTimeout() {
-
+            recognizer.stop();
         }
     };
     private Scene.OnUpdateListener UiStyleUpdateListener = new Scene.OnUpdateListener() {
@@ -125,22 +114,25 @@ public class FullscreenActionActivity extends FridayActivity {
             try {
                 //Acquire an image from the arcore fragment
                 Image img = arFragment.getArSceneView().getArFrame().acquireCameraImage();
+
                 //create a buffer array out of it
                 byte[] bytes = new byte[img.getPlanes()[0].getBuffer().capacity()];
                 img.getPlanes()[0].getBuffer().get(bytes, 0, img.getPlanes()[0].getBuffer().capacity());
                 ByteArrayOutputStream baOutputStream = new ByteArrayOutputStream();
+
                 //convert YUV-format image to JPEG(only the JPEG-format can be decoded from a byte-array
                 YuvImage yuvImage = new YuvImage(bytes, ImageFormat.NV21, img.getWidth(), img.getHeight(), null);
                 yuvImage.compressToJpeg(new Rect(0, 0, img.getWidth(), img.getHeight()), 50, baOutputStream);
+
                 //release acquired image
                 img.close();
                 byte[] byteForBitmap = baOutputStream.toByteArray();
+
                 //create bitmap and let the palette analyze it
                 Bitmap bitmap = BitmapFactory.decodeByteArray(byteForBitmap, 0, byteForBitmap.length);
-                Palette.Builder palette = new Palette.Builder(bitmap);
-                palette.generate(palette1 -> {
-                    //decide wether the font-color should be black or white
-                    if (isColorBright(palette1.getDominantColor(Color.WHITE))) {
+                Palette.Builder palette = Palette.from(bitmap);
+                palette.generate(generatedPalette -> {
+                    if (isColorBright(generatedPalette.getDominantColor(Color.WHITE))) {
                         time.setTextColor(Color.BLACK);
                         user_email.setTextColor(Color.BLACK);
                     } else {
@@ -154,6 +146,7 @@ public class FullscreenActionActivity extends FridayActivity {
         }
     };
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,19 +156,19 @@ public class FullscreenActionActivity extends FridayActivity {
         ActionBar actionBar = getSupportActionBar();
         Intent returnOnErrorIntent = new Intent();
         ArCoreApk apk = ArCoreApk.getInstance();
+        Session mArCoreSession;
         try {
             mArCoreSession = new Session(FullscreenActionActivity.this);
-        } catch(Exception e) {
+        } catch (Exception e) {
             Log.d(LOGTAG, "Exception ocurred");
             if (e instanceof UnavailableArcoreNotInstalledException) {
+                returnOnErrorIntent.putExtra("errtpe", "TYPE_NOT_INSTALLED");
             } else if (e instanceof UnavailableApkTooOldException) {
                 returnOnErrorIntent.putExtra("errtype", "TYPE_OLD_APK");
             } else if (e instanceof UnavailableSdkTooOldException) {
                 returnOnErrorIntent.putExtra("errtype", "TYPE_OLD_SDK_TOOL");
             } else if (e instanceof UnavailableDeviceNotCompatibleException) {
                 returnOnErrorIntent.putExtra("errtype", "TYPE_DEVICE_INCOMPATIBLE");
-            } else if (e instanceof UnavailableUserDeclinedInstallationException) {
-                returnOnErrorIntent.putExtra("errtype", "USER_DELINED");
             }
             setResult(RESULT_CANCELED, returnOnErrorIntent);
             finishActivity(MainActivity.FULLSCREEN_REQUEST_CODE);
@@ -187,9 +180,9 @@ public class FullscreenActionActivity extends FridayActivity {
         }
         //Following code is an example
         ModelRenderable.builder()
-                .setSource(this, R.raw.andy)
+                .setSource(this, R.raw.project_friday_text)
                 .build()
-                .thenAccept(renderable -> andyRenderable = renderable)
+                .thenAccept(renderable -> fridayTextRenderable = renderable)
                 .exceptionally(
                         throwable -> {
                             Toast toast =
@@ -200,26 +193,10 @@ public class FullscreenActionActivity extends FridayActivity {
                         });
         arFragment.setOnTapArPlaneListener(
                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
-                    if (andyRenderable == null) {
+                    if (fridayTextRenderable == null) {
                         return;
                     }
-                    CompletableFuture<ViewRenderable> settingsStage = ViewRenderable.builder().setView(FullscreenActionActivity.this, R.layout.ar_settings_layout).build();
-                    settingsStage.thenAccept(viewRenderable -> {
-                        try {
-                            settingsRenderable = settingsStage.get();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Node solarControls = new Node();
-                        Anchor anchor = hitResult.createAnchor();
-                        AnchorNode parent = new AnchorNode(anchor);
-                        parent.setParent(arFragment.getArSceneView().getScene());
-                        solarControls.setParent(parent);
-                        solarControls.setRenderable(settingsRenderable);
-                        solarControls.setLocalPosition(new Vector3(0.5f, 0.5f, 0.0f));
-                    });
+
                     // Create the Anchor.
                     Anchor anchor = hitResult.createAnchor();
                     AnchorNode anchorNode = new AnchorNode(anchor);
@@ -228,13 +205,22 @@ public class FullscreenActionActivity extends FridayActivity {
                     // Create the transformable andy and add it to the anchor.
                     TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
                     andy.setParent(anchorNode);
-                    andy.setRenderable(andyRenderable);
+                    andy.setRenderable(fridayTextRenderable);
                     andy.select();
                 });
         arFragment.getArSceneView().getScene().addOnUpdateListener(UiStyleUpdateListener);
         Calendar c = Calendar.getInstance();
-        time.setText(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE));
+        time.setText(String.format("%d:%d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
         user_email.setText(auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : "Nicht angemeldet");
+        if (getIntent().hasExtra("noLimit") && !getIntent().getBooleanExtra("noLimit", false)) {
+            TimerTask finishTask = new TimerTask() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            };
+            new Timer().schedule(finishTask, 3 * 60000);
+        }
     }
 
     @Override
@@ -246,63 +232,55 @@ public class FullscreenActionActivity extends FridayActivity {
         AsyncTask loadRecognizers = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] objects) {
-                try {
-                    Assets assets = new Assets(FullscreenActionActivity.this);
-                    File assetsDir = assets.syncAssets();
-                    recognizer = SpeechRecognizerSetup.defaultSetup()
-                            .setAcousticModel(new File(assetsDir, "en-us-ptm"))
-                            .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
-                            .getRecognizer();
-                    recognizer.addListener(new RecognitionListener() {
-                        @Override
-                        public void onBeginningOfSpeech() {
-                        }
+                recognizer = ((FridayApplication) getApplication()).getSpeechtotextrecognizer();
+                recognizer.addListener(new RecognitionListener() {
+                    @Override
+                    public void onBeginningOfSpeech() {
+                    }
 
-                        @Override
-                        public void onEndOfSpeech() {
-                        }
+                    @Override
+                    public void onEndOfSpeech() {
+                    }
 
-                        @Override
-                        public void onPartialResult(Hypothesis hypothesis) {
-                            Log.d("KEYPHRASER", "partial result");
-                            if (hypothesis != null) {
-                                mic_text.setText("...");
-                                mic_img.setImageResource(R.drawable.ic_mic_black_24dp);
-                                mic_indicator.animate()
-                                        .scaleXBy(0.3f)
-                                        .scaleYBy(0.3f)
-                                        .yBy(1f)
-                                        .setInterpolator(new AccelerateDecelerateInterpolator())
-                                        .setDuration(200)
-                                        .start();
-                                recognizer.stop();
-                                recognizer.cancel();
-                                speechtoTextRecognizer.addListener(stt);
-                                speechtoTextRecognizer.startListening("input", 2000);
-                            }
+                    @Override
+                    public void onPartialResult(Hypothesis hypothesis) {
+                        Log.d("KEYPHRASER", "partial result");
+                        if (hypothesis != null) {
+                            mic_text.setText("...");
+                            mic_img.setImageResource(R.drawable.ic_mic_black_24dp);
+                            mic_indicator.animate()
+                                    .scaleXBy(0.3f)
+                                    .scaleYBy(0.3f)
+                                    .yBy(1f)
+                                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                                    .setDuration(200)
+                                    .start();
+                            recognizer.stop();
+                            recognizer.cancel();
+                            speechtoTextRecognizer.addListener(stt);
+                            speechtoTextRecognizer.startListening("input", 2000);
                         }
+                    }
 
-                        @Override
-                        public void onResult(Hypothesis hypothesis) {
-                            Log.d("KEYPHRASER", "result");
-                        }
+                    @Override
+                    public void onResult(Hypothesis hypothesis) {
+                        Log.d("KEYPHRASER", "result");
+                        speechtoTextRecognizer.stop();
+                    }
 
-                        @Override
-                        public void onError(Exception e) {
-                            Log.e("KEYPHRASER", e.getLocalizedMessage(), e);
-                            Toast.makeText(FullscreenActionActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                        }
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e("KEYPHRASER", e.getLocalizedMessage(), e);
+                        Toast.makeText(FullscreenActionActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    }
 
-                        @Override
-                        public void onTimeout() {
-
-                        }
-                    });
-                    recognizer.addKeywordSearch("wakeup", new File(assetsDir, "phrases/wakeup.gram"));
-                    recognizer.startListening("wakeup");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    @Override
+                    public void onTimeout() {
+                        speechtoTextRecognizer.stop();
+                    }
+                });
+                recognizer.addKeywordSearch("wakeup", new File(((FridayApplication) getApplication()).getAssetsDir(), "phrases/wakeup.gram"));
+                recognizer.startListening("wakeup");
                 return null;
             }
 
@@ -342,15 +320,12 @@ public class FullscreenActionActivity extends FridayActivity {
         recognizer.cancel();
         recognizer.shutdown();
         speechtoTextRecognizer.stop();
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 1) {
-            if (grantResults[0] == -1) {
-                Toast.makeText(FullscreenActionActivity.this, "Declined permission", Toast.LENGTH_SHORT).show();
-            }
+        if (requestCode == 1 && grantResults[0] == -1) {
+            Toast.makeText(FullscreenActionActivity.this, "Declined permission", Toast.LENGTH_SHORT).show();
         }
     }
 

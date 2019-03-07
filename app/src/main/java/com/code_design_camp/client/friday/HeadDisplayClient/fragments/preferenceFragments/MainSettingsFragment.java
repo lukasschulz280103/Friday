@@ -42,9 +42,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     private ProgressDialog loadingdialog;
     private CheckBoxPreference devmode_show_changelog;
 
-    private ThemeDialog.OnSelectedTheme themeSelected = (t, r) -> {
-        Log.d("SetttingsActivity", "onThemeSelected");
-    };
+    private ThemeDialog.OnSelectedTheme themeSelected = (hasChanged) -> Log.d("SetttingsActivity", "onThemeSelected");
     private Preference.OnPreferenceClickListener select_theme_pref_click = preference -> {
         ThemeSelectPreference pref = (ThemeSelectPreference) preference;
         pref.showDialog(themeSelected);
@@ -180,7 +178,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         Preference auto_check_update = findPreference("check_update_auto");
         Preference auto_sync_account = findPreference("sync_account_auto");
         Preference devmode = findPreference("devmode");
-        devmode_show_changelog = (CheckBoxPreference) findPreference("pref_devmode_show_changelog");
+        devmode_show_changelog = findPreference("pref_devmode_show_changelog");
 
         del_account.setOnPreferenceClickListener(deletionlistener);
         sign_out.setOnPreferenceClickListener(sign_out_click);

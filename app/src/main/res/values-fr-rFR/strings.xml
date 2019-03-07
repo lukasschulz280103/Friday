@@ -216,4 +216,8 @@
     <string name="code_unauthenticated">Vous n\'êtes pas connecté. Pour utiliser cette fonctionnalité, connectez-vous via \">Profil >Se connecter\" et réessayez.</string>
     <string name="code_unavailable">Service indisponible. Veuillez vérifier votre connexion réseau et réessayer plus tard.</string>
     <string name="code_unknown">Une erreur inconnue s\'est produite !</string>
+    <string name="submit_feedback">Submit feedback</string>
+    <string name="developer_options">options de développement</string>
+    <string name="heat_warning_BETA">Affichage d\'un avertissement de chaleur au démarrage du mode d\'action</string>
+    <string name="license_activity_label">licences open source</string>
 </resources>

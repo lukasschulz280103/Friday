@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
@@ -24,9 +25,7 @@ import androidx.palette.graphics.Palette;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.interfaces.OnAuthCompletedListener;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.FeedbackSenderActivity;
-import com.code_design_camp.client.friday.HeadDisplayClient.ui.LayoutEditorActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
-import com.code_design_camp.client.friday.HeadDisplayClient.ui.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -48,11 +47,11 @@ public class ProfileFragment extends Fragment {
     private View.OnClickListener intentmanager = view -> {
         switch (view.getId()) {
             case R.id.main_layout_editor: {
-                startActivity(new Intent(getActivity(), LayoutEditorActivity.class));
+                Toast.makeText(getContext(), R.string.feature_soon, Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.main_settings: {
-                startActivityForResult(new Intent(getActivity(), SettingsActivity.class), 0);
+                startActivityForResult(new Intent("com.friday.settings"), 0);
                 break;
             }
             case R.id.main_help: {
@@ -144,10 +143,11 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("ProfileFragment", "onActivityresult - resultCodeOk:" + (resultCode == Activity.RESULT_OK));
-        if (resultCode == Activity.RESULT_OK && requestCode == 0) {
-            getActivity().recreate();
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            mainActivity.recreate();
+            return;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

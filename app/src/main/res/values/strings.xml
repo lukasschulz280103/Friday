@@ -267,5 +267,9 @@
     <string name="code_data_loss">A loss of data ocurred. Try again and if this problem persists, contact our support.</string>
     <string name="code_unauthenticated">You are not authenticated. Please sign in via \">Profile >Sign in\" first to use this feature.</string>
     <string name="code_perm_denied">Access denied. This has to do withyour account. This may leads to an blocked or deactivated account. If this is not the case, contact our support.</string>
+    <string name="developer_options">Developer options</string>
+    <string name="submit_feedback">Submit feedback</string>
+    <string name="heat_warning_BETA">Show heat warning when starting actionmode</string>
+    <string name="license_activity_label">open source licenses</string>
     >>>>>>> luke
 </resources>
