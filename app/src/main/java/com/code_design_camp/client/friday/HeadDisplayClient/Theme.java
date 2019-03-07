@@ -52,6 +52,7 @@ public class Theme {
             R.string.theme_blue,
             R.string.theme_magenta,
             R.string.theme_dark,
+            R.string.theme_red,
             R.string.theme_pink
     };
     private Context mContext;
