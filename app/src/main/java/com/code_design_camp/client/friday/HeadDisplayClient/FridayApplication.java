@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -12,7 +11,6 @@ import android.util.Log;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.NotificationUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.UpdateUtil;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,11 +19,16 @@ import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
 
+/**
+ * Application class
+ */
 public class FridayApplication extends Application {
     public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
     public static final String LOGTAG_STORE = "FridayMarketplace";
     public SpeechRecognizer speechtotextrecognizer;
     public OnAssetsLoadedListener mOnAssetLoadedListener;
+    public File assetsDir;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,19 +39,6 @@ public class FridayApplication extends Application {
             updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(this, versionNumberServer));
         }
         loadSpeechRecognizer();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
-        Drawable warnicon = getDrawable(R.drawable.ic_warning_black_24dp);
-        warnicon.setTint(getResources().getColor(R.color.highlight_orange));
-        builder.setIcon(warnicon);
-        builder.setTitle(R.string.low_memory_title);
-        builder.setMessage(R.string.low_memory_message);
-        builder.setNeutralButton(android.R.string.ok, null);
-        builder.create().show();
     }
 
     private void createNotificationChannels() {
@@ -74,12 +64,13 @@ public class FridayApplication extends Application {
                         mOnAssetLoadedListener.onStartedLoadingAssets();
                     }
                     Assets assets = new Assets(FridayApplication.this);
-                    File assetsDir = assets.syncAssets();
+                    assetsDir = assets.syncAssets();
                     speechtotextrecognizer = SpeechRecognizerSetup.defaultSetup()
                             .setAcousticModel(new File(assetsDir, "en-us-ptm"))
                             .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
                             .getRecognizer();
                     speechtotextrecognizer.addNgramSearch("input", new File(assetsDir, "en-70k-0.1.lm"));
+
                 } catch (IOException e) {
 
                 }
@@ -102,11 +93,22 @@ public class FridayApplication extends Application {
         this.mOnAssetLoadedListener = l;
     }
 
+    public SpeechRecognizer getSpeechtotextrecognizer() {
+        return speechtotextrecognizer;
+    }
+
+    public File getAssetsDir() {
+        return assetsDir;
+    }
+
     public interface OnAssetsLoadedListener {
         void onStartedLoadingAssets();
+
         void onAssetLoaded();
+
         void onError();
     }
+
 
     public class Jobs {
         public static final int JOB_FEEDBACK = 1;

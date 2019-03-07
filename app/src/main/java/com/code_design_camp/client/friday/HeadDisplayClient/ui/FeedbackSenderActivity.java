@@ -1,11 +1,9 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -17,7 +15,6 @@ import android.view.Window;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
@@ -138,12 +135,7 @@ public class FeedbackSenderActivity extends FridayActivity {
                     MaterialAlertDialogBuilder errorui = new MaterialAlertDialogBuilder(this);
                     errorui.setTitle(R.string.network_error_title);
                     errorui.setMessage(R.string.error_network_missing_info);
-                    errorui.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            onOptionsItemSelected(mItem);
-                        }
-                    });
+                    errorui.setPositiveButton(R.string.retry, (dialogInterface, i) -> onOptionsItemSelected(mItem));
                     errorui.create().show();
                 }
             }
@@ -169,31 +161,26 @@ public class FeedbackSenderActivity extends FridayActivity {
                 File device_info_file = LogUtil.createDebugInfoFile(this, "email", feedback_email.getText().toString(), "body", feedback_body.getText().toString());
                 final String folder_name = createTimeStampString();
                 UploadTask upload_device_info_file = null;
-                fileUploadDialog = new ProgressDialog(this, "Uploading Log files...");
+                fileUploadDialog = new ProgressDialog(this, getString(R.string.feedback_submit_logfiles_upload));
                 fileUploadDialog.show();
                 upload_device_info_file = feedback_log_folder.child(folder_name + "/device_info.json").putBytes(LogUtil.fileToString(device_info_file).getBytes());
-                upload_device_info_file.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onComplete(Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (attachedFile != null) {
-                                Log.d(LOGTAG, "File uri is " + attachedFile.toPath());
-                                ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
-                                attachedImageBitmpap.compress(Bitmap.CompressFormat.PNG, 50, bytestream);
-                                attachedImageBitmpap.recycle();
-                                fileUploadDialog.setMessage(R.string.feedback_submit_image_upload);
-                                UploadTask upload_image_file = feedback_log_folder.child(folder_name + "/feedback-image.jpg").putBytes(bytestream.toByteArray());
-                                upload_image_file.addOnCompleteListener(attachment_upload);
-                            } else {
-                                Toast.makeText(FeedbackSenderActivity.this, R.string.feedback_submit_success, Toast.LENGTH_LONG).show();
-                                Log.d(LOGTAG, "Submitted log without attached file");
-                                finish();
-                            }
+                upload_device_info_file.addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (attachedFile != null) {
+                            ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
+                            attachedImageBitmpap.compress(Bitmap.CompressFormat.PNG, 50, bytestream);
+                            attachedImageBitmpap.recycle();
+                            fileUploadDialog.setMessage(R.string.feedback_submit_image_upload);
+                            UploadTask upload_image_file = feedback_log_folder.child(folder_name + "/feedback-image.jpg").putBytes(bytestream.toByteArray());
+                            upload_image_file.addOnCompleteListener(attachment_upload);
                         } else {
-                            Exception e = task.getException();
-                            Log.e(LOGTAG, e.getLocalizedMessage(), e);
+                            Toast.makeText(FeedbackSenderActivity.this, R.string.feedback_submit_success, Toast.LENGTH_LONG).show();
+                            Log.d(LOGTAG, "Submitted log without attached file");
+                            finish();
                         }
+                    } else {
+                        Exception e = task.getException();
+                        Log.e(LOGTAG, e.getLocalizedMessage(), e);
                     }
                 });
             } catch (FileNotFoundException e) {
