@@ -35,19 +35,19 @@
             android:orientation="vertical">
 
             <TextView
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="?attr/colorOnPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_welcome" />
+                android:text="@string/app_welcome"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                android:textColor="?attr/colorOnPrimary" />
 
             <TextView
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="?attr/colorOnSecondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="@string/app_friday_description" />
+                android:text="@string/app_friday_description"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="?attr/colorOnSecondary" />
         </LinearLayout>
     </LinearLayout>
 

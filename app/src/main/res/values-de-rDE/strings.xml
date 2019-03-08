@@ -225,5 +225,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="developer_options">Entwickleroptionen</string>
     <string name="license_activity_label">Open-Source Lizenzen</string>
     <string name="heat_warning_BETA">Überhitzungswarnung bei starten des AR-Modus anzigen</string>
+    <string name="greet_no_name">Guten Tag!</string>
     >>>>>>> luke
 </resources>

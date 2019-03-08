@@ -158,10 +158,7 @@ public class DefaultSigninFragment extends Fragment {
         emailinput = fragmentview.findViewById(R.id.email_input_signin);
         google_signin = fragmentview.findViewById(R.id.signin_google_button);
         submitbtn.setOnClickListener(view -> {
-            loader.setVisibility(View.VISIBLE);
-            setInputsEnabled(false);
-            Task signinTask = auth.signInWithEmailAndPassword(emailinput.getText().toString(), passwEdittext.getText().toString());
-            signinTask.addOnCompleteListener(completionlistener);
+            validateEmail();
         });
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.request_id_token))
@@ -257,14 +254,18 @@ public class DefaultSigninFragment extends Fragment {
         submitbtn.setEnabled(enabled);
     }
 
-    private void validateEmail() {
+    private boolean validateEmail() {
         String text = emailinput.getText().toString();
         if (!text.contains(".") || !text.contains("@")) {
             email_input_wrapper.setError(getString(R.string.mail_invalid_error));
+            return false;
         } else {
+            loader.setVisibility(View.VISIBLE);
+            setInputsEnabled(false);
             auth.signInWithEmailAndPassword(emailinput.getText().toString(), passwEdittext.getText().toString()).addOnCompleteListener(completionlistener);
+            return true;
         }
-        }
+    }
 
     private void resetPassword() {
         MaterialAlertDialogBuilder askResetPassword = new MaterialAlertDialogBuilder(getContext());

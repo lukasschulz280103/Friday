@@ -220,4 +220,5 @@
     <string name="developer_options">options de développement</string>
     <string name="heat_warning_BETA">Affichage d\'un avertissement de chaleur au démarrage du mode d\'action</string>
     <string name="license_activity_label">licences open source</string>
+    <string name="greet_no_name">Bonjour!</string>
 </resources>
