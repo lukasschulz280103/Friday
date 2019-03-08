@@ -49,7 +49,6 @@ import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationExceptio
 public class MainActivity extends FridayActivity {
     public static final int FULLSCREEN_REQUEST_CODE = 22;
     private static final String LOGTAG = "FridayMainActivity";
-    //Store Fragment
     MainStoreFragment storeFragment = new MainStoreFragment();
     private ViewFlipper vswitcher_main;
 
@@ -256,7 +255,7 @@ public class MainActivity extends FridayActivity {
 
     @Override
     public void onBackPressed() {
-        if (authDialogFragment.isAdded()) {
+        if (authDialogFragment != null && authDialogFragment.isAdded()) {
             authDialogFragment.dismissDialog();
         } else {
             Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
@@ -295,9 +294,9 @@ public class MainActivity extends FridayActivity {
                 }
             }
             alertDialog.create().show();
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            return;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void setmOnAuthCompleted(OnAuthCompletedListener mOnAuthCompleted) {
