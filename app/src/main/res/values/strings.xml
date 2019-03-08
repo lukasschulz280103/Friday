@@ -271,5 +271,6 @@
     <string name="submit_feedback">Submit feedback</string>
     <string name="heat_warning_BETA">Show heat warning when starting actionmode</string>
     <string name="license_activity_label">open source licenses</string>
+    <string name="greet_no_name">Welcome!</string>
     >>>>>>> luke
 </resources>

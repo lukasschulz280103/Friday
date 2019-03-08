@@ -37,7 +37,7 @@ import java.io.IOException;
  */
 public class ProfileFragment extends Fragment {
     public static final String LOGTAG = "ProfileFragment";
-    public static final int REQUEST_CODE_SETTINGS = 200;
+    private static final int REQUEST_CODE_SETTINGS = 200;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private MainActivity mainActivity;
@@ -133,13 +133,16 @@ public class ProfileFragment extends Fragment {
 
     private void setupSignInScreen() {
         try {
-            Uri account_image_uri = Uri.parse("file://" + getContext().getFilesDir() + "/profile/avatar.jpg");
-            Bitmap bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), account_image_uri);
-            Palette p = Palette.from(bm).generate();
-            accountImageView.setBorderColor(p.getDominantColor(Color.GRAY));
-            accountImageView.setImageURI(account_image_uri);
+            if (firebaseUser.getPhotoUrl() != null) {
+                Uri account_image_uri = Uri.parse("file://" + getContext().getFilesDir() + "/profile/avatar.jpg");
+                Bitmap bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), account_image_uri);
+                Palette p = Palette.from(bm).generate();
+                accountImageView.setBorderWidth(10f);
+                accountImageView.setBorderColor(p.getDominantColor(Color.GRAY));
+                accountImageView.setImageURI(account_image_uri);
+            }
             emailText.setText(firebaseUser.getEmail());
-            welcomeText.setText(getString(R.string.page_profile_header_text, firebaseUser.getDisplayName()));
+            welcomeText.setText(!firebaseUser.getDisplayName().equals("") ? getString(R.string.page_profile_header_text, firebaseUser.getDisplayName()) : getString(R.string.greet_no_name));
         } catch (IOException e) {
             Log.e("ProfilePage", e.getLocalizedMessage(), e);
         }

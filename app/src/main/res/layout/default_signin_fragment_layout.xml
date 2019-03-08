@@ -9,6 +9,14 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
+    <ProgressBar
+        android:id="@+id/signin_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible" />
+
     <RelativeLayout
         android:id="@+id/submit_form_container"
         android:layout_width="match_parent"
@@ -32,14 +40,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </RelativeLayout>
-
-    <ProgressBar
-        android:id="@+id/signin_progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="invisible" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

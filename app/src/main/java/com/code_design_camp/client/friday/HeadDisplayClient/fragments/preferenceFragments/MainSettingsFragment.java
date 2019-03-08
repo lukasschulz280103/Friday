@@ -1,5 +1,6 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.fragments.preferenceFragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
@@ -32,28 +34,27 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.io.File;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class MainSettingsFragment extends PreferenceFragmentCompat {
     private static final String LOGTAG = "SettingsFragment";
     private Activity mActivity;
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private ProgressDialog loadingdialog;
-    private CheckBoxPreference devmode_show_changelog;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+    private ProgressDialog loadingDialog;
+    private CheckBoxPreference devModeShowChangelog;
 
-    private ThemeDialog.OnSelectedTheme themeSelected = (hasChanged) -> Log.d("SetttingsActivity", "onThemeSelected");
-    private Preference.OnPreferenceClickListener select_theme_pref_click = preference -> {
+    private ThemeDialog.OnSelectedTheme onSelectedTheme = (hasChanged) -> Log.d("SetttingsActivity", "onThemeSelected");
+    private Preference.OnPreferenceClickListener themePreferenceClickListener = preference -> {
         ThemeSelectPreference pref = (ThemeSelectPreference) preference;
-        pref.showDialog(themeSelected);
+        pref.showDialog(onSelectedTheme);
         return true;
     };
-    private Preference.OnPreferenceClickListener sign_out_click = preference -> {
+    private Preference.OnPreferenceClickListener signOutClickListener = preference -> {
         MaterialAlertDialogBuilder confirm_signout = new MaterialAlertDialogBuilder(mActivity);
         confirm_signout.setTitle(R.string.confirm_signout_title);
         confirm_signout.setMessage(R.string.confirm_signout_message);
         confirm_signout.setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
-            auth.signOut();
+            firebaseAuth.signOut();
             deleteLocalUserData();
             Toast.makeText(getActivity(), getString(R.string.sign_out_success), Toast.LENGTH_SHORT).show();
             mActivity.finish();
@@ -62,74 +63,75 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         confirm_signout.create().show();
         return true;
     };
-    private OnCompleteListener deletioncallback = new OnCompleteListener() {
-        MaterialAlertDialogBuilder faildeletedialog;
+    private OnCompleteListener<Void> onAccountDeletionCompleteListener = new OnCompleteListener<Void>() {
+        MaterialAlertDialogBuilder deletionErrorDialog;
 
         @Override
         public void onComplete(@NonNull Task task) {
-            faildeletedialog = new MaterialAlertDialogBuilder(mActivity);
-            loadingdialog.dismiss();
+            deletionErrorDialog = new MaterialAlertDialogBuilder(mActivity);
+            loadingDialog.dismiss();
             if (task.isSuccessful()) {
                 deleteLocalUserData();
                 Toast.makeText(getActivity(), getString(R.string.deletion_success), Toast.LENGTH_LONG).show();
                 mActivity.finish();
             } else if (task.isCanceled()) {
-                faildeletedialog.setTitle(R.string.deletion_error_canceled_title);
-                faildeletedialog.setMessage(R.string.deletion_error_canceled_message);
-                faildeletedialog.setPositiveButton(android.R.string.ok, null);
-                faildeletedialog.create().show();
+                deletionErrorDialog.setTitle(R.string.deletion_error_canceled_title);
+                deletionErrorDialog.setMessage(R.string.deletion_error_canceled_message);
+                deletionErrorDialog.setPositiveButton(android.R.string.ok, null);
+                deletionErrorDialog.create().show();
             } else {
-                faildeletedialog.setTitle(R.string.deletion_error_unknown_title);
-                faildeletedialog.setMessage(Objects.requireNonNull(task.getException()).getMessage());
-                faildeletedialog.setPositiveButton(android.R.string.ok, null);
-                faildeletedialog.create().show();
+                deletionErrorDialog.setTitle(R.string.deletion_error_unknown_title);
+                deletionErrorDialog.setMessage(Objects.requireNonNull(task.getException()).getMessage());
+                deletionErrorDialog.setPositiveButton(android.R.string.ok, null);
+                deletionErrorDialog.create().show();
                 Log.e("AccountDeletion", "Could not delete account", task.getException());
             }
         }
     };
-    private Preference.OnPreferenceClickListener deletionlistener = new Preference.OnPreferenceClickListener() {
+    private Preference.OnPreferenceClickListener onAccountDeletionClickListener = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
             MaterialAlertDialogBuilder confirmdeletion = new MaterialAlertDialogBuilder(mActivity);
             confirmdeletion.setIcon(R.drawable.ic_warning_black_24dp);
             confirmdeletion.setTitle(R.string.confirm_deletion_title);
             confirmdeletion.setMessage(R.string.confirm_deletion_message);
-            View dialogView = getLayoutInflater().inflate(R.layout.deletion_dialog_feedback, null, false);
+
+            @SuppressLint("InflateParams") View dialogView = getLayoutInflater().inflate(R.layout.deletion_dialog_feedback, null, false);
             RadioGroup rGroup = dialogView.findViewById(R.id.deletion_reason_rgroup);
             TextInputEditText attachmentText = dialogView.findViewById(R.id.reason_attached_text);
-            AtomicReference<String> reasonKeyword = new AtomicReference<>("");
+
+            final String[] reasonKeyword = {""};
             rGroup.setOnCheckedChangeListener((radioGroup, i) -> {
-                int checkedId = radioGroup.getCheckedRadioButtonId();
                 attachmentText.setVisibility(View.GONE);
-                switch (checkedId) {
+                switch (radioGroup.getCheckedRadioButtonId()) {
                     case R.id.reason_bad_experience: {
-                        reasonKeyword.set("REASON_BAD_EXPERIENCE");
+                        reasonKeyword[0] = "REASON_BAD_EXPERIENCE";
                     }
                     case R.id.reason_login_issues: {
-                        reasonKeyword.set("REASON_LOGIN_ISSUES");
+                        reasonKeyword[0] = "REASON_LOGIN_ISSUES";
                     }
                     case R.id.reason_app_useless: {
-                        reasonKeyword.set("REASON_APP_USELESS");
+                        reasonKeyword[0] = "REASON_APP_USELESS";
 
                     }
                     case R.id.reason_no_hardware: {
-                        reasonKeyword.set("REASON_NO_HARDWARE");
+                        reasonKeyword[0] = "REASON_NO_HARDWARE";
 
                     }
                     case R.id.reason_other: {
-                        reasonKeyword.set("REASON_OTHER");
+                        reasonKeyword[0] = "REASON_OTHER";
                         attachmentText.setVisibility(View.VISIBLE);
                     }
                 }
             });
             confirmdeletion.setView(R.layout.deletion_dialog_feedback);
-            confirmdeletion.setPositiveButton(getString(R.string.confirm_deletion_positive, user.getDisplayName() != null ? user.getDisplayName() : user.getEmail()), (dialogInterface, i) -> {
-                loadingdialog = new ProgressDialog(getActivity(), getString(R.string.delete_dialog_loading_text));
-                loadingdialog.show();
+            confirmdeletion.setPositiveButton(getString(R.string.confirm_deletion_positive, firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : firebaseUser.getEmail()), (dialogInterface, i) -> {
+                loadingDialog = new ProgressDialog(getActivity(), getString(R.string.delete_dialog_loading_text));
+                loadingDialog.show();
                 JobScheduler scheduler = (JobScheduler) getActivity().getSystemService(Context.JOB_SCHEDULER_SERVICE);
                 PersistableBundle extra = new PersistableBundle();
-                extra.putString("reason", reasonKeyword.toString());
-                extra.putString("uid", user.getUid());
+                extra.putString("reason", reasonKeyword[0]);
+                extra.putString("uid", firebaseUser.getUid());
                 JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_FEEDBACK, new ComponentName(mActivity, FeedbackService.class))
                         .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                         .setBackoffCriteria(30000, JobInfo.BACKOFF_POLICY_LINEAR)
@@ -137,8 +139,8 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
                         .build();
                 assert scheduler != null;
                 scheduler.schedule(info);
-                Task<Void> deletiontask = user.delete();
-                deletiontask.addOnCompleteListener(deletioncallback);
+                Task<Void> deletiontask = firebaseUser.delete();
+                deletiontask.addOnCompleteListener(onAccountDeletionCompleteListener);
             });
             confirmdeletion.setNegativeButton(android.R.string.cancel, null);
             confirmdeletion.create().show();
@@ -157,11 +159,11 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     private Preference.OnPreferenceChangeListener devModeSwitchChange = (preference, newValue) -> {
         Boolean val = (Boolean) newValue;
         if(val){
-            devmode_show_changelog.setEnabled(true);
+            devModeShowChangelog.setEnabled(true);
         }
         else{
-            devmode_show_changelog.setEnabled(false);
-            devmode_show_changelog.setChecked(false);
+            devModeShowChangelog.setEnabled(false);
+            devModeShowChangelog.setChecked(false);
         }
         return true;
     };
@@ -172,25 +174,28 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.pref_main);
         setHasOptionsMenu(true);
         mActivity = getActivity();
-        Preference del_account = findPreference("delete_account");
-        Preference sign_out = findPreference("pref_sign_out");
-        Preference select_theme_pref = findPreference("dialog_theme_pref");
-        Preference auto_check_update = findPreference("check_update_auto");
-        Preference auto_sync_account = findPreference("sync_account_auto");
-        Preference devmode = findPreference("devmode");
-        devmode_show_changelog = findPreference("pref_devmode_show_changelog");
+        Preference accountDeletionPreference = findPreference("delete_account");
+        Preference signOutPreference = findPreference("pref_sign_out");
+        Preference themePreference = findPreference("dialog_theme_pref");
+        Preference autoUpdatePreference = findPreference("check_update_auto");
+        Preference autoSyncAccountPreference = findPreference("sync_account_auto");
+        SwitchPreference devMode = findPreference("devmode");
+        devModeShowChangelog = findPreference("pref_devmode_show_changelog");
 
-        del_account.setOnPreferenceClickListener(deletionlistener);
-        sign_out.setOnPreferenceClickListener(sign_out_click);
-        select_theme_pref.setOnPreferenceClickListener(select_theme_pref_click);
-        auto_check_update.setOnPreferenceChangeListener(autoCheckUpdateChangeListener);
-        devmode.setOnPreferenceChangeListener(devModeSwitchChange);
-        if (user == null) {
-            sign_out.setEnabled(false);
-            del_account.setEnabled(false);
-            auto_sync_account.setEnabled(false);
+        accountDeletionPreference.setOnPreferenceClickListener(onAccountDeletionClickListener);
+        signOutPreference.setOnPreferenceClickListener(signOutClickListener);
+        themePreference.setOnPreferenceClickListener(themePreferenceClickListener);
+        autoUpdatePreference.setOnPreferenceChangeListener(autoCheckUpdateChangeListener);
+        devMode.setOnPreferenceChangeListener(devModeSwitchChange);
+        if (firebaseUser == null) {
+            signOutPreference.setEnabled(false);
+            accountDeletionPreference.setEnabled(false);
+            autoSyncAccountPreference.setEnabled(false);
         } else {
-            del_account.setLayoutResource(R.layout.account_preference_delete);
+            accountDeletionPreference.setLayoutResource(R.layout.account_preference_delete);
+        }
+        if (!devMode.isChecked()) {
+            devModeShowChangelog.setEnabled(false);
         }
     }
 
@@ -201,7 +206,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
 
     private void deleteLocalUserData() {
         File account_file = new File(getContext().getFilesDir(), "/profile/avatar.jpg");
-        boolean filedeleted = account_file.delete();
-        Log.d("ProfilePage", "Account image file was deleted:" + filedeleted);
+        boolean isFileDeleted = account_file.delete();
+        Log.d("ProfilePage", "Account image file was deleted:" + isFileDeleted);
     }
 }
