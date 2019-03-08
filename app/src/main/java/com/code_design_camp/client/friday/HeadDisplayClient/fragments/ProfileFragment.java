@@ -137,8 +137,8 @@ public class ProfileFragment extends Fragment {
                 Uri account_image_uri = Uri.parse("file://" + getContext().getFilesDir() + "/profile/avatar.jpg");
                 Bitmap bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), account_image_uri);
                 Palette p = Palette.from(bm).generate();
-                accountImageView.setBorderWidth(10f);
-                accountImageView.setBorderColor(p.getDominantColor(Color.GRAY));
+                accountImageView.setShadowRadius(15f);
+                accountImageView.setShadowColor(p.getDominantColor(Color.GRAY));
                 accountImageView.setImageURI(account_image_uri);
             }
             emailText.setText(firebaseUser.getEmail());
