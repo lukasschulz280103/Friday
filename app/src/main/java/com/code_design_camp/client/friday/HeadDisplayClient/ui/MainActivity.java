@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -27,8 +28,6 @@ import android.widget.ViewFlipper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
@@ -50,30 +49,27 @@ import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationExceptio
 public class MainActivity extends FridayActivity {
     public static final int FULLSCREEN_REQUEST_CODE = 22;
     private static final String LOGTAG = "FridayMainActivity";
-    private boolean isSigninShown = false;
-    private boolean loadSpeechRecognizer = false;
+    MainStoreFragment storeFragment = new MainStoreFragment();
     private ViewFlipper vswitcher_main;
 
-    private BottomNavigationView main_nav;
-    private FloatingActionButton lets_go;
     private AuthDialog authDialogFragment;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
     private SharedPreferences defaut_pref;
-    private FridayApplication app;
     private PackageInfo pkgInf;
     private LinearLayout assetLoaderLayout;
     private TextSwitcher assetLoaderText;
     private ProgressBar loadingBar;
+    private boolean loadedSpeechRecognizer = false;
     FridayApplication.OnAssetsLoadedListener mAssetsLoadedListener = new FridayApplication.OnAssetsLoadedListener() {
         @Override
         public void onStartedLoadingAssets() {
             assetLoaderLayout.setVisibility(View.VISIBLE);
+            Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_down);
+            assetLoaderLayout.startAnimation(anim);
         }
 
         @Override
         public void onAssetLoaded() {
-            loadSpeechRecognizer = true;
+            loadedSpeechRecognizer = true;
             loadingBar.setIndeterminateDrawable(getDrawable(R.drawable.ic_cloud_done_black_24dp));
             assetLoaderText.setText(getString(R.string.asset_loader_loading_success));
             Handler h = new Handler();
@@ -106,7 +102,7 @@ public class MainActivity extends FridayActivity {
 
         @Override
         public void onError() {
-            loadSpeechRecognizer = false;
+            loadedSpeechRecognizer = false;
             Toast.makeText(MainActivity.this,R.string.err_unable_to_load_speech_assets,Toast.LENGTH_LONG).show();
         }
     };
@@ -129,12 +125,26 @@ public class MainActivity extends FridayActivity {
         }
     };
     FloatingActionButton.OnClickListener startVR = view -> {
-        if (loadSpeechRecognizer) {
-            Intent i = new Intent(MainActivity.this, FullscreenActionActivity.class);
-            startActivityForResult(i, FULLSCREEN_REQUEST_CODE);
-        } else {
-            Snackbar.make(findViewById(R.id.viewflipperparent), R.string.err_assets_not_loaded, Snackbar.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, FullscreenActionActivity.class);
+        if (loadedSpeechRecognizer && defaut_pref.getBoolean("showHeatWarn", true)) {
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
+            builder.setTitle("Device health protection")
+                    .setMessage("You are running a beta version of friday. This version contains known performance issues causing the device to heat up to an unsafe temperature. To prevent device damage, the AR-activity will be automatically finished after 3 minutes.")
+                    .setIcon(R.drawable.ic_warning_black_24dp)
+                    .setPositiveButton(android.R.string.ok, (dialogInterface, int_which) -> startActivityForResult(intent, FULLSCREEN_REQUEST_CODE))
+                    .setNeutralButton("start without limit", (dialogInterface, wich) -> {
+                        intent.putExtra("noLimit", true);
+                        startActivityForResult(intent, FULLSCREEN_REQUEST_CODE);
+                    })
+                    .setNeutralButtonIcon(getResources().getDrawable(R.drawable.ic_twotone_security_24px))
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .create().show();
+            return;
+        } else if (loadedSpeechRecognizer) {
+            startActivity(intent);
+            return;
         }
+        Snackbar.make(findViewById(R.id.viewflipperparent), R.string.err_assets_not_loaded, Snackbar.LENGTH_SHORT).show();
     };
 
     @Override
@@ -143,28 +153,25 @@ public class MainActivity extends FridayActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        Theme theme = new Theme(this);
-        int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this));
-        findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex));
-        findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
-        
         vswitcher_main = findViewById(R.id.main_view_flipper);
-        main_nav = findViewById(R.id.main_bottom_nav);
-        lets_go = findViewById(R.id.start_actionmode);
         assetLoaderLayout = findViewById(R.id.asset_loading_indicator_conatiner);
         assetLoaderText = findViewById(R.id.asset_loading_text);
         loadingBar = findViewById(R.id.asset_loading_bar);
         defaut_pref = PreferenceManager.getDefaultSharedPreferences(this);
-        app = ((FridayApplication) getApplication());
         try {
             pkgInf = getPackageManager().getPackageInfo(getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        Theme theme = new Theme(this);
+        int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this));
+        ((BottomNavigationView) findViewById(R.id.main_bottom_nav)).setOnNavigationItemSelectedListener(navselected);
+        findViewById(R.id.start_actionmode).setOnClickListener(startVR);
+        findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex));
+        findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
+        FridayApplication app = ((FridayApplication) getApplication());
         Log.d(LOGTAG, "SharedPref versionName is " + defaut_pref.getString("version", "1.0.0"));
         vswitcher_main.setDisplayedChild(0);
-        main_nav.setOnNavigationItemSelectedListener(navselected);
-        lets_go.setOnClickListener(startVR);
         checkForFirstUse();
         if (!defaut_pref.getString("version", "0").equals(pkgInf.versionName)|| defaut_pref.getBoolean("pref_devmode_show_changelog", false)) {
             ChangelogDialogFragment changelogdialog = new ChangelogDialogFragment();
@@ -173,22 +180,26 @@ public class MainActivity extends FridayActivity {
             editor.putString("version", pkgInf.versionName);
             editor.apply();
         }
+
         try {
             PackageManager isOldAppInstalled = getPackageManager();
             isOldAppInstalled.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES);
-            fragmentManager = getSupportFragmentManager();
             UninstallOldAppDialog uninstallOldDialogFragment = new UninstallOldAppDialog();
-            fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
-            fragmentTransaction.replace(android.R.id.content, uninstallOldDialogFragment).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
+                    .replace(android.R.id.content, uninstallOldDialogFragment)
+                    .commit();
         } catch (PackageManager.NameNotFoundException e) {
             Log.i(LOGTAG,"no old version found");
         }
+
         if (defaut_pref.getInt("theme", 0) == 0) {
             defaut_pref.edit().putInt("theme", R.style.AppTheme).apply();
         }
+
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         assert pm != null;
+
         if (pm.isPowerSaveMode()) {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
             builder.setTitle(R.string.energy_saver_warn_title);
@@ -197,14 +208,15 @@ public class MainActivity extends FridayActivity {
             builder.setNegativeButton(R.string.later, null);
             builder.create().show();
         }
+
         app.setOnAssetsLoadedListener(mAssetsLoadedListener);
         assetLoaderLayout.setVisibility(View.VISIBLE);
         assetLoaderText.setFactory(() -> new TextView(MainActivity.this));
         assetLoaderText.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
         assetLoaderText.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
         assetLoaderText.setText(getString(R.string.asset_loader_loading));
+
         //Initialize Store
-        MainStoreFragment storeFragment = new MainStoreFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.store_frag_container,storeFragment)
                 .commit();
@@ -225,10 +237,28 @@ public class MainActivity extends FridayActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        //Fragments need to be removed before saving the instance state
+        getSupportFragmentManager().beginTransaction()
+                .remove(storeFragment)
+                .commit();
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!storeFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.store_frag_container, storeFragment)
+                    .commit();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
-        if (isSigninShown) {
+        if (authDialogFragment != null && authDialogFragment.isAdded()) {
             authDialogFragment.dismissDialog();
-            isSigninShown = false;
         } else {
             Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
                     .setAction(getString(R.string.action_leave), view -> finishAffinity()).show();
@@ -247,9 +277,7 @@ public class MainActivity extends FridayActivity {
                     alertDialog.setMessage(R.string.errtype_not_installed);
                     ArCoreApk apk = ArCoreApk.getInstance();
                     try {
-                        if(apk.requestInstall(this,true) == ArCoreApk.InstallStatus.INSTALL_REQUESTED){
-
-                        }
+                        apk.requestInstall(this, true);
                     } catch (UnavailableDeviceNotCompatibleException e) {
                         data.putExtra("errtype","TYPE_DEVICE_NOT_SUPPORTED");
                         onActivityResult(requestCode,resultCode,data);
@@ -268,9 +296,9 @@ public class MainActivity extends FridayActivity {
                 }
             }
             alertDialog.create().show();
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            return;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void setmOnAuthCompleted(OnAuthCompletedListener mOnAuthCompleted) {
@@ -280,13 +308,12 @@ public class MainActivity extends FridayActivity {
 
     public void promptSignin() {
         Log.d("FirebaseAuth", "showing auth dialog");
-        fragmentManager = getSupportFragmentManager();
         authDialogFragment = new AuthDialog();
         authDialogFragment.setOnAuthListener(mOnAuthCompleted);
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
-        fragmentTransaction.replace(android.R.id.content, authDialogFragment).commit();
-        isSigninShown = true;
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
+                .replace(android.R.id.content, authDialogFragment)
+                .commit();
     }
 
     public void dismissUninstallPrompt() {

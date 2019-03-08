@@ -39,8 +39,8 @@
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/page_profile_image_account"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
                 android:layout_margin="16dp"
                 app:civ_border="true"
                 app:civ_border_color="@color/civ_border"
@@ -52,12 +52,12 @@
 
             <TextView
                 android:id="@+id/page_profile_header"
-                style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:text="TextView"
+                android:textAppearance="?attr/textAppearanceHeadline3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/page_profile_image_account" />
@@ -70,6 +70,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="TextView"
+                android:textAppearance="?attr/textAppearanceHeadline5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/page_profile_header" />
@@ -99,7 +100,7 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_photo_size_select_small_black_24dp" />
+                android:src="@drawable/ic_twotone_format_shapes_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"
@@ -116,7 +117,7 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_settings_black_24dp" />
+                android:src="@drawable/ic_twotone_settings_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"
@@ -134,7 +135,7 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_live_help_black_24dp" />
+                android:src="@drawable/ic_twotone_help_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"
@@ -153,7 +154,7 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_feedback_black_24dp" />
+                android:src="@drawable/ic_twotone_feedback_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"

@@ -1,6 +1,6 @@
 package agency.tango.materialintroscreen.listeners;
 
-import android.support.v4.view.CustomViewPager;
+import androidx.core.view.CustomViewPager;
 
 import java.util.ArrayList;
 import java.util.List;

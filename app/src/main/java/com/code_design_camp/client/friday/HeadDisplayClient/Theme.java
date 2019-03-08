@@ -16,6 +16,7 @@ public class Theme {
             R.color.BluePrimaryColor,
             R.color.MagentaPrimaryColor,
             R.color.DarkPrimaryColor,
+            R.color.RedPrimaryColor,
             R.color.PinkPrimaryColor
     };
     private static int[] themes = new int[]{
@@ -24,6 +25,7 @@ public class Theme {
             R.style.AppTheme_Custom_Blue,
             R.style.AppTheme_Custom_Magenta,
             R.style.AppTheme_Custom_Dark,
+            R.style.AppTheme_Custom_Red,
             R.style.AppTheme_Custom_Pink
     };
     private static int[] gradientColors = new int[]{
@@ -32,6 +34,7 @@ public class Theme {
             R.color.BlueSecondaryColor,
             R.color.MagentaSecondaryColor,
             R.color.DarkSecondaryColor,
+            R.color.RedSecondaryColor,
             R.color.PinkSecondaryColor
     };
     private static int[] textSecondaryColors = new int[]{
@@ -40,6 +43,7 @@ public class Theme {
             R.color.BlueSecondaryTextColor,
             R.color.MagentaSecondaryTextColor,
             R.color.DarkSecondaryTextColor,
+            R.color.RedSecondaryTextColor,
             R.color.PinkSecondaryTextColor
     };
     private static int[] names = new int[]{
@@ -48,6 +52,7 @@ public class Theme {
             R.string.theme_blue,
             R.string.theme_magenta,
             R.string.theme_dark,
+            R.string.theme_red,
             R.string.theme_pink
     };
     private Context mContext;
@@ -65,7 +70,7 @@ public class Theme {
 
     /**
      *
-     * @return Reutrns all available app themes
+     * @return returns all available app themes
      */
     public static int[] getThemes() {
         return themes;
@@ -138,7 +143,7 @@ public class Theme {
     /**
      *
      * @param pos color index in theme
-     * @return gradient of the two colors at the position
+     * @return gradient of the two coMain menu | File | New | Vector Assetlors at the position
      */
     public GradientDrawable createGradient(int pos){
         return new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, getColorsForPos(pos));

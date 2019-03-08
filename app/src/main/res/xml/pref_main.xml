@@ -12,6 +12,11 @@
             android:key="delete_account"
             android:title="@string/delete_account" />
     </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/pref_header_general">
+        <CheckBoxPreference
+            android:key="showHeatWarn"
+            android:title="@string/heat_warning_BETA" />
+    </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/more_sync_settings">
         <androidx.preference.SwitchPreference
             android:key="sync_account_auto"
@@ -20,7 +25,7 @@
             android:key="check_update_auto"
             android:title="@string/auto_check_update" />
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory android:title="">
+    <androidx.preference.PreferenceCategory android:title="@string/look">
         <com.code_design_camp.client.friday.HeadDisplayClient.preference.ThemeSelectPreference
             android:key="dialog_theme_pref"
             android:title="@string/design" />
@@ -32,7 +37,7 @@
             <intent android:action="com.friday.Info" />
         </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/developer_options">
         <androidx.preference.SwitchPreference
             android:title="@string/pref_devmode"
             android:key="devmode" />

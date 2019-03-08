@@ -221,5 +221,10 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="code_unauthenticated">Sie sind nicht angemeldet. Um diese Funktion zu verwenden, melden sie sich über \">Profil >Anmelden\" an un versuchen sie es erneut.</string>
     <string name="code_unavailable">Service ist nicht erreichbar. Bitte überprüfen sie ihre Netzwerkverbindung und versuchen sie es später erneut.</string>
     <string name="code_unknown">EIn unbekannter Fehler ist aufgetreten.</string>
+    <string name="submit_feedback">Submit feedback</string>
+    <string name="developer_options">Entwickleroptionen</string>
+    <string name="license_activity_label">Open-Source Lizenzen</string>
+    <string name="heat_warning_BETA">Überhitzungswarnung bei starten des AR-Modus anzigen</string>
+    <string name="greet_no_name">Guten Tag!</string>
     >>>>>>> luke
 </resources>

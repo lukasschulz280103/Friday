@@ -30,31 +30,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView8">
 
-            <androidx.appcompat.widget.AppCompatRadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/reason_bad_experience"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bad experience with the software" />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/reason_login_issues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Issues while loggin in" />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/reason_app_useless"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="I have no reason to use this app" />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/reason_no_hardware"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="I hdon't have the required hardware (e.g. the AR-glasses)" />
 
-            <androidx.appcompat.widget.AppCompatRadioButton
+            <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/reason_other"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

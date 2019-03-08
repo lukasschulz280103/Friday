@@ -23,7 +23,8 @@
             android:layout_margin="8dp"
             android:gravity="start|center_vertical"
             android:text="@string/nav_main_profile"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="?attr/colorOnSecondary" />
     </FrameLayout>
         <ScrollView
             android:layout_width="0dp"
