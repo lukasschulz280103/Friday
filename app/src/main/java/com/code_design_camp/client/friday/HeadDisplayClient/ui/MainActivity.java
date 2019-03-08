@@ -131,9 +131,7 @@ public class MainActivity extends FridayActivity {
             builder.setTitle("Device health protection")
                     .setMessage("You are running a beta version of friday. This version contains known performance issues causing the device to heat up to an unsafe temperature. To prevent device damage, the AR-activity will be automatically finished after 3 minutes.")
                     .setIcon(R.drawable.ic_warning_black_24dp)
-                    .setPositiveButton(android.R.string.ok, (dialogInterface, int_which) -> {
-                        startActivityForResult(intent, FULLSCREEN_REQUEST_CODE);
-                    })
+                    .setPositiveButton(android.R.string.ok, (dialogInterface, int_which) -> startActivityForResult(intent, FULLSCREEN_REQUEST_CODE))
                     .setNeutralButton("start without limit", (dialogInterface, wich) -> {
                         intent.putExtra("noLimit", true);
                         startActivityForResult(intent, FULLSCREEN_REQUEST_CODE);
@@ -155,27 +153,25 @@ public class MainActivity extends FridayActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        Theme theme = new Theme(this);
-        int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this));
-        findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex));
-        findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
         vswitcher_main = findViewById(R.id.main_view_flipper);
-        BottomNavigationView main_nav = findViewById(R.id.main_bottom_nav);
-        FloatingActionButton lets_go = findViewById(R.id.start_actionmode);
         assetLoaderLayout = findViewById(R.id.asset_loading_indicator_conatiner);
         assetLoaderText = findViewById(R.id.asset_loading_text);
         loadingBar = findViewById(R.id.asset_loading_bar);
         defaut_pref = PreferenceManager.getDefaultSharedPreferences(this);
-        FridayApplication app = ((FridayApplication) getApplication());
         try {
             pkgInf = getPackageManager().getPackageInfo(getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        Theme theme = new Theme(this);
+        int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this));
+        ((BottomNavigationView) findViewById(R.id.main_bottom_nav)).setOnNavigationItemSelectedListener(navselected);
+        findViewById(R.id.start_actionmode).setOnClickListener(startVR);
+        findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex));
+        findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
+        FridayApplication app = ((FridayApplication) getApplication());
         Log.d(LOGTAG, "SharedPref versionName is " + defaut_pref.getString("version", "1.0.0"));
         vswitcher_main.setDisplayedChild(0);
-        main_nav.setOnNavigationItemSelectedListener(navselected);
-        lets_go.setOnClickListener(startVR);
         checkForFirstUse();
         if (!defaut_pref.getString("version", "0").equals(pkgInf.versionName)|| defaut_pref.getBoolean("pref_devmode_show_changelog", false)) {
             ChangelogDialogFragment changelogdialog = new ChangelogDialogFragment();
@@ -184,6 +180,7 @@ public class MainActivity extends FridayActivity {
             editor.putString("version", pkgInf.versionName);
             editor.apply();
         }
+
         try {
             PackageManager isOldAppInstalled = getPackageManager();
             isOldAppInstalled.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES);
@@ -195,11 +192,14 @@ public class MainActivity extends FridayActivity {
         } catch (PackageManager.NameNotFoundException e) {
             Log.i(LOGTAG,"no old version found");
         }
+
         if (defaut_pref.getInt("theme", 0) == 0) {
             defaut_pref.edit().putInt("theme", R.style.AppTheme).apply();
         }
+
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         assert pm != null;
+
         if (pm.isPowerSaveMode()) {
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
             builder.setTitle(R.string.energy_saver_warn_title);
@@ -208,12 +208,14 @@ public class MainActivity extends FridayActivity {
             builder.setNegativeButton(R.string.later, null);
             builder.create().show();
         }
+
         app.setOnAssetsLoadedListener(mAssetsLoadedListener);
         assetLoaderLayout.setVisibility(View.VISIBLE);
         assetLoaderText.setFactory(() -> new TextView(MainActivity.this));
         assetLoaderText.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
         assetLoaderText.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
         assetLoaderText.setText(getString(R.string.asset_loader_loading));
+
         //Initialize Store
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.store_frag_container,storeFragment)

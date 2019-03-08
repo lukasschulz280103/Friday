@@ -94,14 +94,14 @@ public class FeedbackSenderActivity extends FridayActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_feedback);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Toolbar t = findViewById(R.id.toolbar2);
-        setSupportActionBar(t);
-        inputtemplate = PreferenceManager.getDefaultSharedPreferences(this);
         feedback_email = findViewById(R.id.feedback_mail);
         feedback_body = findViewById(R.id.feedback_body);
         feedback_debug_add_device_info = findViewById(R.id.feedback_device_info);
         feedback_debug_add_usage_data = findViewById(R.id.feedback_usage_data);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Toolbar t = findViewById(R.id.toolbar2);
+        setSupportActionBar(t);
+        inputtemplate = PreferenceManager.getDefaultSharedPreferences(this);
         if (user != null) {
             feedback_email.setText(user.getEmail());
         }

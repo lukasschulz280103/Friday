@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /*
 This file is necessarry for analytics, in order to record usage statistics.
  */
-public class FridayActivity extends AppCompatActivity {
+public abstract class FridayActivity extends AppCompatActivity {
     public static final String LOGTAG = "FridayActivity";
 
     @Override

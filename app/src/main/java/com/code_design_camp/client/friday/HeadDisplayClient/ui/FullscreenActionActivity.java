@@ -76,6 +76,7 @@ public class FullscreenActionActivity extends FridayActivity {
     private ArFragment arFragment;
     private ModelRenderable fridayTextRenderable;
     private SpeechRecognizer recognizer, speechtoTextRecognizer;
+    private Session mArCoreSession;
     private RecognitionListener stt = new RecognitionListener() {
         @Override
         public void onBeginningOfSpeech() {
@@ -152,13 +153,20 @@ public class FullscreenActionActivity extends FridayActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
         setContentView(R.layout.activity_fullscreen_action);
-        init();
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
+        time = findViewById(R.id.timetext);
+        user_email = findViewById(R.id.signedin_user_text);
+        auth = FirebaseAuth.getInstance();
+        mic_indicator = findViewById(R.id.mic_indicator);
+        mic_text = findViewById(R.id.mic_text);
+        mic_img = findViewById(R.id.mic_pic);
         ActionBar actionBar = getSupportActionBar();
         Intent returnOnErrorIntent = new Intent();
-        ArCoreApk apk = ArCoreApk.getInstance();
-        Session mArCoreSession;
         try {
-            mArCoreSession = new Session(FullscreenActionActivity.this);
+            ArCoreApk apk = ArCoreApk.getInstance();
+            if (apk.requestInstall(this, true) != ArCoreApk.InstallStatus.INSTALLED) {
+                mArCoreSession = new Session(this);
+            }
         } catch (Exception e) {
             Log.d(LOGTAG, "Exception ocurred");
             if (e instanceof UnavailableArcoreNotInstalledException) {
@@ -236,10 +244,12 @@ public class FullscreenActionActivity extends FridayActivity {
                 recognizer.addListener(new RecognitionListener() {
                     @Override
                     public void onBeginningOfSpeech() {
+
                     }
 
                     @Override
                     public void onEndOfSpeech() {
+
                     }
 
                     @Override
@@ -314,12 +324,16 @@ public class FullscreenActionActivity extends FridayActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        recognizer.stop();
+    protected void onPause() {
+        super.onPause();
         recognizer.cancel();
-        recognizer.shutdown();
-        speechtoTextRecognizer.stop();
+        speechtoTextRecognizer.cancel();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mArCoreSession.close();
     }
 
     @Override
@@ -327,16 +341,6 @@ public class FullscreenActionActivity extends FridayActivity {
         if (requestCode == 1 && grantResults[0] == -1) {
             Toast.makeText(FullscreenActionActivity.this, "Declined permission", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void init() {
-        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ar_fragment);
-        time = findViewById(R.id.timetext);
-        user_email = findViewById(R.id.signedin_user_text);
-        auth = FirebaseAuth.getInstance();
-        mic_indicator = findViewById(R.id.mic_indicator);
-        mic_text = findViewById(R.id.mic_text);
-        mic_img = findViewById(R.id.mic_pic);
     }
 
     private boolean isColorBright(int color) {
