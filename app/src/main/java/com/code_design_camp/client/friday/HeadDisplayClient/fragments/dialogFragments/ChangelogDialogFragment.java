@@ -25,6 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.Date;
 
@@ -42,9 +43,7 @@ public class ChangelogDialogFragment extends DialogFragment {
     private String update_body;
     private Date update_timestamp;
     private FirebaseFirestore changelog = FirebaseFirestore.getInstance();
-    private PackageInfo pkgInf;
-    private CollectionReference changelog_collection = changelog.collection("changelogs");
-    private DocumentReference changelog_doc;
+    private CollectionReference changelog_collection;
     private EventListener<DocumentSnapshot> onChangelogDocumentLoaded = new EventListener<DocumentSnapshot>() {
         @Override
         public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -93,9 +92,12 @@ public class ChangelogDialogFragment extends DialogFragment {
         setCancelable(false);
         try {
             super.onCreate(savedInstanceState);
-            pkgInf = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+            PackageInfo pkgInf = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
             Log.d("ChangeLogDialog", "versionName is " + pkgInf.versionName);
-            changelog_doc = changelog_collection.document(pkgInf.versionName);
+            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder().setPersistenceEnabled(false).build();
+            changelog.setFirestoreSettings(settings);
+            changelog_collection = changelog.collection("changelogs");
+            DocumentReference changelog_doc = changelog_collection.document(pkgInf.versionName);
             changelog_doc.addSnapshotListener(onChangelogDocumentLoaded);
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(LOGTAG, e.getLocalizedMessage(), e);

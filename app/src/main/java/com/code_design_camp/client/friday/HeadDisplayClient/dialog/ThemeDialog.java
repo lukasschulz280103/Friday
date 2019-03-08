@@ -1,7 +1,6 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.dialog;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -15,9 +14,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.code_design_camp.client.friday.HeadDisplayClient.R;
-import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
-
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,23 +21,34 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.Theme;
+import com.code_design_camp.client.friday.HeadDisplayClient.ui.SettingsActivity;
+
 /**
  * Displays a dialog to the user where he is able to choose one of six themes for friday
  * @see Theme
  */
 public class ThemeDialog extends DialogFragment {
+    private Theme theme;
+    private boolean hasChanged = false;
     private Context context;
     private OnSelectedTheme mListener;
     private SharedPreferences preferences;
     private View.OnClickListener doneclick = view -> {
         dismiss();
-        getActivity().recreate();
+        ((SettingsActivity) getActivity()).onSelectedTheme(hasChanged);
     };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mListener = (hasChanged) -> this.hasChanged = hasChanged;
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    public OnSelectedTheme getListener() {
+        return mListener;
     }
 
     @Override
@@ -73,7 +80,7 @@ public class ThemeDialog extends DialogFragment {
     }
 
     public interface OnSelectedTheme {
-        void onSelectedTheme(Theme t, Intent result);
+        void onSelectedTheme(boolean hasChanged);
     }
 
     private class ThemeSelectItemAdapter extends ArrayAdapter<Theme> {
@@ -85,6 +92,7 @@ public class ThemeDialog extends DialogFragment {
         View.OnClickListener themeClick = view -> {
             ImageView gradient = view.findViewById(R.id.gradient_bg);
             selectedItem = (int) view.getTag();
+            getListener().onSelectedTheme(preferences.getInt("theme", Theme.getCurrentAppTheme(getContext())) != Theme.getThemes()[selectedItem]);
             preferences.edit().putInt("theme", Theme.getThemes()[selectedItem]).apply();
             gradient.setImageDrawable(createGradient(true, (int) view.getTag()));
             Log.d(LOGTAG, "Clicked theme is already selected.Tag:" + view.getTag());

@@ -14,17 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
+
         <LinearLayout
             android:id="@+id/asset_loading_indicator_conatiner"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
             android:layout_margin="16dp"
             android:animateLayoutChanges="true"
             android:background="@drawable/launcher_logo_bg_white"
+            android:elevation="16dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextSwitcher
                 android:id="@+id/asset_loading_text"

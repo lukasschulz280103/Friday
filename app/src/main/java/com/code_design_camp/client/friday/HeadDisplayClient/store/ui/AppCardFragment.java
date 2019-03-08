@@ -74,7 +74,6 @@ public class AppCardFragment extends Fragment {
         //CollectionReference is already apps reference
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
