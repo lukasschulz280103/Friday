@@ -99,7 +99,7 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_photo_size_select_small_black_24dp" />
+                android:src="@drawable/ic_twotone_format_shapes_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"
@@ -116,7 +116,7 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_settings_black_24dp" />
+                android:src="@drawable/ic_twotone_settings_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"
@@ -134,7 +134,7 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_live_help_black_24dp" />
+                android:src="@drawable/ic_twotone_help_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"
@@ -153,7 +153,7 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_feedback_black_24dp" />
+                android:src="@drawable/ic_twotone_feedback_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"

@@ -12,15 +12,19 @@ import com.code_design_camp.client.friday.HeadDisplayClient.fragments.preference
 public class SettingsActivity extends FridayActivity implements ThemeDialog.OnSelectedTheme {
     private static final String LOGTAG = "SettingsActivity";
     private boolean themeChanged = false;
-    MainSettingsFragment msf = new MainSettingsFragment();
+    MainSettingsFragment mainSettingsFragment = new MainSettingsFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getCurrentAppTheme(this));
         super.onCreate(savedInstanceState);
         getSupportFragmentManager().beginTransaction().replace(android.R.id.content,
-                msf).commit();
+                mainSettingsFragment).commit();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
+        if (getIntent().hasExtra("hasChanged")) {
+            themeChanged = getIntent().getBooleanExtra("hasChanged", false);
+            setResult(RESULT_OK);
+        }
     }
 
     @Override
@@ -28,6 +32,7 @@ public class SettingsActivity extends FridayActivity implements ThemeDialog.OnSe
         Log.d(LOGTAG, "hasChanged:" + hasChanged);
         themeChanged = hasChanged;
         if (hasChanged) {
+            getIntent().putExtra("hasChanged", true);
             recreate();
             Log.d(LOGTAG, "context:" + getBaseContext());
         }
@@ -35,19 +40,11 @@ public class SettingsActivity extends FridayActivity implements ThemeDialog.OnSe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                if (themeChanged) {
-                    setResult(RESULT_OK);
-                } else {
-                    setResult(RESULT_CANCELED);
-                }
-                finish();
-                return true;
-            }
-            default: {
-                return false;
-            }
+        Log.d(LOGTAG, "themeChanged:" + themeChanged);
+        if (item.getItemId() == android.R.id.home && themeChanged) {
+            setResult(RESULT_OK);
         }
+        super.onBackPressed();
+        return true;
     }
 }
