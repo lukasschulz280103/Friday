@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.FileUtil;
+import com.code_design_camp.client.friday.HeadDisplayClient.Util.UserUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.interfaces.OnAuthCompletedListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -222,13 +223,14 @@ public class DefaultSigninFragment extends Fragment {
                         DownloadManager.Request dmrequest = new DownloadManager.Request(user.getPhotoUrl());
                         dmrequest.setVisibleInDownloadsUi(false);
                         dmrequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
-                        dmrequest.setDestinationInExternalFilesDir(getContext(), "profile", File.separator + "avatar.jpg");
+                        dmrequest.setDestinationInExternalFilesDir(mActivity, "profile", File.separator + "avatar.jpg");
                         mActivity.registerReceiver(new BroadcastReceiver() {
                             @Override
                             public void onReceive(Context context, Intent intent) {
                                 loading_dialog.dismiss();
-                                File avatar_temp = new File(getContext().getExternalFilesDir("profile"), "avatar.jpg");
-                                File avatar_dest = new File(getContext().getFilesDir() + File.separator + "profile", "avatar.jpg");
+                                UserUtil userUtil = new UserUtil(context);
+                                File avatar_temp = new File(mActivity.getExternalFilesDir("profile"), "avatar.jpg");
+                                File avatar_dest = userUtil.getAvatarFile();
                                 try {
                                     FileUtil.moveFile(avatar_temp, avatar_dest);
                                 } catch (IOException e) {

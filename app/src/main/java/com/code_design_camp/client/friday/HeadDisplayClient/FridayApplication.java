@@ -5,6 +5,11 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -13,10 +18,13 @@ import android.util.Log;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.NotificationUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.UpdateUtil;
+import com.code_design_camp.client.friday.HeadDisplayClient.service.AccountSyncService;
+import com.code_design_camp.client.friday.HeadDisplayClient.service.OnAccountSyncStateChanged;
 import com.crashlytics.android.Crashlytics;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
@@ -26,9 +34,10 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Application class
  */
-public class FridayApplication extends Application {
+public class FridayApplication extends Application implements OnAccountSyncStateChanged {
     public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
     public static final String LOGTAG_STORE = "FridayMarketplace";
+    private ArrayList<Object> syncStateChangedNotifyList = new ArrayList<>();
     public SpeechRecognizer speechtotextrecognizer;
     public OnAssetsLoadedListener mOnAssetLoadedListener;
     public File assetsDir;
@@ -36,12 +45,20 @@ public class FridayApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("friday", "Initializing firebaseApp");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Fabric.with(this, new Crashlytics());
         createNotificationChannels();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("check_update_auto", false)) {
+        if (preferences.getBoolean("check_update_auto", false)) {
             UpdateUtil updateUtil = new UpdateUtil(this);
             updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(this, versionNumberServer));
+        }
+        if (preferences.getBoolean("sync_account_auto", true)) {
+            JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+            JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, new ComponentName(this, AccountSyncService.class))
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setBackoffCriteria(2 * 60000, JobInfo.BACKOFF_POLICY_LINEAR)
+                    .build();
+            scheduler.schedule(info);
         }
     }
 
@@ -111,6 +128,23 @@ public class FridayApplication extends Application {
         return assetsDir;
     }
 
+    public void registerForSyncStateChange(Object context) {
+        if (context instanceof OnAccountSyncStateChanged) {
+            syncStateChangedNotifyList.add(context);
+        } else {
+            throw new IllegalArgumentException(context + "must implement interface OnAccountSyncStateChanged");
+        }
+    }
+
+    public void unregisterForSyncStateChange(Object context) {
+        syncStateChangedNotifyList.remove(context);
+    }
+
+    @Override
+    public void onSyncStateChanged() {
+
+    }
+
     public interface OnAssetsLoadedListener {
         void onStartedLoadingAssets();
 
@@ -121,6 +155,7 @@ public class FridayApplication extends Application {
 
 
     public class Jobs {
-        public static final int JOB_FEEDBACK = 1;
+        public static final int JOB_SYNC_ACCOUNT = 8000;
+        public static final int JOB_FEEDBACK = 8001;
     }
 }

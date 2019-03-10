@@ -20,6 +20,7 @@
     <androidx.preference.PreferenceCategory android:title="@string/more_sync_settings">
         <androidx.preference.SwitchPreference
             android:key="sync_account_auto"
+            android:defaultValue="true"
             android:title="@string/auto_sync" />
         <androidx.preference.SwitchPreference
             android:key="check_update_auto"

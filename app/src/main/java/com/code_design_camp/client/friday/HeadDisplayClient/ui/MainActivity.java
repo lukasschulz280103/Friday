@@ -39,6 +39,7 @@ import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFrag
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.dialogFragments.UninstallOldAppDialog;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.interfaces.OnAuthCompletedListener;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.store.MainStoreFragment;
+import com.code_design_camp.client.friday.HeadDisplayClient.service.OnAccountSyncStateChanged;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,7 +50,7 @@ import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationExceptio
 
 import java.util.Arrays;
 
-public class MainActivity extends FridayActivity {
+public class MainActivity extends FridayActivity implements OnAccountSyncStateChanged {
     public static final int FULLSCREEN_REQUEST_CODE = 22;
     private static final int REQUEST_PERMISSIONS_CODE = 900;
     private static final String LOGTAG = "FridayMainActivity";
@@ -70,7 +71,7 @@ public class MainActivity extends FridayActivity {
             runOnUiThread(() -> {
                 assetLoaderLayout.setTranslationY(-100);
                 assetLoaderLayout.setVisibility(View.VISIBLE);
-                assetLoaderLayout.animate().y(24).setDuration(300).setInterpolator(new DecelerateInterpolator()).start();
+                assetLoaderLayout.animate().y(32f).setDuration(300).setInterpolator(new DecelerateInterpolator()).start();
             });
         }
 
@@ -227,6 +228,8 @@ public class MainActivity extends FridayActivity {
         assetLoaderText.setCurrentText(getString(R.string.asset_loader_loading));
         app.loadSpeechRecognizer();
 
+        app.registerForSyncStateChange(this);
+
         //Initialize Store
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.store_frag_container,storeFragment)
@@ -365,5 +368,10 @@ public class MainActivity extends FridayActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.store_default_toolbar, menu);
         return true;
+    }
+
+    @Override
+    public void onSyncStateChanged() {
+
     }
 }
