@@ -1,9 +1,11 @@
 package com.code_design_camp.client.friday.HeadDisplayClient;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -11,6 +13,7 @@ import android.util.Log;
 
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.NotificationUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.Util.UpdateUtil;
+import com.crashlytics.android.Crashlytics;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import edu.cmu.pocketsphinx.SpeechRecognizerSetup;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Application class
@@ -33,12 +37,12 @@ public class FridayApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d("friday", "Initializing firebaseApp");
+        Fabric.with(this, new Crashlytics());
         createNotificationChannels();
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("check_update_auto", false)) {
             UpdateUtil updateUtil = new UpdateUtil(this);
             updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(this, versionNumberServer));
         }
-        loadSpeechRecognizer();
     }
 
     private void createNotificationChannels() {
@@ -72,7 +76,9 @@ public class FridayApplication extends Application {
                     speechtotextrecognizer.addNgramSearch("input", new File(assetsDir, "en-70k-0.1.lm"));
 
                 } catch (IOException e) {
-
+                    if (mOnAssetLoadedListener != null) {
+                        mOnAssetLoadedListener.onError(e);
+                    }
                 }
                 return null;
             }
@@ -86,7 +92,11 @@ public class FridayApplication extends Application {
                 }
             }
         };
-        at.execute();
+        if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED && mOnAssetLoadedListener != null) {
+            mOnAssetLoadedListener.onError(new SecurityException("Could not load speech assets. Microphone permission not given."));
+        } else {
+            at.execute();
+        }
     }
 
     public void setOnAssetsLoadedListener(OnAssetsLoadedListener l) {
@@ -106,7 +116,7 @@ public class FridayApplication extends Application {
 
         void onAssetLoaded();
 
-        void onError();
+        void onError(Exception e);
     }
 
 

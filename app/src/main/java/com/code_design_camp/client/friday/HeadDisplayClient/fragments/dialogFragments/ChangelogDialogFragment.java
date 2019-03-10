@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.text.HtmlCompat;
@@ -47,7 +48,7 @@ public class ChangelogDialogFragment extends DialogFragment {
     private EventListener<DocumentSnapshot> onChangelogDocumentLoaded = new EventListener<DocumentSnapshot>() {
         @Override
         public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-            if (e == null) {
+            if (e == null && documentSnapshot.exists()) {
                 update_title = (String) documentSnapshot.get("title");
                 update_body = (String) documentSnapshot.get("body");
                 update_timestamp = ((Timestamp) documentSnapshot.get("release_date")).toDate();
@@ -57,12 +58,15 @@ public class ChangelogDialogFragment extends DialogFragment {
                 setUpdate_title(update_title);
                 body.setText(HtmlCompat.fromHtml(update_body, HtmlCompat.FROM_HTML_MODE_COMPACT));
                 setUpdate_timestamp(update_timestamp);
-            } else {
+            } else if (e != null) {
                 errortext.setVisibility(View.VISIBLE);
-                errortext.setText("Couldn't load info. Caused by: " + e.getLocalizedMessage());
+                errortext.setText(String.format("Couldn't load info. Caused by: %s", e.getLocalizedMessage()));
                 setCancelable(true);
                 loadingbar.setVisibility(View.GONE);
                 Log.e(LOGTAG, e.getLocalizedMessage(), e);
+            } else {
+                dismiss();
+                Toast.makeText(getContext(), "Update successful", Toast.LENGTH_SHORT).show();
             }
             dismiss.setEnabled(true);
         }
