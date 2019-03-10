@@ -26,10 +26,6 @@
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".AccountSyncService"
-            android:enabled="true"
-            android:exported="true"></service>
 
         <activity
             android:name=".ui.WizardActivity"
@@ -120,6 +116,9 @@
 
         <service
             android:name=".service.FeedbackService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".service.AccountSyncService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 

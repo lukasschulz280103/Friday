@@ -2,11 +2,8 @@ package com.code_design_camp.client.friday.HeadDisplayClient.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,22 +17,22 @@ import android.widget.ViewSwitcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.palette.graphics.Palette;
 
+import com.code_design_camp.client.friday.HeadDisplayClient.FridayApplication;
 import com.code_design_camp.client.friday.HeadDisplayClient.R;
+import com.code_design_camp.client.friday.HeadDisplayClient.Util.UserUtil;
 import com.code_design_camp.client.friday.HeadDisplayClient.fragments.interfaces.OnAuthCompletedListener;
+import com.code_design_camp.client.friday.HeadDisplayClient.service.OnAccountSyncStateChanged;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.FeedbackSenderActivity;
 import com.code_design_camp.client.friday.HeadDisplayClient.ui.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import java.io.IOException;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements OnAccountSyncStateChanged {
     public static final String LOGTAG = "ProfileFragment";
     private static final int REQUEST_CODE_SETTINGS = 200;
     private FirebaseAuth firebaseAuth;
@@ -87,6 +84,7 @@ public class ProfileFragment extends Fragment {
         emailText = fragmentView.findViewById(R.id.page_profile_email);
         accountImageView = fragmentView.findViewById(R.id.page_profile_image_account);
         welcomeText = fragmentView.findViewById(R.id.page_profile_header);
+        ((FridayApplication) mainActivity.getApplication()).registerForSyncStateChange(this);
         Button signInButton = fragmentView.findViewById(R.id.page_profile_signin_button);
         LinearLayout toFeedback = fragmentView.findViewById(R.id.main_feedback);
         LinearLayout toSettings = fragmentView.findViewById(R.id.main_settings);
@@ -132,20 +130,13 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setupSignInScreen() {
-        try {
-            if (firebaseUser.getPhotoUrl() != null) {
-                Uri account_image_uri = Uri.parse("file://" + getContext().getFilesDir() + "/profile/avatar.jpg");
-                Bitmap bm = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), account_image_uri);
-                Palette p = Palette.from(bm).generate();
-                accountImageView.setShadowRadius(15f);
-                accountImageView.setShadowColor(p.getDominantColor(Color.GRAY));
-                accountImageView.setImageURI(account_image_uri);
-            }
-            emailText.setText(firebaseUser.getEmail());
-            welcomeText.setText(!firebaseUser.getDisplayName().equals("") ? getString(R.string.page_profile_header_text, firebaseUser.getDisplayName()) : getString(R.string.greet_no_name));
-        } catch (IOException e) {
-            Log.e("ProfilePage", e.getLocalizedMessage(), e);
+        UserUtil userUtil = new UserUtil(mainActivity);
+        if (firebaseUser.getPhotoUrl() != null && userUtil.getAvatarFile().exists()) {
+            Uri account_image_uri = Uri.parse("file://" + getContext().getFilesDir() + "/profile/avatar.jpg");
+            accountImageView.setImageURI(account_image_uri);
         }
+        emailText.setText(firebaseUser.getEmail());
+        welcomeText.setText(!firebaseUser.getDisplayName().equals("") ? getString(R.string.page_profile_header_text, firebaseUser.getDisplayName()) : getString(R.string.greet_no_name));
     }
 
     @Override
@@ -155,5 +146,10 @@ public class ProfileFragment extends Fragment {
             mainActivity.recreate();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onSyncStateChanged() {
+        setupSignInScreen();
     }
 }

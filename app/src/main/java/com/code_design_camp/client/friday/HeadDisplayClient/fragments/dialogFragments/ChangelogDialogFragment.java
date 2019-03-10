@@ -48,7 +48,7 @@ public class ChangelogDialogFragment extends DialogFragment {
     private EventListener<DocumentSnapshot> onChangelogDocumentLoaded = new EventListener<DocumentSnapshot>() {
         @Override
         public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-            if (e == null && documentSnapshot.exists()) {
+            if (e == null && documentSnapshot != null && documentSnapshot.exists()) {
                 update_title = (String) documentSnapshot.get("title");
                 update_body = (String) documentSnapshot.get("body");
                 update_timestamp = ((Timestamp) documentSnapshot.get("release_date")).toDate();
