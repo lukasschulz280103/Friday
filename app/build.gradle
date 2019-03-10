@@ -1,6 +1,11 @@
 import com.google.gms.googleservices.GoogleServicesPlugin
 
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -8,7 +13,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 4
-        versionName "1.2.0-alpha01"
+        versionName "1.2.0-alpha02"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -47,6 +52,7 @@ dependencies {
     implementation 'com.google.ar:core:1.7.0'
     implementation 'com.github.AppIntro:AppIntro:v5.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     testImplementation 'junit:junit:4.13-beta-2'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'

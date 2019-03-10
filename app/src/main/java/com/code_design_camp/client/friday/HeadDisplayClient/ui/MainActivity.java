@@ -1,6 +1,7 @@
 package com.code_design_camp.client.friday.HeadDisplayClient.ui;
 
 
+import android.Manifest;
 import android.animation.Animator;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,8 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
@@ -46,10 +47,14 @@ import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
 
+import java.util.Arrays;
+
 public class MainActivity extends FridayActivity {
     public static final int FULLSCREEN_REQUEST_CODE = 22;
+    private static final int REQUEST_PERMISSIONS_CODE = 900;
     private static final String LOGTAG = "FridayMainActivity";
     MainStoreFragment storeFragment = new MainStoreFragment();
+    FridayApplication app;
     private ViewFlipper vswitcher_main;
 
     private AuthDialog authDialogFragment;
@@ -62,9 +67,11 @@ public class MainActivity extends FridayActivity {
     FridayApplication.OnAssetsLoadedListener mAssetsLoadedListener = new FridayApplication.OnAssetsLoadedListener() {
         @Override
         public void onStartedLoadingAssets() {
-            assetLoaderLayout.setVisibility(View.VISIBLE);
-            Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_down);
-            assetLoaderLayout.startAnimation(anim);
+            runOnUiThread(() -> {
+                assetLoaderLayout.setTranslationY(-100);
+                assetLoaderLayout.setVisibility(View.VISIBLE);
+                assetLoaderLayout.animate().y(24).setDuration(300).setInterpolator(new DecelerateInterpolator()).start();
+            });
         }
 
         @Override
@@ -101,8 +108,13 @@ public class MainActivity extends FridayActivity {
         }
 
         @Override
-        public void onError() {
+        public void onError(Exception e) {
             loadedSpeechRecognizer = false;
+            if (e instanceof SecurityException) {
+                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA}, REQUEST_PERMISSIONS_CODE);
+            } else {
+                Log.e(LOGTAG, e.getLocalizedMessage(), e);
+            }
             Toast.makeText(MainActivity.this,R.string.err_unable_to_load_speech_assets,Toast.LENGTH_LONG).show();
         }
     };
@@ -169,7 +181,7 @@ public class MainActivity extends FridayActivity {
         findViewById(R.id.start_actionmode).setOnClickListener(startVR);
         findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex));
         findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
-        FridayApplication app = ((FridayApplication) getApplication());
+        app = ((FridayApplication) getApplication());
         Log.d(LOGTAG, "SharedPref versionName is " + defaut_pref.getString("version", "1.0.0"));
         vswitcher_main.setDisplayedChild(0);
         checkForFirstUse();
@@ -208,13 +220,12 @@ public class MainActivity extends FridayActivity {
             builder.setNegativeButton(R.string.later, null);
             builder.create().show();
         }
-
         app.setOnAssetsLoadedListener(mAssetsLoadedListener);
-        assetLoaderLayout.setVisibility(View.VISIBLE);
         assetLoaderText.setFactory(() -> new TextView(MainActivity.this));
         assetLoaderText.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
         assetLoaderText.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-        assetLoaderText.setText(getString(R.string.asset_loader_loading));
+        assetLoaderText.setCurrentText(getString(R.string.asset_loader_loading));
+        app.loadSpeechRecognizer();
 
         //Initialize Store
         getSupportFragmentManager().beginTransaction()
@@ -236,12 +247,13 @@ public class MainActivity extends FridayActivity {
         }
     }
 
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         //Fragments need to be removed before saving the instance state
         getSupportFragmentManager().beginTransaction()
                 .remove(storeFragment)
-                .commit();
+                .commitAllowingStateLoss();
         super.onSaveInstanceState(outState);
     }
 
@@ -299,6 +311,23 @@ public class MainActivity extends FridayActivity {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSIONS_CODE) {
+            if (!Arrays.equals(grantResults, new int[]{PackageManager.PERMISSION_GRANTED, PackageManager.PERMISSION_GRANTED})) {
+                MaterialAlertDialogBuilder permissionWarnDialog = new MaterialAlertDialogBuilder(this);
+                permissionWarnDialog.setTitle(R.string.err_missing_permissions)
+                        .setMessage(R.string.err_permission_need_explanation)
+                        .setIcon(R.drawable.ic_twotone_security_24px)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.retry, (dialogInterface, which) -> requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, REQUEST_PERMISSIONS_CODE))
+                        .create().show();
+            } else {
+                app.loadSpeechRecognizer();
+            }
+        }
     }
 
     public void setmOnAuthCompleted(OnAuthCompletedListener mOnAuthCompleted) {
