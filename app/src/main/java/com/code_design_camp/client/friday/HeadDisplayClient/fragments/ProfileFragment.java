@@ -134,9 +134,11 @@ public class ProfileFragment extends Fragment implements OnAccountSyncStateChang
         if (firebaseUser.getPhotoUrl() != null && userUtil.getAvatarFile().exists()) {
             Uri account_image_uri = Uri.parse("file://" + getContext().getFilesDir() + "/profile/avatar.jpg");
             accountImageView.setImageURI(account_image_uri);
+        } else {
+            accountImageView.setBackground(mainActivity.getDrawable(R.drawable.ic_twotone_account_circle_24px));
         }
         emailText.setText(firebaseUser.getEmail());
-        welcomeText.setText(!firebaseUser.getDisplayName().equals("") ? getString(R.string.page_profile_header_text, firebaseUser.getDisplayName()) : getString(R.string.greet_no_name));
+        welcomeText.setText(firebaseUser.getDisplayName() != null && !firebaseUser.getDisplayName().equals("") ? getString(R.string.page_profile_header_text, firebaseUser.getDisplayName()) : getString(R.string.greet_no_name));
     }
 
     @Override
