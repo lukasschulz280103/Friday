@@ -166,6 +166,7 @@ public class FullscreenActionActivity extends FridayActivity {
             ArCoreApk apk = ArCoreApk.getInstance();
             if (apk.requestInstall(this, true) != ArCoreApk.InstallStatus.INSTALLED) {
                 mArCoreSession = new Session(this);
+                Collection<Anchor> mAnchors = mArCoreSession.getAllAnchors();
             }
         } catch (Exception e) {
             Log.d(LOGTAG, "Exception ocurred");
@@ -182,7 +183,6 @@ public class FullscreenActionActivity extends FridayActivity {
             finishActivity(MainActivity.FULLSCREEN_REQUEST_CODE);
             return;
         }
-        Collection<Anchor> mAnchors = mArCoreSession.getAllAnchors();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
