@@ -1,26 +1,18 @@
-Read in [german](README.md)
-## project "friday"
-The friday app is the part of the friday project, which turns your android smartphone into portable AR-glasses.
+Read in [german](README.md) 
+# Project "friday"
+Friday is an AR project that turns the mobile phone into practical AR glasses. 
 
-#### Download and installation
-The app-version of friday is available on Android 5.0(Lollipop:API Lvl 22) and higher. The .APK-installable file can be found in the "releases"-section. Before you install the app, we recommend you to temporarily disable all antivirus-tools to prevent them from interrupting your installation. Android versions below Android 8.0(Oreo) also must activate the prefence "Unknown Sources" in _Settings -> Security -> Unknown Sources_, to enable installations outside od Google Play.After you downloaded the file, open it by clicking the Download-Manager notification with the suitable file name.
+## Screenshots
+<img width="200" alt="friday main page" src="https://lh3.googleusercontent.com/cFuQXyakrKK7Um04agGrzoGtlTWEkjqMFaY4HBfUNw6sBgOg4wR7jU6aEM34d745oNZgvgFrWff8AwO36lEp8_g8fK725u_oWLRiKhd9XZYhohZeZbQHIBDvycLQMk1JpBXF76mve1I=w2400" ></img>
+<img width="200" alt="friday store" src="https://lh3.googleusercontent.com/JdkDIUnyXJQ0LFBrbi_Gqdum9GNU0OCn4obCXJ-rnnJRnn-LvHWq3i1wIQycgBTE1DyhqHt9MjF5CrufOo4DTAd_W4q28YRWsyD67TCyh00Akx5g4oadhpyHqpG0Ai2MSaBQ3NTUhuE=w2400" ></img>
+<img width="200" alt="friday account" src="https://lh3.googleusercontent.com/h9P7HwR0ggPHNevm9EnFCPVAIVh40_GW71dW4aG8kQ56aDnvW0_mz4pPMLCdO8gBpK92GzFO3XYV6Dsk37KPmSUTw1FlNiY9sVHtVw1rZGzFqir4Lj8qpyoaYIGGLKfX1VTEuBSwRno=w2400" ></img>
+<img width="200" alt="theme chosing dialog" src="https://lh3.googleusercontent.com/JHEtGz6stl4OZ30MGXBs7tAjjycJTDD3BXxC2rE8xtd3b0IN_u3iPxIiIBBVJnJKNHWFyKb9DCQCsFc44bEp5KJDDdnkDNWAXKx0h5tUyvEh6TrVU0NpVrOt6_8rnN7gp5Uc9MYpZbc=w2400" ></img>
+## Download and Installation
+The app version of Friday is only available for Android 6.0(API Level 24) or higher. The corresponding APK installation file can be downloaded from the "releases" tab. It is recommended to deactivate antivirus programs temporarily to make the installation run smoothly. Android versions under Android 8.0(Oreo) must also activate the option "Unknown Apps" (_Settings -> Device Security -> Unknown Apps_) in the settings to allow an installation outside the playstore. After downloading the file to your device, you can install it by clicking on the corresponding Download Manager Notification in the Notification Center. 
 
-## features
-> friday is currently only available in a pre-release version, the version may be not working stable
+## Features
+ > The current app version is a developer release and may run unstable, its features also. 
+- Currently friday supports a BETA AR mode, which supports a time display for testing purposes. 
 
-- friday currently supports a BETA AR-Mode that tentatively contains a clock-widget
-
-#### Geplante features
-- [ ] Voice control
-- [ ] AR Layout Editor
-- [ ] More new widgets(See [this](#widgets)
-#### Available features
-Name | Feature-version | App-version
------|-----------------|------------
-Google accoung signin and sync | 1.0 | v1.1.0
-Date&time widget | 1.2 | 1.0.0-beta01
-#### Widgets
-Widget | available | description
--------|-----------|-------------
-Time&Date|Yes|This widget is used to display time, date or depending on the configuration both at a time.
-Google Kalender Event|No|This widget is used to display the events fetched from the connected Google Account, e. g. the lastest event or an event selected by the user.
+# Develop plugins
+An SDK is currently under development that will allow you to develop apps and tools for friday.
