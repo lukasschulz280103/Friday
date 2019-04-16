@@ -91,7 +91,7 @@
     <string name="internal_error_message">Il y a eu une erreur interne lors du traitement de votre demande.</string>
     <string name="internal_error_title">erruer interne</string>
     <string name="later">postérieures</string>
-    <string name="layout_edit_title">Layout Editor</string>
+    <string name="layout_edit_title">Editor</string>
     <string name="leave_action_activity">Voulez-vous mettre fin à cette session ?</string>
     <string name="leave_app">Voulez-vous vraiment quitter l\'application ?</string>
     <string name="licenses">Licences</string>

@@ -2,7 +2,7 @@
     <androidx.preference.PreferenceCategory
         android:title="User">
 
-        <com.code_design_camp.client.friday.HeadDisplayClient.preference.AccountPreference
+        <com.friday.ar.preference.AccountPreference
             android:key="account_main_preference"
             android:layout="@layout/account_preference_layout" />
         <androidx.preference.Preference
@@ -27,7 +27,7 @@
             android:title="@string/auto_check_update" />
     </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/look">
-        <com.code_design_camp.client.friday.HeadDisplayClient.preference.ThemeSelectPreference
+        <com.friday.ar.preference.ThemeSelectPreference
             android:key="dialog_theme_pref"
             android:title="@string/design" />
     </androidx.preference.PreferenceCategory>
@@ -37,6 +37,9 @@
             android:title="@string/info">
             <intent android:action="com.friday.Info" />
         </androidx.preference.Preference>
+        <androidx.preference.Preference
+            android:key=""
+            android:title="@string/help"></androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/developer_options">
         <androidx.preference.SwitchPreference

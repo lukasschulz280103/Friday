@@ -1,17 +1,11 @@
-<<<<<<< HEAD
 *.iml
 .gradle
-/local.properties
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
+local.properties
 .DS_Store
 /build
 /captures
+/fridaysdk
 .externalNativeBuild
-googleservices.json
-=======
-/build
 google-services.json
 *.apk
 *.ap_
@@ -21,14 +15,8 @@ bin/
 gen/
 local.properties
 Thumbs.db
-.DS_STORE
-*.iml
 .idea
-.gradle
 build/
 .navigation
-captures/
 output.json
 obj/
-.externalNativeBuild
->>>>>>> luke

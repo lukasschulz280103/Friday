@@ -9,7 +9,7 @@ repositories {
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.code_design_camp.client.friday.HeadDisplayClient"
+        applicationId "com.friday.ar"
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 5
@@ -26,36 +26,48 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
 }
 
 dependencies {
+    implementation fileTree(include: ['*.aar', '*.jar'], dir: 'libs')
     implementation project(':pocketsphinx-android-5prealpha-release')
-    //implementation 'io.grpc:grpc-okhttp:1.17.1'
-    implementation 'androidx.preference:preference:1.1.0-alpha03'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation project(':fridaysdk')
+    implementation 'androidx.preference:preference:1.1.0-alpha04'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha4'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.palette:palette-ktx:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha04'
-    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
     implementation 'com.google.firebase:firebase-database:16.1.0'
     implementation 'com.google.firebase:firebase-storage:16.1.0'
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
-    implementation 'com.google.firebase:firebase-firestore:18.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
+    implementation 'com.google.firebase:firebase-firestore:18.2.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     //implementation 'com.google.cloud:google-cloud-dialogflow:0.82.0-alpha'
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
-    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.7.0'
-    implementation 'com.google.ar.sceneform:core:1.7.0'
-    implementation 'com.google.ar:core:1.7.0'
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.8.0'
+    implementation 'com.google.ar.sceneform:core:1.8.0'
+    implementation 'com.google.ar:core:1.8.0'
     implementation 'com.github.AppIntro:AppIntro:v5.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     testImplementation 'junit:junit:4.13-beta-2'
-    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+    androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.ar.sceneform.plugin'

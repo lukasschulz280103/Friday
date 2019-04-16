@@ -40,7 +40,7 @@
 
             <fragment
                 android:id="@+id/fragment"
-                android:name="com.code_design_camp.client.friday.HeadDisplayClient.fragments.ProfileFragment"
+                android:name="com.friday.ar.fragments.ProfileFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_profile" />

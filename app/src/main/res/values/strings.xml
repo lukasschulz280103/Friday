@@ -137,7 +137,7 @@
     <string name="missing_inputs">You either need to allow the collection of device usage data or specify your feedback in the feedback body.</string>
     <string name="uninstall_old_title">Uninstall older version</string>
     <string name="uninstall_old_body">You can\'t use this version of friday with an older version installed at the same time. \n \n <b>You only have to do this once.</b></string>
-    <string name="layout_edit_title">Layout Editor</string>
+    <string name="layout_edit_title">Konfigurator</string>
     <string name="help">Help</string>
     <string name="design">Design</string>
     <string name="theme_dialog_title">Select theme</string>
@@ -272,5 +272,6 @@
     <string name="heat_warning_BETA">Show heat warning when starting actionmode</string>
     <string name="license_activity_label">open source licenses</string>
     <string name="greet_no_name">Welcome!</string>
+    <string name="add_detail_debug_info">Add additional, more detailed debug infos</string>
     >>>>>>> luke
 </resources>
