@@ -42,7 +42,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.aar', '*.jar'], dir: 'libs')
     implementation project(':pocketsphinx-android-5prealpha-release')
-    implementation project(':fridaysdk')
     implementation 'androidx.preference:preference:1.1.0-alpha04'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha4'
