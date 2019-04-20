@@ -43,7 +43,7 @@
             android:name="com.friday.ar.ui.StoreDetailActivity"
             android:theme="@style/AppTheme" />
 
-        <receiver android:name="com.friday.ar.Util.BootReciever">
+        <receiver android:name="com.friday.ar.util.BootReciever">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -65,15 +65,6 @@
             android:label="@string/title_activity_fullscreen_action"
             android:parentActivityName="com.friday.ar.ui.MainActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.friday.ar.ui.MainActivity" />
-        </activity>
-        <activity
-            android:name="com.friday.ar.ui.LayoutEditorActivity"
-            android:label="@string/title_activity_edit_vr"
-            android:parentActivityName="com.friday.ar.ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

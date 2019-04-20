@@ -17,10 +17,8 @@ public class PluginLoader {
     private File pluginDir;
 
     public PluginLoader(Context context) {
-        pluginDir = new File(context.getFilesDir().getPath() + "/plugins");
-        if (!pluginDir.mkdir()) {
-            Log.e(LOGTAG, "Plugin directory could not be created");
-        }
+        pluginDir = new File(context.getFilesDir() + "/plugin");
+        pluginDir.mkdirs();
     }
 
     String packageName = "";

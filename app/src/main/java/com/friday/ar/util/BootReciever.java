@@ -1,4 +1,4 @@
-package com.friday.ar.Util;
+package com.friday.ar.util;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;

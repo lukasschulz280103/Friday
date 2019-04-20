@@ -17,15 +17,15 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.friday.ar.Util.NotificationUtil;
-import com.friday.ar.Util.UpdateUtil;
 import com.friday.ar.plugin.application.PluginLoader;
 import com.friday.ar.service.AccountSyncService;
 import com.friday.ar.service.OnAccountSyncStateChanged;
+import com.friday.ar.service.OnAccountSyncStateChangedList;
+import com.friday.ar.util.NotificationUtil;
+import com.friday.ar.util.UpdateUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
@@ -54,7 +54,7 @@ public class FridayApplication extends Application implements OnAccountSyncState
      * This directory contains the dictionary files used to convert speech to text.
      */
     public File assetsDir;
-    private ArrayList<Object> syncStateChangedNotifyList = new ArrayList<>();
+    private OnAccountSyncStateChangedList<?> syncStateChangedNotifyList = new OnAccountSyncStateChangedList();
 
     @Override
     public void onCreate() {
@@ -147,21 +147,22 @@ public class FridayApplication extends Application implements OnAccountSyncState
         return assetsDir;
     }
 
-    public void registerForSyncStateChange(Object context) {
-        if (context instanceof OnAccountSyncStateChanged) {
+    public <Object extends OnAccountSyncStateChanged> void registerForSyncStateChange(Object context) {
+        if (context != null) {
             syncStateChangedNotifyList.add(context);
         } else {
-            throw new IllegalArgumentException(context + "must implement interface OnAccountSyncStateChanged");
+            throw new NullPointerException("");
         }
     }
-
     public void unregisterForSyncStateChange(Object context) {
         syncStateChangedNotifyList.remove(context);
     }
 
     @Override
     public void onSyncStateChanged() {
-
+        for (OnAccountSyncStateChanged listener : syncStateChangedNotifyList) {
+            listener.onSyncStateChanged();
+        }
     }
 
     public interface OnAssetsLoadedListener {

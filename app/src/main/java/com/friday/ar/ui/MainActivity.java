@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
@@ -39,6 +40,7 @@ import com.friday.ar.fragments.dialogFragments.ChangelogDialogFragment;
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog;
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener;
 import com.friday.ar.fragments.store.MainStoreFragment;
+import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment;
 import com.friday.ar.service.OnAccountSyncStateChanged;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -233,6 +235,11 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.store_frag_container, storeFragment)
                 .commit();
+        ImageButton storeExpandManagerButton = findViewById(R.id.storeMore);
+        storeExpandManagerButton.setOnClickListener(v -> {
+            ManagerBottomSheetDialogFragment managerDialog = new ManagerBottomSheetDialogFragment();
+            managerDialog.show(getSupportFragmentManager(), "ManagerBottomSheet");
+        });
     }
 
     private void checkForFirstUse() {

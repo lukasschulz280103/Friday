@@ -24,9 +24,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.friday.ar.R;
-import com.friday.ar.Util.FileUtil;
-import com.friday.ar.Util.UserUtil;
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener;
+import com.friday.ar.util.FileUtil;
+import com.friday.ar.util.UserUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

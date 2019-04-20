@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/manager_background"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        style="@style/PageTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Friday" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_overlay" />
+
+    <LinearLayout
+        android:id="@+id/managerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/myApps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_apps_black_24dp"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
+            android:text="@string/manager_my_installations"
+            android:textAppearance="?attr/textAppearanceHeadline4" />
+
+        <TextView
+            android:id="@+id/transactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_twotone_attach_money_24px"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
+            android:text="@string/manager_transactions"
+            android:textAppearance="?attr/textAppearanceHeadline4" />
+
+        <TextView
+            android:id="@+id/subscriptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_twotone_payment_24px"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
+            android:text="@string/manager_subscriptions"
+            android:textAppearance="?attr/textAppearanceHeadline4" />
+
+        <TextView
+            android:id="@+id/wishlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_twotone_bookmarks_24px"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
+            android:text="@string/manager_wishlist"
+            android:textAppearance="?attr/textAppearanceHeadline4" />
+    </LinearLayout>
+
+</LinearLayout>

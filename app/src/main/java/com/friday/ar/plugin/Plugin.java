@@ -1,20 +1,33 @@
 package com.friday.ar.plugin;
 
-import android.media.Image;
+import android.media.Rating;
+import android.net.Uri;
+
+import java.io.File;
 
 public class Plugin {
-    public String name;
-    public Image icon;
-    public String authorName;
-    public String authorId;
-    public String versionName;
+    private String name;
+    private Uri iconURI;
+    private String authorName;
+    private String authorId;
+    private String versionName;
+    private Rating rating;
+    private PluginFile pluginFile;
+
+    public PluginFile getPluginFile() {
+        return pluginFile;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
 
     public String getName() {
         return name;
     }
 
-    public Image getIcon() {
-        return icon;
+    public Uri getIconURI() {
+        return iconURI;
     }
 
     public String getAuthorName() {
@@ -27,5 +40,16 @@ public class Plugin {
 
     public String getVersionName() {
         return versionName;
+    }
+
+    public class PluginFile extends File {
+        public PluginFile(String packageName) {
+            super(packageName);
+        }
+
+        @Override
+        public long length() {
+            return super.length();
+        }
     }
 }

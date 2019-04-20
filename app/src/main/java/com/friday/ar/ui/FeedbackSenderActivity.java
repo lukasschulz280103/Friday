@@ -21,11 +21,11 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.friday.ar.R;
 import com.friday.ar.Theme;
-import com.friday.ar.Util.Connectivity;
-import com.friday.ar.Util.LogUtil;
-import com.friday.ar.Util.Validator;
 import com.friday.ar.activities.FridayActivity;
 import com.friday.ar.dialog.ProgressDialog;
+import com.friday.ar.util.Connectivity;
+import com.friday.ar.util.LogUtil;
+import com.friday.ar.util.Validator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
