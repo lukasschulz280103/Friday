@@ -29,4 +29,10 @@ public class FileUtil {
             f.getParentFile().delete();
         }
     }
+
+    public static String getFileEnding(File file) {
+        if (file.isDirectory())
+            throw new IllegalArgumentException("Can't get the ending of a directory.");
+        return file.getName().substring(file.getName().lastIndexOf("."));
+    }
 }

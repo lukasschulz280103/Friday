@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.friday.ar.plugin.Plugin;
-import com.friday.ar.sdk.ArApplication;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,6 +23,15 @@ public class PluginLoader {
         }
     }
 
+    String packageName = "";
+
+    /**
+     * @return List of all installed Plugins
+     */
+    public ArrayList<Plugin> getIndexedPlugins() {
+        return pluginIndex;
+    }
+
     /**
      * Load all plugins into cache.
      * This is basically indexes all installed Plugins.
@@ -33,18 +41,24 @@ public class PluginLoader {
     public boolean startLoading() {
         if (pluginDir.exists()) {
             for (File dir : pluginDir.listFiles()) {
-                ArApplication app = new ArApplication();
-                app.start();
+                Log.d(LOGTAG, "Loading " + dir.getName());
+                packageName = "";
+                loadPackage(dir);
             }
             return true;
         }
         return false;
     }
 
-    /**
-     * @return List of all installed Plugins
-     */
-    public ArrayList<Plugin> getIndexedPlugins() {
-        return pluginIndex;
+    private void loadPackage(File packageDir) {
+        for (File middlePackage : packageDir.listFiles()) {
+            if (middlePackage.listFiles().length == 1) {
+                loadPackage(middlePackage.listFiles()[0]);
+                packageName.concat(middlePackage + ".");
+            } else {
+                packageName = packageName.substring(0, packageName.length() - 1);
+                Log.d(LOGTAG, "Loaded package:" + packageName);
+            }
+        }
     }
 }
