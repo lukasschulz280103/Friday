@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 
 import androidx.annotation.Nullable;
@@ -16,10 +17,10 @@ import com.friday.ar.FridayApplication;
 import com.friday.ar.R;
 import com.friday.ar.Theme;
 import com.friday.ar.activities.FridayActivity;
-import com.friday.ar.dialog.ErrorDialog;
 import com.friday.ar.list.store.PluginListAdapter;
 import com.friday.ar.plugin.application.PluginLoader;
 import com.friday.ar.plugin.installer.PluginInstaller;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,8 +43,11 @@ public class StoreInstallationManagerActivity extends FridayActivity {
         PluginLoader pluginLoader = ((FridayApplication) getApplication()).getApplicationPluginLoader();
         list.setLayoutManager(new LinearLayoutManager(this));
         if (pluginLoader.getIndexedPlugins().size() == 0) {
-            //TODO:Add empty view handling
+            findViewById(R.id.emptyView).setVisibility(View.VISIBLE);
+            list.setVisibility(View.GONE);
         } else {
+            findViewById(R.id.emptyView).setVisibility(View.GONE);
+            list.setVisibility(View.VISIBLE);
             list.setAdapter(new PluginListAdapter(this, pluginLoader.getIndexedPlugins()));
         }
     }
@@ -59,12 +63,14 @@ public class StoreInstallationManagerActivity extends FridayActivity {
         switch (item.getItemId()) {
             case android.R.id.home: {
                 finishAfterTransition();
+                break;
             }
             case R.id.install_from_disk: {
                 Intent selectPluginIntent = new Intent();
                 selectPluginIntent.setType("*/*")
                         .setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(selectPluginIntent, OPEN_PLUGIN_INTENT_CODE);
+                break;
             }
         }
         return true;
@@ -81,9 +87,12 @@ public class StoreInstallationManagerActivity extends FridayActivity {
                 Log.e(LOGTAG, e.getLocalizedMessage(), e);
                 Crashlytics.logException(e);
             } catch (PluginInstaller.IllegalFileException e) {
-                Log.e(LOGTAG, e.getLocalizedMessage(), e);
-                ErrorDialog errorDialog = new ErrorDialog(this, R.drawable.ic_warning_black_24dp, e);
-                errorDialog.show();
+                MaterialAlertDialogBuilder alertDialogBuilder = new MaterialAlertDialogBuilder(this);
+                alertDialogBuilder.setIcon(R.drawable.file_cancel)
+                        .setTitle(R.string.err_inappropriate_file_extension)
+                        .setMessage(R.string.err_inappropriate_file_extension_msg)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .create().show();
             }
         }
     }

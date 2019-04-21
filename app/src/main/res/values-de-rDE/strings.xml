@@ -233,5 +233,9 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="store_title_installed_plugins">Installiert</string>
     <string name="install_from_disk">Von Speicher installieren</string>
     <string name="open_plugin_file">Plugindatei öffnen</string>
+    <string name="err_inappropriate_file_extension">Inkompatibler Dateityp</string>
+    <string name="err_inappropriate_file_extension_msg">Die geöffnete Datei hat eine ungültige Dateierweiterung und kann nicht verwendet werden.</string>
+    <string name="emptyview_nothing_here">Nichts zu finden.</string>
+    <string name="emptyview_go_to_store">Besuch den Store um Plugins herunterzuladen.</string>
     >>>>>>> luke
 </resources>

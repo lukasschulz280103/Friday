@@ -279,4 +279,8 @@
     <string name="store_title_installed_plugins">Installed</string>
     <string name="install_from_disk">Install from disk</string>
     <string name="open_plugin_file">Open plugin file</string>
+    <string name="err_inappropriate_file_extension">Innapropriate file extension</string>
+    <string name="err_inappropriate_file_extension_msg">The chosen file has an inappropriate extension and cannot be loaded.</string>
+    <string name="emptyview_nothing_here">Nothing here.</string>
+    <string name="emptyview_go_to_store">Visit the store and download some plugins!</string>
 </resources>
