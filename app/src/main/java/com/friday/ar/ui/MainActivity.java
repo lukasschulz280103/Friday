@@ -237,7 +237,7 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
                 .commit();
         ImageButton storeExpandManagerButton = findViewById(R.id.storeMore);
         storeExpandManagerButton.setOnClickListener(v -> {
-            ManagerBottomSheetDialogFragment managerDialog = new ManagerBottomSheetDialogFragment();
+            ManagerBottomSheetDialogFragment managerDialog = new ManagerBottomSheetDialogFragment(this);
             managerDialog.show(getSupportFragmentManager(), "ManagerBottomSheet");
         });
     }

@@ -261,7 +261,7 @@ public class FullscreenActionActivity extends FridayActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        speechToTextRecognizer = ((FridayApplication) getApplication()).speechToTextRecognizer;
+        speechToTextRecognizer = ((FridayApplication) getApplication()).getSpeechToTextRecognizer();
         microphoneImage.setImageResource(R.drawable.ic_mic_off_black_24dp);
         @SuppressLint("StaticFieldLeak")
         AsyncTask loadRecognizers = new AsyncTask() {

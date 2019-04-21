@@ -1,4 +1,4 @@
-package com.friday.ar.store.fragments;
+package com.friday.ar.fragments.store;
 
 
 import android.content.Context;
@@ -31,10 +31,10 @@ import java.util.Map;
 /**
  * Shows the servers featured fragments.
  *
- * @see com.friday.ar.fragments.store.MainStoreFragment
+ * @see MainStoreFragment
  */
 public class StoreFeaturedFragment extends Fragment {
-    public static final String LOGTAG = FridayApplication.LOGTAG_STORE;
+    public static final String LOGTAG = FridayApplication.Constants.LOGTAG_STORE;
     private Context context;
     private FirebaseFirestore fridayStoreFirestore;
     private DocumentReference storeData;

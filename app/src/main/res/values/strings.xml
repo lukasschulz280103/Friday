@@ -276,4 +276,7 @@
     <string name="manager_transactions">Transactions</string>
     <string name="manager_subscriptions">Subscriptions</string>
     <string name="manager_wishlist">Wishlist</string>
+    <string name="store_title_installed_plugins">Installed</string>
+    <string name="install_from_disk">Install from disk</string>
+    <string name="open_plugin_file">Open plugin file</string>
 </resources>

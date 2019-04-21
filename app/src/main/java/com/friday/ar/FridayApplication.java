@@ -36,29 +36,36 @@ import io.fabric.sdk.android.Fabric;
  * Application class
  */
 public class FridayApplication extends Application implements OnAccountSyncStateChanged {
-    public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
-    public static final String LOGTAG_STORE = "FridayMarketplace";
     /**
      * This is the global {@link SpeechRecognizer}.
      * Its purpose is to transform speech input from the voice assistant into text.
      * Loaded when {@link com.friday.ar.ui.MainActivity}'s onCreate() is called.
      */
-    public SpeechRecognizer speechToTextRecognizer;
-    public PluginLoader applicationPluginLoader;
+    private SpeechRecognizer speechToTextRecognizer;
+
+    /**
+     * This variable is the application global plugin loader.
+     * Use this variable to get information about installed plugins, or to interact with them
+     */
+    private PluginLoader applicationPluginLoader;
+
     /**
      * Callback object to notify {@link com.friday.ar.ui.MainActivity} that the {@link FridayApplication#speechToTextRecognizer} recognizer is loaded.
      */
-    public OnAssetsLoadedListener mOnAssetLoadedListener;
+    private OnAssetsLoadedListener mOnAssetLoadedListener;
+
     /**
      * <b>Asset directory.</b><br>
      * This directory contains the dictionary files used to convert speech to text.
      */
-    public File assetsDir;
+    private File assetsDir;
     private OnAccountSyncStateChangedList<?> syncStateChangedNotifyList = new OnAccountSyncStateChangedList();
 
     @Override
     public void onCreate() {
         super.onCreate();
+        applicationPluginLoader = new PluginLoader(this);
+        applicationPluginLoader.startLoading();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Fabric.with(this, new Crashlytics());
         createNotificationChannels();
@@ -81,7 +88,7 @@ public class FridayApplication extends Application implements OnAccountSyncState
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel update_channel = new NotificationChannel(
-                    NOTIF_CHANNEL_UPDATE_ID,
+                    Constants.NOTIF_CHANNEL_UPDATE_ID,
                     "Update Checker",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
@@ -139,6 +146,10 @@ public class FridayApplication extends Application implements OnAccountSyncState
         this.mOnAssetLoadedListener = l;
     }
 
+    public PluginLoader getApplicationPluginLoader() {
+        return applicationPluginLoader;
+    }
+
     public SpeechRecognizer getSpeechToTextRecognizer() {
         return speechToTextRecognizer;
     }
@@ -177,5 +188,10 @@ public class FridayApplication extends Application implements OnAccountSyncState
     public class Jobs {
         public static final int JOB_SYNC_ACCOUNT = 8000;
         public static final int JOB_FEEDBACK = 8001;
+    }
+
+    public class Constants {
+        public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
+        public static final String LOGTAG_STORE = "FridayMarketplace";
     }
 }

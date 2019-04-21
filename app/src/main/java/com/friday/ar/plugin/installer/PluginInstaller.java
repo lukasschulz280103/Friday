@@ -14,13 +14,19 @@ public class PluginInstaller {
         this.context = context;
     }
 
-    public void installFrom(File pluginDir) throws IOException {
-        if (!pluginDir.isDirectory())
+    public void installFrom(File pluginDir) throws IOException, IllegalFileException {
+        if (pluginDir.isDirectory())
             throw new IllegalArgumentException("A Friday plugin package cannot be a directory.");
-        else if (!FileUtil.getFileEnding(pluginDir).equals(".jar"))
-            throw new IllegalArgumentException("This file has an inappropriate ending");
+        else if (!FileUtil.getFileExtension(pluginDir).equals("jar"))
+            throw new IllegalFileException("This file has an inappropriate ending");
         else {
             FileUtil.moveFile(pluginDir, new File(context.getFilesDir() + "/plugin"));
+        }
+    }
+
+    public class IllegalFileException extends IllegalStateException {
+        public IllegalFileException(String message) {
+            super(message);
         }
     }
 }

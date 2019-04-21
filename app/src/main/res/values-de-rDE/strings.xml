@@ -230,5 +230,8 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="manager_transactions">Transaktionen</string>
     <string name="manager_subscriptions">Abonnements</string>
     <string name="manager_wishlist">Wunschliste</string>
+    <string name="store_title_installed_plugins">Installiert</string>
+    <string name="install_from_disk">Von Speicher installieren</string>
+    <string name="open_plugin_file">Plugindatei öffnen</string>
     >>>>>>> luke
 </resources>

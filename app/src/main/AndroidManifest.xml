@@ -19,16 +19,16 @@
         android:required="true" />
 
     <application
-        android:name="com.friday.ar.FridayApplication"
+        android:name=".FridayApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".ui.StoreInstallationManagerActivity" />
         <activity
-            android:name="com.friday.ar.ui.WizardActivity"
+            android:name=".ui.WizardActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="com.friday.Wizard" />
@@ -37,20 +37,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.friday.ar.ui.LicenseActivity"
+            android:name=".ui.LicenseActivity"
             android:label="@string/license_activity_label" />
         <activity
-            android:name="com.friday.ar.ui.StoreDetailActivity"
+            android:name=".ui.StoreDetailActivity"
             android:theme="@style/AppTheme" />
 
-        <receiver android:name="com.friday.ar.util.BootReciever">
+        <receiver android:name=".util.BootReciever">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name="com.friday.ar.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,10 +60,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.friday.ar.ui.FullscreenActionActivity"
+            android:name=".ui.FullscreenActionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_action"
-            android:parentActivityName="com.friday.ar.ui.MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -71,9 +71,9 @@
                 android:value="com.friday.ar.ui.MainActivity" />
         </activity>
         <activity
-            android:name="com.friday.ar.ui.SettingsActivity"
+            android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.friday.ar.ui.MainActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/PreferenceActivityStyle">
             <intent-filter>
                 <action android:name="com.friday.settings" />
@@ -86,10 +86,10 @@
                 android:value="com.friday.ar.ui.MainActivity" />
         </activity>
         <activity
-            android:name="com.friday.ar.ui.FeedbackSenderActivity"
+            android:name=".ui.FeedbackSenderActivity"
             android:label="@string/app_feedback" />
         <activity
-            android:name="com.friday.ar.ui.InfoActivity"
+            android:name=".ui.InfoActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.friday.Info" />
@@ -106,10 +106,10 @@
             android:value="9a85d5ff39417c8b72a7242e63d6fd53f43fe7f9" />
 
         <service
-            android:name="com.friday.ar.service.FeedbackService"
+            android:name=".service.FeedbackService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name="com.friday.ar.service.AccountSyncService"
+            android:name=".service.AccountSyncService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
