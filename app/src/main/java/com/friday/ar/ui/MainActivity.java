@@ -42,6 +42,7 @@ import com.friday.ar.fragments.interfaces.OnAuthCompletedListener;
 import com.friday.ar.fragments.store.MainStoreFragment;
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment;
 import com.friday.ar.service.OnAccountSyncStateChanged;
+import com.friday.ar.ui.store.StoreDetailActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

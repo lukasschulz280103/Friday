@@ -1,4 +1,4 @@
-package com.friday.ar.ui;
+package com.friday.ar.ui.store;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import com.friday.ar.activities.FridayActivity;
 import com.friday.ar.list.store.PluginListAdapter;
 import com.friday.ar.plugin.application.PluginLoader;
 import com.friday.ar.plugin.installer.PluginInstaller;
+import com.friday.ar.ui.FileSelectorActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
@@ -66,9 +67,7 @@ public class StoreInstallationManagerActivity extends FridayActivity {
                 break;
             }
             case R.id.install_from_disk: {
-                Intent selectPluginIntent = new Intent();
-                selectPluginIntent.setType("*/*")
-                        .setAction(Intent.ACTION_GET_CONTENT);
+                Intent selectPluginIntent = new Intent(this, FileSelectorActivity.class);
                 startActivityForResult(selectPluginIntent, OPEN_PLUGIN_INTENT_CODE);
                 break;
             }
@@ -78,11 +77,12 @@ public class StoreInstallationManagerActivity extends FridayActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.d(LOGTAG, "data:" + data.getData().toString());
         if (requestCode == OPEN_PLUGIN_INTENT_CODE && resultCode == RESULT_OK) {
             File openedFile = new File(data.getData().toString());
             PluginInstaller installer = new PluginInstaller(this);
             try {
-                installer.installFrom(openedFile);
+                installer.installFrom(new File(openedFile.getPath()));
             } catch (IOException e) {
                 Log.e(LOGTAG, e.getLocalizedMessage(), e);
                 Crashlytics.logException(e);

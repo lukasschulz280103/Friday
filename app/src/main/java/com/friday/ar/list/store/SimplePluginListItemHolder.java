@@ -19,7 +19,7 @@ public class SimplePluginListItemHolder extends RecyclerView.ViewHolder {
 
     public SimplePluginListItemHolder(@NonNull View itemView) {
         super(itemView);
-        iconView = itemView.findViewById(R.id.icon);
+        iconView = itemView.findViewById(R.id.fileIcon);
         title = itemView.findViewById(R.id.name);
         installStatus = itemView.findViewById(R.id.installStatus);
         ratingBar = itemView.findViewById(R.id.rating);

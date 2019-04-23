@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.friday.ar.R;
-import com.friday.ar.ui.StoreDetailActivity;
+import com.friday.ar.ui.store.StoreDetailActivity;
 
 public class DashboardSimpleItem extends Fragment {
     @Nullable

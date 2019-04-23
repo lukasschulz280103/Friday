@@ -26,7 +26,8 @@
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.StoreInstallationManagerActivity" />
+        <activity android:name=".ui.FileSelectorActivity"></activity>
+        <activity android:name=".ui.store.StoreInstallationManagerActivity" />
         <activity
             android:name=".ui.WizardActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -40,7 +41,7 @@
             android:name=".ui.LicenseActivity"
             android:label="@string/license_activity_label" />
         <activity
-            android:name=".ui.StoreDetailActivity"
+            android:name=".ui.store.StoreDetailActivity"
             android:theme="@style/AppTheme" />
 
         <receiver android:name=".util.BootReciever">

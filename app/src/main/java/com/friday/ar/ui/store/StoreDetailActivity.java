@@ -1,4 +1,4 @@
-package com.friday.ar.ui;
+package com.friday.ar.ui.store;
 
 import android.os.Bundle;
 import android.util.Log;
