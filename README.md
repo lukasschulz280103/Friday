@@ -1,5 +1,5 @@
 
-<img width="200" alt="friday main page" src="https://lh3.googleusercontent.com/6LknrZzl4_IXMAugbhizGwbNEcXpvzCSWKSHfIag1DA0q0Mc3MzlPuWkJsUjS4fAr1eHfshVG58TNzsD7GMq74l0ydFh2a5ORPho6a-kbWdXbX7k4C2hwXI8uj-3rPvSOBQ5OI_lnOE=w2400" ></img>
+<img alt="banner image" src="https://lh3.googleusercontent.com/6LknrZzl4_IXMAugbhizGwbNEcXpvzCSWKSHfIag1DA0q0Mc3MzlPuWkJsUjS4fAr1eHfshVG58TNzsD7GMq74l0ydFh2a5ORPho6a-kbWdXbX7k4C2hwXI8uj-3rPvSOBQ5OI_lnOE=w2400" ></img>
 Read in [english](README.en.md) 
 # Projekt "friday"
 Friday ist ein AR-Projekt, mithilfe dessen das Handy zur praktischen AR-Brille wird. 
