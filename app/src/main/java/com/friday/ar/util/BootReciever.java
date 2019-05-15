@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.preference.PreferenceManager;
 
 import com.friday.ar.FridayApplication;
@@ -19,7 +20,10 @@ public class BootReciever extends BroadcastReceiver {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (preferences.getBoolean("check_update_auto", false)) {
             UpdateUtil updateUtil = new UpdateUtil(context);
-            updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(context, versionNumberServer));
+            updateUtil.setListener(versionNumberServer -> {
+                if (!new PackageInfo().versionName.equals(versionNumberServer))
+                    NotificationUtil.notifyUpdateAvailable(context, versionNumberServer);
+            });
         }
         if (preferences.getBoolean("sync_account_auto", true)) {
             JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);

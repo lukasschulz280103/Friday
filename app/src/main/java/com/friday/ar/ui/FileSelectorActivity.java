@@ -2,7 +2,6 @@ package com.friday.ar.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,10 +88,6 @@ public class FileSelectorActivity extends FridayActivity {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_folder_24px));
                 holder.folderInfos.setVisibility(View.VISIBLE);
                 holder.fileSize.setVisibility(View.GONE);
-                Log.d(LOGTAG, "directoryFileItem folders = " + directoryFileItem.listFiles());
-                //TODO:Fix bug that directory preview is tried to be shown on files
-                holder.containingFolders.setText(Integer.toString(directoryFileItem.listFiles().length));
-                holder.containingFiles.setText(Integer.toString(directoryFileItem.listFiles(File::isFile).length));
             } else {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_insert_drive_file_24px));
             }
@@ -111,8 +106,6 @@ public class FileSelectorActivity extends FridayActivity {
         TextView fileName;
         TextView fileSize;
         LinearLayout folderInfos;
-        TextView containingFolders;
-        TextView containingFiles;
 
         FileViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -121,8 +114,6 @@ public class FileSelectorActivity extends FridayActivity {
             fileSize = itemView.findViewById(R.id.fileSize);
             fileName = itemView.findViewById(R.id.fileName);
             folderInfos = itemView.findViewById(R.id.folderInfos);
-            containingFolders = itemView.findViewById(R.id.folderContainingFolders);
-            containingFiles = itemView.findViewById(R.id.folderContainingFiles);
         }
     }
 }
