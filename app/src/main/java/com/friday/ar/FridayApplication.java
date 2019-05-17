@@ -69,10 +69,16 @@ public class FridayApplication extends Application implements OnAccountSyncState
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Fabric.with(this, new Crashlytics());
         createNotificationChannels();
-        if (preferences.getBoolean("check_update_auto", false)) {
-            UpdateUtil updateUtil = new UpdateUtil(this);
-            updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(this, versionNumberServer));
-        }
+        UpdateUtil updateUtil = new UpdateUtil();
+        updateUtil.setListener(versionNumberServer -> {
+            try {
+                if (preferences.getBoolean("check_update_auto", false) && getPackageManager().getPackageInfo(getPackageName(), 0).versionName.equals(versionNumberServer)) {
+                    NotificationUtil.notifyUpdateAvailable(FridayApplication.this, versionNumberServer);
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         if (preferences.getBoolean("sync_account_auto", true)) {
             JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
             JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, new ComponentName(this, AccountSyncService.class))

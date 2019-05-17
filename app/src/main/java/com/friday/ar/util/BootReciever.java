@@ -7,22 +7,29 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.friday.ar.FridayApplication;
 import com.friday.ar.plugin.application.PluginLoader;
 import com.friday.ar.service.AccountSyncService;
 
 public class BootReciever extends BroadcastReceiver {
+    private static final String LOGTAG = "BootReciever";
+
     @Override
     public void onReceive(final Context context, Intent pIntent) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (preferences.getBoolean("check_update_auto", false)) {
-            UpdateUtil updateUtil = new UpdateUtil(context);
+            UpdateUtil updateUtil = new UpdateUtil();
             updateUtil.setListener(versionNumberServer -> {
-                if (!new PackageInfo().versionName.equals(versionNumberServer))
-                    NotificationUtil.notifyUpdateAvailable(context, versionNumberServer);
+                try {
+                    if (!context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName.equals(versionNumberServer))
+                        NotificationUtil.notifyUpdateAvailable(context, versionNumberServer);
+                } catch (PackageManager.NameNotFoundException e) {
+                    Log.e(LOGTAG, e.getLocalizedMessage(), e);
+                }
             });
         }
         if (preferences.getBoolean("sync_account_auto", true)) {
