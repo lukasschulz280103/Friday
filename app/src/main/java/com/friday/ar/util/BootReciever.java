@@ -1,4 +1,4 @@
-package com.friday.ar.Util;
+package com.friday.ar.util;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -14,12 +14,13 @@ import com.friday.ar.plugin.application.PluginLoader;
 import com.friday.ar.service.AccountSyncService;
 
 public class BootReciever extends BroadcastReceiver {
+    private static final String LOGTAG = "BootReciever";
+
     @Override
     public void onReceive(final Context context, Intent pIntent) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         if (preferences.getBoolean("check_update_auto", false)) {
-            UpdateUtil updateUtil = new UpdateUtil(context);
-            updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(context, versionNumberServer));
+            UpdateUtil.checkForUpdate(context);
         }
         if (preferences.getBoolean("sync_account_auto", true)) {
             JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);

@@ -23,10 +23,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.crashlytics.android.Crashlytics;
 import com.friday.ar.R;
-import com.friday.ar.Util.FileUtil;
-import com.friday.ar.Util.UserUtil;
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener;
+import com.friday.ar.util.FileUtil;
+import com.friday.ar.util.UserUtil;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -185,6 +186,8 @@ public class DefaultSigninFragment extends Fragment {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                Crashlytics.setUserName(account.getDisplayName());
+                Crashlytics.setUserEmail(account.getEmail());
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -215,6 +218,7 @@ public class DefaultSigninFragment extends Fragment {
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(mActivity, task -> {
                     if (task.isSuccessful()) {
+                        Crashlytics.setUserIdentifier(auth.getCurrentUser().getUid());
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("CONTEXT", "Activity is " + mActivity);
                         DownloadManager downloadManager = (DownloadManager) mActivity.getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);

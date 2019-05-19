@@ -20,11 +20,11 @@ import androidx.fragment.app.Fragment;
 
 import com.friday.ar.FridayApplication;
 import com.friday.ar.R;
-import com.friday.ar.Util.UserUtil;
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener;
 import com.friday.ar.service.OnAccountSyncStateChanged;
 import com.friday.ar.ui.FeedbackSenderActivity;
 import com.friday.ar.ui.MainActivity;
+import com.friday.ar.util.UserUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mikhaellopez.circularimageview.CircularImageView;

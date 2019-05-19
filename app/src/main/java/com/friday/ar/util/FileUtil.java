@@ -1,4 +1,4 @@
-package com.friday.ar.Util;
+package com.friday.ar.util;
 
 import android.util.Log;
 
@@ -30,9 +30,15 @@ public class FileUtil {
         }
     }
 
-    public static String getFileEnding(File file) {
+    /**
+     * Returns the file ending of the passed {@link File} object.
+     *
+     * @param file File to work with
+     * @return returns the file extension, e.g. "jar"
+     */
+    public static String getFileExtension(File file) {
         if (file.isDirectory())
             throw new IllegalArgumentException("Can't get the ending of a directory.");
-        return file.getName().substring(file.getName().lastIndexOf("."));
+        return file.getName().contains(".") ? file.getName().substring(file.getName().lastIndexOf(".")):"";
     }
 }

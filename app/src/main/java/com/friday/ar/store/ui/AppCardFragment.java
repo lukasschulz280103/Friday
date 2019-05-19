@@ -27,7 +27,7 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class AppCardFragment extends Fragment {
-    public static final String LOGTAG = FridayApplication.LOGTAG_STORE;
+    public static final String LOGTAG = FridayApplication.Constants.LOGTAG_STORE;
     ImageView thumbnail;
     private ErrorDialog errorDialog;
     private CollectionReference mAppRef;

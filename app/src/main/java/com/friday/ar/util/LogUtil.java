@@ -1,4 +1,4 @@
-package com.friday.ar.Util;
+package com.friday.ar.util;
 
 import android.content.Context;
 import android.os.Build;

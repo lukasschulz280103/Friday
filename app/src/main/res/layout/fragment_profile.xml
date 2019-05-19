@@ -102,13 +102,13 @@
                 style="@style/ProfilePageItemIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_twotone_format_shapes_24px" />
+                android:src="@drawable/ic_twotone_group_24px" />
 
             <TextView
                 style="@style/ProfilePageItem.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/layout_edit_title" />
+                android:text="@string/friday_groups" />
         </LinearLayout>
 
         <LinearLayout

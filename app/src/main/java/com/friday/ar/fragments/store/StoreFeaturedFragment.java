@@ -1,4 +1,4 @@
-package com.friday.ar.store.fragments;
+package com.friday.ar.fragments.store;
 
 
 import android.content.Context;
@@ -23,6 +23,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -30,13 +31,13 @@ import java.util.Map;
 /**
  * Shows the servers featured fragments.
  *
- * @see com.friday.ar.fragments.store.MainStoreFragment
+ * @see MainStoreFragment
  */
 public class StoreFeaturedFragment extends Fragment {
-    public static final String LOGTAG = FridayApplication.LOGTAG_STORE;
+    public static final String LOGTAG = FridayApplication.Constants.LOGTAG_STORE;
     private Context context;
-    private FirebaseFirestore storedatafs = FirebaseFirestore.getInstance();
-    private DocumentReference storedata;
+    private FirebaseFirestore fridayStoreFirestore;
+    private DocumentReference storeData;
     private ArrayList<CollectionReference> dataList = new ArrayList<>();
     private ViewPager viewPager;
     private OnCompleteListener storeDataLoaded = task -> {
@@ -45,7 +46,7 @@ public class StoreFeaturedFragment extends Fragment {
             ArrayList<Map<String, Object>> data = (ArrayList<Map<String, Object>>) snap.get("list");
             for (Map map : data) {
                 WidgetInfo inf = new WidgetInfo();
-                CollectionReference collectionReference = storedatafs.collection("/store/data/" + map.get("id"));
+                CollectionReference collectionReference = fridayStoreFirestore.collection("/store/data/" + map.get("id"));
                 dataList.add(collectionReference);
             }
             viewPager.setAdapter(new CardViewPagerAdapter(getFragmentManager(), dataList));
@@ -57,6 +58,11 @@ public class StoreFeaturedFragment extends Fragment {
     };
 
     public StoreFeaturedFragment() {
+        FirebaseFirestoreSettings firestoreSettings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        fridayStoreFirestore = FirebaseFirestore.getInstance();
+        fridayStoreFirestore.setFirestoreSettings(firestoreSettings);
         // Required empty public constructor
     }
 
@@ -72,7 +78,7 @@ public class StoreFeaturedFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_store_featured, container, false);
         viewPager = v.findViewById(R.id.store_main_pager);
-        DocumentReference loadedStoreData = storedatafs.document("/store/generated/featured-apps/default");
+        DocumentReference loadedStoreData = fridayStoreFirestore.document("/store/generated/featured-apps/default");
         loadedStoreData.get().addOnCompleteListener(storeDataLoaded);
         return v;
     }

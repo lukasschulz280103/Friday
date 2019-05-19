@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import com.friday.ar.R;
 import com.friday.ar.fragments.net.ConnectionFragment;
 import com.friday.ar.fragments.net.OnConnectionStateChangedListener;
-import com.friday.ar.store.fragments.StoreFeaturedFragment;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class MainStoreFragment extends ConnectionFragment implements OnConnectionStateChangedListener {

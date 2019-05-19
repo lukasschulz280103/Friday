@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.friday.ar.R;
-import com.friday.ar.Util.FireStoreCodeInterpreter;
+import com.friday.ar.util.FireStoreCodeInterpreter;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 

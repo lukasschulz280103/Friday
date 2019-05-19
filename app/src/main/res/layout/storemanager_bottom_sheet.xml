@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/manager_background"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        style="@style/PageTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Friday" />
+
+    <LinearLayout
+        android:id="@+id/managerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/myInstallations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/store_title_installed_plugins"
+            android:textAppearance="@style/Store.Header"
+            android:transitionName="installationsTitle" />
+
+        <TextView
+            android:id="@+id/transactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/manager_transactions"
+            android:textAppearance="@style/Store.Header"
+            android:transitionName="installationsTitle" />
+
+        <TextView
+            android:id="@+id/subsriptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/manager_subscriptions"
+            android:textAppearance="@style/Store.Header"
+            android:transitionName="installationsTitle" />
+
+        <TextView
+            android:id="@+id/wishlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/manager_wishlist"
+            android:textAppearance="@style/Store.Header"
+            android:transitionName="installationsTitle" />
+
+    </LinearLayout>
+
+</LinearLayout>

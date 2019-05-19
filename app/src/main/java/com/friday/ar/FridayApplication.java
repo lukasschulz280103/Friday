@@ -17,15 +17,14 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.friday.ar.Util.NotificationUtil;
-import com.friday.ar.Util.UpdateUtil;
 import com.friday.ar.plugin.application.PluginLoader;
 import com.friday.ar.service.AccountSyncService;
 import com.friday.ar.service.OnAccountSyncStateChanged;
+import com.friday.ar.service.OnAccountSyncStateChangedList;
+import com.friday.ar.util.UpdateUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import edu.cmu.pocketsphinx.Assets;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
@@ -36,36 +35,40 @@ import io.fabric.sdk.android.Fabric;
  * Application class
  */
 public class FridayApplication extends Application implements OnAccountSyncStateChanged {
-    public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
-    public static final String LOGTAG_STORE = "FridayMarketplace";
     /**
      * This is the global {@link SpeechRecognizer}.
      * Its purpose is to transform speech input from the voice assistant into text.
      * Loaded when {@link com.friday.ar.ui.MainActivity}'s onCreate() is called.
      */
-    public SpeechRecognizer speechToTextRecognizer;
-    public PluginLoader applicationPluginLoader;
+    private SpeechRecognizer speechToTextRecognizer;
+
+    /**
+     * This variable is the application global plugin loader.
+     * Use this variable to get information about installed plugins, or to interact with them
+     */
+    private PluginLoader applicationPluginLoader;
+
     /**
      * Callback object to notify {@link com.friday.ar.ui.MainActivity} that the {@link FridayApplication#speechToTextRecognizer} recognizer is loaded.
      */
-    public OnAssetsLoadedListener mOnAssetLoadedListener;
+    private OnAssetsLoadedListener mOnAssetLoadedListener;
+
     /**
      * <b>Asset directory.</b><br>
      * This directory contains the dictionary files used to convert speech to text.
      */
-    public File assetsDir;
-    private ArrayList<Object> syncStateChangedNotifyList = new ArrayList<>();
+    private File assetsDir;
+    private OnAccountSyncStateChangedList<?> syncStateChangedNotifyList = new OnAccountSyncStateChangedList();
 
     @Override
     public void onCreate() {
         super.onCreate();
+        applicationPluginLoader = new PluginLoader(this);
+        applicationPluginLoader.startLoading();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Fabric.with(this, new Crashlytics());
         createNotificationChannels();
-        if (preferences.getBoolean("check_update_auto", false)) {
-            UpdateUtil updateUtil = new UpdateUtil(this);
-            updateUtil.setListener(versionNumberServer -> NotificationUtil.notifyUpdateAvailable(this, versionNumberServer));
-        }
+        UpdateUtil.checkForUpdate(this);
         if (preferences.getBoolean("sync_account_auto", true)) {
             JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
             JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, new ComponentName(this, AccountSyncService.class))
@@ -81,7 +84,7 @@ public class FridayApplication extends Application implements OnAccountSyncState
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel update_channel = new NotificationChannel(
-                    NOTIF_CHANNEL_UPDATE_ID,
+                    Constants.NOTIF_CHANNEL_UPDATE_ID,
                     "Update Checker",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
@@ -109,7 +112,6 @@ public class FridayApplication extends Application implements OnAccountSyncState
                             .setAcousticModel(new File(assetsDir, "en-us-ptm"))
                             .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
                             .getRecognizer();
-                    speechToTextRecognizer.addNgramSearch("input", new File(assetsDir, "en-70k-0.1.lm"));
 
                 } catch (IOException e) {
                     if (mOnAssetLoadedListener != null) {
@@ -139,6 +141,10 @@ public class FridayApplication extends Application implements OnAccountSyncState
         this.mOnAssetLoadedListener = l;
     }
 
+    public PluginLoader getApplicationPluginLoader() {
+        return applicationPluginLoader;
+    }
+
     public SpeechRecognizer getSpeechToTextRecognizer() {
         return speechToTextRecognizer;
     }
@@ -147,21 +153,22 @@ public class FridayApplication extends Application implements OnAccountSyncState
         return assetsDir;
     }
 
-    public void registerForSyncStateChange(Object context) {
-        if (context instanceof OnAccountSyncStateChanged) {
+    public <Object extends OnAccountSyncStateChanged> void registerForSyncStateChange(Object context) {
+        if (context != null) {
             syncStateChangedNotifyList.add(context);
         } else {
-            throw new IllegalArgumentException(context + "must implement interface OnAccountSyncStateChanged");
+            throw new NullPointerException("");
         }
     }
-
     public void unregisterForSyncStateChange(Object context) {
         syncStateChangedNotifyList.remove(context);
     }
 
     @Override
     public void onSyncStateChanged() {
-
+        for (OnAccountSyncStateChanged listener : syncStateChangedNotifyList) {
+            listener.onSyncStateChanged();
+        }
     }
 
     public interface OnAssetsLoadedListener {
@@ -176,5 +183,10 @@ public class FridayApplication extends Application implements OnAccountSyncState
     public class Jobs {
         public static final int JOB_SYNC_ACCOUNT = 8000;
         public static final int JOB_FEEDBACK = 8001;
+    }
+
+    public class Constants {
+        public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
+        public static final String LOGTAG_STORE = "FridayMarketplace";
     }
 }

@@ -91,7 +91,7 @@
     <string name="internal_error_message">Il y a eu une erreur interne lors du traitement de votre demande.</string>
     <string name="internal_error_title">erruer interne</string>
     <string name="later">postérieures</string>
-    <string name="layout_edit_title">Editor</string>
+    <string name="friday_groups">Groupes</string>
     <string name="leave_action_activity">Voulez-vous mettre fin à cette session ?</string>
     <string name="leave_app">Voulez-vous vraiment quitter l\'application ?</string>
     <string name="licenses">Licences</string>
@@ -221,4 +221,16 @@
     <string name="heat_warning_BETA">Affichage d\'un avertissement de chaleur au démarrage du mode d\'action</string>
     <string name="license_activity_label">licences open source</string>
     <string name="greet_no_name">Bonjour!</string>
+    <string name="manager_my_installations">Mes installations</string>
+    <string name="manager_transactions">Transactions</string>
+    <string name="manager_subscriptions">Abonnements</string>
+    <string name="manager_wishlist">Liste de souhaits</string>
+    <string name="install_from_disk">Installer à partir du disque</string>
+    <string name="err_inappropriate_file_extension">Extension de fichier inappropriée</string>
+    <string name="open_plugin_file">Ouvrir le fichier plugin</string>
+    <string name="store_title_installed_plugins">Installé</string>
+    <string name="add_detail_debug_info">Ajouter des infos de débogage supplémentaires et plus détaillées</string>
+    <string name="err_inappropriate_file_extension_msg">Le fichier choisi a une extension inappropriée et ne peut pas être chargé.</string>
+    <string name="emptyview_nothing_here">Il n\'y a rien ici.</string>
+    <string name="emptyview_go_to_store">Visitez le store pour télécharger les plugins</string>
 </resources>

@@ -16,8 +16,8 @@ import androidx.annotation.Nullable;
 
 import com.friday.ar.R;
 import com.friday.ar.Theme;
-import com.friday.ar.Util.Connectivity;
 import com.friday.ar.activities.FridayActivity;
+import com.friday.ar.util.Connectivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

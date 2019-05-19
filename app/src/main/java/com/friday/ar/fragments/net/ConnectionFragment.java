@@ -4,12 +4,14 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
+import com.friday.ar.fragments.store.ErrorFragment;
+
 /**
  * Extendable Fragment class to automatically implement {@link OnConnectionStateChangedListener}
  * This class is necessary to properly access unknown subclasses
  *
  * @see OnConnectionStateChangedListener
- * @see com.friday.ar.fragments.store.ErrorFragment
+ * @see ErrorFragment
  */
 public class ConnectionFragment extends Fragment implements OnConnectionStateChangedListener {
 

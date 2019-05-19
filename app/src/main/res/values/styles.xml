@@ -30,7 +30,10 @@
         <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
         <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
         <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetMaterial</item>
+        <item name="android:windowActivityTransitions">true</item>
     </style>
+
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -148,6 +151,14 @@
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
+
+    <style name="BottomSheetMaterial" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetMaterial.Style</item>
+    </style>
+
+    <style name="BottomSheetMaterial.Style" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/manager_background</item>
+    </style>
     <style name="UppercaseWarn">
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/warn_red</item>
@@ -246,7 +257,6 @@
     </style>
 
     <style name="Store.Card"></style>
-
     <style name="Store.Card.Title">
         <item name="android:textAppearance">@style/Store.Header</item>
     </style>

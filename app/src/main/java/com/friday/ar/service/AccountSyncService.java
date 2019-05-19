@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
-import com.friday.ar.Util.FileUtil;
-import com.friday.ar.Util.UserUtil;
+import com.friday.ar.util.FileUtil;
+import com.friday.ar.util.UserUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
