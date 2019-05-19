@@ -77,8 +77,9 @@ public class StoreInstallationManagerActivity extends FridayActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d(LOGTAG, "data:" + data.getData().toString());
-        if (requestCode == OPEN_PLUGIN_INTENT_CODE && resultCode == RESULT_OK) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == OPEN_PLUGIN_INTENT_CODE && resultCode == RESULT_OK && data != null) {
+            Log.d(LOGTAG, "data:" + data.getData().toString());
             File openedFile = new File(data.getData().toString());
             PluginInstaller installer = new PluginInstaller(this);
             try {
