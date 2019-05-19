@@ -28,7 +28,8 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 //TODO:Add support for opening directories
 //TODO:Add support for selecting files
 public class FileSelectorActivity extends FridayActivity {
-    public static final String LOGTAG = "FileSelector";
+    private static final String LOGTAG = "FileSelector";
+    RecyclerView fileList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class FileSelectorActivity extends FridayActivity {
         setContentView(R.layout.activity_file_selector);
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setTitle(R.string.open_plugin_file);
+        fileList = findViewById(R.id.fileList);
         //TODO:Fix NullPointerException when returning result to calling activity
         setResult(RESULT_CANCELED);
     }
@@ -49,6 +51,17 @@ public class FileSelectorActivity extends FridayActivity {
             RecyclerView fileList = findViewById(R.id.fileList);
             fileList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
             fileList.setAdapter(new FileSystemArrayAdapter(new File("/")));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        FileSystemArrayAdapter fileListAdapter = ((FileSystemArrayAdapter) fileList.getAdapter());
+        if (fileListAdapter.sourceFile.getParentFile() != null) {
+            fileListAdapter.sourceFile = fileListAdapter.sourceFile.getParentFile();
+            fileListAdapter.notifyDataSetChanged();
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -86,17 +99,21 @@ public class FileSelectorActivity extends FridayActivity {
             holder.fileName.setText(directoryFileItem.getName());
             if (directoryFileItem.isDirectory() && !directoryFileItem.isFile()) {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_folder_24px));
-                holder.folderInfos.setVisibility(View.VISIBLE);
                 holder.fileSize.setVisibility(View.GONE);
+                holder.root.setOnClickListener(v -> {
+                    sourceFile = directoryFileItem;
+                    notifyDataSetChanged();
+                });
             } else {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_insert_drive_file_24px));
+                holder.root.setOnClickListener(v -> setResult(RESULT_OK));
             }
 
         }
 
         @Override
         public int getItemCount() {
-            return sourceFile.listFiles().length;
+            return sourceFile.listFiles() != null ? sourceFile.listFiles().length : 0;
         }
     }
 
@@ -105,7 +122,6 @@ public class FileSelectorActivity extends FridayActivity {
         ImageView fileIcon;
         TextView fileName;
         TextView fileSize;
-        LinearLayout folderInfos;
 
         FileViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,7 +129,6 @@ public class FileSelectorActivity extends FridayActivity {
             fileIcon = itemView.findViewById(R.id.fileIcon);
             fileSize = itemView.findViewById(R.id.fileSize);
             fileName = itemView.findViewById(R.id.fileName);
-            folderInfos = itemView.findViewById(R.id.folderInfos);
         }
     }
 }

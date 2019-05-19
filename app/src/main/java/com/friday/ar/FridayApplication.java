@@ -21,7 +21,6 @@ import com.friday.ar.plugin.application.PluginLoader;
 import com.friday.ar.service.AccountSyncService;
 import com.friday.ar.service.OnAccountSyncStateChanged;
 import com.friday.ar.service.OnAccountSyncStateChangedList;
-import com.friday.ar.util.NotificationUtil;
 import com.friday.ar.util.UpdateUtil;
 
 import java.io.File;
@@ -69,16 +68,7 @@ public class FridayApplication extends Application implements OnAccountSyncState
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Fabric.with(this, new Crashlytics());
         createNotificationChannels();
-        UpdateUtil updateUtil = new UpdateUtil();
-        updateUtil.setListener(versionNumberServer -> {
-            try {
-                if (preferences.getBoolean("check_update_auto", false) && getPackageManager().getPackageInfo(getPackageName(), 0).versionName.equals(versionNumberServer)) {
-                    NotificationUtil.notifyUpdateAvailable(FridayApplication.this, versionNumberServer);
-                }
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-        });
+        UpdateUtil.checkForUpdate(this);
         if (preferences.getBoolean("sync_account_auto", true)) {
             JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
             JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, new ComponentName(this, AccountSyncService.class))
@@ -122,7 +112,6 @@ public class FridayApplication extends Application implements OnAccountSyncState
                             .setAcousticModel(new File(assetsDir, "en-us-ptm"))
                             .setDictionary(new File(assetsDir, "cmudict-en-us.dict"))
                             .getRecognizer();
-                    speechToTextRecognizer.addNgramSearch("input", new File(assetsDir, "en-70k-0.1.lm"));
 
                 } catch (IOException e) {
                     if (mOnAssetLoadedListener != null) {
