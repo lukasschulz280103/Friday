@@ -18,6 +18,8 @@ import com.friday.ar.R;
 import com.friday.ar.Theme;
 import com.friday.ar.activities.FridayActivity;
 import com.friday.ar.util.Connectivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -93,5 +95,14 @@ public class InfoActivity extends FridayActivity {
     public void onClickLicense(View v) {
         Intent intent = new Intent(this, LicenseActivity.class);
         startActivity(intent);
+    }
+
+    public void onClickContact(View view) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_EMAIL, "friday.enterprises.ar@gmail.com");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Support request" + (user != null ? " #" + user.getUid() : ""));
+        startActivity(Intent.createChooser(intent, getString(R.string.contact)));
     }
 }

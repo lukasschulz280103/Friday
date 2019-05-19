@@ -283,4 +283,5 @@
     <string name="err_inappropriate_file_extension_msg">The chosen file has an inappropriate extension and cannot be loaded.</string>
     <string name="emptyview_nothing_here">Nothing here.</string>
     <string name="emptyview_go_to_store">Visit the store and download some plugins!</string>
+    <string name="contact">Contact us</string>
 </resources>
