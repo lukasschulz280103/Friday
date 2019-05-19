@@ -99,10 +99,9 @@ public class InfoActivity extends FridayActivity {
 
     public void onClickContact(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_EMAIL, "friday.enterprises.ar@gmail.com");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Support request" + (user != null ? " #" + user.getUid() : ""));
+        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "friday.enterprises.ar@gmail.com", null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Support request" + (user != null ? "for #" + user.getUid() : ""));
         startActivity(Intent.createChooser(intent, getString(R.string.contact)));
+        //TODO: Add code which attaches a debug log file
     }
 }
