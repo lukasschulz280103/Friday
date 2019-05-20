@@ -93,7 +93,7 @@ public class FileSelectorActivity extends FridayActivity {
                 holder.fileSize.setVisibility(View.GONE);
                 holder.root.setOnClickListener(v -> {
                     Log.d(LOGTAG, directoryFileItem.getPath());
-                    setDirectoryList(directoryFileItem);
+                    if (directoryFileItem.canRead()) setDirectoryList(directoryFileItem);
                 });
             } else {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_insert_drive_file_24px));
@@ -104,14 +104,12 @@ public class FileSelectorActivity extends FridayActivity {
 
         @Override
         public int getItemCount() {
-            return directoryList.size();
+            return sourceFile.listFiles().length;
         }
 
         public void setDirectoryList(File directoryFile) {
-            if (sourceFile != null && sourceFile.getParentFile().getPath().equals(directoryFile.getPath())) {
-                notifyItemRangeRemoved(0, directoryFile.listFiles() != null ? directoryFile.listFiles().length : 0);
-            } else {
-                notifyItemRangeRemoved(0, directoryFile.getParentFile().listFiles() != null ? directoryFile.getParentFile().listFiles().length : 0);
+            if (sourceFile != null) {
+                notifyItemRangeRemoved(0, sourceFile.listFiles() != null ? sourceFile.listFiles().length : 0);
             }
             sourceFile = directoryFile;
             directoryList = Arrays.asList(directoryFile.listFiles());
