@@ -2,6 +2,8 @@ package com.friday.ar.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,16 +52,16 @@ public class FileSelectorActivity extends FridayActivity {
         if (requestCode == 8001 && Arrays.equals(grantResults, new int[]{PERMISSION_GRANTED})) {
             RecyclerView fileList = findViewById(R.id.fileList);
             fileList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            fileList.setAdapter(new FileSystemArrayAdapter(new File("/")));
+            fileList.setAdapter(new FileSystemArrayAdapter(Environment.getExternalStorageDirectory()));
         }
     }
 
     @Override
     public void onBackPressed() {
         FileSystemArrayAdapter fileListAdapter = ((FileSystemArrayAdapter) fileList.getAdapter());
-        if (fileListAdapter.sourceFile.getParentFile() != null) {
-            fileListAdapter.sourceFile = fileListAdapter.sourceFile.getParentFile();
-            fileListAdapter.notifyDataSetChanged();
+        if (fileListAdapter.sourceFile.getParentFile() != null && fileListAdapter.sourceFile.getParentFile().canRead()) {
+            Log.d(LOGTAG, "parent:" + fileListAdapter.sourceFile.getParentFile().getPath());
+            fileListAdapter.setDirectoryList(fileListAdapter.sourceFile.getParentFile());
         } else {
             super.onBackPressed();
         }
@@ -70,20 +72,8 @@ public class FileSelectorActivity extends FridayActivity {
         List<File> directoryList;
 
         FileSystemArrayAdapter(File startFrom) {
-            this.sourceFile = startFrom;
-            File[] directoryArray = startFrom.listFiles();
-            directoryList = Arrays.asList(directoryArray);
-            directoryList.sort((file1, file2) -> {
-                if (file1.isDirectory() && file2.isFile())
-                    return -1;
-                if (file1.isDirectory() && file2.isDirectory()) {
-                    return 0;
-                }
-                if (file1.isFile() && file2.isFile()) {
-                    return 0;
-                }
-                return 1;
-            });
+            Log.d(LOGTAG, "starting file array adapter");
+            setDirectoryList(startFrom);
         }
 
         @NonNull
@@ -95,14 +85,15 @@ public class FileSelectorActivity extends FridayActivity {
         @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull FileViewHolder holder, int position) {
+            Log.d(LOGTAG, "creating item " + position);
             File directoryFileItem = directoryList.get(position);
             holder.fileName.setText(directoryFileItem.getName());
             if (directoryFileItem.isDirectory() && !directoryFileItem.isFile()) {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_folder_24px));
                 holder.fileSize.setVisibility(View.GONE);
                 holder.root.setOnClickListener(v -> {
-                    sourceFile = directoryFileItem;
-                    notifyDataSetChanged();
+                    Log.d(LOGTAG, directoryFileItem.getPath());
+                    setDirectoryList(directoryFileItem);
                 });
             } else {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_insert_drive_file_24px));
@@ -113,7 +104,29 @@ public class FileSelectorActivity extends FridayActivity {
 
         @Override
         public int getItemCount() {
-            return sourceFile.listFiles() != null ? sourceFile.listFiles().length : 0;
+            return directoryList.size();
+        }
+
+        public void setDirectoryList(File directoryFile) {
+            if (sourceFile != null && sourceFile.getParentFile().getPath().equals(directoryFile.getPath())) {
+                notifyItemRangeRemoved(0, directoryFile.listFiles() != null ? directoryFile.listFiles().length : 0);
+            } else {
+                notifyItemRangeRemoved(0, directoryFile.getParentFile().listFiles() != null ? directoryFile.getParentFile().listFiles().length : 0);
+            }
+            sourceFile = directoryFile;
+            directoryList = Arrays.asList(directoryFile.listFiles());
+            directoryList.sort((file1, file2) -> {
+                if (file1.isDirectory() && file2.isFile())
+                    return -1;
+                if (file1.isDirectory() && file2.isDirectory()) {
+                    return 0;
+                }
+                if (file1.isFile() && file2.isFile()) {
+                    return 0;
+                }
+                return 1;
+            });
+            notifyItemRangeInserted(0, directoryList.size());
         }
     }
 

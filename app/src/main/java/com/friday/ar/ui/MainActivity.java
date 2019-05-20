@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +44,6 @@ import com.friday.ar.service.OnAccountSyncStateChanged;
 import com.friday.ar.ui.store.StoreDetailActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
@@ -139,28 +137,6 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
             Toast.makeText(MainActivity.this, R.string.err_unable_to_load_speech_assets, Toast.LENGTH_LONG).show();
         }
     };
-    FloatingActionButton.OnClickListener startVR = view -> {
-        Intent intent = new Intent(MainActivity.this, FullscreenActionActivity.class);
-        if (loadedSpeechRecognizer && defaut_pref.getBoolean("showHeatWarn", true)) {
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
-            builder.setTitle("Device health protection")
-                    .setMessage("You are running a beta version of friday. This version contains known performance issues causing the device to heat up to an unsafe temperature. To prevent device damage, the AR-activity will be automatically finished after 3 minutes.")
-                    .setIcon(R.drawable.ic_warning_black_24dp)
-                    .setPositiveButton(android.R.string.ok, (dialogInterface, int_which) -> startActivityForResult(intent, FULLSCREEN_REQUEST_CODE))
-                    .setNeutralButton("start without limit", (dialogInterface, wich) -> {
-                        intent.putExtra("noLimit", true);
-                        startActivityForResult(intent, FULLSCREEN_REQUEST_CODE);
-                    })
-                    .setNeutralButtonIcon(getResources().getDrawable(R.drawable.ic_twotone_security_24px))
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .create().show();
-            return;
-        } else if (loadedSpeechRecognizer) {
-            startActivity(intent);
-            return;
-        }
-        Snackbar.make(findViewById(R.id.viewflipperparent), R.string.err_assets_not_loaded, Snackbar.LENGTH_SHORT).show();
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +157,10 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
         Theme theme = new Theme(this);
         int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this));
         ((BottomNavigationView) findViewById(R.id.main_bottom_nav)).setOnNavigationItemSelectedListener(navselected);
-        findViewById(R.id.start_actionmode).setOnClickListener(startVR);
+        findViewById(R.id.start_actionmode).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FullscreenActionActivity.class);
+            startActivity(intent);
+        });
         findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex));
         findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
         app = ((FridayApplication) getApplication());
@@ -219,9 +198,12 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
             MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
             builder.setTitle(R.string.energy_saver_warn_title);
             builder.setMessage(R.string.energy_saver_warn_msg);
-            builder.setPositiveButton(R.string.deactivate, (dialogInterface, i) -> startActivity(new Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)));
+            builder.setPositiveButton(R.string.deactivate, (dialogInterface, i) -> {
+
+            });
             builder.setNegativeButton(R.string.later, null);
             builder.create().show();
+
         }
         app.setOnAssetsLoadedListener(mAssetsLoadedListener);
         assetLoaderText.setFactory(() -> new TextView(MainActivity.this));

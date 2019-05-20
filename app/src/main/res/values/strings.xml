@@ -185,7 +185,7 @@
     <string name="low_memory_title">Low memory warning</string>
     <string name="low_memory_message">The device is running on low memory, which may causes performance lags in the VR-Mode. Please try to free up space in order to guarantee a good performance.</string>
     <string name="energy_saver_warn_title">Energy saver is on</string>
-    <string name="energy_saver_warn_msg">You need to turn of the Energysaver if you want to use the AR-feature</string>
+    <string name="energy_saver_warn_msg">You should turn off the energy saver mode in order to experience a good performance when using the AR-mode</string>
     <string name="deactivate">deactivate</string>
     <string name="later">later</string>
     <string name="recommendation_picked_widgets_title">Picked Widgets</string>
