@@ -21,6 +21,7 @@ import androidx.preference.SwitchPreference;
 
 import com.friday.ar.FridayApplication;
 import com.friday.ar.R;
+import com.friday.ar.Theme;
 import com.friday.ar.dialog.ProgressDialog;
 import com.friday.ar.dialog.ThemeDialog;
 import com.friday.ar.preference.ThemeSelectPreference;
@@ -196,11 +197,13 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         if (!devMode.isChecked()) {
             devModeShowChangelog.setEnabled(false);
         }
+        Theme theme = new Theme(getActivity());
+        themePreference.setSummary(theme.getNameForPos(theme.indexOf(Theme.getCurrentAppTheme(getActivity()))));
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        //This method has to be implented
+        //This method has to be implemented
     }
 
     private void deleteLocalUserData() {

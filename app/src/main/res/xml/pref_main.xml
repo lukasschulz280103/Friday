@@ -12,11 +12,6 @@
             android:key="delete_account"
             android:title="@string/delete_account" />
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory android:title="@string/pref_header_general">
-        <CheckBoxPreference
-            android:key="showHeatWarn"
-            android:title="@string/heat_warning_BETA" />
-    </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/more_sync_settings">
         <androidx.preference.SwitchPreference
             android:key="sync_account_auto"
