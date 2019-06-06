@@ -49,12 +49,12 @@ public class MainStoreFragment extends ConnectionFragment implements OnConnectio
         getFragmentManager().beginTransaction()
                 .add(R.id.store_frag_container, new ErrorFragment((FirebaseFirestoreException) e))
                 .remove(this)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     private void addFragment(@IdRes int containerId, Fragment newFragment) {
         getChildFragmentManager().beginTransaction()
                 .replace(containerId, newFragment)
-                .commit();
+                .commitAllowingStateLoss();
     }
 }

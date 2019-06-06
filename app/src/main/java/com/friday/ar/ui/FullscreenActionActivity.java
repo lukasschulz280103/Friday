@@ -11,12 +11,10 @@ import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.media.Image;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +53,6 @@ import com.google.ar.sceneform.ux.TransformableNode;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.Calendar;
 
 import edu.cmu.pocketsphinx.Hypothesis;
@@ -263,71 +260,6 @@ public class FullscreenActionActivity extends FridayActivity {
         super.onStart();
         speechToTextRecognizer = ((FridayApplication) getApplication()).getSpeechToTextRecognizer();
         microphoneImage.setImageResource(R.drawable.ic_mic_off_black_24dp);
-        @SuppressLint("StaticFieldLeak")
-        AsyncTask loadRecognizers = new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                wakeupRecognizer = ((FridayApplication) getApplication()).getSpeechToTextRecognizer();
-                wakeupRecognizer.addListener(new RecognitionListener() {
-                    @Override
-                    public void onBeginningOfSpeech() {
-
-                    }
-
-                    @Override
-                    public void onEndOfSpeech() {
-
-                    }
-
-                    @Override
-                    public void onPartialResult(Hypothesis hypothesis) {
-                        Log.d("KEYPHRASER", "partial result");
-                        if (hypothesis != null) {
-                            microphoneText.setText("...");
-                            microphoneImage.setImageResource(R.drawable.ic_mic_black_24dp);
-                            microphoneIndicator.animate()
-                                    .scaleXBy(0.3f)
-                                    .scaleYBy(0.3f)
-                                    .yBy(1f)
-                                    .setInterpolator(new AccelerateDecelerateInterpolator())
-                                    .setDuration(200)
-                                    .start();
-                            wakeupRecognizer.stop();
-                            wakeupRecognizer.cancel();
-                            speechToTextRecognizer.addListener(speechToTextConversionListener);
-                            speechToTextRecognizer.startListening("input", 2000);
-                        }
-                    }
-
-                    @Override
-                    public void onResult(Hypothesis hypothesis) {
-                        Log.d("KEYPHRASER", "result");
-                        speechToTextRecognizer.stop();
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("KEYPHRASER", e.getLocalizedMessage(), e);
-                        Toast.makeText(FullscreenActionActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onTimeout() {
-                        speechToTextRecognizer.stop();
-                    }
-                });
-                wakeupRecognizer.addKeywordSearch("wakeup", new File(((FridayApplication) getApplication()).getAssetsDir(), "phrases/wakeup.gram"));
-                wakeupRecognizer.startListening("wakeup");
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                microphoneImage.setImageResource(R.drawable.ic_mic_none_green_24dp);
-            }
-        };
-        loadRecognizers.execute();
     }
 
     @Override

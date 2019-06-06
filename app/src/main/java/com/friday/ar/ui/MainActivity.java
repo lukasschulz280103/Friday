@@ -2,13 +2,11 @@ package com.friday.ar.ui;
 
 
 import android.Manifest;
-import android.animation.Animator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -16,14 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -83,60 +77,6 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
     private TextSwitcher assetLoaderText;
     private ProgressBar loadingBar;
     private boolean loadedSpeechRecognizer = false;
-    FridayApplication.OnAssetsLoadedListener mAssetsLoadedListener = new FridayApplication.OnAssetsLoadedListener() {
-        @Override
-        public void onStartedLoadingAssets() {
-            runOnUiThread(() -> {
-                assetLoaderLayout.setTranslationY(-100);
-                assetLoaderLayout.setVisibility(View.VISIBLE);
-                assetLoaderLayout.animate().y(32f).setDuration(300).setInterpolator(new DecelerateInterpolator()).start();
-            });
-        }
-
-        @Override
-        public void onAssetLoaded() {
-            loadedSpeechRecognizer = true;
-            loadingBar.setIndeterminateDrawable(getDrawable(R.drawable.ic_cloud_done_black_24dp));
-            assetLoaderText.setText(getString(R.string.asset_loader_loading_success));
-            Handler h = new Handler();
-            h.postDelayed(() -> assetLoaderLayout.animate()
-                    .alpha(0)
-                    .setDuration(500)
-                    .setListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animator) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animator) {
-                            assetLoaderLayout.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animator) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animator) {
-
-                        }
-                    })
-                    .start(), 2000);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            loadedSpeechRecognizer = false;
-            if (e instanceof SecurityException) {
-                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA}, REQUEST_PERMISSIONS_CODE);
-            } else {
-                Log.e(LOGTAG, e.getLocalizedMessage(), e);
-            }
-            Toast.makeText(MainActivity.this, R.string.err_unable_to_load_speech_assets, Toast.LENGTH_LONG).show();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,9 +133,8 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
 
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
         assert pm != null;
-
         if (pm.isPowerSaveMode()) {
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
             builder.setTitle(R.string.energy_saver_warn_title);
             builder.setMessage(R.string.energy_saver_warn_msg);
             builder.setPositiveButton(R.string.deactivate, (dialogInterface, i) -> {
@@ -203,16 +142,8 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
             });
             builder.setNegativeButton(R.string.later, null);
             builder.create().show();
-
         }
-        app.setOnAssetsLoadedListener(mAssetsLoadedListener);
-        assetLoaderText.setFactory(() -> new TextView(MainActivity.this));
-        assetLoaderText.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
-        assetLoaderText.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-        assetLoaderText.setCurrentText(getString(R.string.asset_loader_loading));
-        app.loadSpeechRecognizer();
-
-        app.registerForSyncStateChange(this);
+        //app.registerForSyncStateChange(this);
 
         //Initialize Store
         getSupportFragmentManager().beginTransaction()
@@ -317,7 +248,6 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
                         .setPositiveButton(R.string.retry, (dialogInterface, which) -> requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, REQUEST_PERMISSIONS_CODE))
                         .create().show();
             } else {
-                app.loadSpeechRecognizer();
             }
         }
     }
