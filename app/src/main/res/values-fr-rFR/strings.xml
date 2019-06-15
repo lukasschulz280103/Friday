@@ -234,4 +234,12 @@
     <string name="emptyview_nothing_here">Il n\'y a rien ici.</string>
     <string name="emptyview_go_to_store">Visitez le store pour télécharger les plugins</string>
     <string name="contact">Contactez-nous</string>
+    <string name="storeInstallationsManager_diskInstallWarningTitle">Avertissement de sécurité</string>
+    <string name="storeInstallationsManager_diskInstallWarningMessage">Si vous installez des plugins à partir de sources inconnues, il y a un risque qu\'ils affichent un comportement indésirable. Entre autres choses, ces effets secondaires peuvent causer des dommages inattendus à votre appareil. Nous n\'assumons aucune responsabilité à cet égard.</string>
+    <string name="dont_show_again">Ne me montre plus jamais</string>
+    <string name="pluginInstaller_noItemsIndexed">Aucun fichier de plugin trouvé</string>
+    <plurals name="pluginInstaller_indexingStatus">
+        <item quantity="one">Un fichier plugin trouvé</item>
+        <item quantity="other">%d fichiers de plugins trouvés</item>
+    </plurals>
 </resources>

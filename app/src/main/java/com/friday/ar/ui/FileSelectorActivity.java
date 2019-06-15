@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,9 +17,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.friday.ar.FridayApplication;
 import com.friday.ar.R;
 import com.friday.ar.Theme;
 import com.friday.ar.activities.FridayActivity;
+import com.friday.ar.plugin.PluginVerticalListAdapter;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.io.File;
 import java.util.Arrays;
@@ -27,11 +31,11 @@ import java.util.List;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-//TODO:Add support for opening directories
 //TODO:Add support for selecting files
 public class FileSelectorActivity extends FridayActivity {
     private static final String LOGTAG = "FileSelector";
     RecyclerView fileList;
+    private Button openPlugin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,24 +46,34 @@ public class FileSelectorActivity extends FridayActivity {
         setContentView(R.layout.activity_file_selector);
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setTitle(R.string.open_plugin_file);
-        fileList = findViewById(R.id.fileList);
+        TextView indexingStatus = findViewById(R.id.indexing_status);
         //TODO:Fix NullPointerException when returning result to calling activity
         setResult(RESULT_CANCELED);
+        FridayApplication app = (FridayApplication) getApplication();
+        indexingStatus.setText(app.getIndexedFiles().size() != 0 ?
+                getResources().getQuantityString(R.plurals.pluginInstaller_indexingStatus, app.getIndexedFiles().size(), app.getIndexedFiles().size()) :
+                getString(R.string.pluginInstaller_noItemsIndexed));
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 8001 && Arrays.equals(grantResults, new int[]{PERMISSION_GRANTED})) {
-            RecyclerView fileList = findViewById(R.id.fileList);
+            fileList = findViewById(R.id.fileList);
             fileList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
             fileList.setAdapter(new FileSystemArrayAdapter(Environment.getExternalStorageDirectory()));
+            RecyclerView indexedFilesList = findViewById(R.id.indexedFilesList);
+            indexedFilesList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            indexedFilesList.setAdapter(new PluginVerticalListAdapter(this, ((FridayApplication) getApplication()).getIndexedFiles()));
         }
     }
 
     @Override
     public void onBackPressed() {
         FileSystemArrayAdapter fileListAdapter = ((FileSystemArrayAdapter) fileList.getAdapter());
-        if (fileListAdapter.sourceFile.getParentFile() != null && fileListAdapter.sourceFile.getParentFile().canRead()) {
+        SlidingUpPanelLayout slidingUpPanelLayout = findViewById(R.id.contentPane);
+        if (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else if (fileListAdapter.sourceFile.getParentFile() != null && fileListAdapter.sourceFile.getParentFile().canRead()) {
             Log.d(LOGTAG, "parent:" + fileListAdapter.sourceFile.getParentFile().getPath());
             fileListAdapter.setDirectoryList(fileListAdapter.sourceFile.getParentFile());
         } else {

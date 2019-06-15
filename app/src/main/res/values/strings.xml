@@ -284,4 +284,12 @@
     <string name="emptyview_nothing_here">Nothing here.</string>
     <string name="emptyview_go_to_store">Visit the store and download some plugins!</string>
     <string name="contact">Contact us</string>
+    <string name="storeInstallationsManager_diskInstallWarningTitle">Security Warning</string>
+    <string name="storeInstallationsManager_diskInstallWarningMessage">If you install plugins from unknown sources, there is a risk that they will show unwanted behavior. Among other things, these side effects can cause unexpected damage to your device. No responsibility is taken for this.</string>
+    <string name="dont_show_again">Don\'t show again</string>
+    <string name="pluginInstaller_noItemsIndexed">No plugin files found</string>
+    <plurals name="pluginInstaller_indexingStatus">
+        <item quantity="one">One plugin file found</item>
+        <item quantity="other">%d plugin files found</item>
+    </plurals>
 </resources>

@@ -34,7 +34,7 @@ public class FileUtil {
      * Returns the file ending of the passed {@link File} object.
      *
      * @param file File to work with
-     * @return returns the file extension, e.g. "jar"
+     * @return returns the file extension, e.g. ".jar". Returns empty string if the file has no ending.
      */
     public static String getFileExtension(File file) {
         if (file.isDirectory())

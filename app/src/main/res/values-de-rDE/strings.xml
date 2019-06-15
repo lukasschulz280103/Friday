@@ -44,7 +44,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="pref_title_display_name">Nutzername</string>
     <string name="sign_out">Abmelden</string>
     <string name="more_sync_settings">Synchronisation</string>
->>>>>>> luke
     <string name="delete_account">Account löschen</string>
     <string name="confirm_signout_title">Abmelden</string>
     <string name="confirm_signout_message">Wollen sie sich wirklich abmelden?</string>
@@ -238,5 +237,12 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="emptyview_nothing_here">Nichts zu finden.</string>
     <string name="emptyview_go_to_store">Besuch den Store um Plugins herunterzuladen.</string>
     <string name="contact">Kontakt</string>
-    >>>>>>> luke
+    <string name="storeInstallationsManager_diskInstallWarningTitle">Sicherheitswarnung</string>
+    <string name="storeInstallationsManager_diskInstallWarningMessage">Wenn sie Plugins von unbekannten Quellen installieren, besteht die Gefahr, dass diese ungewollte Verhaltensweisen aufzeigen. Diese Nebenwirkungen können unter anderem zu unerwarteten Schäden auf und an ihrem Gerät führen. Dafür wird keine Verantwortung übernommen.</string>
+    <string name="dont_show_again">Nicht erneut anzeigen</string>
+    <string name="pluginInstaller_noItemsIndexed">Keine Plugindateien gefunden</string>
+    <plurals name="pluginInstaller_indexingStatus">
+        <item quantity="one">Eine Plugindatei gefunden</item>
+        <item quantity="other">%d Plugindateien gefunden</item>
+    </plurals>
 </resources>

@@ -19,6 +19,9 @@ import com.friday.ar.service.OnAccountSyncStateChangedList;
 import com.friday.ar.service.PluginIndexer;
 import com.friday.ar.util.UpdateUtil;
 
+import java.util.ArrayList;
+import java.util.jar.JarFile;
+
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import io.fabric.sdk.android.Fabric;
 
@@ -32,6 +35,8 @@ public class FridayApplication extends Application implements OnAccountSyncState
      * Loaded when {@link com.friday.ar.ui.MainActivity}'s onCreate() is called.
      */
     private SpeechRecognizer speechToTextRecognizer;
+
+    private ArrayList<JarFile> indexedFiles = new ArrayList<>();
 
     /**
      * This variable is the application global plugin loader.
@@ -53,7 +58,7 @@ public class FridayApplication extends Application implements OnAccountSyncState
         UpdateUtil.checkForUpdate(this);
         PluginLoader loader = new PluginLoader(this);
         loader.startLoading();
-        runServices();
+        new Thread(this::runServices).start();
     }
 
     private void createNotificationChannels() {
@@ -113,6 +118,14 @@ public class FridayApplication extends Application implements OnAccountSyncState
         for (OnAccountSyncStateChanged listener : syncStateChangedNotifyList) {
             listener.onSyncStateChanged();
         }
+    }
+
+    public ArrayList<JarFile> getIndexedFiles() {
+        return indexedFiles;
+    }
+
+    public void setIndexedFiles(ArrayList<JarFile> indexedFiles) {
+        this.indexedFiles = indexedFiles;
     }
 
     public class Jobs {
