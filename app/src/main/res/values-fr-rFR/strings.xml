@@ -242,4 +242,6 @@
         <item quantity="one">Un fichier plugin trouvé</item>
         <item quantity="other">%d fichiers de plugins trouvés</item>
     </plurals>
+    <string name="pluginInstaller_succes_install_title">Installation réussie</string>
+    <string name="pluginInstaller_success_ticker_text">L\'installation du plugin %s a été un succès.</string>
 </resources>

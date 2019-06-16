@@ -8,11 +8,26 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/fileIcon"
+    <FrameLayout
         android:layout_width="50dp"
-        android:layout_height="50dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/fileIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ProgressBar
+            android:id="@+id/iconProgress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:visibility="visible" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

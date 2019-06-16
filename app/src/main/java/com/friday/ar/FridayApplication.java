@@ -136,6 +136,11 @@ public class FridayApplication extends Application implements OnAccountSyncState
 
     public class Constants {
         public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
+        public static final String NOTIF_CHANNEL_INSTALLER_ID = "channel_plugin_installer";
         public static final String LOGTAG_STORE = "FridayMarketplace";
+
+        public class NotificationIDs {
+            public static final int NOTIFICATION_INSTALL_SUCCESS = 200;
+        }
     }
 }

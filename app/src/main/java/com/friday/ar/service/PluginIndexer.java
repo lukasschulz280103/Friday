@@ -21,8 +21,9 @@ public class PluginIndexer extends JobService {
     private static final String LOGTAG = "PluginIndexer";
     private ArrayList<JarFile> indexedFiles = new ArrayList<>();
 
+    //TODO: Add deeper verification checks to prevent installations of tamperd plugins
     @SuppressWarnings("StatementWithEmptyBody")
-    private static boolean verify(JarFile jar) throws IOException {
+    public static boolean verify(JarFile jar) throws IOException {
         Log.d(LOGTAG, "veryfing file:" + jar.getName());
         Enumeration<JarEntry> entries = jar.entries();
         while (entries.hasMoreElements()) {

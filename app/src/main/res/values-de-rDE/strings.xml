@@ -245,4 +245,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
         <item quantity="one">Eine Plugindatei gefunden</item>
         <item quantity="other">%d Plugindateien gefunden</item>
     </plurals>
+    <string name="pluginInstaller_succes_install_title">Installation abgeschlossen</string>
+    <string name="pluginInstaller_success_ticker_text">Die Installation des Plugins %s war erfolgreich</string>
 </resources>

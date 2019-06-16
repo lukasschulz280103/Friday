@@ -292,4 +292,7 @@
         <item quantity="one">One plugin file found</item>
         <item quantity="other">%d plugin files found</item>
     </plurals>
+    <string name="pluginInstaller_succes_install_title">Installation success</string>
+    <string name="pluginInstaller_name" translatable="false">PluginInstaller</string>
+    <string name="pluginInstaller_success_ticker_text">The installation of %s was succesful</string>
 </resources>

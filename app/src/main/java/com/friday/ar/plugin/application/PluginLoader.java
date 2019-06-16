@@ -49,8 +49,9 @@ public class PluginLoader {
     }
 
     private void loadPackage(File packageDir) {
+        if (packageDir.listFiles() == null) return;
         for (File middlePackage : packageDir.listFiles()) {
-            if (middlePackage.listFiles().length == 1) {
+            if (middlePackage.listFiles() != null && middlePackage.listFiles().length == 1) {
                 loadPackage(middlePackage.listFiles()[0]);
                 packageName.concat(middlePackage + ".");
             } else {

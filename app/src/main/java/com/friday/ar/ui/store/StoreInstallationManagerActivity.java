@@ -33,6 +33,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class StoreInstallationManagerActivity extends FridayActivity {
     public static final String LOGTAG = "StoreInstallations";
@@ -112,7 +113,7 @@ public class StoreInstallationManagerActivity extends FridayActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == OPEN_PLUGIN_INTENT_CODE && resultCode == RESULT_OK && data != null) {
             Log.d(LOGTAG, "data:" + data.getData().toString());
-            File openedFile = new File(data.getData().toString());
+            File openedFile = new File(Objects.requireNonNull(data.getData().getPath()));
             PluginInstaller installer = new PluginInstaller(this);
             try {
                 installer.installFrom(new File(openedFile.getPath()));

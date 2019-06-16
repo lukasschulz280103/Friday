@@ -1,6 +1,10 @@
 package com.friday.ar.ui;
 
+import android.animation.ObjectAnimator;
+import android.animation.StateListAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -8,9 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,19 +29,25 @@ import com.friday.ar.R;
 import com.friday.ar.Theme;
 import com.friday.ar.activities.FridayActivity;
 import com.friday.ar.plugin.PluginVerticalListAdapter;
+import com.friday.ar.util.FileUtil;
+import com.google.android.material.appbar.AppBarLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.JarFile;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static com.friday.ar.service.PluginIndexer.verify;
 
 //TODO:Add support for selecting files
 public class FileSelectorActivity extends FridayActivity {
     private static final String LOGTAG = "FileSelector";
-    RecyclerView fileList;
+    private RecyclerView fileList;
+    private SlidingUpPanelLayout slidingUpPanelLayout;
     private Button openPlugin;
 
     @Override
@@ -46,21 +59,37 @@ public class FileSelectorActivity extends FridayActivity {
         setContentView(R.layout.activity_file_selector);
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setTitle(R.string.open_plugin_file);
+        slidingUpPanelLayout = findViewById(R.id.contentPane);
         TextView indexingStatus = findViewById(R.id.indexing_status);
+        openPlugin = findViewById(R.id.select_file);
         //TODO:Fix NullPointerException when returning result to calling activity
         setResult(RESULT_CANCELED);
         FridayApplication app = (FridayApplication) getApplication();
         indexingStatus.setText(app.getIndexedFiles().size() != 0 ?
                 getResources().getQuantityString(R.plurals.pluginInstaller_indexingStatus, app.getIndexedFiles().size(), app.getIndexedFiles().size()) :
                 getString(R.string.pluginInstaller_noItemsIndexed));
+        slidingUpPanelLayout.setDragView(R.id.buttonbar);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 8001 && Arrays.equals(grantResults, new int[]{PERMISSION_GRANTED})) {
+            LinearLayoutManager fileListLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
             fileList = findViewById(R.id.fileList);
-            fileList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            fileList.setLayoutManager(fileListLayoutManager);
             fileList.setAdapter(new FileSystemArrayAdapter(Environment.getExternalStorageDirectory()));
+            AppBarLayout appBarLayout = findViewById(R.id.appbar);
+            StateListAnimator stateListAnimator = new StateListAnimator();
+            fileList.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                if (fileListLayoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
+                    stateListAnimator.addState(new int[0], ObjectAnimator.ofFloat(appBarLayout, "elevation", 0));
+                    appBarLayout.setStateListAnimator(stateListAnimator);
+                } else {
+                    StateListAnimator stateListAnimator1 = new StateListAnimator();
+                    stateListAnimator1.addState(new int[0], ObjectAnimator.ofFloat(appBarLayout, "elevation", 16));
+                    appBarLayout.setStateListAnimator(stateListAnimator1);
+                }
+            });
             RecyclerView indexedFilesList = findViewById(R.id.indexedFilesList);
             indexedFilesList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
             indexedFilesList.setAdapter(new PluginVerticalListAdapter(this, ((FridayApplication) getApplication()).getIndexedFiles()));
@@ -70,7 +99,6 @@ public class FileSelectorActivity extends FridayActivity {
     @Override
     public void onBackPressed() {
         FileSystemArrayAdapter fileListAdapter = ((FileSystemArrayAdapter) fileList.getAdapter());
-        SlidingUpPanelLayout slidingUpPanelLayout = findViewById(R.id.contentPane);
         if (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
             slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else if (fileListAdapter.sourceFile.getParentFile() != null && fileListAdapter.sourceFile.getParentFile().canRead()) {
@@ -106,12 +134,37 @@ public class FileSelectorActivity extends FridayActivity {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_folder_24px));
                 holder.fileSize.setVisibility(View.GONE);
                 holder.root.setOnClickListener(v -> {
+                    setResult(RESULT_CANCELED);
                     Log.d(LOGTAG, directoryFileItem.getPath());
                     if (directoryFileItem.canRead()) setDirectoryList(directoryFileItem);
                 });
             } else {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_insert_drive_file_24px));
-                holder.root.setOnClickListener(v -> setResult(RESULT_OK));
+                holder.root.setOnClickListener(v -> {
+                    holder.fileIcon.animate().scaleX(0f).scaleY(0f).setDuration(200).setInterpolator(new AccelerateInterpolator()).start();
+                    holder.iconProgress.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(new DecelerateInterpolator()).start();
+                    //Running verification on an file can take some time, so we run it on another thread
+                    new Thread(() -> {
+                        try {
+                            if (FileUtil.getFileExtension(directoryFileItem).equals(".jar") && verify(new JarFile(directoryFileItem))) {
+                                Intent resultIntent = new Intent();
+                                resultIntent.setData(Uri.fromFile(directoryFileItem));
+                                setResult(RESULT_OK, resultIntent);
+                                openPlugin.setEnabled(true);
+                                openPlugin.setOnClickListener((view) -> finish());
+                            } else {
+                                setResult(RESULT_CANCELED);
+                                openPlugin.setEnabled(false);
+                            }
+                        } catch (IOException e) {
+                            Log.e(LOGTAG, e.getMessage(), e);
+                        }
+                        runOnUiThread(() -> {
+                            holder.fileIcon.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(new DecelerateInterpolator()).start();
+                            holder.iconProgress.animate().scaleX(0f).scaleY(0f).setDuration(200).setInterpolator(new AccelerateInterpolator()).start();
+                        });
+                    }).start();
+                });
             }
 
         }
@@ -145,6 +198,7 @@ public class FileSelectorActivity extends FridayActivity {
     class FileViewHolder extends RecyclerView.ViewHolder {
         LinearLayout root;
         ImageView fileIcon;
+        ProgressBar iconProgress;
         TextView fileName;
         TextView fileSize;
 
@@ -152,6 +206,7 @@ public class FileSelectorActivity extends FridayActivity {
             super(itemView);
             root = itemView.findViewById(R.id.itemRootLayout);
             fileIcon = itemView.findViewById(R.id.fileIcon);
+            iconProgress = itemView.findViewById(R.id.iconProgress);
             fileSize = itemView.findViewById(R.id.fileSize);
             fileName = itemView.findViewById(R.id.fileName);
         }
