@@ -192,7 +192,7 @@
     </string>
     <string name="uninstall_old_title">Désinstaller l\'ancienne version</string>
     <string name="uninstall_old_body">Vous ne pouvez pas utiliser cette version du friday avec une version plus ancienne installée en même temps. \\n \\n \\n <b>Vous n\'avez à le faire qu\'une seule fois. </b></string>
-    <string name="update_notif_channel_descr">Usage time and way of the AR-feature</string>
+    <string name="notification_channel_update_description">Usage time and way of the AR-feature</string>
     <string name="usage_data_ar_feature">Temps d\'utilisation et mode d\'utilisation de la fonction AR</string>
     <string name="usage_data_feature_usage_data">Données d\'utilisation des fonctionnalités que nous considérons comme causant les crashs de l\'application du friday.</string>
     <string name="usage_data_necesssarity">Nous ne recueillons que les données d\'utilisation que nous considérons utiles au développement et à l\'amélioration de cette application. Toutes les données recueillies seront effacées après avoir été examinées par notre service d\'assistance.</string>
@@ -244,4 +244,9 @@
     </plurals>
     <string name="pluginInstaller_succes_install_title">Installation réussie</string>
     <string name="pluginInstaller_success_ticker_text">L\'installation du plugin %s a été un succès.</string>
+    <string name="notification_channel_plugin_installer">service d\'installation du plugin</string>
+    <string name="notification_channel_update">Vérification de mise à jour</string>
+    <string name="notification_channel_plugin_installer_description">Ce canal vous informe de l\'état des plugins installés lorsque, par exemple, la progression d\'un plugin installé change.</string>
+    <string name="notifications">Notifications</string>
+    <string name="more_notification_settings">Autres paramètres de notification</string>
 </resources>

@@ -20,6 +20,7 @@ import com.friday.ar.service.PluginIndexer;
 import com.friday.ar.util.UpdateUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.jar.JarFile;
 
 import edu.cmu.pocketsphinx.SpeechRecognizer;
@@ -63,14 +64,20 @@ public class FridayApplication extends Application implements OnAccountSyncState
 
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel update_channel = new NotificationChannel(
+            NotificationChannel updateChannel = new NotificationChannel(
                     Constants.NOTIF_CHANNEL_UPDATE_ID,
-                    "Update Checker",
+                    getString(R.string.notification_channel_update),
                     NotificationManager.IMPORTANCE_DEFAULT
             );
-            update_channel.setDescription(getString(R.string.update_notif_channel_descr));
+            updateChannel.setDescription(getString(R.string.notification_channel_update_description));
+            NotificationChannel pluginInstallerChannel = new NotificationChannel(
+                    Constants.NOTIF_CHANNEL_INSTALLER_ID,
+                    getString(R.string.notification_channel_plugin_installer),
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            pluginInstallerChannel.setDescription(getString(R.string.notification_channel_plugin_installer_description));
             NotificationManager nm = getSystemService(NotificationManager.class);
-            nm.createNotificationChannel(update_channel);
+            nm.createNotificationChannels(Arrays.asList(updateChannel, pluginInstallerChannel));
         }
     }
 

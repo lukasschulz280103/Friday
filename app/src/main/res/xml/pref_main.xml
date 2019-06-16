@@ -21,6 +21,11 @@
             android:key="check_update_auto"
             android:title="@string/auto_check_update" />
     </androidx.preference.PreferenceCategory>
+    <androidx.preference.PreferenceCategory android:title="@string/notifications">
+        <androidx.preference.Preference android:title="@string/more_notification_settings">
+            <intent android:action="android.settings.APP_NOTIFICATION_SETTINGS" />
+        </androidx.preference.Preference>
+    </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/look">
         <com.friday.ar.preference.ThemeSelectPreference
             android:key="dialog_theme_pref"
@@ -32,9 +37,9 @@
             android:title="@string/info">
             <intent android:action="com.friday.Info" />
         </androidx.preference.Preference>
-        <androidx.preference.Preference
-            android:key=""
-            android:title="@string/help"></androidx.preference.Preference>
+        <androidx.preference.Preference android:title="@string/help">
+
+        </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/developer_options">
         <androidx.preference.SwitchPreference

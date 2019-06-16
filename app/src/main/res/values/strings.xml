@@ -157,7 +157,7 @@
     <string name="auto_sync">Synchronize with cloud</string>
     <string name="theme">Theme</string>
     <string name="select_theme">Select Theme</string>
-    <string name="update_notif_channel_descr">This channel is used to notify about new Updates.</string>
+    <string name="notification_channel_update_description">This channel is used to notify about new Updates.</string>
     <string name="app_update_title">friday Update</string>
     <string name="app_update_description">friday is ready to update to %s !</string>
     <string name="store_flag_widget">flag</string>
@@ -295,4 +295,9 @@
     <string name="pluginInstaller_succes_install_title">Installation success</string>
     <string name="pluginInstaller_name" translatable="false">PluginInstaller</string>
     <string name="pluginInstaller_success_ticker_text">The installation of %s was succesful</string>
+    <string name="notification_channel_update">Update check</string>
+    <string name="notification_channel_plugin_installer">Plugin installation service</string>
+    <string name="notification_channel_plugin_installer_description">This channel notifies you about the status of the installed plugins when, for example, the progress of an installiong plugin changes.</string>
+    <string name="notifications">Notifications</string>
+    <string name="more_notification_settings">More notification settings</string>
 </resources>

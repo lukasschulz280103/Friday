@@ -62,7 +62,6 @@ public class FileSelectorActivity extends FridayActivity {
         slidingUpPanelLayout = findViewById(R.id.contentPane);
         TextView indexingStatus = findViewById(R.id.indexing_status);
         openPlugin = findViewById(R.id.select_file);
-        //TODO:Fix NullPointerException when returning result to calling activity
         setResult(RESULT_CANCELED);
         FridayApplication app = (FridayApplication) getApplication();
         indexingStatus.setText(app.getIndexedFiles().size() != 0 ?
@@ -139,6 +138,7 @@ public class FileSelectorActivity extends FridayActivity {
                     if (directoryFileItem.canRead()) setDirectoryList(directoryFileItem);
                 });
             } else {
+                //TODO: Add visible sign that marks an file as selected
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_insert_drive_file_24px));
                 holder.root.setOnClickListener(v -> {
                     holder.fileIcon.animate().scaleX(0f).scaleY(0f).setDuration(200).setInterpolator(new AccelerateInterpolator()).start();

@@ -116,7 +116,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="design">Design</string>
     <string name="select_theme">Theme auswählen</string>
     <string name="theme">Theme</string>
-    <string name="update_notif_channel_descr">Dier Channel wird genutzt, um über neue Updates zu benachrichtigen</string>
+    <string name="notification_channel_update_description">Dier Channel wird genutzt, um über neue Updates zu benachrichtigen</string>
     <string name="app_update_title">Friday Update</string>
     <string name="app_update_description">Friday kann jetzt auf %s geupdated werden</string>
     <string name="store_flag_widget">Melden</string>
@@ -247,4 +247,9 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     </plurals>
     <string name="pluginInstaller_succes_install_title">Installation abgeschlossen</string>
     <string name="pluginInstaller_success_ticker_text">Die Installation des Plugins %s war erfolgreich</string>
+    <string name="notification_channel_plugin_installer">Plugin-Installationsservice</string>
+    <string name="notification_channel_update">Updateüberprüfung</string>
+    <string name="notification_channel_plugin_installer_description">Dieser Kanal informiert über den Status von ihren installierten Plugins. Er benachrichtigt sie z.B. darüber, wenn sich der Status einer laufenden Installaion eines Plugins ändert.</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="more_notification_settings">Mehr Benachrichtigungseinstellungen</string>
 </resources>

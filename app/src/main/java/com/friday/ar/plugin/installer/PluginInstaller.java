@@ -33,13 +33,13 @@ public class PluginInstaller {
             Notification notification = new NotificationCompat.Builder(context, FridayApplication.Constants.NOTIF_CHANNEL_INSTALLER_ID)
                     .setContentTitle(context.getString(R.string.pluginInstaller_succes_install_title))
                     .setContentText(pluginDir.getName())
-                    .setContentInfo(context.getString(R.string.pluginInstaller_name))
+                    .setSubText(context.getString(R.string.pluginInstaller_name))
                     .setCategory(NotificationCompat.CATEGORY_STATUS)
-                    .setPriority(NotificationCompat.PRIORITY_LOW)
-                    .setTicker(context.getString(R.string.pluginInstaller_success_ticker_text))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setSmallIcon(R.drawable.ic_twotone_save_alt_24px)
+                    .setTicker(context.getString(R.string.pluginInstaller_success_ticker_text, pluginDir.getName()))
                     .build();
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            assert notificationManager != null;
             notificationManager.notify(FridayApplication.Constants.NotificationIDs.NOTIFICATION_INSTALL_SUCCESS, notification);
         }
     }
