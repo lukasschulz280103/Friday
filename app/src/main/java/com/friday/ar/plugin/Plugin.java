@@ -3,9 +3,37 @@ package com.friday.ar.plugin;
 import android.media.Rating;
 import android.net.Uri;
 
-import java.io.File;
+import com.friday.ar.plugin.file.PluginFile;
 
 public class Plugin {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIconURI(Uri iconURI) {
+        this.iconURI = iconURI;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    public void setPluginFile(PluginFile pluginFile) {
+        this.pluginFile = pluginFile;
+    }
+
     private String name;
     private Uri iconURI;
     private String authorName;
@@ -40,16 +68,5 @@ public class Plugin {
 
     public String getVersionName() {
         return versionName;
-    }
-
-    public class PluginFile extends File {
-        public PluginFile(String packageName) {
-            super(packageName);
-        }
-
-        @Override
-        public long length() {
-            return super.length();
-        }
     }
 }

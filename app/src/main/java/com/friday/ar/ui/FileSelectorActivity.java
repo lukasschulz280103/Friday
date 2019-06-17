@@ -64,10 +64,11 @@ public class FileSelectorActivity extends FridayActivity {
         openPlugin = findViewById(R.id.select_file);
         setResult(RESULT_CANCELED);
         FridayApplication app = (FridayApplication) getApplication();
-        indexingStatus.setText(app.getIndexedFiles().size() != 0 ?
-                getResources().getQuantityString(R.plurals.pluginInstaller_indexingStatus, app.getIndexedFiles().size(), app.getIndexedFiles().size()) :
+        indexingStatus.setText(app.getIndexedInstallablePluginFiles().size() != 0 ?
+                getResources().getQuantityString(R.plurals.pluginInstaller_indexingStatus, app.getIndexedInstallablePluginFiles().size(), app.getIndexedInstallablePluginFiles().size()) :
                 getString(R.string.pluginInstaller_noItemsIndexed));
         slidingUpPanelLayout.setDragView(R.id.buttonbar);
+        openPlugin.setOnClickListener((view) -> finish());
     }
 
     @Override
@@ -91,7 +92,7 @@ public class FileSelectorActivity extends FridayActivity {
             });
             RecyclerView indexedFilesList = findViewById(R.id.indexedFilesList);
             indexedFilesList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-            indexedFilesList.setAdapter(new PluginVerticalListAdapter(this, ((FridayApplication) getApplication()).getIndexedFiles()));
+            indexedFilesList.setAdapter(new PluginVerticalListAdapter(this, ((FridayApplication) getApplication()).getIndexedInstallablePluginFiles()));
         }
     }
 
@@ -151,7 +152,6 @@ public class FileSelectorActivity extends FridayActivity {
                                 resultIntent.setData(Uri.fromFile(directoryFileItem));
                                 setResult(RESULT_OK, resultIntent);
                                 openPlugin.setEnabled(true);
-                                openPlugin.setOnClickListener((view) -> finish());
                             } else {
                                 setResult(RESULT_CANCELED);
                                 openPlugin.setEnabled(false);

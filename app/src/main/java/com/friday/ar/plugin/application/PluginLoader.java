@@ -4,8 +4,15 @@ import android.content.Context;
 import android.util.Log;
 
 import com.friday.ar.plugin.Plugin;
+import com.friday.ar.plugin.file.Manifest;
+import com.friday.ar.plugin.file.PluginFile;
+import com.friday.ar.plugin.security.PluginVerifier;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -20,8 +27,6 @@ public class PluginLoader {
         pluginDir = new File(context.getFilesDir() + "/plugin");
         pluginDir.mkdirs();
     }
-
-    String packageName = "";
 
     /**
      * @return List of all installed Plugins
@@ -38,26 +43,34 @@ public class PluginLoader {
      */
     public boolean startLoading() {
         if (pluginDir.exists()) {
-            for (File dir : pluginDir.listFiles()) {
-                Log.d(LOGTAG, "Loading " + dir.getName());
-                packageName = "";
-                loadPackage(dir);
+            for (File pluginFile : pluginDir.listFiles()) {
+                try {
+                    PluginFile plugin = new PluginFile(pluginFile.getPath());
+                    Log.d(LOGTAG, "Loading " + plugin.getName());
+                    loadPackage(plugin);
+                } catch (IOException e) {
+                    Log.e(LOGTAG, e.getMessage(), e);
+                } catch (JSONException e) {
+                    Log.e(LOGTAG, e.getMessage(), e);
+                } catch (Manifest.ManifestSecurityException e) {
+                    Log.e(LOGTAG, e.getMessage(), e);
+                }
+
             }
             return true;
         }
         return false;
     }
 
-    private void loadPackage(File packageDir) {
-        if (packageDir.listFiles() == null) return;
-        for (File middlePackage : packageDir.listFiles()) {
-            if (middlePackage.listFiles() != null && middlePackage.listFiles().length == 1) {
-                loadPackage(middlePackage.listFiles()[0]);
-                packageName.concat(middlePackage + ".");
-            } else {
-                packageName = packageName.substring(0, packageName.length() - 1);
-                Log.d(LOGTAG, "Loaded package:" + packageName);
-            }
+    private void loadPackage(@NotNull PluginFile packageDir) {
+        try {
+            PluginVerifier.verify(packageDir);
+        } catch (IOException e) {
+            Log.e(LOGTAG, e.getLocalizedMessage(), e);
+        } catch (JSONException e) {
+            Log.e(LOGTAG, e.getLocalizedMessage(), e);
+        } catch (Manifest.ManifestSecurityException e) {
+            Log.e(LOGTAG, e.getLocalizedMessage(), e);
         }
     }
 }

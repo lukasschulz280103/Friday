@@ -45,7 +45,7 @@ public class PluginInstaller {
     }
 
     public class IllegalFileException extends IllegalStateException {
-        public IllegalFileException(String message) {
+        IllegalFileException(String message) {
             super(message);
         }
     }

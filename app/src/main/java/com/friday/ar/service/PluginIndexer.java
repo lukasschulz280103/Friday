@@ -57,7 +57,7 @@ public class PluginIndexer extends JobService {
                 File defaultDir = Environment.getExternalStorageDirectory();
                 indexDirectories(defaultDir);
                 Log.d(LOGTAG, "indexed Plugins:" + indexedFiles);
-                ((FridayApplication) getApplication()).setIndexedFiles(indexedFiles);
+                ((FridayApplication) getApplication()).setIndexedInstallablePluginFiles(indexedFiles);
                 jobFinished(params, true);
             } catch (Exception e) {
                 Log.e(LOGTAG, e.getLocalizedMessage(), e);

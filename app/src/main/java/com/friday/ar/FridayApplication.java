@@ -37,7 +37,7 @@ public class FridayApplication extends Application implements OnAccountSyncState
      */
     private SpeechRecognizer speechToTextRecognizer;
 
-    private ArrayList<JarFile> indexedFiles = new ArrayList<>();
+    private ArrayList<JarFile> indexedInstallablePluginFiles = new ArrayList<>();
 
     /**
      * This variable is the application global plugin loader.
@@ -127,12 +127,12 @@ public class FridayApplication extends Application implements OnAccountSyncState
         }
     }
 
-    public ArrayList<JarFile> getIndexedFiles() {
-        return indexedFiles;
+    public ArrayList<JarFile> getIndexedInstallablePluginFiles() {
+        return indexedInstallablePluginFiles;
     }
 
-    public void setIndexedFiles(ArrayList<JarFile> indexedFiles) {
-        this.indexedFiles = indexedFiles;
+    public void setIndexedInstallablePluginFiles(ArrayList<JarFile> indexedFiles) {
+        this.indexedInstallablePluginFiles = indexedFiles;
     }
 
     public class Jobs {

@@ -23,7 +23,11 @@
     </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/notifications">
         <androidx.preference.Preference android:title="@string/more_notification_settings">
-            <intent android:action="android.settings.APP_NOTIFICATION_SETTINGS" />
+            <intent android:action="android.settings.APP_NOTIFICATION_SETTINGS">
+                <extra
+                    android:name="android.provider.extra.APP_PACKAGE"
+                    android:value="com.friday.ar" />
+            </intent>
         </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/look">
