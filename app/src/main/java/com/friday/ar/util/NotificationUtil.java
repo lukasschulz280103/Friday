@@ -8,7 +8,7 @@ import android.content.Intent;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.friday.ar.FridayApplication;
+import com.friday.ar.Constant;
 import com.friday.ar.R;
 import com.friday.ar.ui.InfoActivity;
 
@@ -19,7 +19,7 @@ public class NotificationUtil {
         Intent toInfoPage = new Intent(context, InfoActivity.class);
         PendingIntent notif_click = PendingIntent.getActivity(context, 2, toInfoPage, 0);
         nmc = NotificationManagerCompat.from(context);
-        Notification update_notif = new NotificationCompat.Builder(context, FridayApplication.Constants.NOTIF_CHANNEL_UPDATE_ID)
+        Notification update_notif = new NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_UPDATE_ID)
                 .setSmallIcon(R.drawable.ic_file_download_black_24dp)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(context.getString(R.string.app_update_description, newVersion))

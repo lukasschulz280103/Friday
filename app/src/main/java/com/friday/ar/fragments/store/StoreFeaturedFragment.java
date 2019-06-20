@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.friday.ar.FridayApplication;
+import com.friday.ar.Constant;
 import com.friday.ar.R;
 import com.friday.ar.fragments.net.ConnectionFragment;
 import com.friday.ar.store.data.WidgetInfo;
@@ -34,7 +34,7 @@ import java.util.Map;
  * @see MainStoreFragment
  */
 public class StoreFeaturedFragment extends Fragment {
-    public static final String LOGTAG = FridayApplication.Constants.LOGTAG_STORE;
+    private static final String LOGTAG = Constant.LOGTAG_STORE;
     private Context context;
     private FirebaseFirestore fridayStoreFirestore;
     private DocumentReference storeData;

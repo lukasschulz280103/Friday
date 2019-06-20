@@ -33,7 +33,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment implements OnAccountSyncStateChanged {
-    public static final String LOGTAG = "ProfileFragment";
+    private static final String LOGTAG = "ProfileFragment";
     private static final int REQUEST_CODE_SETTINGS = 200;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;

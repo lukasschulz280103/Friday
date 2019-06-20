@@ -55,7 +55,7 @@ import java.io.IOException;
 import static android.content.ContentValues.TAG;
 
 public class DefaultSigninFragment extends Fragment {
-    public static final String LOGTAG = "DeafultSigninFragment";
+    private static final String LOGTAG = "DeafultSigninFragment";
     private static final int RC_SIGN_IN = 9001;
     private TextView resetResultText, resetPasswText;
     private OnAuthCompletedListener mOnAuthCompletedListener;

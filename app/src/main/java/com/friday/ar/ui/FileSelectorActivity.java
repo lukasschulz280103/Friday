@@ -29,24 +29,24 @@ import com.friday.ar.R;
 import com.friday.ar.Theme;
 import com.friday.ar.activities.FridayActivity;
 import com.friday.ar.plugin.PluginVerticalListAdapter;
-import com.friday.ar.util.FileUtil;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.snackbar.Snackbar;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.jar.JarFile;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-import static com.friday.ar.service.PluginIndexer.verify;
 
 //TODO:Add support for selecting files
 public class FileSelectorActivity extends FridayActivity {
     private static final String LOGTAG = "FileSelector";
-    private RecyclerView fileList;
+    private RecyclerView fileListRecyclerView;
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private Button openPlugin;
 
@@ -75,18 +75,18 @@ public class FileSelectorActivity extends FridayActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 8001 && Arrays.equals(grantResults, new int[]{PERMISSION_GRANTED})) {
             LinearLayoutManager fileListLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-            fileList = findViewById(R.id.fileList);
-            fileList.setLayoutManager(fileListLayoutManager);
-            fileList.setAdapter(new FileSystemArrayAdapter(Environment.getExternalStorageDirectory()));
+            fileListRecyclerView = findViewById(R.id.fileList);
+            fileListRecyclerView.setLayoutManager(fileListLayoutManager);
+            fileListRecyclerView.setAdapter(new FileSystemArrayAdapter(Environment.getExternalStorageDirectory()));
             AppBarLayout appBarLayout = findViewById(R.id.appbar);
             StateListAnimator stateListAnimator = new StateListAnimator();
-            fileList.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            fileListRecyclerView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                 if (fileListLayoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
                     stateListAnimator.addState(new int[0], ObjectAnimator.ofFloat(appBarLayout, "elevation", 0));
                     appBarLayout.setStateListAnimator(stateListAnimator);
                 } else {
                     StateListAnimator stateListAnimator1 = new StateListAnimator();
-                    stateListAnimator1.addState(new int[0], ObjectAnimator.ofFloat(appBarLayout, "elevation", 16));
+                    stateListAnimator1.addState(new int[0], ObjectAnimator.ofFloat(appBarLayout, "elevation", 8));
                     appBarLayout.setStateListAnimator(stateListAnimator1);
                 }
             });
@@ -98,7 +98,7 @@ public class FileSelectorActivity extends FridayActivity {
 
     @Override
     public void onBackPressed() {
-        FileSystemArrayAdapter fileListAdapter = ((FileSystemArrayAdapter) fileList.getAdapter());
+        FileSystemArrayAdapter fileListAdapter = ((FileSystemArrayAdapter) fileListRecyclerView.getAdapter());
         if (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
             slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else if (fileListAdapter.sourceFile.getParentFile() != null && fileListAdapter.sourceFile.getParentFile().canRead()) {
@@ -144,26 +144,21 @@ public class FileSelectorActivity extends FridayActivity {
                 holder.root.setOnClickListener(v -> {
                     holder.fileIcon.animate().scaleX(0f).scaleY(0f).setDuration(200).setInterpolator(new AccelerateInterpolator()).start();
                     holder.iconProgress.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(new DecelerateInterpolator()).start();
-                    //Running verification on an file can take some time, so we run it on another thread
-                    new Thread(() -> {
-                        try {
-                            if (FileUtil.getFileExtension(directoryFileItem).equals(".jar") && verify(new JarFile(directoryFileItem))) {
-                                Intent resultIntent = new Intent();
-                                resultIntent.setData(Uri.fromFile(directoryFileItem));
-                                setResult(RESULT_OK, resultIntent);
-                                openPlugin.setEnabled(true);
-                            } else {
-                                setResult(RESULT_CANCELED);
-                                openPlugin.setEnabled(false);
-                            }
-                        } catch (IOException e) {
-                            Log.e(LOGTAG, e.getMessage(), e);
-                        }
-                        runOnUiThread(() -> {
-                            holder.fileIcon.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(new DecelerateInterpolator()).start();
-                            holder.iconProgress.animate().scaleX(0f).scaleY(0f).setDuration(200).setInterpolator(new AccelerateInterpolator()).start();
-                        });
-                    }).start();
+                    try {
+                        //This file throws an exception if the zip is invalid
+                        new ZipFile(directoryFileItem);
+                        Intent resultIntent = new Intent();
+                        resultIntent.setData(Uri.fromFile(directoryFileItem));
+                        setResult(RESULT_OK, resultIntent);
+                        openPlugin.setEnabled(true);
+                    } catch (ZipException e) {
+                        Log.e(LOGTAG, e.getLocalizedMessage(), e);
+                        Snackbar.make(fileListRecyclerView, R.string.fileSelector_wrong_file_type_selected, Snackbar.LENGTH_SHORT).show();
+                        setResult(RESULT_CANCELED);
+                        openPlugin.setEnabled(false);
+                    }
+                    holder.fileIcon.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(new DecelerateInterpolator()).start();
+                    holder.iconProgress.animate().scaleX(0f).scaleY(0f).setDuration(200).setInterpolator(new AccelerateInterpolator()).start();
                 });
             }
 

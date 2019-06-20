@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.friday.ar.R;
 import com.friday.ar.plugin.Plugin;
 
+import java.io.File;
 import java.util.List;
 
 public class PluginListAdapter extends RecyclerView.Adapter<SimplePluginListItemHolder> {
@@ -34,7 +35,7 @@ public class PluginListAdapter extends RecyclerView.Adapter<SimplePluginListItem
         holder.iconView.setImageURI(plugin.getIconURI());
         holder.title.setText(plugin.getName());
         holder.ratingBar.setRating(plugin.getRating().getStarRating());
-        holder.size.setText(Long.toString(plugin.getPluginFile().length()));
+        holder.size.setText(Long.toString(new File(plugin.getPluginFile().getName()).length()));
     }
 
     @Override

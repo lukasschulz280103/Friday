@@ -1,40 +1,33 @@
 package com.friday.ar.plugin.file;
 
 
-import com.google.common.io.CharStreams;
+import android.content.Context;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 
 /**
- * This class represents an Friday plugin file.
+ * This class represents an Friday plugin file/directory.
  **/
-public class PluginFile extends ZipFile {
+public class PluginFile extends File {
     private Manifest manifest;
 
-    public PluginFile(String pathname) throws IOException, JSONException, Manifest.ManifestSecurityException {
+    public PluginFile(String pathname, Context context) throws IOException, JSONException, IllegalArgumentException {
         super(pathname);
-        ZipEntry manifestEntry = new ZipEntry("meta/manifest.json");
-        InputStream manifestInputStream = getInputStream(manifestEntry);
-        String jsonText;
-        try (final Reader reader = new InputStreamReader(manifestInputStream)) {
-            jsonText = CharStreams.toString(reader);
+        if (!isDirectory()) {
+            throw new IllegalArgumentException("The given path points to a file");
         }
-        JSONObject manifestOject = new JSONObject(jsonText);
-        JSONObject meta = manifestOject.getJSONObject("meta");
-        if (meta == null) {
-            throw new Manifest.ManifestSecurityException("Manifest does not contain required meta info!");
-        }
+        File manifestFile = new File(getPath() + "/meta/manifest.json");
+        JSONObject meta = new JSONObject(new String(Files.readAllBytes(manifestFile.toPath()), StandardCharsets.UTF_8));
         manifest = new Manifest(
                 meta.getString("applicationName"),
-                meta.getString("authorInfo"),
+                meta.getString("authorName"),
                 meta.getString("versionName")
         );
 

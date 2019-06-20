@@ -6,42 +6,24 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.friday.ar.FridayApplication;
-import com.friday.ar.util.FileUtil;
+import com.friday.ar.plugin.file.Manifest;
+import com.friday.ar.plugin.file.ZippedPluginFile;
+import com.friday.ar.plugin.security.PluginVerifier;
+
+import net.lingala.zip4j.exception.ZipException;
+
+import org.json.JSONException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class PluginIndexer extends JobService {
     private static final String LOGTAG = "PluginIndexer";
     private ArrayList<JarFile> indexedFiles = new ArrayList<>();
 
-    //TODO: Add deeper verification checks to prevent installations of tamperd plugins
-    @SuppressWarnings("StatementWithEmptyBody")
-    public static boolean verify(JarFile jar) throws IOException {
-        Log.d(LOGTAG, "veryfing file:" + jar.getName());
-        Enumeration<JarEntry> entries = jar.entries();
-        while (entries.hasMoreElements()) {
-            JarEntry entry = entries.nextElement();
-            try {
-                byte[] buffer = new byte[8192];
-                InputStream is = jar.getInputStream(entry);
-                while ((is.read(buffer, 0, buffer.length)) != -1) {
-                    // We just read. This will throw a SecurityException
-                    // if a signature/digest check fails.
-                }
-            } catch (SecurityException se) {
-                Log.e(LOGTAG, "Could not verify jar file:" + se.getMessage(), se);
-                return false;
-            }
-        }
-        return true;
-    }
 
     @Override
     public boolean onStopJob(JobParameters params) {
@@ -55,7 +37,7 @@ public class PluginIndexer extends JobService {
             Log.d(LOGTAG, "Started indexing job...");
             try {
                 File defaultDir = Environment.getExternalStorageDirectory();
-                indexDirectories(defaultDir);
+                //indexDirectories(defaultDir);
                 Log.d(LOGTAG, "indexed Plugins:" + indexedFiles);
                 ((FridayApplication) getApplication()).setIndexedInstallablePluginFiles(indexedFiles);
                 jobFinished(params, true);
@@ -75,15 +57,19 @@ public class PluginIndexer extends JobService {
                     indexDirectories(file);
                 } else {
                     try {
-                        Log.d(LOGTAG, FileUtil.getFileExtension(file));
-                        if (FileUtil.getFileExtension(file).equals(".jar") && verify(new JarFile(file))) {
-                            Log.d(LOGTAG, "found valid jar file:" + file);
-                            indexedFiles.add(new JarFile(file));
-                        }
+                        PluginVerifier.verify(new ZippedPluginFile(file), getApplicationContext());
+                        Log.d(LOGTAG, "found valid plugin file:" + file);
+                        indexedFiles.add(new JarFile(file));
                     } catch (FileNotFoundException e) {
-                        Log.e(LOGTAG, e.getMessage(), e);
+                        Log.e(LOGTAG, "File was deleted or moved:" + e.getMessage(), e);
                     } catch (IOException e) {
-                        Log.e(LOGTAG, e.getMessage(), e);
+                        Log.e(LOGTAG, "Unknown IOException:" + e.getMessage(), e);
+                    } catch (ZipException e) {
+                        Log.e(LOGTAG, "Zip file could not be opened:" + e.getLocalizedMessage(), e);
+                    } catch (JSONException e) {
+                        Log.e(LOGTAG, "Plugin file verification failed:" + e.getLocalizedMessage(), e);
+                    } catch (Manifest.ManifestSecurityException e) {
+                        Log.e(LOGTAG, "File '" + file.getName() + "' was not added to index; invalid manifest:" + e.getLocalizedMessage(), e);
                     }
                 }
             }

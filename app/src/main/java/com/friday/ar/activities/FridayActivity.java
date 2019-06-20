@@ -6,11 +6,12 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 /*
 This file is necessarry for analytics, in order to record usage statistics.
  */
 public abstract class FridayActivity extends AppCompatActivity {
-    public static final String LOGTAG = "FridayActivity";
+    private static final String LOGTAG = "FridayActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

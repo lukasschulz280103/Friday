@@ -19,13 +19,15 @@ import java.util.ArrayList;
  * This class loads all plugins when the app starts.
  */
 public class PluginLoader {
-    public static final String LOGTAG = "PluginLoader";
+    private static final String LOGTAG = "PluginLoader";
     private ArrayList<Plugin> pluginIndex = new ArrayList<>();
     private File pluginDir;
+    private Context context;
 
     public PluginLoader(Context context) {
         pluginDir = new File(context.getFilesDir() + "/plugin");
         pluginDir.mkdirs();
+        this.context = context;
     }
 
     /**
@@ -43,17 +45,18 @@ public class PluginLoader {
      */
     public boolean startLoading() {
         if (pluginDir.exists()) {
+            Log.d(LOGTAG, pluginDir.listFiles().toString());
             for (File pluginFile : pluginDir.listFiles()) {
                 try {
-                    PluginFile plugin = new PluginFile(pluginFile.getPath());
+                    PluginFile plugin = new PluginFile(pluginFile.getPath(), context);
                     Log.d(LOGTAG, "Loading " + plugin.getName());
                     loadPackage(plugin);
                 } catch (IOException e) {
                     Log.e(LOGTAG, e.getMessage(), e);
                 } catch (JSONException e) {
                     Log.e(LOGTAG, e.getMessage(), e);
-                } catch (Manifest.ManifestSecurityException e) {
-                    Log.e(LOGTAG, e.getMessage(), e);
+                } catch (IllegalArgumentException e) {
+                    pluginFile.delete();
                 }
 
             }

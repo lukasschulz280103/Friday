@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="search">Rechercher</string>
     <string name="store">Store</string>
     <string name="action_createnew_account">Créer un compte</string>
@@ -8,7 +8,7 @@
     <string name="app_feedback">Rétroaction</string>
     <string name="app_language">Langue</string>
     <string name="app_settings">Paramètres</string>
-    <string name="app_update_description">friday est prêt à être mis à jour  vers un nouvelle version</string>
+    <string name="app_update_description">friday est prêt à être mis à jour  vers un nouvelle version: %s</string>
     <string name="app_welcome">Salut à friday!</string>
     <string name="app_update_title">friday Update</string>
     <string name="asset_loader_loading">chargement des données</string>
@@ -239,7 +239,7 @@
     <string name="dont_show_again">Ne me montre plus jamais</string>
     <string name="pluginInstaller_noItemsIndexed">Aucun fichier de plugin trouvé</string>
     <plurals name="pluginInstaller_indexingStatus">
-        <item quantity="one">Un fichier plugin trouvé</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">Un fichier plugin trouvé</item>
         <item quantity="other">%d fichiers de plugins trouvés</item>
     </plurals>
     <string name="pluginInstaller_succes_install_title">Installation réussie</string>
@@ -249,4 +249,8 @@
     <string name="notification_channel_plugin_installer_description">Ce canal vous informe de l\'état des plugins installés lorsque, par exemple, la progression d\'un plugin installé change.</string>
     <string name="notifications">Notifications</string>
     <string name="more_notification_settings">Autres paramètres de notification</string>
+    <string name="pluginInstaller_error_installation_failed">L\'installation a échoué</string>
+    <string name="pluginInstaller_error_could_not_parse">Le plugin n\'a pas pu être traité</string>
+    <string name="pluginInstaller_error_manifest_security">Ce plugin viole les règles de sécurité et n\'a donc pas été installé.</string>
+    <string name="fileSelector_wrong_file_type_selected">Vous devez sélectionner un fichier du type de fichier d\'un plugin (*.fpl)</string>
 </resources>

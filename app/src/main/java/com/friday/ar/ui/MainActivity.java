@@ -13,11 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextSwitcher;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -52,31 +52,33 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
     MainStoreFragment storeFragment = new MainStoreFragment();
     FridayApplication app;
     OnAuthCompletedListener mOnAuthCompleted;
-    private ViewFlipper vswitcher_main;
+    private ViewFlipper viewSwitcherMain;
     BottomNavigationView.OnNavigationItemSelectedListener navselected = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.main_nav_dashboard:
-                    vswitcher_main.setDisplayedChild(0);
+                    viewSwitcherMain.setDisplayedChild(0);
                     break;
                 case R.id.main_nav_store:
-                    vswitcher_main.setDisplayedChild(2);
+                    if (findViewById(R.id.stub_page_store) != null) {
+                        findViewById(R.id.stub_page_store).setVisibility(View.VISIBLE);
+                        setupSorePage();
+                    }
+                    viewSwitcherMain.setDisplayedChild(1);
                     break;
                 case R.id.main_nav_profile:
-                    vswitcher_main.setDisplayedChild(1);
+                    if (findViewById(R.id.stub_page_profile) != null) {
+                        findViewById(R.id.stub_page_profile).setVisibility(View.VISIBLE);
+                        setupProfilePage();
+                    }
+                    viewSwitcherMain.setDisplayedChild(2);
                     break;
             }
             return true;
         }
     };
     private AuthDialog authDialogFragment;
-    private SharedPreferences defaut_pref;
-    private PackageInfo pkgInf;
-    private LinearLayout assetLoaderLayout;
-    private TextSwitcher assetLoaderText;
-    private ProgressBar loadingBar;
-    private boolean loadedSpeechRecognizer = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,76 +86,103 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        vswitcher_main = findViewById(R.id.main_view_flipper);
-        assetLoaderLayout = findViewById(R.id.asset_loading_indicator_conatiner);
-        assetLoaderText = findViewById(R.id.asset_loading_text);
-        loadingBar = findViewById(R.id.asset_loading_bar);
-        defaut_pref = PreferenceManager.getDefaultSharedPreferences(this);
-        try {
-            pkgInf = getPackageManager().getPackageInfo(getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        Theme theme = new Theme(this);
-        int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this));
-        ((BottomNavigationView) findViewById(R.id.main_bottom_nav)).setOnNavigationItemSelectedListener(navselected);
-        findViewById(R.id.start_actionmode).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, FullscreenActionActivity.class);
-            startActivity(intent);
-        });
-        findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex));
-        findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
-        app = ((FridayApplication) getApplication());
-        Log.d(LOGTAG, "SharedPref versionName is " + defaut_pref.getString("version", "1.0.0"));
-        vswitcher_main.setDisplayedChild(0);
-        checkForFirstUse();
-        if (!defaut_pref.getString("version", "0").equals(pkgInf.versionName) || defaut_pref.getBoolean("pref_devmode_show_changelog", false)) {
-            ChangelogDialogFragment changelogdialog = new ChangelogDialogFragment();
-            changelogdialog.show(getSupportFragmentManager(), "ChangeLogDialog");
-            SharedPreferences.Editor editor = defaut_pref.edit();
-            editor.putString("version", pkgInf.versionName);
-            editor.apply();
-        }
 
-        try {
-            PackageManager isOldAppInstalled = getPackageManager();
-            isOldAppInstalled.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES);
-            UninstallOldAppDialog uninstallOldDialogFragment = new UninstallOldAppDialog();
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
-                    .replace(android.R.id.content, uninstallOldDialogFragment)
-                    .commit();
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.i(LOGTAG, "no old version found");
-        }
+        //Setting up views and objects on separate thread to improve performance at startup
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                viewSwitcherMain = findViewById(R.id.main_view_flipper);
+                FrameLayout parallaxScrollView = findViewById(R.id.parallaxScollView);
+                LinearLayout mainTitleView = findViewById(R.id.mainTitleView);
+                app = ((FridayApplication) getApplication());
+                //Apply padding to the main pages content frame so it fits the height of the title view
+                ViewTreeObserver vto = parallaxScrollView.getViewTreeObserver();
+                vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        mainTitleView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        int height = mainTitleView.getMeasuredHeight();
+                        runOnUiThread(() -> parallaxScrollView.setPadding(0, height, 0, 0));
+                    }
+                });
 
-        if (defaut_pref.getInt("theme", 0) == 0) {
-            defaut_pref.edit().putInt("theme", R.style.AppTheme).apply();
-        }
+                Theme theme = new Theme(MainActivity.this);
+                int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(MainActivity.this));
+                runOnUiThread(() -> findViewById(R.id.mainTitleView).setBackground(theme.createGradient(appThemeIndex)));
 
-        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
-        assert pm != null;
-        if (pm.isPowerSaveMode()) {
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
-            builder.setTitle(R.string.energy_saver_warn_title);
-            builder.setMessage(R.string.energy_saver_warn_msg);
-            builder.setPositiveButton(R.string.deactivate, (dialogInterface, i) -> {
 
-            });
-            builder.setNegativeButton(R.string.later, null);
-            builder.create().show();
-        }
+                ((BottomNavigationView) findViewById(R.id.main_bottom_nav)).setOnNavigationItemSelectedListener(navselected);
+
+                findViewById(R.id.start_actionmode).setOnClickListener(v -> {
+                    Intent intent = new Intent(MainActivity.this, FullscreenActionActivity.class);
+                    startActivity(intent);
+                });
+
+                PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+                assert pm != null;
+                if (pm.isPowerSaveMode()) {
+                    MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(MainActivity.this);
+                    builder.setTitle(R.string.energy_saver_warn_title);
+                    builder.setMessage(R.string.energy_saver_warn_msg);
+                    builder.setPositiveButton(R.string.deactivate, (dialogInterface, i) -> {
+                    });
+                    builder.setNegativeButton(R.string.later, null);
+                    runOnUiThread(() -> builder.create().show());
+                }
+
+                SharedPreferences default_pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                PackageInfo pkgInf;
+                try {
+                    pkgInf = getPackageManager().getPackageInfo(getPackageName(), 0);
+                    if (!default_pref.getString("version", "0").equals(pkgInf.versionName) || default_pref.getBoolean("pref_devmode_show_changelog", false)) {
+                        ChangelogDialogFragment changelogdialog = new ChangelogDialogFragment();
+                        changelogdialog.show(getSupportFragmentManager(), "ChangeLogDialog");
+                        SharedPreferences.Editor editor = default_pref.edit();
+                        editor.putString("version", pkgInf.versionName);
+                        editor.apply();
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                checkForFirstUse();
+
+                try {
+                    PackageManager isOldAppInstalled = getPackageManager();
+                    isOldAppInstalled.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES);
+                    UninstallOldAppDialog uninstallOldDialogFragment = new UninstallOldAppDialog();
+                    getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
+                            .replace(android.R.id.content, uninstallOldDialogFragment)
+                            .commit();
+                } catch (PackageManager.NameNotFoundException e) {
+                    Log.i(LOGTAG, "no old version found");
+                }
+
+                if (default_pref.getInt("theme", 0) == 0) {
+                    default_pref.edit().putInt("theme", R.style.AppTheme).apply();
+                }
+            }
+        }).start();
         //app.registerForSyncStateChange(this);
 
-        //Initialize Store
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.store_frag_container, storeFragment)
-                .commit();
+    }
+
+    private void setupSorePage() {
         ImageButton storeExpandManagerButton = findViewById(R.id.storeMore);
         storeExpandManagerButton.setOnClickListener(v -> {
             ManagerBottomSheetDialogFragment managerDialog = new ManagerBottomSheetDialogFragment(this);
             managerDialog.show(getSupportFragmentManager(), "ManagerBottomSheet");
         });
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.store_frag_container, storeFragment)
+                .commit();
+    }
+
+    private void setupProfilePage() {
+        Theme theme = new Theme(MainActivity.this);
+        int appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(MainActivity.this));
+        findViewById(R.id.profileTitleViewContainer).setBackground(theme.createGradient(appThemeIndex));
     }
 
     private void checkForFirstUse() {
@@ -183,7 +212,7 @@ public class MainActivity extends FridayActivity implements OnAccountSyncStateCh
     @Override
     public void onResume() {
         super.onResume();
-        if (!storeFragment.isAdded()) {
+        if (!storeFragment.isAdded() && findViewById(R.id.stub_page_store) == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.store_frag_container, storeFragment)
                     .commit();

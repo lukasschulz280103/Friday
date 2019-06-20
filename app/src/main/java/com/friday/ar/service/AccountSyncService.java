@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class AccountSyncService extends JobService {
-    public static final String LOGTAG = "SynchronizationService";
+    private static final String LOGTAG = "SynchronizationService";
 
     public AccountSyncService() {
     }
@@ -42,7 +42,7 @@ public class AccountSyncService extends JobService {
             registerReceiver(new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    unregisterReceiver(this);
+                    context.unregisterReceiver(this);
                     Log.d(LOGTAG, "synchronized account avatar");
                     try {
                         FileUtil.moveFile(new File(getExternalFilesDir("profile") + File.separator + "avatar.jpg"), avatarFile);

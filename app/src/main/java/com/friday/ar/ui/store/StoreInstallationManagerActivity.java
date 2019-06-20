@@ -18,25 +18,27 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crashlytics.android.Crashlytics;
 import com.friday.ar.FridayApplication;
 import com.friday.ar.R;
 import com.friday.ar.Theme;
 import com.friday.ar.activities.FridayActivity;
 import com.friday.ar.list.store.PluginListAdapter;
 import com.friday.ar.plugin.application.PluginLoader;
+import com.friday.ar.plugin.file.ZippedPluginFile;
 import com.friday.ar.plugin.installer.PluginInstaller;
 import com.friday.ar.ui.FileSelectorActivity;
 import com.friday.ar.util.DisplayUtil;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import net.lingala.zip4j.exception.ZipException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 public class StoreInstallationManagerActivity extends FridayActivity {
-    public static final String LOGTAG = "StoreInstallations";
+    private static final String LOGTAG = "StoreInstallations";
     public static final int OPEN_PLUGIN_INTENT_CODE = 733;
 
     @Override
@@ -116,17 +118,11 @@ public class StoreInstallationManagerActivity extends FridayActivity {
             File openedFile = new File(Objects.requireNonNull(data.getData().getPath()));
             PluginInstaller installer = new PluginInstaller(this);
             try {
-                installer.installFrom(new File(openedFile.getPath()));
+                installer.installFrom(new ZippedPluginFile(new File(openedFile.getPath())));
             } catch (IOException e) {
                 Log.e(LOGTAG, e.getLocalizedMessage(), e);
-                Crashlytics.logException(e);
-            } catch (PluginInstaller.IllegalFileException e) {
-                MaterialAlertDialogBuilder alertDialogBuilder = new MaterialAlertDialogBuilder(this);
-                alertDialogBuilder.setIcon(R.drawable.file_cancel)
-                        .setTitle(R.string.err_inappropriate_file_extension)
-                        .setMessage(R.string.err_inappropriate_file_extension_msg)
-                        .setPositiveButton(android.R.string.ok, null)
-                        .create().show();
+            } catch (ZipException e) {
+                Log.e(LOGTAG, e.getLocalizedMessage(), e);
             }
         }
     }

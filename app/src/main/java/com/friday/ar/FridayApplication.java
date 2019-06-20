@@ -45,33 +45,29 @@ public class FridayApplication extends Application implements OnAccountSyncState
      */
     private PluginLoader applicationPluginLoader;
 
+
     private OnAccountSyncStateChangedList<?> syncStateChangedNotifyList = new OnAccountSyncStateChangedList();
-    private SharedPreferences preferences;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        applicationPluginLoader = new PluginLoader(this);
-        applicationPluginLoader.startLoading();
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Fabric.with(this, new Crashlytics());
-        createNotificationChannels();
-        UpdateUtil.checkForUpdate(this);
-        PluginLoader loader = new PluginLoader(this);
-        loader.startLoading();
-        new Thread(this::runServices).start();
+        new Thread(() -> {
+            runServices();
+            createNotificationChannels();
+        }).start();
     }
 
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel updateChannel = new NotificationChannel(
-                    Constants.NOTIF_CHANNEL_UPDATE_ID,
+                    Constant.NOTIF_CHANNEL_UPDATE_ID,
                     getString(R.string.notification_channel_update),
                     NotificationManager.IMPORTANCE_DEFAULT
             );
             updateChannel.setDescription(getString(R.string.notification_channel_update_description));
             NotificationChannel pluginInstallerChannel = new NotificationChannel(
-                    Constants.NOTIF_CHANNEL_INSTALLER_ID,
+                    Constant.NOTIF_CHANNEL_INSTALLER_ID,
                     getString(R.string.notification_channel_plugin_installer),
                     NotificationManager.IMPORTANCE_DEFAULT
             );
@@ -103,6 +99,7 @@ public class FridayApplication extends Application implements OnAccountSyncState
     }
 
     private void runServices() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(FridayApplication.this);
         JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         if (preferences.getBoolean("sync_account_auto", true)) {
             JobInfo info = new JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, new ComponentName(this, AccountSyncService.class))
@@ -118,6 +115,14 @@ public class FridayApplication extends Application implements OnAccountSyncState
                 .setBackoffCriteria(30 * 60000, JobInfo.BACKOFF_POLICY_LINEAR)
                 .build();
         jobScheduler.schedule(jobIndexerInfo);
+
+        applicationPluginLoader = new PluginLoader(this);
+        applicationPluginLoader.startLoading();
+
+        UpdateUtil.checkForUpdate(this);
+
+        PluginLoader loader = new PluginLoader(this);
+        loader.startLoading();
     }
 
     @Override
@@ -141,13 +146,4 @@ public class FridayApplication extends Application implements OnAccountSyncState
         public static final int JOB_INDEX_PLUGINS = 8002;
     }
 
-    public class Constants {
-        public static final String NOTIF_CHANNEL_UPDATE_ID = "channel_update";
-        public static final String NOTIF_CHANNEL_INSTALLER_ID = "channel_plugin_installer";
-        public static final String LOGTAG_STORE = "FridayMarketplace";
-
-        public class NotificationIDs {
-            public static final int NOTIFICATION_INSTALL_SUCCESS = 200;
-        }
-    }
 }

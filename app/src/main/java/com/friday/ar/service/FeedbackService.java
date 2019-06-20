@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FeedbackService extends JobService {
-    public static final String LOGTAG = "FeedbackService";
+    private static final String LOGTAG = "FeedbackService";
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {

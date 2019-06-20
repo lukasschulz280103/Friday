@@ -65,7 +65,7 @@ import edu.cmu.pocketsphinx.SpeechRecognizer;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActionActivity extends FridayActivity {
-    public static final String LOGTAG = "ARActivity";
+    private static final String LOGTAG = "ARActivity";
     private FirebaseAuth firebaseAuth;
     private ConstraintLayout microphoneIndicator;
     private TextView timeLabel, userEmail, microphoneText;

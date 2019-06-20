@@ -15,37 +15,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <LinearLayout
-            android:id="@+id/asset_loading_indicator_conatiner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_margin="16dp"
-            android:animateLayoutChanges="true"
-            android:background="@drawable/launcher_logo_bg_white"
-            android:elevation="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextSwitcher
-                android:id="@+id/asset_loading_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="8dp" />
-
-            <ProgressBar
-                android:id="@+id/asset_loading_bar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/start_actionmode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
@@ -58,9 +32,17 @@
 
             <include layout="@layout/page_main" />
 
-            <include layout="@layout/page_profile" />
+            <ViewStub
+                android:id="@+id/stub_page_store"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/page_store" />
 
-            <include layout="@layout/page_store" />
+            <ViewStub
+                android:id="@+id/stub_page_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout="@layout/page_profile" />
         </ViewFlipper>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

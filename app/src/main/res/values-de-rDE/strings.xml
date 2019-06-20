@@ -252,4 +252,8 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="notification_channel_plugin_installer_description">Dieser Kanal informiert über den Status von ihren installierten Plugins. Er benachrichtigt sie z.B. darüber, wenn sich der Status einer laufenden Installaion eines Plugins ändert.</string>
     <string name="notifications">Benachrichtigungen</string>
     <string name="more_notification_settings">Mehr Benachrichtigungseinstellungen</string>
+    <string name="pluginInstaller_error_installation_failed">Installation fehlgeschlagen</string>
+    <string name="pluginInstaller_error_could_not_parse">Parsen des Plugins fehlgeschlagen</string>
+    <string name="pluginInstaller_error_manifest_security">Dieses Plugin verstößt gegen die Sicherheitsvorschriften und wurde daher nicht installiert.</string>
+    <string name="fileSelector_wrong_file_type_selected">Sie müssen eine Friday Plugindatei auswählen (*.fpl)</string>
 </resources>

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.friday.ar.FridayApplication;
+import com.friday.ar.Constant;
 import com.friday.ar.R;
 import com.friday.ar.dialog.ErrorDialog;
 import com.friday.ar.fragments.net.ConnectionFragment;
@@ -27,7 +27,7 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class AppCardFragment extends Fragment {
-    public static final String LOGTAG = FridayApplication.Constants.LOGTAG_STORE;
+    private static final String LOGTAG = Constant.LOGTAG_STORE;
     ImageView thumbnail;
     private ErrorDialog errorDialog;
     private CollectionReference mAppRef;
