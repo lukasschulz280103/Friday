@@ -30,6 +30,7 @@ import androidx.palette.graphics.Palette;
 import com.friday.ar.FridayApplication;
 import com.friday.ar.R;
 import com.friday.ar.activities.FridayActivity;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
@@ -51,6 +52,10 @@ import com.google.ar.sceneform.rendering.ViewRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.text.FirebaseVisionText;
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -107,10 +112,12 @@ public class FullscreenActionActivity extends FridayActivity {
             wakeupRecognizer.stop();
         }
     };
+    int awaitVision;
     private Scene.OnUpdateListener uiStyleUpdateListener = new Scene.OnUpdateListener() {
         @Override
         public void onUpdate(FrameTime frameTime) {
             try {
+                awaitVision += 1;
                 //Acquire an image from the arcore fragment
                 Image img = arFragment.getArSceneView().getArFrame().acquireCameraImage();
 
@@ -139,6 +146,16 @@ public class FullscreenActionActivity extends FridayActivity {
                         userEmail.setTextColor(Color.WHITE);
                     }
                 });
+                if (awaitVision % 200 == 0) {
+                    FirebaseVisionImage visionImage = FirebaseVisionImage.fromBitmap(bitmap);
+                    FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
+                            .getOnDeviceTextRecognizer();
+                    Task<FirebaseVisionText> result =
+                            detector.processImage(visionImage)
+                                    .addOnSuccessListener(firebaseVisionText -> Log.d(LOGTAG, "firebase Vision:" + firebaseVisionText.getText()))
+                                    .addOnFailureListener(e -> Log.e(LOGTAG, e.getMessage(), e));
+                }
+
             } catch (NotYetAvailableException e) {
                 Log.w("ArFragment", "Fragment not yet available");
             }
@@ -190,69 +207,73 @@ public class FullscreenActionActivity extends FridayActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        try {
-            ArCoreApk apk = ArCoreApk.getInstance();
-            if (apk.requestInstall(this, true) != ArCoreApk.InstallStatus.INSTALLED) {
+        //performance.
+        new Thread(() -> {
+            try {
+                ArCoreApk apk = ArCoreApk.getInstance();
+                if (apk.requestInstall(FullscreenActionActivity.this, true) != ArCoreApk.InstallStatus.INSTALLED) {
 
+                }
+                mArCoreSession = new Session(FullscreenActionActivity.this);
+                Config config = mArCoreSession.getConfig();
+                config.setUpdateMode(Config.UpdateMode.LATEST_CAMERA_IMAGE);
+                config.setFocusMode(Config.FocusMode.AUTO);
+                mArCoreSession.configure(config);
+                arFragment.getArSceneView().setupSession(mArCoreSession);
+            } catch (Exception e) {
+                Log.d(LOGTAG, "Exception ocurred");
+                if (e instanceof UnavailableArcoreNotInstalledException) {
+                    returnOnErrorIntent.putExtra("errtpe", "TYPE_NOT_INSTALLED");
+                } else if (e instanceof UnavailableApkTooOldException) {
+                    returnOnErrorIntent.putExtra("errtype", "TYPE_OLD_APK");
+                } else if (e instanceof UnavailableSdkTooOldException) {
+                    returnOnErrorIntent.putExtra("errtype", "TYPE_OLD_SDK_TOOL");
+                } else if (e instanceof UnavailableDeviceNotCompatibleException) {
+                    returnOnErrorIntent.putExtra("errtype", "TYPE_DEVICE_INCOMPATIBLE");
+                }
+                setResult(RESULT_CANCELED, returnOnErrorIntent);
+                finishActivity(MainActivity.FULLSCREEN_REQUEST_CODE);
+                return;
             }
-            mArCoreSession = new Session(this);
-            Config config = mArCoreSession.getConfig();
-            config.setUpdateMode(Config.UpdateMode.LATEST_CAMERA_IMAGE);
-            config.setFocusMode(Config.FocusMode.AUTO);
-            mArCoreSession.configure(config);
-            arFragment.getArSceneView().setupSession(mArCoreSession);
 
-        } catch (Exception e) {
-            Log.d(LOGTAG, "Exception ocurred");
-            if (e instanceof UnavailableArcoreNotInstalledException) {
-                returnOnErrorIntent.putExtra("errtpe", "TYPE_NOT_INSTALLED");
-            } else if (e instanceof UnavailableApkTooOldException) {
-                returnOnErrorIntent.putExtra("errtype", "TYPE_OLD_APK");
-            } else if (e instanceof UnavailableSdkTooOldException) {
-                returnOnErrorIntent.putExtra("errtype", "TYPE_OLD_SDK_TOOL");
-            } else if (e instanceof UnavailableDeviceNotCompatibleException) {
-                returnOnErrorIntent.putExtra("errtype", "TYPE_DEVICE_INCOMPATIBLE");
-            }
-            setResult(RESULT_CANCELED, returnOnErrorIntent);
-            finishActivity(MainActivity.FULLSCREEN_REQUEST_CODE);
-            return;
-        }
+            //Following code is an example
+            ModelRenderable.builder()
+                    .setSource(FullscreenActionActivity.this, R.raw.project_friday_text)
+                    .build()
+                    .thenAccept(renderable -> fridayTextRenderable = renderable)
+                    .exceptionally(
+                            throwable -> {
+                                Toast toast =
+                                        Toast.makeText(FullscreenActionActivity.this, "Unable to load andy renderable", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                runOnUiThread(toast::show);
+                                return null;
+                            });
+            arFragment.getPlaneDiscoveryController().hide();
+            arFragment.setOnTapArPlaneListener(
+                    (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+                        if (fridayTextRenderable == null) {
+                            return;
+                        }
 
-        //Following code is an example
-        ModelRenderable.builder()
-                .setSource(this, R.raw.project_friday_text)
-                .build()
-                .thenAccept(renderable -> fridayTextRenderable = renderable)
-                .exceptionally(
-                        throwable -> {
-                            Toast toast =
-                                    Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
-                            return null;
-                        });
-        arFragment.getPlaneDiscoveryController().hide();
-        arFragment.setOnTapArPlaneListener(
-                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
-                    if (fridayTextRenderable == null) {
-                        return;
-                    }
+                        // Create the Anchor.
+                        Anchor anchor = hitResult.createAnchor();
+                        AnchorNode anchorNode = new AnchorNode(anchor);
+                        anchorNode.setParent(arFragment.getArSceneView().getScene());
 
-                    // Create the Anchor.
-                    Anchor anchor = hitResult.createAnchor();
-                    AnchorNode anchorNode = new AnchorNode(anchor);
-                    anchorNode.setParent(arFragment.getArSceneView().getScene());
-
-                    // Create the transformable andy and add it to the anchor.
-                    TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
-                    andy.setParent(anchorNode);
-                    andy.setRenderable(fridayTextRenderable);
-                    andy.select();
-                });
-        arFragment.getArSceneView().getScene().addOnUpdateListener(uiStyleUpdateListener);
-        Calendar c = Calendar.getInstance();
-        timeLabel.setText(String.format("%d:%d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
-        userEmail.setText(firebaseAuth.getCurrentUser() != null ? firebaseAuth.getCurrentUser().getEmail() : "Nicht angemeldet");
+                        // Create the transformable andy and add it to the anchor.
+                        TransformableNode andy = new TransformableNode(arFragment.getTransformationSystem());
+                        andy.setParent(anchorNode);
+                        andy.setRenderable(fridayTextRenderable);
+                        andy.select();
+                    });
+            arFragment.getArSceneView().getScene().addOnUpdateListener(uiStyleUpdateListener);
+            Calendar c = Calendar.getInstance();
+            runOnUiThread(() -> {
+                timeLabel.setText(String.format("%d:%d", c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE)));
+                userEmail.setText(firebaseAuth.getCurrentUser() != null ? firebaseAuth.getCurrentUser().getEmail() : "Nicht angemeldet");
+            });
+        }).start();
     }
 
     @Override
@@ -285,8 +306,8 @@ public class FullscreenActionActivity extends FridayActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        wakeupRecognizer.cancel();
-        speechToTextRecognizer.cancel();
+        //wakeupRecognizer.cancel();
+        //speechToTextRecognizer.cancel();
     }
 
     @Override

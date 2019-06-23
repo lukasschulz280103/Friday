@@ -1,4 +1,4 @@
-package com.friday.ar.ui.store;
+package com.friday.ar.ui.store.packageInstaller;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,13 +54,14 @@ public class StoreInstallationManagerActivity extends FridayActivity {
         RecyclerView list = findViewById(R.id.appList);
         PluginLoader pluginLoader = ((FridayApplication) getApplication()).getApplicationPluginLoader();
         list.setLayoutManager(new LinearLayoutManager(this));
-        if (pluginLoader.getIndexedPlugins().size() == 0) {
+        if (pluginLoader.getIndexedPlugins() == null || pluginLoader.getIndexedPlugins().size() == 0) {
             findViewById(R.id.emptyView).setVisibility(View.VISIBLE);
             list.setVisibility(View.GONE);
         } else {
             findViewById(R.id.emptyView).setVisibility(View.GONE);
             list.setVisibility(View.VISIBLE);
             list.setAdapter(new PluginListAdapter(this, pluginLoader.getIndexedPlugins()));
+            registerForContextMenu(list);
         }
     }
 
@@ -117,13 +118,21 @@ public class StoreInstallationManagerActivity extends FridayActivity {
             Log.d(LOGTAG, "data:" + data.getData().toString());
             File openedFile = new File(Objects.requireNonNull(data.getData().getPath()));
             PluginInstaller installer = new PluginInstaller(this);
-            try {
-                installer.installFrom(new ZippedPluginFile(new File(openedFile.getPath())));
-            } catch (IOException e) {
-                Log.e(LOGTAG, e.getLocalizedMessage(), e);
-            } catch (ZipException e) {
-                Log.e(LOGTAG, e.getLocalizedMessage(), e);
-            }
+            new Thread(() -> {
+                try {
+                    installer.installFrom(new ZippedPluginFile(new File(openedFile.getPath())));
+                } catch (IOException e) {
+                    Log.e(LOGTAG, e.getLocalizedMessage(), e);
+                } catch (ZipException e) {
+                    Log.e(LOGTAG, e.getLocalizedMessage(), e);
+                }
+
+            }).start();
         }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        return super.onContextItemSelected(item);
     }
 }

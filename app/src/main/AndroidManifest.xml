@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.friday.ar">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -27,6 +26,34 @@
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.store.packageInstaller.PackageInstallerActivity"
+            android:allowEmbedded="true"
+            android:theme="@style/AppTheme.Transparent"
+
+            >
+            <intent-filter
+                android:icon="@drawable/ic_twotone_save_alt_24px"
+                android:label="@string/pluginInstaller_intent_install"
+                android:priority="1">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\..*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.fpl" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\.fpl" />
+            </intent-filter>
+        </activity>
+
         <uses-library
             android:name="android.test.runner"
             android:required="false" />
@@ -36,8 +63,9 @@
         <uses-library
             android:name="android.test.mock"
             android:required="false" />
-        <activity android:name=".ui.FileSelectorActivity"></activity>
-        <activity android:name=".ui.store.StoreInstallationManagerActivity" />
+
+        <activity android:name=".ui.FileSelectorActivity" />
+        <activity android:name=".ui.store.packageInstaller.StoreInstallationManagerActivity" />
         <activity
             android:name=".ui.WizardActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -53,13 +81,6 @@
         <activity
             android:name=".ui.store.StoreDetailActivity"
             android:theme="@style/AppTheme" />
-
-        <receiver android:name=".util.BootReciever">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait">
@@ -109,12 +130,21 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".util.BootReciever">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="9a85d5ff39417c8b72a7242e63d6fd53f43fe7f9" />
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="ocr" />
 
         <service
             android:name=".service.FeedbackService"

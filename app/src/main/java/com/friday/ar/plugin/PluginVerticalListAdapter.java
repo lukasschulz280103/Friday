@@ -10,19 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.friday.ar.R;
+import com.friday.ar.plugin.file.ZippedPluginFile;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.jar.JarFile;
 
 import static android.app.Activity.RESULT_OK;
 
 //TODO: Add functionality that makes an item selectable
 public class PluginVerticalListAdapter extends RecyclerView.Adapter<PluginViewHolder> {
-    private ArrayList<JarFile> dataList;
+    private ArrayList<ZippedPluginFile> dataList;
     private Activity context;
 
-    public PluginVerticalListAdapter(@NonNull Activity context, @NonNull ArrayList<JarFile> dataList) {
+    public PluginVerticalListAdapter(@NonNull Activity context, @NonNull ArrayList<ZippedPluginFile> dataList) {
         this.dataList = dataList;
         this.context = context;
     }
@@ -35,13 +35,13 @@ public class PluginVerticalListAdapter extends RecyclerView.Adapter<PluginViewHo
 
     @Override
     public void onBindViewHolder(@NonNull PluginViewHolder holder, int position) {
-        JarFile file = dataList.get(position);
-        holder.title.setText(file.getName().substring(file.getName().lastIndexOf("/")));
-        holder.path.setText(file.getName());
+        ZippedPluginFile file = dataList.get(position);
+        holder.title.setText(file.getFile().getName());
+        holder.path.setText(file.getFile().getName());
         holder.icon.setImageDrawable(context.getDrawable(R.drawable.ic_twotone_insert_drive_file_24px));
         holder.root.setOnClickListener(v -> {
             Intent resultIntent = new Intent();
-            resultIntent.setData(Uri.fromFile(new File(file.getName())));
+            resultIntent.setData(Uri.fromFile(new File(file.getFile().getName())));
             context.setResult(RESULT_OK, resultIntent);
             context.findViewById(R.id.select_file).setEnabled(true);
         });

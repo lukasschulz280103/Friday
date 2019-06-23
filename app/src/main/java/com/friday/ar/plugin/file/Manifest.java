@@ -1,19 +1,33 @@
 package com.friday.ar.plugin.file;
 
 
+import androidx.annotation.Nullable;
+
 import com.friday.ar.plugin.Plugin;
+import com.friday.ar.plugin.security.VerificationSecurityException;
 
 import org.jetbrains.annotations.NotNull;
 
 public class Manifest {
     private String pluginName;
+    @Nullable
     private String author;
     private String version;
+    /**
+     * source file of the plugin
+     */
+    private PluginFile sourceFile;
 
-    public Manifest(@NotNull String pluginName, String author, @NotNull String version) {
+    public Manifest(PluginFile sourceFile, @NotNull String pluginName, @Nullable String author, @NotNull String version) {
         this.pluginName = pluginName;
         this.author = author;
         this.version = version;
+        this.sourceFile = sourceFile;
+    }
+
+    @Nullable
+    public String getAuthor() {
+        return author;
     }
 
     public String getPluginName() {
@@ -33,6 +47,7 @@ public class Manifest {
         returnPlugin.setName(pluginName);
         returnPlugin.setAuthorName(author);
         returnPlugin.setVersionName(version);
+        returnPlugin.setPluginFile(sourceFile);
         return returnPlugin;
     }
 
@@ -41,7 +56,7 @@ public class Manifest {
      *
      * @see Manifest
      **/
-    public static class ManifestSecurityException extends Exception {
+    public static class ManifestSecurityException extends VerificationSecurityException {
         public ManifestSecurityException(String message) {
             super("The given manifest is not valid:" + message);
         }

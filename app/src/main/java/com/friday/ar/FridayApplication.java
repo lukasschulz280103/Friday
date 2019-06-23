@@ -13,15 +13,16 @@ import android.preference.PreferenceManager;
 
 import com.crashlytics.android.Crashlytics;
 import com.friday.ar.plugin.application.PluginLoader;
+import com.friday.ar.plugin.file.ZippedPluginFile;
 import com.friday.ar.service.AccountSyncService;
 import com.friday.ar.service.OnAccountSyncStateChanged;
 import com.friday.ar.service.OnAccountSyncStateChangedList;
 import com.friday.ar.service.PluginIndexer;
 import com.friday.ar.util.UpdateUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.jar.JarFile;
 
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 import io.fabric.sdk.android.Fabric;
@@ -37,7 +38,7 @@ public class FridayApplication extends Application implements OnAccountSyncState
      */
     private SpeechRecognizer speechToTextRecognizer;
 
-    private ArrayList<JarFile> indexedInstallablePluginFiles = new ArrayList<>();
+    private ArrayList<ZippedPluginFile> indexedInstallablePluginFiles = new ArrayList<>();
 
     /**
      * This variable is the application global plugin loader.
@@ -52,6 +53,10 @@ public class FridayApplication extends Application implements OnAccountSyncState
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+        if (!new File(getExternalCacheDir() + "/pluginZipCache").delete()) {
+            new File(getExternalCacheDir() + "/pluginZipCache").deleteOnExit();
+        }
+        Constant.getPluginDir(this).delete();
         new Thread(() -> {
             runServices();
             createNotificationChannels();
@@ -120,9 +125,6 @@ public class FridayApplication extends Application implements OnAccountSyncState
         applicationPluginLoader.startLoading();
 
         UpdateUtil.checkForUpdate(this);
-
-        PluginLoader loader = new PluginLoader(this);
-        loader.startLoading();
     }
 
     @Override
@@ -132,11 +134,11 @@ public class FridayApplication extends Application implements OnAccountSyncState
         }
     }
 
-    public ArrayList<JarFile> getIndexedInstallablePluginFiles() {
+    public ArrayList<ZippedPluginFile> getIndexedInstallablePluginFiles() {
         return indexedInstallablePluginFiles;
     }
 
-    public void setIndexedInstallablePluginFiles(ArrayList<JarFile> indexedFiles) {
+    public void setIndexedInstallablePluginFiles(ArrayList<ZippedPluginFile> indexedFiles) {
         this.indexedInstallablePluginFiles = indexedFiles;
     }
 

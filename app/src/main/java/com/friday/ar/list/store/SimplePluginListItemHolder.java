@@ -1,6 +1,7 @@
 package com.friday.ar.list.store;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ public class SimplePluginListItemHolder extends RecyclerView.ViewHolder {
     public TextView installStatus;
     public RatingBar ratingBar;
     public TextView size;
+    public ImageButton overflowMenu;
 
     public SimplePluginListItemHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,5 +26,6 @@ public class SimplePluginListItemHolder extends RecyclerView.ViewHolder {
         installStatus = itemView.findViewById(R.id.installStatus);
         ratingBar = itemView.findViewById(R.id.rating);
         size = itemView.findViewById(R.id.size);
+        overflowMenu = itemView.findViewById(R.id.overflowMenu);
     }
 }

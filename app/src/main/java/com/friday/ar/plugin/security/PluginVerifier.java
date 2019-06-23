@@ -3,11 +3,11 @@ package com.friday.ar.plugin.security;
 import android.content.Context;
 import android.util.Log;
 
+import com.friday.ar.Constant;
 import com.friday.ar.plugin.file.Manifest;
 import com.friday.ar.plugin.file.Manifest.ManifestSecurityException;
 import com.friday.ar.plugin.file.PluginFile;
 import com.friday.ar.plugin.file.ZippedPluginFile;
-import com.friday.ar.util.FileUtil;
 
 import net.lingala.zip4j.exception.ZipException;
 
@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 
 /**
  * Use this class to verify any kind of possible {@link PluginFile}
@@ -39,28 +40,51 @@ import java.nio.file.Files;
 public class PluginVerifier {
     private static final String LOGTAG = "PluginVerifier";
 
-    public static void verify(ZippedPluginFile plugin, Context context) throws JSONException, ManifestSecurityException, ZipException, IOException {
-        File externalPluginZipCache = new File(context.getExternalCacheDir().getPath() + "/pluginZipCache/" +
-                plugin.getFile().getName().replace(FileUtil.getFileExtension(plugin.getFile()), ""));
-        plugin.extractAll(externalPluginZipCache.getPath());
-        for (File file : externalPluginZipCache.listFiles()) {
+    /**
+     * Verify a plugin which is zipped.
+     * Throws an exception if an plugin file seems o be corrupted.
+     *
+     * @param plugin            {@link ZippedPluginFile} to run verification on
+     * @param context           {@link Context} application context
+     * @param deleteOnException boolean whether the cached file should be deleted if the verification fails.
+     * @throws JSONException                 is thrown when the verification fails while trying to read the manifest, but its json is invalid
+     * @throws VerificationSecurityException is thrown when the {@link PluginVerifier} encounters corrupted plugin modules(e.g. missing manifest entry)
+     * @throws ZipException                  is thrown if the file that was passed as the first argument is not a valid {@link net.lingala.zip4j.core.ZipFile}
+     * @throws IOException                   general IOException thrown when a problem occurs while trying to use the file
+     */
+    public static void verify(ZippedPluginFile plugin, Context context, boolean deleteOnException) throws JSONException, VerificationSecurityException, IOException, ZipException {
+        File extractedPluginDir = Constant.getPluginCacheDir(context, plugin.getFile().getName().replace(".fpl", ""));
+        try {
+            plugin.extractAll(extractedPluginDir.getPath());
+            Log.d(LOGTAG, "extractionFilePath:" + extractedPluginDir.getPath());
+        } catch (ZipException e) {
+            Constant.getPluginCacheDir(context).deleteOnExit();
+            throw new ZipException(e);
+        }
+        for (File file : Constant.getPluginCacheDir(context).listFiles()) {
             Log.d(LOGTAG, file.getName());
         }
-        verify(new PluginFile(externalPluginZipCache.getPath(), context));
-        //if(! externalPluginZipCache.delete()){
-        //    externalPluginZipCache.deleteOnExit();
-        //}
+        PluginFile cacheFile = new PluginFile(extractedPluginDir.getPath() + "/"+extractedPluginDir.getName());
+        verify(cacheFile, deleteOnException);
     }
 
-    public static void verify(PluginFile pluginFile) throws ManifestSecurityException, JSONException, IOException {
-        String manifestContentString = new String(Files.readAllBytes(pluginFile.toPath()), StandardCharsets.UTF_8);
+    public static void verify(PluginFile pluginFile, boolean deleteOnException) throws JSONException, IOException, VerificationSecurityException {
+        String manifestContentString;
+        try {
+            manifestContentString = new String(Files.readAllBytes(new File(pluginFile.getPath() + "/meta/manifest.json").toPath()), StandardCharsets.UTF_8);
+        } catch (NoSuchFileException e) {
+            if (deleteOnException) pluginFile.delete();
+            throw new VerificationSecurityException("Could not find manifest file in the given plugin file.");
+        }
         JSONObject manifestOject = new JSONObject(manifestContentString);
         JSONObject meta = manifestOject.getJSONObject("meta");
         if (meta == null) {
+            if(deleteOnException) pluginFile.delete();
             throw new Manifest.ManifestSecurityException("Manifest does not contain required meta info!");
         }
         if (meta.getString("applicationName") == null ||
                 meta.getString("applicationName").isEmpty()) {
+            if(deleteOnException) pluginFile.delete();
             throw new ManifestSecurityException.MissingFieldException("meta", "The manifest meta info is missing an application name, or its value is empty.");
         }
         if (meta.getString("authorName") == null ||
@@ -69,6 +93,7 @@ public class PluginVerifier {
         }
         if (meta.getString("versionName") == null ||
                 meta.getString("versionName").isEmpty()) {
+            if(deleteOnException) pluginFile.delete();
             throw new ManifestSecurityException.MissingFieldException("meta", "The manifest meta info is missing the versionName, or its value is empty.");
         }
     }

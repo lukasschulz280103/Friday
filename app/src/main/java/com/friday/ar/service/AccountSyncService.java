@@ -21,6 +21,7 @@ public class AccountSyncService extends JobService {
     private static final String LOGTAG = "SynchronizationService";
 
     public AccountSyncService() {
+
     }
 
     @Override
@@ -46,6 +47,7 @@ public class AccountSyncService extends JobService {
                     Log.d(LOGTAG, "synchronized account avatar");
                     try {
                         FileUtil.moveFile(new File(getExternalFilesDir("profile") + File.separator + "avatar.jpg"), avatarFile);
+                        jobFinished(jobParameters, false);
                     } catch (IOException e) {
                         Log.e(LOGTAG, e.getLocalizedMessage(), e);
                     } finally {

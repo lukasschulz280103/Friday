@@ -304,4 +304,9 @@
     <string name="pluginInstaller_error_could_not_parse">Could not parse plugin</string>
     <string name="pluginInstaller_error_manifest_security">This plugin violates security regulations and thus was not installed.</string>
     <string name="fileSelector_wrong_file_type_selected">You must select a friday plugin file (*.fpl)</string>
+    <string name="store_plugin_status_installed">Installed</string>
+    <string name="store_plugin_uninstall">Uninstall</string>
+    <string name="pluginInstaller_intent_install">Install with Friday</string>
+    <string name="pluginInstaller_activity_title">Install Plugin</string>
+    <string name="pluginInstaller_activity_installNow">Install now</string>
 </resources>

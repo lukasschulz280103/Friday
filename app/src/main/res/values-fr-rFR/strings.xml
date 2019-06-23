@@ -253,4 +253,7 @@
     <string name="pluginInstaller_error_could_not_parse">Le plugin n\'a pas pu être traité</string>
     <string name="pluginInstaller_error_manifest_security">Ce plugin viole les règles de sécurité et n\'a donc pas été installé.</string>
     <string name="fileSelector_wrong_file_type_selected">Vous devez sélectionner un fichier du type de fichier d\'un plugin (*.fpl)</string>
+    <string name="pluginInstaller_intent_install">Installé avec Friday</string>
+    <string name="pluginInstaller_activity_title">Installer le plugin</string>
+    <string name="pluginInstaller_activity_installNow">Installer maintenant</string>
 </resources>

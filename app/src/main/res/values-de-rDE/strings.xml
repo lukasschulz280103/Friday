@@ -256,4 +256,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="pluginInstaller_error_could_not_parse">Parsen des Plugins fehlgeschlagen</string>
     <string name="pluginInstaller_error_manifest_security">Dieses Plugin verstößt gegen die Sicherheitsvorschriften und wurde daher nicht installiert.</string>
     <string name="fileSelector_wrong_file_type_selected">Sie müssen eine Friday Plugindatei auswählen (*.fpl)</string>
+    <string name="pluginInstaller_intent_install">Mit Friday installieren</string>
+    <string name="pluginInstaller_activity_title">Plugin installieren</string>
+    <string name="pluginInstaller_activity_installNow">Jetzt installieren</string>
 </resources>
