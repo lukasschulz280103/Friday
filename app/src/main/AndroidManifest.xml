@@ -30,7 +30,7 @@
             android:name=".ui.store.packageInstaller.PackageInstallerActivity"
             android:allowEmbedded="true"
             android:theme="@style/AppTheme.Transparent"
-
+            android:launchMode="singleInstance"
             >
             <intent-filter
                 android:icon="@drawable/ic_twotone_save_alt_24px"
