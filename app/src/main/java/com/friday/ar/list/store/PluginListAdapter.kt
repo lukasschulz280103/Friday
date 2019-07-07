@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-
+import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.plugin.Plugin
+import com.friday.ar.util.FileUtil
 
 class PluginListAdapter(private val context: Context, private val dataList: List<Plugin>) : RecyclerView.Adapter<SimplePluginListItemHolder>() {
 
@@ -36,9 +37,9 @@ class PluginListAdapter(private val context: Context, private val dataList: List
                 when (item.itemId) {
                     R.id.uninstall_plugin -> {
                         Log.d(LOGTAG, "Uninstalling " + plugin.pluginFile!!.name)
-                        if (!plugin.pluginFile!!.delete()) {
-                            plugin.pluginFile!!.deleteOnExit()
-                        }
+                        FileUtil.deleteDirectory(plugin.pluginFile!!)
+                        (context.applicationContext as FridayApplication).applicationPluginLoader!!.indexedPlugins.removeAt(position)
+                        notifyItemRemoved(position)
                     }
                 }
                 true

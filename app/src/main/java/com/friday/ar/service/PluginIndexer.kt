@@ -14,6 +14,10 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
+/**
+ * This class automatically indexes plugins after searching for them on the internal storage.
+ * <b>It does not list installed plugins.</b>
+ */
 class PluginIndexer : JobService() {
     private val indexedFiles = ArrayList<ZippedPluginFile>()
     private val excludedDirs = Arrays.asList("Android")
@@ -89,7 +93,7 @@ class PluginIndexer : JobService() {
     }
 
     companion object {
-        private const val LOGTAG = "PluginIndexer"
+        private const val LOGTAG = "InstallablePluginIndexer"
     }
 
 }

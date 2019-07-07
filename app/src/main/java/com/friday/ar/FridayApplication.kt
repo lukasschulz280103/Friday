@@ -103,9 +103,8 @@ class FridayApplication : Application(), OnAccountSyncStateChanged {
         }
 
         val jobIndexerInfo = JobInfo.Builder(FridayApplication.Jobs.JOB_INDEX_PLUGINS, ComponentName(this, PluginIndexer::class.java))
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
-                .setOverrideDeadline(0)
                 .setBackoffCriteria((30 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
+                .setOverrideDeadline(0)
                 .build()
         jobScheduler.schedule(jobIndexerInfo)
 
@@ -122,9 +121,9 @@ class FridayApplication : Application(), OnAccountSyncStateChanged {
     }
 
     object Jobs {
-        val JOB_SYNC_ACCOUNT = 8000
-        val JOB_FEEDBACK = 8001
-        val JOB_INDEX_PLUGINS = 8002
+        const val JOB_SYNC_ACCOUNT = 8000
+        const val JOB_FEEDBACK = 8001
+        const val JOB_INDEX_PLUGINS = 8002
     }
 
 }

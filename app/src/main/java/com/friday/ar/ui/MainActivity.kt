@@ -102,26 +102,14 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
                 startActivity(intent)
             }
 
-            val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
-            if (pm != null) {
-                if (pm.isPowerSaveMode) {
-                    val builder = MaterialAlertDialogBuilder(this@MainActivity)
-                    builder.setTitle(R.string.energy_saver_warn_title)
-                    builder.setMessage(R.string.energy_saver_warn_msg)
-                    builder.setPositiveButton(R.string.deactivate) { dialogInterface, i -> }
-                    builder.setNegativeButton(R.string.later, null)
-                    runOnUiThread { builder.create().show() }
-                }
-            }
-
-            val default_pref = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
+            val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
             val pkgInf: PackageInfo
             try {
                 pkgInf = packageManager.getPackageInfo(packageName, 0)
-                if (default_pref.getString("version", "0") != pkgInf.versionName || default_pref.getBoolean("pref_devmode_show_changelog", false)) {
+                if (defaultSharedPreferences.getString("version", "0") != pkgInf.versionName || defaultSharedPreferences.getBoolean("pref_devmode_show_changelog", false)) {
                     val changelogdialog = ChangelogDialogFragment()
                     changelogdialog.show(supportFragmentManager, "ChangeLogDialog")
-                    val editor = default_pref.edit()
+                    val editor = defaultSharedPreferences.edit()
                     editor.putString("version", pkgInf.versionName)
                     editor.apply()
                 }
@@ -143,10 +131,19 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
                 Log.i(LOGTAG, "no old version found")
             }
 
-            if (default_pref.getInt("theme", 0) == 0) {
-                default_pref.edit().putInt("theme", R.style.AppTheme).apply()
+            if (defaultSharedPreferences.getInt("theme", 0) == 0) {
+                defaultSharedPreferences.edit().putInt("theme", R.style.AppTheme).apply()
             }
         }).start()
+        val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (pm.isPowerSaveMode) {
+            val builder = MaterialAlertDialogBuilder(this@MainActivity)
+            builder.setTitle(R.string.energy_saver_warn_title)
+            builder.setMessage(R.string.energy_saver_warn_msg)
+            builder.setPositiveButton(R.string.deactivate) { _, i -> }
+            builder.setNegativeButton(R.string.later, null)
+            builder.create().show()
+        }
         //app.registerForSyncStateChange(this);
 
     }

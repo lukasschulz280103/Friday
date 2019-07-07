@@ -21,19 +21,9 @@ object FileUtil {
         }
     }
 
-    /**
-     * Returns the file ending of the passed [File] object.
-     *
-     * @param file File to work with
-     * @return returns the file extension, e.g. ".jar". Returns empty string if the file has no ending.
-     */
-    fun getFileExtension(file: File): String {
-        if (file.isDirectory)
-            throw IllegalArgumentException("Can't get the ending of a directory.")
-        return if (file.name.contains(".")) file.name.substring(file.name.lastIndexOf(".")) else ""
-    }
 
-    fun deleteDirectory(directory: File) {
+    fun deleteDirectory(directory: File?) {
+        if (directory?.listFiles() == null) return
         for (fileOrDirectory in directory.listFiles()) {
             if (fileOrDirectory.isDirectory) {
                 deleteDirectory(fileOrDirectory)

@@ -34,6 +34,7 @@ class PluginLoader(private val context: Context) {
      * @return Returns a boolean value whether the plugins could be loaded or not.
      */
     fun startLoading(): Boolean {
+        indexedPlugins.clear()
         if (pluginDir.exists()) {
             Log.d(LOGTAG, pluginDir.listFiles().toString())
             for (pluginFile in pluginDir.listFiles()) {

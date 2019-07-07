@@ -17,36 +17,39 @@ import java.io.File
 import java.io.IOException
 
 class AccountSyncService : JobService() {
+    var jobParameters: JobParameters? = null
+    private val downloadFinishReciever = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val util = UserUtil(applicationContext)
+            val avatarFile = util.avatarFile
+            context.unregisterReceiver(this)
+            Log.d(LOGTAG, "synchronized account avatar")
+            try {
+                FileUtil.moveFile(File(getExternalFilesDir("profile")?.toString() + File.separator + "avatar.jpg"), avatarFile)
+                jobFinished(jobParameters, false)
+            } catch (e: IOException) {
+                Log.e(LOGTAG, e.localizedMessage, e)
+            } finally {
+                jobFinished(jobParameters, false)
+            }
+        }
+    }
 
     override fun onStartJob(jobParameters: JobParameters): Boolean {
+        this.jobParameters = jobParameters
         Log.d(LOGTAG, "started synchronization service")
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-        val util = UserUtil(applicationContext)
         if (firebaseUser == null) {
             jobFinished(jobParameters, false)
             return false
         }
         if (firebaseUser.photoUrl != null) {
-            val avatarFile = util.avatarFile
-            avatarFile.delete()
+            UserUtil(applicationContext).avatarFile.delete()
             val request = DownloadManager.Request(firebaseUser.photoUrl)
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
                     .setDestinationInExternalFilesDir(applicationContext, "profile", File.separator + "avatar.jpg")
                     .setVisibleInDownloadsUi(false)
-            registerReceiver(object : BroadcastReceiver() {
-                override fun onReceive(context: Context, intent: Intent) {
-                    context.unregisterReceiver(this)
-                    Log.d(LOGTAG, "synchronized account avatar")
-                    try {
-                        FileUtil.moveFile(File(getExternalFilesDir("profile")?.toString() + File.separator + "avatar.jpg"), avatarFile)
-                        jobFinished(jobParameters, false)
-                    } catch (e: IOException) {
-                        Log.e(LOGTAG, e.localizedMessage, e)
-                    } finally {
-                        jobFinished(jobParameters, false)
-                    }
-                }
-            }, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+            registerReceiver(downloadFinishReciever, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
             val dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             dm.enqueue(request)
         }
@@ -55,6 +58,7 @@ class AccountSyncService : JobService() {
 
     override fun onStopJob(jobParameters: JobParameters): Boolean {
         Log.d(LOGTAG, "finished synchronization service")
+        unregisterReceiver(downloadFinishReciever)
         return false
     }
 
