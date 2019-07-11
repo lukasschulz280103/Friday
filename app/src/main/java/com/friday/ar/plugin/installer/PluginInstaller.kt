@@ -3,21 +3,18 @@ package com.friday.ar.plugin.installer
 import android.app.NotificationManager
 import android.content.Context
 import android.util.Log
-
 import androidx.core.app.NotificationCompat
-
 import com.friday.ar.Constant
+import com.friday.ar.FridayApplication
 import com.friday.ar.R
-import com.friday.ar.plugin.file.PluginFile
+import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.PluginVerifier
 import com.friday.ar.plugin.security.VerificationSecurityException
-
+import com.friday.ar.util.FileUtil
+import com.friday.ar.util.cache.CacheUtil
 import net.lingala.zip4j.exception.ZipException
-
 import org.json.JSONException
-
-import java.io.File
 import java.io.IOException
 
 class PluginInstaller(private val context: Context) {
@@ -27,23 +24,19 @@ class PluginInstaller(private val context: Context) {
     fun installFrom(pluginDir: ZippedPluginFile) {
         val zippedPluginDefaultFile = pluginDir.file
         try {
-            pluginDir.extractAll(Constant.getPluginCacheDir(context).path)
-            val extractionTargetDirectory = PluginFile(Constant.getPluginCacheDir(context, zippedPluginDefaultFile.name.replace(".fpl", "")).path)
             val verifier = PluginVerifier()
             val notificationBuilder = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
             verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
                 override fun onSuccess() {
                     try {
                         Log.e(LOGTAG, "pluginInstaller success")
-                        File(zippedPluginDefaultFile.path).renameTo(Constant.getPluginDir(context, zippedPluginDefaultFile.name))
-                        val successPluginManifest = PluginFile(Constant.getPluginDir(context, zippedPluginDefaultFile.name.replace(".fpl", "")).path).manifest
                         notificationBuilder.setContentTitle(context.getString(R.string.pluginInstaller_succes_install_title))
                                 .setContentText(zippedPluginDefaultFile.name)
                                 .setSubText(context.getString(R.string.pluginInstaller_name))
                                 .setCategory(NotificationCompat.CATEGORY_STATUS)
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                                 .setSmallIcon(R.drawable.ic_twotone_save_alt_24px)
-                                .setTicker(context.getString(R.string.pluginInstaller_success_ticker_text, successPluginManifest.pluginName))
+                                .setTicker(context.getString(R.string.pluginInstaller_success_ticker_text, "Plugin"))
                         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                         notificationManager.notify(Constant.NotificationIDs.NOTIFICATION_INSTALL_SUCCESS, notificationBuilder.build())
                     } catch (e: JSONException) {
@@ -53,7 +46,6 @@ class PluginInstaller(private val context: Context) {
                     }
 
                     onInstallProgressChangedListener!!.onSuccess()
-                    extractionTargetDirectory.renameTo(Constant.getPluginDir(context, zippedPluginDefaultFile.name.replace(".fpl", "")))
                 }
 
                 override fun onZipException(e: ZipException) {
@@ -92,7 +84,7 @@ class PluginInstaller(private val context: Context) {
                     onInstallProgressChangedListener!!.onFailure()
                 }
             })
-            verifier.verify(extractionTargetDirectory, true)
+            verifier.verify(CacheUtil.cachePluginFile(context, pluginDir), true)
         } catch (e: ZipException) {
             Log.e(LOGTAG, e.localizedMessage, e)
             val notificationBuilder = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
@@ -123,6 +115,12 @@ class PluginInstaller(private val context: Context) {
             onInstallProgressChangedListener!!.onFailure()
         }
 
+    }
+
+    fun uninstallPlugin(plugin: Plugin) {
+        Log.i(LOGTAG, "uninstalling plugin:${plugin.name}")
+        FileUtil.deleteDirectory(plugin.pluginFile)
+        (context.applicationContext as FridayApplication).applicationPluginLoader!!.indexedPlugins.remove(plugin)
     }
 
     fun setOnInstallProgressChangedListener(onInstallProgressChangedListener: OnInstallProgressChangedListener) {

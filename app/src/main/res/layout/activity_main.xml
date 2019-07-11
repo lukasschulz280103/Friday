@@ -15,15 +15,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/start_actionmode"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:src="@drawable/google_cardboard" />
+            android:text="start ActionMode"
+            app:icon="@drawable/google_cardboard" />
 
         <ViewFlipper
             android:id="@+id/main_view_flipper"

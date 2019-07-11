@@ -13,10 +13,12 @@ import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
 import com.friday.ar.list.store.PluginListAdapter
+import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.installer.PluginInstaller
 import com.friday.ar.ui.FileSelectorActivity
 import com.friday.ar.util.DisplayUtil
+import com.friday.ar.util.list.OnDataUpdateListener
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_store_installation_manager.*
@@ -37,15 +39,24 @@ class StoreInstallationManagerActivity : FridayActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val pluginLoader = (application as FridayApplication).applicationPluginLoader
+        appList.adapter = PluginListAdapter(this, pluginLoader!!.indexedPlugins)
+        registerForContextMenu(appList)
         appList.layoutManager = LinearLayoutManager(this)
-        if (pluginLoader!!.indexedPlugins.size == 0) {
+        setEmptyViewVisibleByInt(pluginLoader.indexedPlugins.size)
+        (appList.adapter as PluginListAdapter).onDataUpdateListener = object : OnDataUpdateListener<Plugin> {
+            override fun onUpdate(data: List<Plugin>) {
+                setEmptyViewVisibleByInt(data.size)
+            }
+        }
+    }
+
+    fun setEmptyViewVisibleByInt(dataSize: Int) {
+        if (dataSize == 0) {
             emptyView.visibility = View.VISIBLE
             appList.visibility = View.GONE
         } else {
             emptyView.visibility = View.GONE
             appList.visibility = View.VISIBLE
-            appList.adapter = PluginListAdapter(this, pluginLoader.indexedPlugins)
-            registerForContextMenu(appList)
         }
     }
 
@@ -104,6 +115,9 @@ class StoreInstallationManagerActivity : FridayActivity() {
 
                 override fun onSuccess() {
                     Log.d(LOGTAG, "success")
+                    val pluginLoader = (application as FridayApplication).applicationPluginLoader!!
+                    pluginLoader.startLoading()
+                    (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginLoader.indexedPlugins)
                 }
 
                 override fun onFailure() {

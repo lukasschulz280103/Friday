@@ -15,9 +15,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,19 +29,10 @@ import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
 import com.friday.ar.plugin.PluginVerticalListAdapter
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.snackbar.Snackbar
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import net.lingala.zip4j.core.ZipFile
-import net.lingala.zip4j.exception.ZipException
 import java.io.File
 import java.util.Arrays
-import kotlin.Array
 import kotlin.Comparator
-import kotlin.Int
-import kotlin.IntArray
-import kotlin.String
-import kotlin.arrayOf
-import kotlin.intArrayOf
 
 //TODO:Add support for selecting files
 class FileSelectorActivity : FridayActivity() {
@@ -65,7 +58,7 @@ class FileSelectorActivity : FridayActivity() {
         else
             getString(R.string.pluginInstaller_noItemsIndexed)
         slidingUpPanelLayout!!.setDragView(R.id.buttonbar)
-        openPlugin!!.setOnClickListener { view -> finish() }
+        openPlugin!!.setOnClickListener { finish() }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -76,7 +69,7 @@ class FileSelectorActivity : FridayActivity() {
             fileListRecyclerView!!.adapter = FileSystemArrayAdapter(Environment.getExternalStorageDirectory())
             val appBarLayout = findViewById<AppBarLayout>(R.id.appbar)
             val stateListAnimator = StateListAnimator()
-            fileListRecyclerView!!.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            fileListRecyclerView!!.setOnScrollChangeListener { _, _, _, _, _ ->
                 if (fileListLayoutManager.findFirstCompletelyVisibleItemPosition() == 0) {
                     stateListAnimator.addState(IntArray(0), ObjectAnimator.ofFloat(appBarLayout, "elevation", 0f))
                     appBarLayout.stateListAnimator = stateListAnimator
@@ -125,7 +118,8 @@ class FileSelectorActivity : FridayActivity() {
             if (directoryFileItem.isDirectory && !directoryFileItem.isFile) {
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_folder_24px))
                 holder.fileSize.visibility = View.GONE
-                holder.root.setOnClickListener { v ->
+                openPlugin!!.isEnabled = false
+                holder.root.setOnClickListener {
                     setResult(Activity.RESULT_CANCELED)
                     Log.d(LOGTAG, directoryFileItem.path)
                     if (directoryFileItem.canRead()) setDirectoryList(directoryFileItem)
@@ -133,25 +127,13 @@ class FileSelectorActivity : FridayActivity() {
             } else {
                 //TODO: Add visible sign that marks an file as selected
                 holder.fileIcon.setImageDrawable(getDrawable(R.drawable.ic_twotone_insert_drive_file_24px))
-                holder.root.setOnClickListener { v ->
-                    holder.fileIcon.animate().scaleX(0f).scaleY(0f).setDuration(200).setInterpolator(AccelerateInterpolator()).start()
-                    holder.iconProgress.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(DecelerateInterpolator()).start()
-                    try {
-                        //This file throws an exception if the zip is invalid
-                        ZipFile(directoryFileItem)
-                        val resultIntent = Intent()
-                        resultIntent.data = Uri.fromFile(directoryFileItem)
-                        setResult(Activity.RESULT_OK, resultIntent)
-                        openPlugin!!.isEnabled = true
-                    } catch (e: ZipException) {
-                        Log.e(LOGTAG, e.localizedMessage, e)
-                        Snackbar.make(fileListRecyclerView!!, R.string.fileSelector_wrong_file_type_selected, Snackbar.LENGTH_SHORT).show()
-                        setResult(Activity.RESULT_CANCELED)
-                        openPlugin!!.isEnabled = false
-                    }
-
-                    holder.fileIcon.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(DecelerateInterpolator()).start()
-                    holder.iconProgress.animate().scaleX(0f).scaleY(0f).setDuration(200).setInterpolator(AccelerateInterpolator()).start()
+                holder.root.setOnClickListener {
+                    openPlugin!!.isEnabled = true
+                    holder.check.visibility = View.VISIBLE
+                    holder.check.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(DecelerateInterpolator()).start()
+                    val resultIntent = Intent()
+                    resultIntent.data = Uri.fromFile(directoryFileItem)
+                    setResult(Activity.RESULT_OK, resultIntent)
                 }
             }
 
@@ -167,7 +149,7 @@ class FileSelectorActivity : FridayActivity() {
             }
             sourceFile = directoryFile
             directoryList = Arrays.asList(*directoryFile.listFiles())
-            directoryList.sortedWith(Comparator<File> { file1: File, file2: File ->
+            directoryList.sortedWith(Comparator { file1: File, file2: File ->
                 if (file1.isDirectory && file2.isFile)
                     return@Comparator -1
                 if (file1.isDirectory && file2.isDirectory) {
@@ -186,7 +168,7 @@ class FileSelectorActivity : FridayActivity() {
     internal inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var root: LinearLayout = itemView.findViewById(R.id.itemRootLayout)
         var fileIcon: ImageView = itemView.findViewById(R.id.fileIcon)
-        var iconProgress: ProgressBar = itemView.findViewById(R.id.iconProgress)
+        var check: ImageView = itemView.findViewById(R.id.check)
         var fileName: TextView = itemView.findViewById(R.id.fileName)
         var fileSize: TextView = itemView.findViewById(R.id.fileSize)
 

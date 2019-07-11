@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.os.PowerManager
 import android.preference.PreferenceManager
 import android.util.Log
@@ -136,21 +137,22 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             }
         }).start()
         val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (pm.isPowerSaveMode) {
-            val builder = MaterialAlertDialogBuilder(this@MainActivity)
-            builder.setTitle(R.string.energy_saver_warn_title)
-            builder.setMessage(R.string.energy_saver_warn_msg)
-            builder.setPositiveButton(R.string.deactivate) { _, i -> }
-            builder.setNegativeButton(R.string.later, null)
-            builder.create().show()
-        }
+        //if (pm.isPowerSaveMode) {
+        //    val builder = MaterialAlertDialogBuilder(this)
+        //    builder.setTitle(R.string.energy_saver_warn_title)
+        //    builder.setMessage(R.string.energy_saver_warn_msg)
+        //    builder.setPositiveButton(R.string.deactivate) { _, _ -> }
+        //    builder.setNegativeButton(R.string.later, null)
+        //    builder.create().show()
+        //}
+        Handler().postDelayed({ start_actionmode.shrink() }, 2500)
         //app.registerForSyncStateChange(this);
 
     }
 
     private fun setupSorePage() {
         val storeExpandManagerButton = findViewById<ImageButton>(R.id.storeMore)
-        storeExpandManagerButton.setOnClickListener { v ->
+        storeExpandManagerButton.setOnClickListener {
             val managerDialog = ManagerBottomSheetDialogFragment(this)
             managerDialog.show(supportFragmentManager, "ManagerBottomSheet")
         }
@@ -166,16 +168,11 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     }
 
     private fun checkForFirstUse() {
-        val settingsfile = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
-        if (settingsfile.getBoolean("isFirstUse", true)) {
-            val notifieffirstuse = MaterialAlertDialogBuilder(this@MainActivity)
-            notifieffirstuse.setTitle("Welcome to friday")
-            notifieffirstuse.setMessage("Thank you for downloading friday.\n\nRemember that you are in a pre-release of our app - Some features may not work properly or this app will crash at some points.")
-            notifieffirstuse.setPositiveButton(android.R.string.ok, null)
-            notifieffirstuse.create().show()
-            settingsfile.edit().putBoolean("isFirstUse", false).apply()
+        val settingsFile = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
+        if (settingsFile.getBoolean("isFirstUse", true)) {
             val showWizard = Intent(this, WizardActivity::class.java)
             startActivity(showWizard)
+            settingsFile.edit().putBoolean("isFirstUse", false).apply()
         }
     }
 

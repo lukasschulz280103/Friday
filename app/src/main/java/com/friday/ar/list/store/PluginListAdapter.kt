@@ -1,20 +1,23 @@
 package com.friday.ar.list.store
 
 import android.content.Context
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.plugin.Plugin
-import com.friday.ar.util.FileUtil
+import com.friday.ar.plugin.installer.PluginInstaller
+import com.friday.ar.util.list.OnDataUpdateListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class PluginListAdapter(private val context: Context, private val dataList: List<Plugin>) : RecyclerView.Adapter<SimplePluginListItemHolder>() {
 
+class PluginListAdapter(private val context: Context, private val dataList: MutableList<Plugin>) : RecyclerView.Adapter<SimplePluginListItemHolder>() {
+    var onDataUpdateListener: OnDataUpdateListener<Plugin>? = null
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimplePluginListItemHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.listitem_app_item, parent, false)
         return SimplePluginListItemHolder(itemView)
@@ -36,10 +39,18 @@ class PluginListAdapter(private val context: Context, private val dataList: List
             menu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.uninstall_plugin -> {
-                        Log.d(LOGTAG, "Uninstalling " + plugin.pluginFile!!.name)
-                        FileUtil.deleteDirectory(plugin.pluginFile!!)
-                        (context.applicationContext as FridayApplication).applicationPluginLoader!!.indexedPlugins.removeAt(position)
-                        notifyItemRemoved(position)
+                        val confirmationDialog = MaterialAlertDialogBuilder(context)
+                                .setTitle(R.string.pluginInstaller_uninstall_dialog_title)
+                                .setMessage(context.getString(R.string.pluginInstaller_uninstall_dialog_msg, plugin.name))
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .setPositiveButton(R.string.store_plugin_uninstall) { _, _ ->
+                                    PluginInstaller(context).uninstallPlugin(plugin)
+                                    notifyItemRemoved(position)
+                                    onDataUpdateListener
+                                            ?: onDataUpdateListener!!.onUpdate(dataList)
+                                }
+                                .create()
+                        confirmationDialog.show()
                     }
                 }
                 true
@@ -51,6 +62,15 @@ class PluginListAdapter(private val context: Context, private val dataList: List
 
     override fun getItemCount(): Int {
         return dataList.size
+    }
+
+    fun onRecieveUpdatedData(updatedData: List<Plugin>) {
+        val diffResult = DiffUtil.calculateDiff(PluginListDiffUtilCallback(updatedData, dataList))
+        diffResult.dispatchUpdatesTo(this)
+
+        this.dataList.clear()
+
+        this.dataList.addAll(updatedData)
     }
 
     companion object {

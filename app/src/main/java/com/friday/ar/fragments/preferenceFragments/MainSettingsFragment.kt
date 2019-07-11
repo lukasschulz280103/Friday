@@ -213,7 +213,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
         themePreference.summary = theme.getNameForPos(theme.indexOf(Theme.getCurrentAppTheme(mActivity!!)))
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         //This method has to be implemented
     }
 

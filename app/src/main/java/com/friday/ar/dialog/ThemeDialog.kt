@@ -85,7 +85,6 @@ class ThemeDialog : DialogFragment() {
         internal var selectedItem: Int = 0
         private lateinit var gradient: ImageView
         internal var themeClick = View.OnClickListener { view ->
-            gradient = view.findViewById(R.id.gradient_bg)
             selectedItem = view.tag as Int
             listener!!.onSelectedTheme(preferences!!.getInt("theme", Theme.getCurrentAppTheme(getContext())) != Theme.themes[selectedItem])
             preferences!!.edit().putInt("theme", Theme.themes[selectedItem]).apply()
@@ -99,8 +98,9 @@ class ThemeDialog : DialogFragment() {
             if (view == null) {
                 view = layoutInflater.inflate(R.layout.theme_select_item, viewGroup, false)
             }
+            gradient = view!!.findViewById(R.id.gradient_bg)
             val th = Theme(context, Theme.themes[i])
-            val text = view!!.findViewById<TextView>(R.id.theme_name)
+            val text = view.findViewById<TextView>(R.id.theme_name)
             val card = view.findViewById<CardView>(R.id.theme_item_card)
             text.text = th.getNameForPos(i)
             text.setTextColor(th.getTextColorSecondary(i))

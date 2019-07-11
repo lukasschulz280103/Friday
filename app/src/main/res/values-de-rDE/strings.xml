@@ -259,4 +259,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="pluginInstaller_intent_install">Mit Friday installieren</string>
     <string name="pluginInstaller_activity_title">Plugin installieren</string>
     <string name="pluginInstaller_activity_installNow">Jetzt installieren</string>
+    <string name="pluginInstaller_uninstall_dialog_msg">Wollen sie %s wirklich deinstallieren?</string>
+    <string name="pluginInstaller_uninstall_dialog_title">Plugin deinstallieren</string>
 </resources>

@@ -10,7 +10,7 @@ import com.friday.ar.dialog.ThemeDialog
 import com.friday.ar.fragments.preferenceFragments.MainSettingsFragment
 
 class SettingsActivity : FridayActivity(), ThemeDialog.OnSelectedTheme {
-    internal var mainSettingsFragment = MainSettingsFragment()
+    private var mainSettingsFragment = MainSettingsFragment()
     private var themeChanged = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +25,7 @@ class SettingsActivity : FridayActivity(), ThemeDialog.OnSelectedTheme {
             setResult(RESULT_OK)
         }
     }
+
 
     override fun onSelectedTheme(hasChanged: Boolean) {
         Log.d(LOGTAG, "hasChanged:$hasChanged")

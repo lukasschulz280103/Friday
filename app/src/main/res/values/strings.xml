@@ -309,4 +309,7 @@
     <string name="pluginInstaller_intent_install">Install with Friday</string>
     <string name="pluginInstaller_activity_title">Install Plugin</string>
     <string name="pluginInstaller_activity_installNow">Install now</string>
+    <string name="start_action_mode">Start ActionMode</string>
+    <string name="pluginInstaller_uninstall_dialog_title">Uninstall plugin</string>
+    <string name="pluginInstaller_uninstall_dialog_msg">Do you really want to uninstall %s?</string>
 </resources>

@@ -9,6 +9,7 @@ import com.friday.ar.plugin.file.Manifest.ManifestSecurityException
 import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.util.FileUtil
+import com.friday.ar.util.cache.CacheUtil
 
 import net.lingala.zip4j.exception.ZipException
 
@@ -52,14 +53,12 @@ class PluginVerifier {
      * @param deleteOnException boolean whether the cached file should be deleted if the verification fails.
      */
     fun verify(plugin: ZippedPluginFile, context: Context, deleteOnException: Boolean) {
-        val extractedPluginDir = Constant.getPluginCacheDir(context, plugin.file.name.replace(".fpl", ""))
         try {
-            plugin.extractAll(extractedPluginDir.path)
-            Log.d(LOGTAG, "extractionFilePath:" + extractedPluginDir.path)
+            val cachedPluginFile = CacheUtil.cachePluginFile(context, plugin)
             for (file in Constant.getPluginCacheDir(context).listFiles()) {
                 Log.d(LOGTAG, file.name)
             }
-            val cacheFile = PluginFile(extractedPluginDir.path + "/" + extractedPluginDir.name)
+            val cacheFile = PluginFile(cachedPluginFile.path + "/" + cachedPluginFile.name)
             verify(cacheFile, deleteOnException)
         } catch (e: ZipException) {
             if (onVerificationCompleteListener != null) {
