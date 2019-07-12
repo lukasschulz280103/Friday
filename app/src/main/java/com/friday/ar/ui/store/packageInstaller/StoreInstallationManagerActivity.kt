@@ -1,5 +1,8 @@
 package com.friday.ar.ui.store.packageInstaller
 
+import android.app.Notification
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.friday.ar.Constant
 import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
@@ -16,6 +20,7 @@ import com.friday.ar.list.store.PluginListAdapter
 import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.installer.PluginInstaller
+import com.friday.ar.plugin.security.VerificationSecurityException
 import com.friday.ar.ui.FileSelectorActivity
 import com.friday.ar.util.DisplayUtil
 import com.friday.ar.util.list.OnDataUpdateListener
@@ -23,6 +28,7 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_store_installation_manager.*
 import net.lingala.zip4j.exception.ZipException
+import org.json.JSONException
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -120,8 +126,28 @@ class StoreInstallationManagerActivity : FridayActivity() {
                     (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginLoader.indexedPlugins)
                 }
 
-                override fun onFailure() {
-                    Log.e(LOGTAG, "failure")
+                override fun onFailure(e: Exception) {
+                    val notification = Notification.Builder(this@StoreInstallationManagerActivity, Constant.NOTIF_CHANNEL_INSTALLER_ID)
+                            .setContentTitle(getString(R.string.pluginInstaller_error_installation_failed))
+                            .setSmallIcon(R.drawable.ic_twotone_error_outline_24px)
+                    when (e) {
+                        is VerificationSecurityException -> {
+                            notification.setContentText(getString(R.string.pluginInstaller_error_manifest_security))
+                                    .setSmallIcon(R.drawable.ic_twotone_security_24px)
+                        }
+                        is ZipException -> {
+                            notification.setContentText(getString(R.string.pluginInstaller_error_invalid_zip_file))
+                        }
+                        is IOException -> {
+                            Log.d(LOGTAG, e.message)
+                            notification.setContentText(getString(R.string.pluginInstaller_error_io_exception))
+                        }
+                        is JSONException -> {
+                            notification.setContentText(getString(R.string.pluginInstaller_error_could_not_parse))
+                        }
+                    }
+                    val notificationManagerCompat = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notificationManagerCompat.notify(Constant.NotificationIDs.NOTIFICATION_INSTALL_ERROR, notification.build())
                 }
             })
             Thread {

@@ -256,4 +256,13 @@
     <string name="pluginInstaller_intent_install">Installé avec Friday</string>
     <string name="pluginInstaller_activity_title">Installer le plugin</string>
     <string name="pluginInstaller_activity_installNow">Installer maintenant</string>
+    <string name="start_action_mode">Démarrer ActionMode</string>
+    <string name="store_plugin_status_installed">Installé</string>
+    <string name="store_plugin_uninstall">Désinstaller</string>
+    <string name="pluginInstaller_uninstall_dialog_msg">Êtes-vous sûr de vouloir désinstaller %s ?</string>
+    <string name="pluginInstaller_uninstall_dialog_title">Désinstaller le plugin</string>
+    <string name="pluginInstaller_error_invalid_zip_file">Ce fichier est corrompu et/ou n\'est pas un plugin-archive valide</string>
+    <string name="pluginInstaller_progressMessage_installing">Installé...</string>
+    <string name="pluginInstaller_progressMessage_verifying">Vérification du plugin....</string>
+    <string name="pluginInstaller_error_io_exception">Le plugin n\'a pas pu être installé à cause d\'une erreur inconnue.</string>
 </resources>

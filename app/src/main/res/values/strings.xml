@@ -312,4 +312,8 @@
     <string name="start_action_mode">Start ActionMode</string>
     <string name="pluginInstaller_uninstall_dialog_title">Uninstall plugin</string>
     <string name="pluginInstaller_uninstall_dialog_msg">Do you really want to uninstall %s?</string>
+    <string name="pluginInstaller_error_invalid_zip_file">This file is corrupted and/or not a valid plugin-archive</string>
+    <string name="pluginInstaller_progressMessage_installing">Installing...</string>
+    <string name="pluginInstaller_progressMessage_verifying">Verifying plugin...</string>
+    <string name="pluginInstaller_error_io_exception">The plugin could not be installed due to an unknown error.</string>
 </resources>

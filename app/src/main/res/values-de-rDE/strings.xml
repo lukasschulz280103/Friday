@@ -261,4 +261,11 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="pluginInstaller_activity_installNow">Jetzt installieren</string>
     <string name="pluginInstaller_uninstall_dialog_msg">Wollen sie %s wirklich deinstallieren?</string>
     <string name="pluginInstaller_uninstall_dialog_title">Plugin deinstallieren</string>
+    <string name="start_action_mode">AcionMode starten</string>
+    <string name="store_plugin_status_installed">Installiert</string>
+    <string name="store_plugin_uninstall">Deinstallieren</string>
+    <string name="pluginInstaller_error_invalid_zip_file">Diese Datei ist beschädigt und/oder keine valides Friday-Pluginarchiv</string>
+    <string name="pluginInstaller_progressMessage_installing">Installieren...</string>
+    <string name="pluginInstaller_progressMessage_verifying">Verifizieren des Plugins...</string>
+    <string name="pluginInstaller_error_io_exception">Die Plugindatei konnte aufgrund eines unbekannten Fehlers nicht installiet werden.</string>
 </resources>

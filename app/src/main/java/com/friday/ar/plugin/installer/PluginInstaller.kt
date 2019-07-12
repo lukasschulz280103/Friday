@@ -1,9 +1,7 @@
 package com.friday.ar.plugin.installer
 
-import android.app.NotificationManager
 import android.content.Context
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import com.friday.ar.Constant
 import com.friday.ar.FridayApplication
 import com.friday.ar.R
@@ -16,104 +14,41 @@ import com.friday.ar.util.cache.CacheUtil
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 
 class PluginInstaller(private val context: Context) {
     private var onInstallProgressChangedListener: OnInstallProgressChangedListener? = null
 
     @Throws(IOException::class)
     fun installFrom(pluginDir: ZippedPluginFile) {
-        val zippedPluginDefaultFile = pluginDir.file
-        try {
-            val verifier = PluginVerifier()
-            val notificationBuilder = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
-            verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
-                override fun onSuccess() {
-                    try {
-                        Log.e(LOGTAG, "pluginInstaller success")
-                        notificationBuilder.setContentTitle(context.getString(R.string.pluginInstaller_succes_install_title))
-                                .setContentText(zippedPluginDefaultFile.name)
-                                .setSubText(context.getString(R.string.pluginInstaller_name))
-                                .setCategory(NotificationCompat.CATEGORY_STATUS)
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                .setSmallIcon(R.drawable.ic_twotone_save_alt_24px)
-                                .setTicker(context.getString(R.string.pluginInstaller_success_ticker_text, "Plugin"))
-                        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                        notificationManager.notify(Constant.NotificationIDs.NOTIFICATION_INSTALL_SUCCESS, notificationBuilder.build())
-                    } catch (e: JSONException) {
-                        Log.e(LOGTAG, e.localizedMessage, e)
-                    } catch (e: IOException) {
-                        Log.e(LOGTAG, e.localizedMessage, e)
-                    }
+        val verifier = PluginVerifier()
+        verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
+            override fun onSuccess() {
+                val cachedPluginFile = CacheUtil.cachePluginFile(context, pluginDir)
+                onInstallProgressChangedListener!!.onProgressChanged(context.getString(R.string.pluginInstaller_progressMessage_installing))
+                Files.move(cachedPluginFile.toPath(), Constant.getPluginDir(context, cachedPluginFile.name).toPath(), StandardCopyOption.REPLACE_EXISTING)
+                onInstallProgressChangedListener!!.onSuccess()
+            }
 
-                    onInstallProgressChangedListener!!.onSuccess()
-                }
+            override fun onZipException(e: ZipException) {
+                onInstallProgressChangedListener!!.onFailure(e)
+            }
 
-                override fun onZipException(e: ZipException) {
-                }
+            override fun onIOException(e: IOException) {
+                onInstallProgressChangedListener!!.onFailure(e)
+            }
 
-                override fun onIOException(e: IOException) {
-                    notificationBuilder.setContentTitle(context.getString(R.string.pluginInstaller_error_installation_failed))
-                            .setContentText(context.getString(R.string.pluginInstaller_error_could_not_parse))
-                            .setContentInfo(zippedPluginDefaultFile.name)
-                            .setSubText(context.getString(R.string.pluginInstaller_name))
-                            .setCategory(NotificationCompat.CATEGORY_ERROR)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setSmallIcon(R.drawable.ic_twotone_error_outline_24px)
-                            .setTicker(context.getString(R.string.pluginInstaller_error_could_not_parse))
-                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notificationManager.notify(Constant.NotificationIDs.NOTIFICATION_INSTALL_ERROR, notificationBuilder.build())
-                    onInstallProgressChangedListener!!.onFailure()
-                }
+            override fun onJSONException(e: JSONException) {
+                onInstallProgressChangedListener!!.onFailure(e)
+            }
 
-                override fun onJSONException(e: JSONException) {
-
-                }
-
-                override fun onVerificationFailed(e: VerificationSecurityException) {
-                    Log.e(LOGTAG, e.localizedMessage, e)
-                    notificationBuilder.setContentTitle(context.getString(R.string.pluginInstaller_error_installation_failed))
-                            .setContentText(context.getString(R.string.pluginInstaller_error_manifest_security))
-                            .setContentInfo(zippedPluginDefaultFile.name)
-                            .setSubText(context.getString(R.string.pluginInstaller_name))
-                            .setCategory(NotificationCompat.CATEGORY_ERROR)
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setSmallIcon(R.drawable.ic_twotone_error_outline_24px)
-                            .setTicker(context.getString(R.string.pluginInstaller_error_could_not_parse))
-                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notificationManager.notify(Constant.NotificationIDs.NOTIFICATION_INSTALL_ERROR, notificationBuilder.build())
-                    onInstallProgressChangedListener!!.onFailure()
-                }
-            })
-            verifier.verify(CacheUtil.cachePluginFile(context, pluginDir), true)
-        } catch (e: ZipException) {
-            Log.e(LOGTAG, e.localizedMessage, e)
-            val notificationBuilder = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
-                    .setContentTitle(context.getString(R.string.pluginInstaller_error_installation_failed))
-                    .setContentText(context.getString(R.string.pluginInstaller_error_could_not_parse))
-                    .setContentInfo(zippedPluginDefaultFile.name)
-                    .setSubText(context.getString(R.string.pluginInstaller_name))
-                    .setCategory(NotificationCompat.CATEGORY_ERROR)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setSmallIcon(R.drawable.ic_twotone_error_outline_24px)
-                    .setTicker(context.getString(R.string.pluginInstaller_error_could_not_parse))
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.notify(Constant.NotificationIDs.NOTIFICATION_INSTALL_ERROR, notificationBuilder.build())
-            onInstallProgressChangedListener!!.onFailure()
-        } catch (e: JSONException) {
-            Log.e(LOGTAG, e.localizedMessage, e)
-            val notificationBuilder = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
-            notificationBuilder.setContentTitle(context.getString(R.string.pluginInstaller_error_installation_failed))
-                    .setContentText(context.getString(R.string.pluginInstaller_error_could_not_parse))
-                    .setContentInfo(zippedPluginDefaultFile.name)
-                    .setSubText(context.getString(R.string.pluginInstaller_name))
-                    .setCategory(NotificationCompat.CATEGORY_ERROR)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
-                    .setSmallIcon(R.drawable.ic_twotone_error_outline_24px)
-                    .setTicker(context.getString(R.string.pluginInstaller_error_could_not_parse))
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.notify(Constant.NotificationIDs.NOTIFICATION_INSTALL_ERROR, notificationBuilder.build())
-            onInstallProgressChangedListener!!.onFailure()
-        }
+            override fun onVerificationFailed(e: VerificationSecurityException) {
+                onInstallProgressChangedListener!!.onFailure(e)
+            }
+        })
+        onInstallProgressChangedListener!!.onProgressChanged(context.getString(R.string.pluginInstaller_progressMessage_verifying))
+        verifier.verify(pluginDir, context, true)
 
     }
 
@@ -130,7 +65,7 @@ class PluginInstaller(private val context: Context) {
     interface OnInstallProgressChangedListener {
         fun onProgressChanged(progressMessage: String)
         fun onSuccess()
-        fun onFailure()
+        fun onFailure(e: Exception)
     }
 
     companion object {
