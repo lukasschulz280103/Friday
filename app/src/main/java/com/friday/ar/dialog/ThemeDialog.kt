@@ -94,14 +94,14 @@ class ThemeDialog : DialogFragment() {
         }
 
         override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
-            var view = view
-            if (view == null) {
-                view = layoutInflater.inflate(R.layout.theme_select_item, viewGroup, false)
+            var itemView = view
+            if (itemView == null) {
+                itemView = layoutInflater.inflate(R.layout.theme_select_item, viewGroup, false)
             }
-            gradient = view!!.findViewById(R.id.gradient_bg)
+            gradient = itemView!!.findViewById(R.id.gradient_bg)
             val th = Theme(context, Theme.themes[i])
-            val text = view.findViewById<TextView>(R.id.theme_name)
-            val card = view.findViewById<CardView>(R.id.theme_item_card)
+            val text = itemView.findViewById<TextView>(R.id.theme_name)
+            val card = itemView.findViewById<CardView>(R.id.theme_item_card)
             text.text = th.getNameForPos(i)
             text.setTextColor(th.getTextColorSecondary(i))
             gradientDrawable = createGradient(false, i)
@@ -112,7 +112,7 @@ class ThemeDialog : DialogFragment() {
             gradient.setImageDrawable(gradientDrawable)
             card.setOnClickListener(themeClick)
             card.tag = i
-            return view
+            return itemView
         }
 
         override fun getCount(): Int {

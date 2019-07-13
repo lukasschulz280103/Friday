@@ -38,7 +38,7 @@ class ErrorFragment(private val e: FirebaseFirestoreException)// Required empty 
         (v.findViewById<View>(R.id.errTitle) as TextView).text = getString(R.string.loading_err_title, errInterpreter.code.toString())
         (v.findViewById<View>(R.id.subtitle_err) as TextView).text = errInterpreter.message
         (v.findViewById<View>(R.id.fullMessage) as TextView).text = errInterpreter.exceptionMessage
-        retry.setOnClickListener { view ->
+        retry.setOnClickListener {
             fragmentManager!!.beginTransaction()
                     .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
                     .add(R.id.store_frag_container, MainStoreFragment())

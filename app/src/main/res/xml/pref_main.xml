@@ -53,6 +53,9 @@
             android:title="@string/pref_devmode_show_changelog"
             android:key="pref_devmode_show_changelog"
             />
+        <androidx.preference.CheckBoxPreference
+            android:key="pref_devmode_use_beta_channel"
+            android:title="@string/pref_devmode_use_beta_channel" />
         <androidx.preference.Preference
             android:key=""
             android:title="Start Introduction">

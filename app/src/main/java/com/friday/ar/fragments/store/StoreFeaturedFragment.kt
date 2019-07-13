@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.friday.ar.Constant
 import com.friday.ar.fragments.net.ConnectionFragment
-import com.friday.ar.store.data.WidgetInfo
 import com.friday.ar.store.pager.CardViewPagerAdapter
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -45,7 +44,6 @@ class StoreFeaturedFragment : Fragment() {
             val snap = task.result as DocumentSnapshot
             val data = snap.get("list") as ArrayList<Map<String, Any>>?
             for (map in data!!) {
-                val inf = WidgetInfo()
                 val collectionReference = fridayStoreFirestore.collection("/store/data/" + map["id"])
                 dataList.add(collectionReference)
             }

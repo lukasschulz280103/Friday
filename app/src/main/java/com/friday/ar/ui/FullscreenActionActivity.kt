@@ -177,14 +177,14 @@ class FullscreenActionActivity : FridayActivity() {
                 .setSource(this, R.raw.project_friday_text)
                 .build()
                 .thenAccept { renderable -> fridayTextRenderable = renderable }
-                .exceptionally { throwable ->
+                .exceptionally {
                     val toast = Toast.makeText(this, "Unable to load andy renderable", Toast.LENGTH_LONG)
                     toast.setGravity(Gravity.CENTER, 0, 0)
                     toast.show()
                     null
                 }
         ar_fragment!!.planeDiscoveryController.hide()
-        ar_fragment!!.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane, motionEvent: MotionEvent ->
+        ar_fragment!!.setOnTapArPlaneListener { hitResult: HitResult, _: Plane, _: MotionEvent ->
             if (fridayTextRenderable == null) {
                 return@setOnTapArPlaneListener
             }
@@ -222,7 +222,7 @@ class FullscreenActionActivity : FridayActivity() {
     override fun onBackPressed() {
         val confirmBack = MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.leave_action_activity)
-                .setPositiveButton(R.string.action_leave) { dialog, dinterface -> finish() }
+                .setPositiveButton(R.string.action_leave) { _, _ -> finish() }
                 .setNegativeButton(android.R.string.no, null)
                 .create()
         confirmBack.show()

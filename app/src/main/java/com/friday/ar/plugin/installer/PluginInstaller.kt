@@ -23,33 +23,36 @@ class PluginInstaller(private val context: Context) {
     @Throws(IOException::class)
     fun installFrom(pluginDir: ZippedPluginFile) {
         val verifier = PluginVerifier()
+        val cachedPluginFile = CacheUtil.cachePluginFile(context, pluginDir)
         verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
             override fun onSuccess() {
-                val cachedPluginFile = CacheUtil.cachePluginFile(context, pluginDir)
                 onInstallProgressChangedListener!!.onProgressChanged(context.getString(R.string.pluginInstaller_progressMessage_installing))
                 Files.move(cachedPluginFile.toPath(), Constant.getPluginDir(context, cachedPluginFile.name).toPath(), StandardCopyOption.REPLACE_EXISTING)
                 onInstallProgressChangedListener!!.onSuccess()
             }
 
             override fun onZipException(e: ZipException) {
+                Log.e(LOGTAG, e.message, e)
                 onInstallProgressChangedListener!!.onFailure(e)
             }
 
             override fun onIOException(e: IOException) {
+                Log.e(LOGTAG, e.message, e)
                 onInstallProgressChangedListener!!.onFailure(e)
             }
 
             override fun onJSONException(e: JSONException) {
+                Log.e(LOGTAG, e.message, e)
                 onInstallProgressChangedListener!!.onFailure(e)
             }
 
             override fun onVerificationFailed(e: VerificationSecurityException) {
+                Log.e(LOGTAG, e.message, e)
                 onInstallProgressChangedListener!!.onFailure(e)
             }
         })
         onInstallProgressChangedListener!!.onProgressChanged(context.getString(R.string.pluginInstaller_progressMessage_verifying))
-        verifier.verify(pluginDir, context, true)
-
+        verifier.verify(cachedPluginFile, true)
     }
 
     fun uninstallPlugin(plugin: Plugin) {

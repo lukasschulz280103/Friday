@@ -66,7 +66,7 @@ class StoreDetailActivity : FridayActivity() {
             Log.e(LOGTAG, e.localizedMessage, e)
         }
     }
-    private val logoListener = OnSuccessListener<QuerySnapshot> { o ->
+    private val logoListener = OnSuccessListener<QuerySnapshot> { _ ->
     }
     private val logoSuccesListener = OnCompleteListener<Any> { task ->
         if (task.isCanceled) {
@@ -86,7 +86,7 @@ class StoreDetailActivity : FridayActivity() {
         val snapshot = o as QuerySnapshot
         val reviewlist = snapshot.documents
     }
-    private val metaDataListener = OnCompleteListener<DocumentSnapshot> { task ->
+    private val metaDataListener = OnCompleteListener<DocumentSnapshot> {
     }
     private val metaDataSuccessListener = OnSuccessListener<DocumentSnapshot> { o ->
         val doc = o as DocumentSnapshot

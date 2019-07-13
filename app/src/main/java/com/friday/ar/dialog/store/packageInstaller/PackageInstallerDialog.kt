@@ -43,7 +43,7 @@ class PackageInstallerDialog(chosenFile: File, context: Context) : BottomSheetDi
             val pluginManifest = pluginFile!!.manifest
             val pluginName = dialogView.findViewById<TextView>(R.id.pluginName)
             val authorName = dialogView.findViewById<TextView>(R.id.authorName)
-            pluginName.text = pluginManifest.pluginName
+            pluginName.text = pluginManifest!!.pluginName
             if (pluginManifest.author == null) {
                 authorName.text = "Unknown author!"
             } else {

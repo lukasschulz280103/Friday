@@ -33,20 +33,26 @@ import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.service.OnAccountSyncStateChanged
 import com.friday.ar.ui.store.StoreDetailActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.page_main.*
 import java.util.*
 
 class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
-    internal var storeFragment = MainStoreFragment()
+    private var storeFragment = MainStoreFragment()
     internal lateinit var app: FridayApplication
-    internal lateinit var mOnAuthCompleted: OnAuthCompletedListener
+    private lateinit var mOnAuthCompleted: OnAuthCompletedListener
     private var viewSwitcherMain: ViewFlipper? = null
-    internal var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.main_nav_dashboard -> viewSwitcherMain!!.displayedChild = 0
             R.id.main_nav_store -> {
@@ -108,8 +114,8 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             try {
                 pkgInf = packageManager.getPackageInfo(packageName, 0)
                 if (defaultSharedPreferences.getString("version", "0") != pkgInf.versionName || defaultSharedPreferences.getBoolean("pref_devmode_show_changelog", false)) {
-                    val changelogdialog = ChangelogDialogFragment()
-                    changelogdialog.show(supportFragmentManager, "ChangeLogDialog")
+                    val changeLogDialog = ChangelogDialogFragment()
+                    changeLogDialog.show(supportFragmentManager, "ChangeLogDialog")
                     val editor = defaultSharedPreferences.edit()
                     editor.putString("version", pkgInf.versionName)
                     editor.apply()
@@ -135,19 +141,46 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             if (defaultSharedPreferences.getInt("theme", 0) == 0) {
                 defaultSharedPreferences.edit().putInt("theme", R.style.AppTheme).apply()
             }
+
+            showUpdateNotif()
         }).start()
         val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
-        //if (pm.isPowerSaveMode) {
-        //    val builder = MaterialAlertDialogBuilder(this)
-        //    builder.setTitle(R.string.energy_saver_warn_title)
-        //    builder.setMessage(R.string.energy_saver_warn_msg)
-        //    builder.setPositiveButton(R.string.deactivate) { _, _ -> }
-        //    builder.setNegativeButton(R.string.later, null)
-        //    builder.create().show()
-        //}
+        if (pm.isPowerSaveMode) {
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle(R.string.energy_saver_warn_title)
+            builder.setMessage(R.string.energy_saver_warn_msg)
+            builder.setPositiveButton(R.string.deactivate) { _, _ -> }
+            builder.setNegativeButton(R.string.later, null)
+            builder.create().show()
+        }
         Handler().postDelayed({ start_actionmode.shrink() }, 2500)
         //app.registerForSyncStateChange(this);
 
+    }
+
+    private fun showUpdateNotif() {
+        val firebaseDatabase = FirebaseDatabase.getInstance()
+        val updateRef = if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_devmode_use_beta_channel", false)) firebaseDatabase.getReference("versionPre") else firebaseDatabase.getReference("version")
+        updateRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    if (packageManager.getPackageInfo(packageName, 0).versionName != dataSnapshot.value!!.toString()) {
+                        val view = layoutInflater.inflate(R.layout.dashboard_update, contentLayout, false)
+                        view.findViewById<MaterialButton>(R.id.update_now).setOnClickListener {
+                            startActivity(Intent(this@MainActivity, InfoActivity::class.java))
+                        }
+                        contentLayout.addView(view)
+                    }
+                } catch (e: PackageManager.NameNotFoundException) {
+                    Log.e(LOGTAG, e.localizedMessage, e)
+                }
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e(LOGTAG, "Could not check for update:" + databaseError.message + "\nDetails:" + databaseError.details, databaseError.toException())
+            }
+        })
     }
 
     private fun setupSorePage() {
@@ -199,7 +232,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             authDialogFragment!!.dismissDialog()
         } else {
             Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
-                    .setAction(getString(R.string.action_leave)) { view -> finishAffinity() }.show()
+                    .setAction(getString(R.string.action_leave)) { finishAffinity() }.show()
         }
     }
 
@@ -208,7 +241,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             val errtype = data.getStringExtra("errtype")
             val alertDialog = MaterialAlertDialogBuilder(this)
             alertDialog.setPositiveButton(android.R.string.ok, null)
-            alertDialog.setNeutralButton(R.string.app_feedback) { dialogInterface, i -> startActivity(Intent(this@MainActivity, FeedbackSenderActivity::class.java)) }
+            alertDialog.setNeutralButton(R.string.app_feedback) { _, _ -> startActivity(Intent(this@MainActivity, FeedbackSenderActivity::class.java)) }
             when (errtype) {
                 "TYPE_NOT_INSTALLED" -> {
                     run {
@@ -254,7 +287,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
                         .setMessage(R.string.err_permission_need_explanation)
                         .setIcon(R.drawable.ic_twotone_security_24px)
                         .setCancelable(false)
-                        .setPositiveButton(R.string.retry) { dialogInterface, which -> requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO), REQUEST_PERMISSIONS_CODE) }
+                        .setPositiveButton(R.string.retry) { _, _ -> requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO), REQUEST_PERMISSIONS_CODE) }
                         .create().show()
             } else {
             }
@@ -283,7 +316,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
                 .commit()
     }
 
-    fun goToStore(v: View) {
+    fun goToStore() {
         val i = Intent(this, StoreDetailActivity::class.java)
         startActivity(i)
     }

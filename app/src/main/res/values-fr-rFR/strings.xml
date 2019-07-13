@@ -265,4 +265,6 @@
     <string name="pluginInstaller_progressMessage_installing">Installé...</string>
     <string name="pluginInstaller_progressMessage_verifying">Vérification du plugin....</string>
     <string name="pluginInstaller_error_io_exception">Le plugin n\'a pas pu être installé à cause d\'une erreur inconnue.</string>
+    <string name="pref_devmode_use_beta_channel">Utiliser le canal bêta pour les mises à jour</string>
+    <string name="update">Mise à jour</string>
 </resources>

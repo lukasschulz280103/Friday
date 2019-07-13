@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 
 import com.friday.ar.Constant
-import com.friday.ar.plugin.file.Manifest
 import com.friday.ar.plugin.file.Manifest.ManifestSecurityException
 import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.file.ZippedPluginFile
@@ -58,7 +57,7 @@ class PluginVerifier {
             for (file in Constant.getPluginCacheDir(context).listFiles()) {
                 Log.d(LOGTAG, file.name)
             }
-            val cacheFile = PluginFile(cachedPluginFile.path + "/" + cachedPluginFile.name)
+            val cacheFile = PluginFile(cachedPluginFile.path)
             verify(cacheFile, deleteOnException)
         } catch (e: ZipException) {
             if (onVerificationCompleteListener != null) {
@@ -81,12 +80,13 @@ class PluginVerifier {
     fun verify(pluginFile: PluginFile, deleteOnException: Boolean) {
         val manifestContentString: String
         try {
+            if (pluginFile.manifest == null) throw VerificationSecurityException("No manifest found!")
             manifestContentString = String(Files.readAllBytes(File(pluginFile.path + "/meta/manifest.json").toPath()), StandardCharsets.UTF_8)
-            val manifestOject = JSONObject(manifestContentString)
-            val meta = manifestOject.getJSONObject("meta")
+            val manifestObject = JSONObject(manifestContentString)
+            val meta = manifestObject.getJSONObject("meta")
             if (meta == null) {
                 if (deleteOnException) FileUtil.deleteDirectory(pluginFile)
-                throw Manifest.ManifestSecurityException("Manifest does not contain required meta info!")
+                throw ManifestSecurityException("Manifest does not contain required meta info!")
             }
             if (meta.getString("applicationName") == null || meta.getString("applicationName").isEmpty()) {
                 if (deleteOnException) FileUtil.deleteDirectory(pluginFile)

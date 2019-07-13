@@ -75,12 +75,12 @@ class InfoActivity : FridayActivity() {
         })
     }
 
-    fun onClickLicense(v: View) {
+    fun onClickLicense() {
         val intent = Intent(this, LicenseActivity::class.java)
         startActivity(intent)
     }
 
-    fun onClickContact(view: View) {
+    fun onClickContact() {
         val user = FirebaseAuth.getInstance().currentUser
         val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "friday.enterprises.ar@gmail.com", null))
         intent.putExtra(Intent.EXTRA_SUBJECT, "Support request" + if (user != null) "for #" + user.uid else "")

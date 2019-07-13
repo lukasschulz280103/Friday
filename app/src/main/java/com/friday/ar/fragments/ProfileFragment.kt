@@ -71,7 +71,7 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
         val toSettings = fragmentView.findViewById<LinearLayout>(R.id.main_settings)
         val toLayoutEditor = fragmentView.findViewById<LinearLayout>(R.id.main_layout_editor)
         val toHelp = fragmentView.findViewById<LinearLayout>(R.id.main_help)
-        signInButton.setOnClickListener { view ->
+        signInButton.setOnClickListener { _ ->
             mainActivity!!.promptSignin()
             mainActivity!!.setmOnAuthCompleted(object : OnAuthCompletedListener {
                 override fun onAuthCompleted() {

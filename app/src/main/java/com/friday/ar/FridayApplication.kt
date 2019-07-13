@@ -54,7 +54,6 @@ class FridayApplication : Application(), OnAccountSyncStateChanged {
         }
         Constant.getPluginDir(this).delete()
         Thread {
-
             runServices()
             createNotificationChannels()
         }.start()

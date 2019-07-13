@@ -316,4 +316,7 @@
     <string name="pluginInstaller_progressMessage_installing">Installing...</string>
     <string name="pluginInstaller_progressMessage_verifying">Verifying plugin...</string>
     <string name="pluginInstaller_error_io_exception">The plugin could not be installed due to an unknown error.</string>
+    <string name="pref_devmode_use_beta_channel">Use beta channel for updates</string>
+    <string name="update">Update</string>
+    <string name="update_available">Update available</string>
 </resources>

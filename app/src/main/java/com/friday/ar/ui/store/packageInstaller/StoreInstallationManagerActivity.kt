@@ -165,7 +165,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
     }
 
     companion object {
-        private val LOGTAG = "StoreInstallations"
-        val OPEN_PLUGIN_INTENT_CODE = 733
+        private const val LOGTAG = "StoreInstallations"
+        const val OPEN_PLUGIN_INTENT_CODE = 733
     }
 }

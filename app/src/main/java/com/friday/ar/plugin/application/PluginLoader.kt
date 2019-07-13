@@ -63,7 +63,7 @@ class PluginLoader(private val context: Context) {
         verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
             override fun onSuccess() {
                 val pluginManifest = packageDir.manifest
-                indexedPlugins.add(pluginManifest.toPlugin())
+                indexedPlugins.add(pluginManifest!!.toPlugin())
             }
 
             override fun onZipException(e: ZipException) {

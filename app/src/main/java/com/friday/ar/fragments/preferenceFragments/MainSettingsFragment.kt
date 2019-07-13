@@ -37,6 +37,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
     private val firebaseUser = FirebaseAuth.getInstance().currentUser
     private var loadingDialog: ProgressDialog? = null
     private var devModeShowChangelog: CheckBoxPreference? = null
+    private var devModeUseBetaChannel: CheckBoxPreference? = null
 
     private val onSelectedTheme = object : ThemeDialog.OnSelectedTheme {
         override fun onSelectedTheme(hasChanged: Boolean) {
@@ -93,7 +94,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
         val attachmentText = dialogView.findViewById<TextInputEditText>(R.id.reason_attached_text)
 
         val reasonKeyword = arrayOf("")
-        rGroup.setOnCheckedChangeListener { radioGroup, i ->
+        rGroup.setOnCheckedChangeListener { radioGroup, _ ->
             attachmentText.visibility = View.GONE
             when (radioGroup.checkedRadioButtonId) {
                 R.id.reason_bad_experience -> {
@@ -143,7 +144,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
             }
         }
         confirmDeletionDialog.setView(R.layout.deletion_dialog_feedback)
-        confirmDeletionDialog.setPositiveButton(getString(R.string.confirm_deletion_positive, if (firebaseUser!!.displayName != null) firebaseUser.displayName else firebaseUser.email)) { dialogInterface, i ->
+        confirmDeletionDialog.setPositiveButton(getString(R.string.confirm_deletion_positive, if (firebaseUser!!.displayName != null) firebaseUser.displayName else firebaseUser.email)) { _, _ ->
             loadingDialog = ProgressDialog(activity!!, getString(R.string.delete_dialog_loading_text))
             loadingDialog!!.show()
             val scheduler = activity!!.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
@@ -174,9 +175,11 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
         val `val` = newValue as Boolean
         if (`val`) {
             devModeShowChangelog!!.isEnabled = true
+            devModeUseBetaChannel!!.isEnabled = true
         } else {
             devModeShowChangelog!!.isEnabled = false
             devModeShowChangelog!!.isChecked = false
+            devModeUseBetaChannel!!.isChecked = false
         }
         true
     }
@@ -193,6 +196,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
         val autoSyncAccountPreference = findPreference<Preference>("sync_account_auto")
         val devMode = findPreference<SwitchPreference>("devmode")
         devModeShowChangelog = findPreference("pref_devmode_show_changelog")
+        devModeUseBetaChannel = findPreference("pref_devmode_use_beta_channel")
 
         accountDeletionPreference!!.onPreferenceClickListener = onAccountDeletionClickListener
         signOutPreference!!.onPreferenceClickListener = signOutClickListener
@@ -208,6 +212,9 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
         }
         if (!devMode.isChecked) {
             devModeShowChangelog!!.isEnabled = false
+            devModeShowChangelog!!.isChecked = false
+            devModeUseBetaChannel!!.isEnabled = false
+            devModeUseBetaChannel!!.isChecked = false
         }
         val theme = Theme(mActivity!!)
         themePreference.summary = theme.getNameForPos(theme.indexOf(Theme.getCurrentAppTheme(mActivity!!)))

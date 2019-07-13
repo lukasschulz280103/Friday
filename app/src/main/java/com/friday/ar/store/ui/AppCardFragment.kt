@@ -44,6 +44,7 @@ class AppCardFragment(private val mAppRef: CollectionReference)//CollectionRefer
                     (parentFragment!!.parentFragment as ConnectionFragment).onError(e)
                 }
             }
+            @Suppress("UNCHECKED_CAST")
             metadataReference.addSnapshotListener { snapshot, e ->
                 if (e == null) {
                     val extraInfo = WidgetInfo.ExtraInfo(snapshot?.get("extra") as Map<String, Boolean>)

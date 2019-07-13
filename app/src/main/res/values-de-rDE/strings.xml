@@ -268,4 +268,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="pluginInstaller_progressMessage_installing">Installieren...</string>
     <string name="pluginInstaller_progressMessage_verifying">Verifizieren des Plugins...</string>
     <string name="pluginInstaller_error_io_exception">Die Plugindatei konnte aufgrund eines unbekannten Fehlers nicht installiet werden.</string>
+    <string name="pref_devmode_use_beta_channel">Beta-Kanal für Updates benutzen</string>
+    <string name="update">Aktualisieren</string>
+    <string name="update_available">Update verfügbar</string>
 </resources>
