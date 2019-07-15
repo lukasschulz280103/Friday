@@ -44,7 +44,7 @@ class StoreDetailActivity : FridayActivity() {
     private var manifest: JSONObject? = null
     private val manifestSuccessListener = OnSuccessListener<Any> { o ->
         try {
-            Log.d(LOGTAG, "Loaded data")
+            Log.d(LOGTAG, "Loaded oldData")
             manifest = JSONObject(String(o as ByteArray, Charset.forName("UTF-8")))
             val tags = manifest!!.getJSONArray("tags")
             widget_detail_loading_spinner!!.visibility = View.GONE
@@ -106,7 +106,7 @@ class StoreDetailActivity : FridayActivity() {
         manifestDownloadTask = appStorageRef.child("/manifest.json").getBytes(ONE_MB)
         reviewRefTask.addOnSuccessListener(reviewSuccessListener)
         reviewRefTask.addOnCompleteListener(reviewListener)
-        //appLogoTask = appStorageRef.child("data/logo/logo.png").getBytes(FIVE_MB);
+        //appLogoTask = appStorageRef.child("oldData/logo/logo.png").getBytes(FIVE_MB);
         addStorageListeners()
     }
 

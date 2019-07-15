@@ -70,7 +70,7 @@ import java.util.List;
 
 /**
  * Layout manager that allows the user to flip left and right
- * through pages of data.  You supply an implementation of a
+ * through pages of oldData.  You supply an implementation of a
  * {@link PagerAdapter} to generate the pages that the view shows.
  *
  * <p>ViewPager is most often used in conjunction with {@link android.app.Fragment},
@@ -180,7 +180,7 @@ public class CustomViewPager extends ViewGroup {
 
     // Offsets of the first and last items, if known.
     // Set during population, used to determine if we are at the beginning
-    // or end of the pager data set during touch scrolling.
+    // or end of the pager oldData set during touch scrolling.
     private float mFirstOffset = -Float.MAX_VALUE;
     private float mLastOffset = Float.MAX_VALUE;
 

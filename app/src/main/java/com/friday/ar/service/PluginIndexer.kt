@@ -20,7 +20,7 @@ import java.util.*
  */
 class PluginIndexer : JobService() {
     private val indexedFiles = ArrayList<ZippedPluginFile>()
-    private val excludedDirs = Arrays.asList("Android")
+    private val excludedDirs = listOf("Android")
     private var isIndexing = false
 
     override fun onStopJob(params: JobParameters): Boolean {

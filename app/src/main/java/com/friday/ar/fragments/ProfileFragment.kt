@@ -120,7 +120,7 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.d(LOGTAG, "onActivityResult:[requestCode=$requestCode|resultCode=$resultCode|data=$data")
+        Log.d(LOGTAG, "onActivityResult:[requestCode=$requestCode|resultCode=$resultCode|oldData=$data")
         if (requestCode == REQUEST_CODE_SETTINGS && resultCode == Activity.RESULT_OK) {
             mainActivity!!.recreate()
         }

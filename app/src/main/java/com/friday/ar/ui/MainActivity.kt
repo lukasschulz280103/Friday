@@ -20,32 +20,31 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
+import com.friday.ar.dashboard.DashboardListItem
 import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.fragments.dialogFragments.ChangelogDialogFragment
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
+import com.friday.ar.list.dashboard.DashboardAdapter
 import com.friday.ar.service.OnAccountSyncStateChanged
 import com.friday.ar.ui.store.StoreDetailActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.page_main.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     private var storeFragment = MainStoreFragment()
@@ -99,7 +98,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
 
             val theme = Theme(this@MainActivity)
             val appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this@MainActivity))
-            runOnUiThread { findViewById<View>(R.id.mainTitleView).background = theme.createGradient(appThemeIndex) }
+            runOnUiThread { mainTitleView.background = theme.createGradient(appThemeIndex) }
 
 
             (findViewById<View>(R.id.main_bottom_nav) as BottomNavigationView).setOnNavigationItemSelectedListener(navselected)
@@ -141,8 +140,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             if (defaultSharedPreferences.getInt("theme", 0) == 0) {
                 defaultSharedPreferences.edit().putInt("theme", R.style.AppTheme).apply()
             }
-
-            showUpdateNotif()
         }).start()
         val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
         if (pm.isPowerSaveMode) {
@@ -155,33 +152,15 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
         }
         Handler().postDelayed({ start_actionmode.shrink() }, 2500)
         //app.registerForSyncStateChange(this);
+        val dataList = ArrayList<DashboardListItem>()
+        mainPageDashboardList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mainPageDashboardList.adapter = DashboardAdapter(this, dataList)
+        mainSwipeRefreshLayout.setOnRefreshListener {
+            val newData = ArrayList<DashboardListItem>()
 
+        }
     }
 
-    private fun showUpdateNotif() {
-        val firebaseDatabase = FirebaseDatabase.getInstance()
-        val updateRef = if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean("pref_devmode_use_beta_channel", false)) firebaseDatabase.getReference("versionPre") else firebaseDatabase.getReference("version")
-        updateRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                try {
-                    if (packageManager.getPackageInfo(packageName, 0).versionName != dataSnapshot.value!!.toString()) {
-                        val view = layoutInflater.inflate(R.layout.dashboard_update, contentLayout, false)
-                        view.findViewById<MaterialButton>(R.id.update_now).setOnClickListener {
-                            startActivity(Intent(this@MainActivity, InfoActivity::class.java))
-                        }
-                        contentLayout.addView(view)
-                    }
-                } catch (e: PackageManager.NameNotFoundException) {
-                    Log.e(LOGTAG, e.localizedMessage, e)
-                }
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(LOGTAG, "Could not check for update:" + databaseError.message + "\nDetails:" + databaseError.details, databaseError.toException())
-            }
-        })
-    }
 
     private fun setupSorePage() {
         val storeExpandManagerButton = findViewById<ImageButton>(R.id.storeMore)

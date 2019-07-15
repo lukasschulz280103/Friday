@@ -171,7 +171,7 @@ class FeedbackSenderActivity : FridayActivity() {
             Log.d(LOGTAG, "resultcode is $resultCode")
             if (attachedFile == null) {
                 try {
-                    Log.d(LOGTAG, "Uri data in OnActivity return is " + data!!.data!!)
+                    Log.d(LOGTAG, "Uri oldData in OnActivity return is " + data!!.data!!)
                     val mUri = data.data
                     attachedFile = File(data.data!!.path!!)
                     attachedImageBitmpap = MediaStore.Images.Media.getBitmap(contentResolver, mUri)

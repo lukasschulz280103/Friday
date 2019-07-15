@@ -66,11 +66,10 @@ class PluginListAdapter(private val context: Context, private val dataList: Muta
 
     fun onRecieveUpdatedData(updatedData: List<Plugin>) {
         val diffResult = DiffUtil.calculateDiff(PluginListDiffUtilCallback(updatedData, dataList))
-        diffResult.dispatchUpdatesTo(this)
-
         this.dataList.clear()
 
         this.dataList.addAll(updatedData)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     companion object {

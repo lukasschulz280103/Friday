@@ -44,7 +44,7 @@ class StoreFeaturedFragment : Fragment() {
             val snap = task.result as DocumentSnapshot
             val data = snap.get("list") as ArrayList<Map<String, Any>>?
             for (map in data!!) {
-                val collectionReference = fridayStoreFirestore.collection("/store/data/" + map["id"])
+                val collectionReference = fridayStoreFirestore.collection("/store/oldData/" + map["id"])
                 dataList.add(collectionReference)
             }
             viewPager!!.adapter = CardViewPagerAdapter(fragmentManager!!, dataList)

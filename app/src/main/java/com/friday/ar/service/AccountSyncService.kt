@@ -8,13 +8,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
-
-import com.friday.ar.util.FileUtil
 import com.friday.ar.util.UserUtil
 import com.google.firebase.auth.FirebaseAuth
-
 import java.io.File
 import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 
 class AccountSyncService : JobService() {
     var jobParameters: JobParameters? = null
@@ -25,7 +24,7 @@ class AccountSyncService : JobService() {
             context.unregisterReceiver(this)
             Log.d(LOGTAG, "synchronized account avatar")
             try {
-                FileUtil.moveFile(File(getExternalFilesDir("profile")?.toString() + File.separator + "avatar.jpg"), avatarFile)
+                Files.move(getExternalFilesDir("profile/avatar.jpg")!!.toPath(), avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 jobFinished(jobParameters, false)
             } catch (e: IOException) {
                 Log.e(LOGTAG, e.localizedMessage, e)

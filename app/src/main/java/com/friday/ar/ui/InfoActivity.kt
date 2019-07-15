@@ -19,10 +19,11 @@ import kotlinx.android.synthetic.main.activity_info.*
 import java.util.*
 
 
+@Suppress("UNUSED_PARAMETER")
 class InfoActivity : FridayActivity() {
-    internal lateinit var firebaseVersionDB: FirebaseDatabase
-    internal lateinit var versionRef: DatabaseReference
-    internal lateinit var packageInfo: PackageInfo
+    private lateinit var firebaseVersionDB: FirebaseDatabase
+    private lateinit var versionRef: DatabaseReference
+    private lateinit var packageInfo: PackageInfo
 
     internal lateinit var version: TextView
 
@@ -75,12 +76,12 @@ class InfoActivity : FridayActivity() {
         })
     }
 
-    fun onClickLicense() {
+    fun onClickLicense(v: View) {
         val intent = Intent(this, LicenseActivity::class.java)
         startActivity(intent)
     }
 
-    fun onClickContact() {
+    fun onClickContact(v: View) {
         val user = FirebaseAuth.getInstance().currentUser
         val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "friday.enterprises.ar@gmail.com", null))
         intent.putExtra(Intent.EXTRA_SUBJECT, "Support request" + if (user != null) "for #" + user.uid else "")

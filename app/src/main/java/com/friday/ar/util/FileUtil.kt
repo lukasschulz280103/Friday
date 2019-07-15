@@ -7,6 +7,7 @@ object FileUtil {
     private val LOGTAG = "FileUtility"
 
     @Throws(IOException::class)
+    @Deprecated("Use Files.move instead")
     fun moveFile(f: File, dest: File) {
         dest.parentFile.mkdirs()
         if (!f.exists()) {

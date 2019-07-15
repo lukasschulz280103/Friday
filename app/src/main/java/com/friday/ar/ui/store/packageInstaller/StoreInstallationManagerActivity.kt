@@ -111,7 +111,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == OPEN_PLUGIN_INTENT_CODE && resultCode == RESULT_OK && data != null) {
-            Log.d(LOGTAG, "data:" + data.data!!.toString())
+            Log.d(LOGTAG, "oldData:" + data.data!!.toString())
             val openedFile = File(Objects.requireNonNull(data.data!!.path))
             val installer = PluginInstaller(this)
             installer.setOnInstallProgressChangedListener(object : PluginInstaller.OnInstallProgressChangedListener {
