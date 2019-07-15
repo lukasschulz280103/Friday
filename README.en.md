@@ -12,7 +12,6 @@ The app version of Friday is only available for Android 6.0(API Level 24) or hig
 
 ## Features
  > The current app version is a developer release and may run unstable, its features also. 
-- Currently friday supports a BETA AR mode, which supports a time display for testing purposes. 
 
 # Develop plugins
 An SDK is currently under development that will allow you to develop apps and tools for friday.
