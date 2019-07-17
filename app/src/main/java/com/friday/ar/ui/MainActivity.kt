@@ -29,6 +29,7 @@ import com.friday.ar.dashboard.DashboardListItem
 import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.fragments.dialogFragments.ChangelogDialogFragment
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
+import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
@@ -82,6 +83,10 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
 
         //Setting up views and objects on separate thread to improve performance at startup
         Thread(Runnable {
+            if (resources.getBoolean(R.bool.isTablet)) {
+                runOnUiThread { UnsupportedDeviceDialog().show(supportFragmentManager, "UnsupportedDeviceDialog") }
+                return@Runnable
+            }
             viewSwitcherMain = findViewById(R.id.main_view_flipper)
             val parallaxScrollView = findViewById<FrameLayout>(R.id.parallaxScollView)
             val mainTitleView = findViewById<LinearLayout>(R.id.mainTitleView)

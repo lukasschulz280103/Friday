@@ -23,8 +23,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:text="start ActionMode"
-            app:icon="@drawable/google_cardboard" />
+            app:icon="@drawable/google_cardboard"
+            tools:text="Start ActionMode" />
 
         <ViewFlipper
             android:id="@+id/main_view_flipper"

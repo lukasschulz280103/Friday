@@ -267,4 +267,8 @@
     <string name="pluginInstaller_error_io_exception">Le plugin n\'a pas pu être installé à cause d\'une erreur inconnue.</string>
     <string name="pref_devmode_use_beta_channel">Utiliser le canal bêta pour les mises à jour</string>
     <string name="update">Mise à jour</string>
+    <string name="unsupported_device_header">Nous sommes désolés!</string>
+    <string name="unsupported_device_tablet_subheader">Friday ne supporte pas les comprimés.</string>
+    <string name="unsupported_device_tablet_description">Mais vous pouvez toujours obtenir Friday sur n\'importe quel appareil Android avec Android 8.0 ou supérieur !</string>
+    <string name="update_available">Mise à jour disponible</string>
 </resources>

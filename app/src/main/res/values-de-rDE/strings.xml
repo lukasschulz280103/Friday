@@ -271,4 +271,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="pref_devmode_use_beta_channel">Beta-Kanal für Updates benutzen</string>
     <string name="update">Aktualisieren</string>
     <string name="update_available">Update verfügbar</string>
+    <string name="unsupported_device_header">Tut uns leid!</string>
+    <string name="unsupported_device_tablet_subheader">Friday wird auf Tablets icht unterstützt.</string>
+    <string name="unsupported_device_tablet_description">Aber du kannst Friday trotzdem auf jeglichem Anroid-Gerät mit Android 8.0 oder höher benutzen.</string>
 </resources>

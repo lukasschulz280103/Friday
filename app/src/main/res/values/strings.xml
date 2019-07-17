@@ -319,4 +319,7 @@
     <string name="pref_devmode_use_beta_channel">Use beta channel for updates</string>
     <string name="update">Update</string>
     <string name="update_available">Update available</string>
+    <string name="unsupported_device_header">We\'re sorry!</string>
+    <string name="unsupported_device_tablet_subheader">Friday does not support tablets.</string>
+    <string name="unsupported_device_tablet_description">But you can still get Friday on any Android device with Android 8.0 or higher!</string>
 </resources>
