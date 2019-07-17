@@ -47,6 +47,7 @@ class StoreFeaturedFragment : Fragment() {
                 val collectionReference = fridayStoreFirestore.collection("/store/oldData/" + map["id"])
                 dataList.add(collectionReference)
             }
+            //TODO viewpager is null after changing design
             viewPager!!.adapter = CardViewPagerAdapter(fragmentManager!!, dataList)
         } else {
             val e = task.exception as FirebaseFirestoreException

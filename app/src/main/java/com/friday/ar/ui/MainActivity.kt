@@ -286,7 +286,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     fun promptSignin() {
         Log.d("FirebaseAuth", "showing auth dialog")
         authDialogFragment = AuthDialog()
-        authDialogFragment!!.onAuthListener = mOnAuthCompleted
+        //TODO UninitializedPropertyException: property accessed but not initialized
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
                 .replace(android.R.id.content, authDialogFragment!!)

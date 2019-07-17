@@ -14,9 +14,11 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.ViewFlipper
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.crashlytics.android.Crashlytics
 import com.friday.ar.R
+import com.friday.ar.extensionMethods.notNull
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.util.FileUtil
 import com.friday.ar.util.UserUtil
@@ -36,6 +38,8 @@ import com.google.firebase.auth.*
 import java.io.File
 import java.io.IOException
 
+
+//TODO renew this messed up code
 class DefaultSignInFragment : Fragment() {
     private var resetResultText: TextView? = null
     private var resetPasswordText: TextView? = null
@@ -47,6 +51,7 @@ class DefaultSignInFragment : Fragment() {
     private var emailInputWrapper: TextInputLayout? = null
     private var googleSignInButton: SignInButton? = null
     private var mSignInClient: GoogleSignInClient? = null
+    private lateinit var mActivity: Activity
     private var requestSignIn = View.OnClickListener {
         val signInIntent = mSignInClient!!.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -68,12 +73,13 @@ class DefaultSignInFragment : Fragment() {
 
         }
     }
+
     private val onSignInCompletionListener = OnCompleteListener<AuthResult> { task ->
         loader!!.visibility = View.INVISIBLE
         setInputsEnabled(true)
         if (task.isSuccessful) {
-            Snackbar.make(activity!!.currentFocus!!, getString(R.string.signin_welcome, emailInput!!.text!!.toString()), Snackbar.LENGTH_SHORT).show()
-            mOnAuthCompletedListener!!.onAuthCompleted()
+            Snackbar.make(mActivity.findViewById(android.R.id.content), getString(R.string.signin_welcome, emailInput!!.text!!.toString()), Snackbar.LENGTH_SHORT).show()
+            mOnAuthCompletedListener!!.notNull { mOnAuthCompletedListener!!.onAuthCompleted() }
         } else {
             val errorDialogBuilder = MaterialAlertDialogBuilder(context!!)
             try {
@@ -125,12 +131,9 @@ class DefaultSignInFragment : Fragment() {
         }
         false
     }
-    private var mActivity: Activity? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val fragmentView = inflater.inflate(R.layout.default_signin_fragment_layout, container, false)
-
-        mActivity = activity
         passwordEditText = fragmentView.findViewById(R.id.email_password)
         resetPasswordText = fragmentView.findViewById(R.id.password_forgot)
         submitbtn = fragmentView.findViewById(R.id.submit)
@@ -143,11 +146,16 @@ class DefaultSignInFragment : Fragment() {
                 .requestIdToken(getString(R.string.request_id_token))
                 .requestEmail()
                 .build()
-        mSignInClient = GoogleSignIn.getClient(mActivity!!, gso)
+        mSignInClient = GoogleSignIn.getClient(mActivity, gso)
         googleSignInButton!!.setOnClickListener(requestSignIn)
         resetPasswordText!!.setOnClickListener { resetPassword() }
         emailInput!!.setOnEditorActionListener(mOnEditorActionListener)
         return fragmentView
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.mActivity = context as AppCompatActivity
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -193,23 +201,24 @@ class DefaultSignInFragment : Fragment() {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(mActivity!!) { task ->
+                .addOnCompleteListener(mActivity) { task ->
                     if (task.isSuccessful) {
                         Crashlytics.setUserIdentifier(firebaseAuth.currentUser!!.uid)
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d("CONTEXT", "Activity is " + mActivity!!)
-                        val downloadManager = mActivity!!.applicationContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                        Log.d("CONTEXT", "Activity is " + mActivity)
+                        val downloadManager = mActivity.applicationContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                         Log.d(TAG, "signInWithCredential:success")
                         val user = firebaseAuth.currentUser
+                        //TODO throw out this avatar download logic and let AccountSyncService do it
                         val downloadManagerRequest = DownloadManager.Request(user!!.photoUrl)
                         downloadManagerRequest.setVisibleInDownloadsUi(false)
                         downloadManagerRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
                         downloadManagerRequest.setDestinationInExternalFilesDir(mActivity, "profile", File.separator + "avatar.jpg")
-                        mActivity!!.registerReceiver(object : BroadcastReceiver() {
+                        mActivity.registerReceiver(object : BroadcastReceiver() {
                             override fun onReceive(context: Context, intent: Intent) {
                                 loadingDialog!!.dismiss()
                                 val userUtil = UserUtil(context)
-                                val avatarTempFile = File(mActivity!!.getExternalFilesDir("profile"), "avatar.jpg")
+                                val avatarTempFile = File(mActivity.getExternalFilesDir("profile"), "avatar.jpg")
                                 val avatarFileDestination = userUtil.avatarFile
                                 try {
                                     FileUtil.moveFile(avatarTempFile, avatarFileDestination)
@@ -217,15 +226,15 @@ class DefaultSignInFragment : Fragment() {
                                     Log.e("AuthDialog", e.localizedMessage, e)
                                 }
 
-                                mOnAuthCompletedListener!!.onAuthCompleted()
+                                mOnAuthCompletedListener!!.notNull { mOnAuthCompletedListener!!.onAuthCompleted() }
                             }
                         }, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
                         downloadManager.enqueue(downloadManagerRequest)
-                        Snackbar.make(mActivity!!.findViewById(android.R.id.content), getString(R.string.signin_welcome, user.displayName), Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(mActivity.findViewById(android.R.id.content), getString(R.string.signin_welcome, user.displayName), Snackbar.LENGTH_SHORT).show()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        Snackbar.make(mActivity!!.findViewById(android.R.id.content), "Sign in error.", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(mActivity.findViewById(android.R.id.content), "Sign in error.", Snackbar.LENGTH_SHORT).show()
                     }
                 }
     }
@@ -253,7 +262,7 @@ class DefaultSignInFragment : Fragment() {
     private fun resetPassword() {
         val askResetPassword = MaterialAlertDialogBuilder(context!!)
         askResetPassword.setTitle(R.string.auth_forgot_password)
-        val dialogView = activity!!.layoutInflater.inflate(R.layout.reset_password_dialog, null, false)
+        val dialogView = mActivity.layoutInflater.inflate(R.layout.reset_password_dialog, null, false)
         (dialogView.findViewById<View>(R.id.email) as TextView).text = emailInput!!.text!!.toString()
         resetResultText = dialogView.findViewById(R.id.reset_result_text)
         val flipper = dialogView.findViewById<ViewFlipper>(R.id.viewflipper)

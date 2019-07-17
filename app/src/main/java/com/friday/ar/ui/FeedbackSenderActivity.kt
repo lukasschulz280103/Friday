@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_feedback.*
 import java.io.ByteArrayOutputStream
@@ -94,8 +95,11 @@ class FeedbackSenderActivity : FridayActivity() {
             }
             R.id.feedback_submit -> {
                 if (Connectivity.isConnected(this)) {
-                    if (Validator.validateEmailInput(this@FeedbackSenderActivity, feedback_mail)) {
+                    if (Validator.validateEmail(feedback_mail.text.toString())) {
+                        feedback_mail.error = null
                         return submitFeedback()
+                    } else {
+                        feedback_mail.error = getString(R.string.mail_invalid_error)
                     }
                 } else {
                     val errorui = MaterialAlertDialogBuilder(this)
@@ -122,7 +126,7 @@ class FeedbackSenderActivity : FridayActivity() {
     }
 
     private fun submitFeedback(): Boolean {
-        if (feedback_device_info.isChecked || !feedback_body.text!!.toString().trim { it <= ' ' }.isEmpty()) {
+        if (feedback_device_info.isChecked || feedback_body.text!!.toString().trim { it <= ' ' }.isNotEmpty()) {
             try {
                 val deviceInfoFile = LogUtil.createDebugInfoFile(this, "email", feedback_mail.text!!.toString(), "body", feedback_body.text!!.toString())
                 val folderName = createTimeStampString()
@@ -145,8 +149,18 @@ class FeedbackSenderActivity : FridayActivity() {
                             finish()
                         }
                     } else {
+                        fileUploadDialog.dismiss()
                         val e = task.exception
                         Log.e(LOGTAG, e!!.localizedMessage, e)
+                        val errorDialog = MaterialAlertDialogBuilder(this)
+                        errorDialog.setTitle(R.string.simple_action_error_title)
+
+                        if (e is StorageException) {
+                            errorDialog.setMessage(R.string.feedbackSender_storageException)
+                        } else errorDialog.setMessage(e.localizedMessage)
+
+                        errorDialog.setPositiveButton(android.R.string.ok, null)
+                                .create().show()
                     }
                 }
             } catch (e: FileNotFoundException) {
