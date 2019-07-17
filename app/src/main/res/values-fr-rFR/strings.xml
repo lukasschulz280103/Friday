@@ -271,4 +271,6 @@
     <string name="unsupported_device_tablet_subheader">Friday ne supporte pas les comprimés.</string>
     <string name="unsupported_device_tablet_description">Mais vous pouvez toujours obtenir Friday sur n\'importe quel appareil Android avec Android 8.0 ou supérieur !</string>
     <string name="update_available">Mise à jour disponible</string>
+    <string name="feedbackSender_storageException">La rétroaction n\'a pas pu être téléchargée. Vous n\'êtes peut-être pas connecté - connectez-vous et réessayez.</string>
+    <string name="fileSelector_permission_required">Vous devez accorder l\'autorisation de stockage afin d\'accéder à vos fichiers.</string>
 </resources>

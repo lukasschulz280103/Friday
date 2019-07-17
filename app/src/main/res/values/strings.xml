@@ -323,4 +323,5 @@
     <string name="unsupported_device_tablet_subheader">Friday does not support tablets.</string>
     <string name="unsupported_device_tablet_description">But you can still get Friday on any Android device with Android 8.0 or higher!</string>
     <string name="feedbackSender_storageException">Could not upload feedback. Most likely you are not signed in. Please sign in first and then retry.</string>
+    <string name="fileSelector_permission_required">You need to grant the storage permission in order to access your files.</string>
 </resources>

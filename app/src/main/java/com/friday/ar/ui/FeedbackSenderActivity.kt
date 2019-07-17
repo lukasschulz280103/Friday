@@ -54,6 +54,7 @@ class FeedbackSenderActivity : FridayActivity() {
         false
     }
     private var attachedFile: File? = null
+
     private val attachment_upload = OnCompleteListener<UploadTask.TaskSnapshot> { task ->
         fileUploadDialog.dismiss()
         if (task.isSuccessful) {

@@ -274,4 +274,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="unsupported_device_header">Tut uns leid!</string>
     <string name="unsupported_device_tablet_subheader">Friday wird auf Tablets icht unterstützt.</string>
     <string name="unsupported_device_tablet_description">Aber du kannst Friday trotzdem auf jeglichem Anroid-Gerät mit Android 8.0 oder höher benutzen.</string>
+    <string name="feedbackSender_storageException">Feedback konnte nicht hochgeladen werden. Möglicherweise sind sie nicht angemeldet - melden sie sich an und versuchen sie es erneut.</string>
+    <string name="fileSelector_permission_required">Sie müssen den Speicherzugrff erlauben, um Ihre Dateien anzuzeigen</string>
 </resources>
