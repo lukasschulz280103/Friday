@@ -8,13 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
-import com.friday.ar.Constant
 import com.friday.ar.fragments.net.ConnectionFragment
 import com.friday.ar.store.pager.CardViewPagerAdapter
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
+import kotlinx.android.synthetic.main.fragment_store_featured.*
 import java.util.*
 
 
@@ -28,7 +27,6 @@ class StoreFeaturedFragment : Fragment() {
     private var fridayStoreFirestore: FirebaseFirestore
     private val storeData: DocumentReference? = null
     private val dataList = ArrayList<CollectionReference>()
-    private var viewPager: ViewPager? = null
 
     init {
         val firestoreSettings = FirebaseFirestoreSettings.Builder()
@@ -47,8 +45,7 @@ class StoreFeaturedFragment : Fragment() {
                 val collectionReference = fridayStoreFirestore.collection("/store/oldData/" + map["id"])
                 dataList.add(collectionReference)
             }
-            //TODO viewpager is null after changing design
-            viewPager!!.adapter = CardViewPagerAdapter(fragmentManager!!, dataList)
+            store_main_pager.adapter = CardViewPagerAdapter(fragmentManager!!, dataList)
         } else {
             val e = task.exception as FirebaseFirestoreException
             Log.d(LOGTAG, e.javaClass.name)
@@ -66,12 +63,13 @@ class StoreFeaturedFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(com.friday.ar.R.layout.fragment_store_featured, container, false)
-        viewPager = v.findViewById(com.friday.ar.R.id.store_main_pager)
         val loadedStoreData = fridayStoreFirestore.document("/store/generated/featured-apps/default")
         loadedStoreData.get().addOnCompleteListener(storeDataLoaded)
         return v
     }
 
-    private val LOGTAG = Constant.LOGTAG_STORE
+    companion object {
+        private const val LOGTAG = "StoreMainPager"
+    }
 
 }

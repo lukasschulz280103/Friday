@@ -34,7 +34,6 @@ import java.io.File
 import java.util.Arrays
 import kotlin.Comparator
 
-//TODO:Add support for selecting files
 class FileSelectorActivity : FridayActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -86,6 +86,5 @@ class InfoActivity : FridayActivity() {
         val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "friday.enterprises.ar@gmail.com", null))
         intent.putExtra(Intent.EXTRA_SUBJECT, "Support request" + if (user != null) "for #" + user.uid else "")
         startActivity(Intent.createChooser(intent, getString(R.string.contact)))
-        //TODO: Add code which attaches a debug log file
     }
 }
