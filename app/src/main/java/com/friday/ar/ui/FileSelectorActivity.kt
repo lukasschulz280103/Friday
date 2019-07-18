@@ -1,7 +1,6 @@
 package com.friday.ar.ui
 
-import android.Manifest
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.animation.ObjectAnimator
 import android.animation.StateListAnimator
 import android.annotation.SuppressLint
@@ -40,7 +39,7 @@ class FileSelectorActivity : FridayActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Theme.getCurrentAppTheme(this))
         super.onCreate(savedInstanceState)
-        requestPermissions(arrayOf(WRITE_EXTERNAL_STORAGE), 8001)
+        requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), 8001)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_file_selector)
         setSupportActionBar(toolbar)
@@ -53,11 +52,13 @@ class FileSelectorActivity : FridayActivity() {
             getString(R.string.pluginInstaller_noItemsIndexed)
         contentPane.setDragView(R.id.buttonbar)
         select_file.setOnClickListener { finish() }
-        fileSelector_request_perms_again.setOnClickListener { requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 8001) }
+        fileSelector_request_perms_again.setOnClickListener { requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), 8001) }
+        fileListFlipper.displayedChild = 0
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == 8001 && Arrays.equals(grantResults, intArrayOf(PERMISSION_GRANTED))) {
+            fileListFlipper.displayedChild = 0
             val fileListLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             fileList.layoutManager = fileListLayoutManager
             fileList.adapter = FileSystemArrayAdapter(Environment.getExternalStorageDirectory())
@@ -77,6 +78,7 @@ class FileSelectorActivity : FridayActivity() {
             indexedFilesList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             indexedFilesList.adapter = PluginVerticalListAdapter(this, (application as FridayApplication).indexedInstallablePluginFiles)
         } else if (Arrays.equals(grantResults, intArrayOf(PERMISSION_DENIED))) {
+            Log.d(LOGTAG, "perms not granted")
             fileListFlipper.displayedChild = 2
         }
     }
@@ -93,6 +95,8 @@ class FileSelectorActivity : FridayActivity() {
             super.onBackPressed()
         }
     }
+
+
     internal inner class FileSystemArrayAdapter(startFrom: File) : RecyclerView.Adapter<FileViewHolder>() {
         var sourceFile: File? = null
         private lateinit var directoryList: List<File>
@@ -142,9 +146,12 @@ class FileSelectorActivity : FridayActivity() {
         fun setDirectoryList(directoryFile: File) {
             if (sourceFile != null) {
                 notifyItemRangeRemoved(0, if (sourceFile!!.listFiles() != null) sourceFile!!.listFiles().size else 0)
-                if (sourceFile!!.listFiles() == null || sourceFile!!.listFiles().isEmpty()) {
+                Log.d(LOGTAG, "directory content:")
+                if (sourceFile!!.listFiles() == null || directoryFile.listFiles().isNullOrEmpty()) {
+                    Log.d(LOGTAG, "empty directory")
                     fileListFlipper.displayedChild = 1
                 } else {
+                    Log.d(LOGTAG, "drectory was entered")
                     fileListFlipper.displayedChild = 0
                 }
             }
