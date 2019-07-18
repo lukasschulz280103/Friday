@@ -1,5 +1,6 @@
 package com.friday.ar.ui
 
+import android.Manifest
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.animation.ObjectAnimator
 import android.animation.StateListAnimator
@@ -52,6 +53,7 @@ class FileSelectorActivity : FridayActivity() {
             getString(R.string.pluginInstaller_noItemsIndexed)
         contentPane.setDragView(R.id.buttonbar)
         select_file.setOnClickListener { finish() }
+        fileSelector_request_perms_again.setOnClickListener { requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 8001) }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

@@ -275,6 +275,7 @@ class DefaultSignInFragment : Fragment() {
             val negative = askResetPasswordDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
             positive.setOnClickListener {
                 askResetPasswordDialog.setCancelable(false)
+                //TODO check email validity to verifiy that email is not empty
                 val resetPassword = firebaseAuth.sendPasswordResetEmail(emailInput!!.text!!.toString())
                 flipper.showNext()
                 positive.isEnabled = false
