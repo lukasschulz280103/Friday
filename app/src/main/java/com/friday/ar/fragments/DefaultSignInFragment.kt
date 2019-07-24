@@ -35,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.*
+import kotlinx.android.synthetic.main.default_signin_fragment_layout.*
 import java.io.File
 import java.io.IOException
 
@@ -246,10 +247,16 @@ class DefaultSignInFragment : Fragment() {
         submitbtn!!.isEnabled = enabled
     }
 
+
+    //TODO: This method should not handle UI related things and should be in class com.frida.ar.util.Validator
     private fun validateEmail(): Boolean {
         val text = emailInput!!.text!!.toString()
-        if (!text.contains(".") || !text.contains("@")) {
+        val pswdText = passwordEditText!!.text.toString()
+        if (text.isEmpty() || !text.contains(".") || !text.contains("@")) {
             emailInputWrapper!!.error = getString(R.string.mail_invalid_error)
+            return false
+        } else if (pswdText.isEmpty()) {
+            passwordInputWrapper.error = getString(R.string.auth_pswd_empty_error)
             return false
         } else {
             loader!!.visibility = View.VISIBLE

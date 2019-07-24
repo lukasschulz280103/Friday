@@ -56,6 +56,7 @@ class PackageInstallerDialog(chosenFile: File, context: Context) : BottomSheetDi
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+        pluginFile!!.deleteRecursively()
         activity!!.finish()
     }
 

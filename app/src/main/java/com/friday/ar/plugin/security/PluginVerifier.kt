@@ -52,8 +52,8 @@ class PluginVerifier {
      * @param deleteOnException boolean whether the cached file should be deleted if the verification fails.
      */
     fun verify(plugin: ZippedPluginFile, context: Context, deleteOnException: Boolean) {
+        val cachedPluginFile = CacheUtil.cachePluginFile(context, plugin)
         try {
-            val cachedPluginFile = CacheUtil.cachePluginFile(context, plugin)
             for (file in Constant.getPluginCacheDir(context).listFiles()) {
                 Log.d(LOGTAG, file.name)
             }
@@ -73,6 +73,8 @@ class PluginVerifier {
             if (onVerificationCompleteListener != null) {
                 onVerificationCompleteListener!!.onIOException(e)
             }
+        } finally {
+            cachedPluginFile.deleteRecursively()
         }
 
     }

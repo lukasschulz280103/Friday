@@ -29,6 +29,7 @@ class PluginInstaller(private val context: Context) {
                 onInstallProgressChangedListener!!.onProgressChanged(context.getString(R.string.pluginInstaller_progressMessage_installing))
                 Files.move(cachedPluginFile.toPath(), Constant.getPluginDir(context, cachedPluginFile.name).toPath(), StandardCopyOption.REPLACE_EXISTING)
                 onInstallProgressChangedListener!!.onSuccess()
+                cachedPluginFile.deleteRecursively()
             }
 
             override fun onZipException(e: ZipException) {

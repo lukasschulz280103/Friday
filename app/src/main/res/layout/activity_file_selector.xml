@@ -40,6 +40,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/fileList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
                 <LinearLayout
                     android:id="@+id/emptyView"
                     android:layout_width="match_parent"
@@ -53,14 +59,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/emptyview_nothing_here" />
                 </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/fileList"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
                 <LinearLayout
                     android:id="@+id/disabledView"
                     android:layout_width="match_parent"

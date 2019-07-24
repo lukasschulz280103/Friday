@@ -276,4 +276,5 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="unsupported_device_tablet_description">Aber du kannst Friday trotzdem auf jeglichem Anroid-Gerät mit Android 8.0 oder höher benutzen.</string>
     <string name="feedbackSender_storageException">Feedback konnte nicht hochgeladen werden. Möglicherweise sind sie nicht angemeldet - melden sie sich an und versuchen sie es erneut.</string>
     <string name="fileSelector_permission_required">Sie müssen den Speicherzugrff erlauben, um Ihre Dateien anzuzeigen</string>
+    <string name="auth_pswd_empty_error">Das Passwort darf nicht leer sein</string>
 </resources>
