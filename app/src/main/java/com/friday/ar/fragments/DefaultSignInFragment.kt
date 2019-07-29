@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.ViewFlipper
@@ -44,7 +45,7 @@ import java.io.IOException
 class DefaultSignInFragment : Fragment() {
     private var resetResultText: TextView? = null
     private var resetPasswordText: TextView? = null
-    private var mOnAuthCompletedListener: OnAuthCompletedListener? = null
+    var onAuthCompletedListener: OnAuthCompletedListener? = null
     private val firebaseAuth = FirebaseAuth.getInstance()
     private var loadingDialogBuilder: MaterialAlertDialogBuilder? = null
     private var loadingDialog: AlertDialog? = null
@@ -80,7 +81,7 @@ class DefaultSignInFragment : Fragment() {
         setInputsEnabled(true)
         if (task.isSuccessful) {
             Snackbar.make(mActivity.findViewById(android.R.id.content), getString(R.string.signin_welcome, emailInput!!.text!!.toString()), Snackbar.LENGTH_SHORT).show()
-            mOnAuthCompletedListener!!.notNull { mOnAuthCompletedListener!!.onAuthCompleted() }
+            onAuthCompletedListener!!.notNull { onAuthCompletedListener!!.onAuthCompleted() }
         } else {
             val errorDialogBuilder = MaterialAlertDialogBuilder(context!!)
             try {
@@ -190,14 +191,6 @@ class DefaultSignInFragment : Fragment() {
 
     }
 
-    fun setOnAuthCompletedListener(mOnAuthCompletedListener: OnAuthCompletedListener) {
-        this.mOnAuthCompletedListener = mOnAuthCompletedListener
-    }
-
-    fun getmOnAuthCompletedListener(): OnAuthCompletedListener? {
-        return mOnAuthCompletedListener
-    }
-
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
@@ -226,8 +219,9 @@ class DefaultSignInFragment : Fragment() {
                                 } catch (e: IOException) {
                                     Log.e("AuthDialog", e.localizedMessage, e)
                                 }
+                                (context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view!!.windowToken, 0)
 
-                                mOnAuthCompletedListener!!.notNull { mOnAuthCompletedListener!!.onAuthCompleted() }
+                                onAuthCompletedListener!!.notNull { onAuthCompletedListener!!.onAuthCompleted() }
                             }
                         }, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
                         downloadManager.enqueue(downloadManagerRequest)

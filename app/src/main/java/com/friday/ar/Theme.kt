@@ -1,9 +1,8 @@
 package com.friday.ar
 
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.Drawable
 import android.preference.PreferenceManager
-
 import androidx.annotation.StyleRes
 
 /**
@@ -64,10 +63,10 @@ class Theme {
     //TODO gradients do not appear top-to-bottom on some devices
     /**
      * @param pos color index in theme
-     * @return gradient of the two coMain menu | File | New | Vector Assetlors at the position
+     * @return gradient of the two colors at the position
      */
-    fun createGradient(pos: Int): GradientDrawable {
-        return GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, getColorsForPos(pos))
+    fun createAppThemeGadient(): Drawable {
+        return mContext!!.getDrawable(R.drawable.app_colors_gradient)!!
     }
 
     companion object {

@@ -10,12 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.friday.ar.FridayApplication
 import com.friday.ar.R
+import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.service.OnAccountSyncStateChanged
 import com.friday.ar.ui.FeedbackSenderActivity
-import com.friday.ar.ui.mainactivity.MainActivity
 import com.friday.ar.util.UserUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -27,7 +26,6 @@ import com.mikhaellopez.circularimageview.CircularImageView
 class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
     private var firebaseAuth: FirebaseAuth? = null
     private var firebaseUser: FirebaseUser? = null
-    private var mainActivity: MainActivity? = null
 
     private var accountImageView: CircularImageView? = null
     private var emailText: TextView? = null
@@ -60,43 +58,36 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val fragmentView = inflater.inflate(R.layout.fragment_profile, container, false)
-        mainActivity = activity as MainActivity?
         viewSwitcher = fragmentView.findViewById(R.id.page_profile_account_vswitcher)
         emailText = fragmentView.findViewById(R.id.page_profile_email)
         accountImageView = fragmentView.findViewById(R.id.page_profile_image_account)
         welcomeText = fragmentView.findViewById(R.id.page_profile_header)
-        (mainActivity!!.application as FridayApplication).registerForSyncStateChange(this)
         val signInButton = fragmentView.findViewById<Button>(R.id.page_profile_signin_button)
         val toFeedback = fragmentView.findViewById<LinearLayout>(R.id.main_feedback)
         val toSettings = fragmentView.findViewById<LinearLayout>(R.id.main_settings)
         val toLayoutEditor = fragmentView.findViewById<LinearLayout>(R.id.main_layout_editor)
         val toHelp = fragmentView.findViewById<LinearLayout>(R.id.main_help)
-        signInButton.setOnClickListener { _ ->
-            mainActivity!!.promptSignin()
-            mainActivity!!.setmOnAuthCompleted(object : OnAuthCompletedListener {
+        signInButton.setOnClickListener {
+            //TODO show auth dialog here
+            val authenticationDialog = AuthDialog()
+            authenticationDialog.show(childFragmentManager, "AuthenticationDialog")
+            authenticationDialog.signInFragment.onAuthCompletedListener = object : OnAuthCompletedListener {
                 override fun onAuthCompleted() {
-                    Log.d("ONAUTHCOMPLETED", "AUTH COMPLETED")
-                    firebaseUser = firebaseAuth!!.currentUser
-                    viewSwitcher!!.displayedChild = 1
                     setupSignInScreen()
-                    mainActivity!!.authDialogFragment!!.dismissDialog()
+                    authenticationDialog.dismiss()
                 }
 
                 override fun onCanceled() {
-
                 }
-            })
-        }
-        if (firebaseAuth!!.currentUser == null) {
-            viewSwitcher!!.displayedChild = 0
-        } else {
-            viewSwitcher!!.displayedChild = 1
-            setupSignInScreen()
+
+            }
         }
         toLayoutEditor.setOnClickListener(intentManager)
         toSettings.setOnClickListener(intentManager)
         toHelp.setOnClickListener(intentManager)
         toFeedback.setOnClickListener(intentManager)
+        setupSignInScreen()
+
         return fragmentView
     }
 
@@ -108,21 +99,26 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
     }
 
     private fun setupSignInScreen() {
-        val userUtil = UserUtil(mainActivity!!)
-        if (firebaseUser!!.photoUrl != null && userUtil.avatarFile.exists()) {
-            val accountImageUri = Uri.parse("file://" + context!!.filesDir + "/profile/avatar.jpg")
-            accountImageView!!.setImageURI(accountImageUri)
+        if (firebaseAuth!!.currentUser == null) {
+            viewSwitcher!!.displayedChild = 0
         } else {
-            accountImageView!!.background = mainActivity!!.getDrawable(R.drawable.ic_twotone_account_circle_24px)
+            val userUtil = UserUtil(context!!)
+            viewSwitcher!!.displayedChild = 1
+            if (firebaseUser!!.photoUrl != null && userUtil.avatarFile.exists()) {
+                val accountImageUri = Uri.parse("file://" + context!!.filesDir + "/profile/avatar.jpg")
+                accountImageView!!.setImageURI(accountImageUri)
+            } else {
+                accountImageView!!.background = activity!!.getDrawable(R.drawable.ic_twotone_account_circle_24px)
+            }
+            emailText!!.text = firebaseUser!!.email
+            welcomeText!!.text = if (firebaseUser!!.displayName != null && firebaseUser!!.displayName != "") getString(R.string.page_profile_header_text, firebaseUser!!.displayName) else getString(R.string.greet_no_name)
         }
-        emailText!!.text = firebaseUser!!.email
-        welcomeText!!.text = if (firebaseUser!!.displayName != null && firebaseUser!!.displayName != "") getString(R.string.page_profile_header_text, firebaseUser!!.displayName) else getString(R.string.greet_no_name)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.d(LOGTAG, "onActivityResult:[requestCode=$requestCode|resultCode=$resultCode|oldData=$data")
         if (requestCode == REQUEST_CODE_SETTINGS && resultCode == Activity.RESULT_OK) {
-            mainActivity!!.recreate()
+            activity!!.recreate()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

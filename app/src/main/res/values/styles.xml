@@ -141,6 +141,12 @@
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
     </style>
 
+    <style name="FullscreenTheme.Dialog">
+        <item name="android:windowAnimationStyle">@style/FullscreenTheme.Dialog</item>
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
     <style name="PreferenceButton" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:backgroundTint">@android:color/transparent</item>

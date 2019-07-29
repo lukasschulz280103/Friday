@@ -41,7 +41,7 @@ class WizardActivity : AppIntro() {
         project_info_page.description = getString(R.string.app_friday_description)
 
         val signin_fragment = DefaultSignInFragment()
-        signin_fragment.setOnAuthCompletedListener(onAuthCompletedListener)
+        signin_fragment.onAuthCompletedListener = onAuthCompletedListener
 
         addSlide(AppIntroFragment.newInstance(welcomePage))
         addSlide(AppIntroFragment.newInstance(project_info_page))

@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.Window
 import android.widget.ImageButton
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +25,6 @@ import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.fragments.dialogFragments.ChangelogDialogFragment
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
-import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.list.dashboard.DashboardAdapter
@@ -50,8 +48,8 @@ import kotlin.collections.ArrayList
 class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     private var storeFragment = MainStoreFragment()
     internal lateinit var app: FridayApplication
-    private lateinit var mOnAuthCompleted: OnAuthCompletedListener
     private lateinit var viewModel: MainActivityViewModel
+    var authDialogFragment: AuthDialog? = null
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.main_nav_dashboard -> main_view_flipper!!.displayedChild = 0
@@ -72,8 +70,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
         }
         true
     }
-    var authDialogFragment: AuthDialog? = null
-        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Theme.getCurrentAppTheme(this))
@@ -140,7 +136,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
 
             val theme = Theme(this@MainActivity)
             val appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this@MainActivity))
-            runOnUiThread { mainTitleView.background = theme.createGradient(appThemeIndex) }
+            runOnUiThread { mainTitleView.background = theme.createAppThemeGadient() }
 
 
             main_bottom_nav.setOnNavigationItemSelectedListener(navselected)
@@ -180,8 +176,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
 
     private fun setupProfilePage() {
         val theme = Theme(this@MainActivity)
-        val appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this@MainActivity))
-        findViewById<View>(R.id.profileTitleViewContainer).background = theme.createGradient(appThemeIndex)
+        findViewById<View>(R.id.profileTitleViewContainer).background = theme.createAppThemeGadient()
     }
 
 
@@ -204,7 +199,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
 
     override fun onBackPressed() {
         if (authDialogFragment != null && authDialogFragment!!.isAdded) {
-            authDialogFragment!!.dismissDialog()
+            authDialogFragment!!.dismiss()
         } else {
             Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
                     .setAction(getString(R.string.action_leave)) { finishAffinity() }.show()
@@ -261,11 +256,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
         }
     }
 
-    fun setmOnAuthCompleted(mOnAuthCompleted: OnAuthCompletedListener) {
-        this.mOnAuthCompleted = mOnAuthCompleted
-        authDialogFragment!!.onAuthListener = mOnAuthCompleted
-    }
-
     fun promptSignin() {
         Log.d("FirebaseAuth", "showing auth dialog")
         authDialogFragment = AuthDialog()
@@ -273,13 +263,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
                 .replace(android.R.id.content, authDialogFragment!!)
-                .commit()
-    }
-
-    fun dismissUninstallPrompt() {
-        supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
-                .replace(android.R.id.content, Fragment())
                 .commit()
     }
 

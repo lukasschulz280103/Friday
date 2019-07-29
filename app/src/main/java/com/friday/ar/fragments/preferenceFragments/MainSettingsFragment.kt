@@ -152,6 +152,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
         } else {
             devModeShowChangelog!!.isEnabled = false
             devModeShowChangelog!!.isChecked = false
+            devModeUseBetaChannel!!.isEnabled = false
             devModeUseBetaChannel!!.isChecked = false
         }
         true
