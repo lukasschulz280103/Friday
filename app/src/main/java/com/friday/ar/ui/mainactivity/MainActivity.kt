@@ -1,25 +1,21 @@
-package com.friday.ar.ui
+package com.friday.ar.ui.mainactivity
 
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.os.PowerManager
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.Window
-import android.widget.FrameLayout
 import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.ViewFlipper
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.friday.ar.FridayApplication
 import com.friday.ar.R
@@ -35,6 +31,9 @@ import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.list.dashboard.DashboardAdapter
 import com.friday.ar.service.OnAccountSyncStateChanged
+import com.friday.ar.ui.FeedbackSenderActivity
+import com.friday.ar.ui.FullscreenActionActivity
+import com.friday.ar.ui.WizardActivity
 import com.friday.ar.ui.store.StoreDetailActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -47,27 +46,28 @@ import kotlinx.android.synthetic.main.page_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+//TODO move all the work to viewModels
 class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     private var storeFragment = MainStoreFragment()
     internal lateinit var app: FridayApplication
     private lateinit var mOnAuthCompleted: OnAuthCompletedListener
-    private var viewSwitcherMain: ViewFlipper? = null
+    private lateinit var viewModel: MainActivityViewModel
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.main_nav_dashboard -> viewSwitcherMain!!.displayedChild = 0
+            R.id.main_nav_dashboard -> main_view_flipper!!.displayedChild = 0
             R.id.main_nav_store -> {
                 if (findViewById<View>(R.id.stub_page_store) != null) {
                     stub_page_store.visibility = View.VISIBLE
                     setupSorePage()
                 }
-                viewSwitcherMain!!.displayedChild = 1
+                main_view_flipper!!.displayedChild = 1
             }
             R.id.main_nav_profile -> {
                 if (findViewById<View>(R.id.stub_page_profile) != null) {
                     stub_page_profile.visibility = View.VISIBLE
                     setupProfilePage()
                 }
-                viewSwitcherMain!!.displayedChild = 2
+                main_view_flipper!!.displayedChild = 2
             }
         }
         true
@@ -80,6 +80,46 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
+        app = application as FridayApplication
+
+        viewModel = ViewModelProviders.of(this, MainActivityViewModel.Factory(app)).get(MainActivityViewModel::class.java)
+
+        viewModel.isFirstUse.observe(this, Observer { isFirstUse ->
+            if (isFirstUse) {
+                val showWizard = Intent(this, WizardActivity::class.java)
+                startActivity(showWizard)
+            }
+        })
+
+        viewModel.energySaverActive.observe(this@MainActivity, Observer { isEnergySaverActive ->
+            if (isEnergySaverActive) {
+                val builder = MaterialAlertDialogBuilder(this)
+                builder.setTitle(R.string.energy_saver_warn_title)
+                builder.setMessage(R.string.energy_saver_warn_msg)
+                builder.setPositiveButton(R.string.deactivate) { _, _ -> }
+                builder.setNegativeButton(R.string.later, null)
+                builder.create().show()
+            }
+        })
+        viewModel.isUpdatedVersion.observe(this@MainActivity, Observer { isUpdatedVersion ->
+            if (isUpdatedVersion) {
+                runOnUiThread {
+                    val changeLogDialog = ChangelogDialogFragment()
+                    changeLogDialog.show(supportFragmentManager, "ChangeLogDialog")
+                }
+            }
+        })
+
+        viewModel.isOldVersionInstalled.observe(this@MainActivity, Observer { isOldVersionInstalled ->
+            if (isOldVersionInstalled) {
+                val uninstallOldDialogFragment = UninstallOldAppDialog()
+                //Using FragmentManager to replace content view with dialog(to make animation work better)
+                supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
+                        .replace(android.R.id.content, uninstallOldDialogFragment)
+                        .commit()
+            }
+        })
 
         //Setting up views and objects on separate thread to improve performance at startup
         Thread(Runnable {
@@ -87,17 +127,14 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
                 runOnUiThread { UnsupportedDeviceDialog().show(supportFragmentManager, "UnsupportedDeviceDialog") }
                 return@Runnable
             }
-            viewSwitcherMain = findViewById(R.id.main_view_flipper)
-            val parallaxScrollView = findViewById<FrameLayout>(R.id.parallaxScollView)
-            val mainTitleView = findViewById<LinearLayout>(R.id.mainTitleView)
-            app = application as FridayApplication
+
             //Apply padding to the main pages content frame so it fits the height of the title view
-            val vto = parallaxScrollView.viewTreeObserver
+            val vto = parallaxScollView.viewTreeObserver
             vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     mainTitleView.viewTreeObserver.removeOnGlobalLayoutListener(this)
                     val height = mainTitleView.measuredHeight
-                    runOnUiThread { parallaxScrollView.setPadding(0, height, 0, 0) }
+                    runOnUiThread { parallaxScollView.setPadding(0, height, 0, 0) }
                 }
             })
 
@@ -106,55 +143,18 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             runOnUiThread { mainTitleView.background = theme.createGradient(appThemeIndex) }
 
 
-            (findViewById<View>(R.id.main_bottom_nav) as BottomNavigationView).setOnNavigationItemSelectedListener(navselected)
+            main_bottom_nav.setOnNavigationItemSelectedListener(navselected)
 
-            findViewById<View>(R.id.start_actionmode).setOnClickListener { v ->
+            start_actionmode.setOnClickListener {
                 val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
                 startActivity(intent)
             }
 
             val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
-            val pkgInf: PackageInfo
-            try {
-                pkgInf = packageManager.getPackageInfo(packageName, 0)
-                if (defaultSharedPreferences.getString("version", "0") != pkgInf.versionName || defaultSharedPreferences.getBoolean("pref_devmode_show_changelog", false)) {
-                    val changeLogDialog = ChangelogDialogFragment()
-                    changeLogDialog.show(supportFragmentManager, "ChangeLogDialog")
-                    val editor = defaultSharedPreferences.edit()
-                    editor.putString("version", pkgInf.versionName)
-                    editor.apply()
-                }
-            } catch (e: PackageManager.NameNotFoundException) {
-                e.printStackTrace()
-            }
-
-            checkForFirstUse()
-
-            try {
-                val isOldAppInstalled = packageManager
-                isOldAppInstalled.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES)
-                val uninstallOldDialogFragment = UninstallOldAppDialog()
-                supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
-                        .replace(android.R.id.content, uninstallOldDialogFragment)
-                        .commit()
-            } catch (e: PackageManager.NameNotFoundException) {
-                Log.i(LOGTAG, "no old version found")
-            }
-
             if (defaultSharedPreferences.getInt("theme", 0) == 0) {
                 defaultSharedPreferences.edit().putInt("theme", R.style.AppTheme).apply()
             }
         }).start()
-        val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (pm.isPowerSaveMode) {
-            val builder = MaterialAlertDialogBuilder(this)
-            builder.setTitle(R.string.energy_saver_warn_title)
-            builder.setMessage(R.string.energy_saver_warn_msg)
-            builder.setPositiveButton(R.string.deactivate) { _, _ -> }
-            builder.setNegativeButton(R.string.later, null)
-            builder.create().show()
-        }
         Handler().postDelayed({ start_actionmode.shrink() }, 2500)
         //app.registerForSyncStateChange(this);
         val dataList = ArrayList<DashboardListItem>()
@@ -182,15 +182,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
         val theme = Theme(this@MainActivity)
         val appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this@MainActivity))
         findViewById<View>(R.id.profileTitleViewContainer).background = theme.createGradient(appThemeIndex)
-    }
-
-    private fun checkForFirstUse() {
-        val settingsFile = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
-        if (settingsFile.getBoolean("isFirstUse", true)) {
-            val showWizard = Intent(this, WizardActivity::class.java)
-            startActivity(showWizard)
-            settingsFile.edit().putBoolean("isFirstUse", false).apply()
-        }
     }
 
 

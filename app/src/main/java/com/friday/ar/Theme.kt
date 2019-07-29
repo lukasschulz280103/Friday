@@ -61,6 +61,7 @@ class Theme {
         return -1
     }
 
+    //TODO gradients do not appear top-to-bottom on some devices
     /**
      * @param pos color index in theme
      * @return gradient of the two coMain menu | File | New | Vector Assetlors at the position

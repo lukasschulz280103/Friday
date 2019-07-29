@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.friday.ar.R
-import com.friday.ar.ui.MainActivity
+import com.friday.ar.ui.mainactivity.MainActivity
 import com.google.android.material.button.MaterialButton
 
 class UninstallOldAppDialog : DialogFragment() {

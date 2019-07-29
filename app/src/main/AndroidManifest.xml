@@ -132,7 +132,7 @@
             android:name=".ui.store.StoreDetailActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.mainactivity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -145,17 +145,17 @@
             android:name=".ui.FullscreenActionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_action"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.mainactivity.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.friday.ar.ui.MainActivity" />
+                android:value="com.friday.ar.ui.mainactivity.MainActivity" />
         </activity>
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.mainactivity.MainActivity"
             android:theme="@style/PreferenceActivityStyle">
             <intent-filter>
                 <action android:name="com.friday.settings" />
@@ -165,7 +165,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.friday.ar.ui.MainActivity" />
+                android:value="com.friday.ar.ui.mainactivity.MainActivity" />
         </activity>
         <activity
             android:name=".ui.FeedbackSenderActivity"

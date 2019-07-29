@@ -15,7 +15,7 @@ import com.friday.ar.R
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.service.OnAccountSyncStateChanged
 import com.friday.ar.ui.FeedbackSenderActivity
-import com.friday.ar.ui.MainActivity
+import com.friday.ar.ui.mainactivity.MainActivity
 import com.friday.ar.util.UserUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

@@ -22,6 +22,7 @@ import io.fabric.sdk.android.Fabric
 import java.io.File
 import java.util.*
 
+//TODO remove data handling from application class to sperate models
 /**
  * Application class
  */

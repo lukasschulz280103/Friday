@@ -12,6 +12,7 @@ import com.friday.ar.R
 import com.friday.ar.ui.store.packageInstaller.StoreInstallationManagerActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
+//TODO convert to empty constructor
 class ManagerBottomSheetDialogFragment(private val contextActivity: Activity) : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

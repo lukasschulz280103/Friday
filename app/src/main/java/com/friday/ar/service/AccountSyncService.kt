@@ -57,7 +57,6 @@ class AccountSyncService : JobService() {
 
     override fun onStopJob(jobParameters: JobParameters): Boolean {
         Log.d(LOGTAG, "finished synchronization service")
-        unregisterReceiver(downloadFinishReciever)
         return false
     }
 
