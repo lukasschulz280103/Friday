@@ -170,7 +170,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     private fun setupSorePage() {
         val storeExpandManagerButton = findViewById<ImageButton>(R.id.storeMore)
         storeExpandManagerButton.setOnClickListener {
-            val managerDialog = ManagerBottomSheetDialogFragment(this)
+            val managerDialog = ManagerBottomSheetDialogFragment()
             managerDialog.show(supportFragmentManager, "ManagerBottomSheet")
         }
         supportFragmentManager.beginTransaction()
@@ -219,7 +219,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             alertDialog.setNeutralButton(R.string.app_feedback) { _, _ -> startActivity(Intent(this@MainActivity, FeedbackSenderActivity::class.java)) }
             when (errtype) {
                 "TYPE_NOT_INSTALLED" -> {
-                    run {
                         alertDialog.setMessage(R.string.errtype_not_installed)
                         val apk = ArCoreApk.getInstance()
                         try {
@@ -230,19 +229,12 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
                         } catch (e: UnavailableUserDeclinedInstallationException) {
                             e.printStackTrace()
                         }
-                    }
-                    run { alertDialog.setMessage(R.string.errtype_arcore_apk_too_old) }
-                    run { alertDialog.setMessage(R.string.errtype_sdk_too_old) }
-                    run { alertDialog.setMessage(R.string.errtype_device_incompatible) }
                 }
                 "TYPE_OLD_APK" -> {
-                    run { alertDialog.setMessage(R.string.errtype_arcore_apk_too_old) }
-                    run { alertDialog.setMessage(R.string.errtype_sdk_too_old) }
-                    run { alertDialog.setMessage(R.string.errtype_device_incompatible) }
+                    alertDialog.setMessage(R.string.errtype_arcore_apk_too_old)
                 }
                 "TYPE_OLD_SDK_TOOL" -> {
-                    run { alertDialog.setMessage(R.string.errtype_sdk_too_old) }
-                    run { alertDialog.setMessage(R.string.errtype_device_incompatible) }
+                    alertDialog.setMessage(R.string.errtype_sdk_too_old)
                 }
                 "TYPE_DEVICE_INCOMPATIBLE" -> {
                     alertDialog.setMessage(R.string.errtype_device_incompatible)
@@ -264,8 +256,8 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
                         .setCancelable(false)
                         .setPositiveButton(R.string.retry) { _, _ -> requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO), REQUEST_PERMISSIONS_CODE) }
                         .create().show()
-            } else {
             }
+
         }
     }
 

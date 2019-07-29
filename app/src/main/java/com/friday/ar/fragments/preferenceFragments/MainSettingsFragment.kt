@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth
 import java.io.File
 import java.util.*
 
+//TODO handle avatar file not existant
 class MainSettingsFragment : PreferenceFragmentCompat() {
 
     private var mActivity: Activity? = null
@@ -93,63 +94,35 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
         val rGroup = dialogView.findViewById<RadioGroup>(R.id.deletion_reason_rgroup)
         val attachmentText = dialogView.findViewById<TextInputEditText>(R.id.reason_attached_text)
 
-        val reasonKeyword = arrayOf("")
+        var reasonKeyword = ""
         rGroup.setOnCheckedChangeListener { radioGroup, _ ->
             attachmentText.visibility = View.GONE
             when (radioGroup.checkedRadioButtonId) {
                 R.id.reason_bad_experience -> {
-                    run { reasonKeyword[0] = "REASON_BAD_EXPERIENCE" }
-                    run { reasonKeyword[0] = "REASON_LOGIN_ISSUES" }
-                    run {
-                        reasonKeyword[0] = "REASON_APP_USELESS"
-
-                    }
-                    run {
-                        reasonKeyword[0] = "REASON_NO_HARDWARE"
-
-                    }
-                    run {
-                        reasonKeyword[0] = "REASON_OTHER"
-                        attachmentText.visibility = View.VISIBLE
-                    }
+                    reasonKeyword = "REASON_BAD_EXPERIENCE"
                 }
                 R.id.reason_login_issues -> {
-                    run { reasonKeyword[0] = "REASON_LOGIN_ISSUES" }
-                    run { reasonKeyword[0] = "REASON_APP_USELESS" }
-                    run { reasonKeyword[0] = "REASON_NO_HARDWARE" }
-                    run {
-                        reasonKeyword[0] = "REASON_OTHER"
-                        attachmentText.visibility = View.VISIBLE
-                    }
+                    reasonKeyword = "REASON_LOGIN_ISSUES"
                 }
                 R.id.reason_app_useless -> {
-                    run { reasonKeyword[0] = "REASON_APP_USELESS" }
-                    run { reasonKeyword[0] = "REASON_NO_HARDWARE" }
-                    run {
-                        reasonKeyword[0] = "REASON_OTHER"
-                        attachmentText.visibility = View.VISIBLE
-                    }
+                    reasonKeyword = "REASON_APP_USELESS"
                 }
                 R.id.reason_no_hardware -> {
-                    run { reasonKeyword[0] = "REASON_NO_HARDWARE" }
-                    run {
-                        reasonKeyword[0] = "REASON_OTHER"
-                        attachmentText.visibility = View.VISIBLE
-                    }
+                    reasonKeyword = "REASON_NO_HARDWARE"
                 }
                 R.id.reason_other -> {
-                    reasonKeyword[0] = "REASON_OTHER"
-                    attachmentText.visibility = View.VISIBLE
+                    reasonKeyword = "REASON_OTHER"
                 }
             }
         }
+        attachmentText.visibility = View.VISIBLE
         confirmDeletionDialog.setView(R.layout.deletion_dialog_feedback)
         confirmDeletionDialog.setPositiveButton(getString(R.string.confirm_deletion_positive, if (firebaseUser!!.displayName != null) firebaseUser.displayName else firebaseUser.email)) { _, _ ->
             loadingDialog = ProgressDialog(activity!!, getString(R.string.delete_dialog_loading_text))
             loadingDialog!!.show()
             val scheduler = activity!!.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
             val extra = PersistableBundle()
-            extra.putString("reason", reasonKeyword[0])
+            extra.putString("reason", reasonKeyword)
             extra.putString("uid", firebaseUser.uid)
             val info = JobInfo.Builder(FridayApplication.Jobs.JOB_FEEDBACK, ComponentName(mActivity!!, FeedbackService::class.java))
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)

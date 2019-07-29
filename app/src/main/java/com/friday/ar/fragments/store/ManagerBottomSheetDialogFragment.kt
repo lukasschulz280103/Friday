@@ -1,6 +1,5 @@
 package com.friday.ar.fragments.store
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +11,7 @@ import com.friday.ar.R
 import com.friday.ar.ui.store.packageInstaller.StoreInstallationManagerActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-//TODO convert to empty constructor
-class ManagerBottomSheetDialogFragment(private val contextActivity: Activity) : BottomSheetDialogFragment() {
+class ManagerBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val dialogView = inflater.inflate(R.layout.storemanager_bottom_sheet, container, false)
@@ -23,7 +21,7 @@ class ManagerBottomSheetDialogFragment(private val contextActivity: Activity) : 
 
     fun startActivityAnimated(intent: Intent, animationTarget: View) {
         val activityOptions = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(contextActivity, animationTarget, animationTarget.transitionName)
+                .makeSceneTransitionAnimation(activity!!, animationTarget, animationTarget.transitionName)
                 .toBundle()
         startActivity(intent, activityOptions)
     }
