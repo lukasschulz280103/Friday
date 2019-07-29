@@ -23,7 +23,7 @@
     <string name="changed_attached_file">Le fichier joint a été changé en %s</string>
     <string name="changelog">Changélog</string>
     <string name="check_update_error">Impossible de vérifier la mise à jour</string>
-    <string name="checking_version">Vérification...</string>
+    <string name="checking_version">Vérification…</string>
     <string name="confirm_deletion_message">En supprimant votre compte, vous acceptez que toutes les données qui font partie de ce compte seront supprimées à jamais.</string>
     <string name="confirm_deletion_positive">Confirmer et supprimer %s</string>
     <string name="confirm_deletion_title">Confirmer la suppression</string>
@@ -95,7 +95,7 @@
     <string name="leave_action_activity">Voulez-vous mettre fin à cette session ?</string>
     <string name="leave_app">Voulez-vous vraiment quitter l\'application ?</string>
     <string name="licenses">Licences</string>
-    <string name="loading_dialog_msg">Charger...</string>
+    <string name="loading_dialog_msg">Charger…</string>
     <string name="look">Look et Feel</string>
     <string name="low_memory_message">La mémoire de l\'appareil est faible, ce qui peut entraîner des retards de performance en mode VR. Veuillez essayer de libérer de l\'espace afin de garantir une bonne performance.</string>
     <string name="low_memory_title">Avertissement de mémoire faible</string>
@@ -135,7 +135,7 @@
     <string name="reason_header">Pourquoi tu nous quittes ?</string>
     <string name="reason_login_issues">Problèmes lors de l\'ouverture d\'une session</string>
     <string name="reason_missing_hardware">Je n\'ai pas le matériel nécessaire (comme des lunettes AR, etc.).</string>
-    <string name="reason_other">Autre...</string>
+    <string name="reason_other">Autre…</string>
     <string name="recommendation_picked_widgets_title">Widgets choisis</string>
     <string name="req_cam_rationale">L\'autorisation de la caméra est nécessaire pour\'la fonction principale du friday : Le mode AR</string>
     <string name="req_cam_retionale_title">Camera</string>
@@ -215,7 +215,7 @@
     <string name="code_perm_denied">Accès refusé. Cette erreur peut être causée par un compte bloqué ou désactivé. Si ce n\'est pas le cas, contactez notre support.</string>
     <string name="code_unauthenticated">Vous n\'êtes pas connecté. Pour utiliser cette fonctionnalité, connectez-vous via \">Profil >Se connecter\" et réessayez.</string>
     <string name="code_unavailable">Service indisponible. Veuillez vérifier votre connexion réseau et réessayer plus tard.</string>
-    <string name="code_unknown">Une erreur inconnue s\'est produite !</string>
+    <string name="unknown_error">Une erreur inconnue s\'est produite !</string>
     <string name="submit_feedback">Submit feedback</string>
     <string name="developer_options">options de développement</string>
     <string name="heat_warning_BETA">Affichage d\'un avertissement de chaleur au démarrage du mode d\'action</string>
@@ -262,7 +262,7 @@
     <string name="pluginInstaller_uninstall_dialog_msg">Êtes-vous sûr de vouloir désinstaller %s ?</string>
     <string name="pluginInstaller_uninstall_dialog_title">Désinstaller le plugin</string>
     <string name="pluginInstaller_error_invalid_zip_file">Ce fichier est corrompu et/ou n\'est pas un plugin-archive valide</string>
-    <string name="pluginInstaller_progressMessage_installing">Installé...</string>
+    <string name="pluginInstaller_progressMessage_installing">Installé…</string>
     <string name="pluginInstaller_progressMessage_verifying">Vérification du plugin....</string>
     <string name="pluginInstaller_error_io_exception">Le plugin n\'a pas pu être installé à cause d\'une erreur inconnue.</string>
     <string name="pref_devmode_use_beta_channel">Utiliser le canal bêta pour les mises à jour</string>
@@ -273,4 +273,7 @@
     <string name="update_available">Mise à jour disponible</string>
     <string name="feedbackSender_storageException">La rétroaction n\'a pas pu être téléchargée. Vous n\'êtes peut-être pas connecté - connectez-vous et réessayez.</string>
     <string name="fileSelector_permission_required">Vous devez accorder l\'autorisation de stockage afin d\'accéder à vos fichiers.</string>
+    <string name="auth_pswd_empty_error">Le mot de passe peut ne pas être vide</string>
+    <string name="auth_server_error_title">Erreur de serveur</string>
+    <string name="auth_server_error_msg">Le serveur n\'a pas permis l\'authentification des utilisateurs à partir de cet appareil. Ce n\'est peut-être pas ta faute. Cette erreur a été signalée aux techniciens. Essayez de mettre à jour cette application, puis réessayez.</string>
 </resources>

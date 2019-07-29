@@ -60,7 +60,7 @@ class PermissionRequestFragment : Fragment(), ISlidePolicy {
         return PermissionChecker.checkSelfPermission(activity!!, Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED || PermissionChecker.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PermissionChecker.PERMISSION_GRANTED
     }
     override fun onUserIllegallyRequestedNextPage() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
 }

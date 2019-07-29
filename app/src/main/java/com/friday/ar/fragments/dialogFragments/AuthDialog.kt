@@ -19,7 +19,9 @@ class AuthDialog : FullscreenDialog() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val dialogView = inflater.inflate(R.layout.signin_layout, container, false)
-        dialogView.close_signin_dialog.setOnClickListener { dismiss() }
+        dialogView.close_signin_dialog.setOnClickListener {
+            dismiss()
+        }
         return dialogView
     }
 

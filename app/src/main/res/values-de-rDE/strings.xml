@@ -15,12 +15,12 @@
     <string name="tou_content">
         Nutzen sie friday niemals in einer Umgebung, in der friday für risikoreichen Konzentrationsverlust, gefährliche Situation und Unfälle sorgen könnte.\n\n
 
-friday übernimmt keine Verantwortung für Fehler oder anderes menchliches Versagen das in nachweisbarem/nicht nachweisbarem Zusamenhang mit diesem Produkt steht.\n\n
+friday übernimmt keine Verantwortung für Fehler oder anderes menchliches Versagen das in nachweisbarem/nicht nachweisbarem Zusammenhang mit diesem Produkt steht.\n\n
 
 Durch die Nutzung dieses Produkts akzeptieren sie, dass diese App eventuell falsche Informationen und Daten enthalten kann. Wir übernehmen keine Verantwortung für die Richtigkeit von Information, die durch Drittanbieter an diese App weitergegeben wird, wie z.B. Kartendaten oder aktuelle Nachrichten.\n\n
 
 Wir sammeln keine persönlichen Daten des Nutzers außer in folgenden Fällen unter Zustimmung:\n
-        \t<b>- Bug-reporting</b>: Um unseren Service weiterhin konstant zu verbessern, werden automatisch Dateien an den Entwickler gesendet, die Nutzungsdaten beeinhalten(Nutzungshäufigkeit jeder Features, Android Version, Gerätenamen und Metadaten[,welche Funktion die App zum crash führt)\n
+        \t<b>- Bug-reporting</b>: Um unseren Service weiterhin konstant zu verbessern, werden automatisch Dateien an den Entwickler gesendet, die Nutzungsdaten beinhalten(Nutzungshäufigkeit jeder Features, Android Version, Gerätenamen und Metadaten[,welche Funktion die App zum crash führt)\n
         \t<b>- Smarte features:</b> Der Nutzer erlaubt die Nutzung von Kontakten, Standortdaten, Kamera, Mikrofon, Benachrichtigungen\n\n
 
 In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren sie, die Nutzungsedingungen und die Datenschutzbestimmung gelesen zu haben und akzeptieren diese.
@@ -50,15 +50,14 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="sign_out_success">Erfolgeich abgemeldet</string>
     <string name="confirm_deletion_title">Löschung bestätigen</string>
     <string name="confirm_deletion_message">Durch das Löschen dieses Accounts bestätigen sie, dass ihnen klar ist, dass jegliche Daten, die mit diesem Account verknüpft sind, gelöscht werden.</string>
-    <string name="loading_dialog_msg">Bitte warten...</string>
+    <string name="loading_dialog_msg">Bitte warten…</string>
     <string name="confirm_deletion_positive">Bestätigen und \"%s\" löschen</string>
     <string name="deletion_success">Account gelöscht</string>
-    <string name="deletion_error_canceled_title">Löschvorgang wurd unterbrochen</string>
+    <string name="deletion_error_canceled_title">Löschvorgang wurde unterbrochen</string>
     <string name="deletion_error_canceled_message">Der Löschvorgang wurde unterbrochen. Dieser Fehler ist darauf zurückzuführen, dass eine Internetverindung nicht vorhanden oder instabil ist</string>
     <string name="deletion_error_unknown_title">Account konnte nicht gelöscht werden</string>
     <string name="warning_auto_account_creation">Sollte noch kein Account vorhanden sein, wird automatisch ein neuer Account erstellt.</string>
-    <string name="delete_dialog_loading_text">Lösche Profildaten...</string>
-    <string name="made_by">by\nLukas Faber\nLukas Schultz</string>
+    <string name="delete_dialog_loading_text">Lösche Profildaten…</string>
     <string name="feature_soon">"Dieses feature ist in der aktuellen Version leider noch nicht verfügbar. "</string>
     <string name="page_profile_header_text">Hallo, %s</string>
     <string name="info_up_to_date">Aktuell</string>
@@ -71,8 +70,8 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="smth_went_wrong">Etwas ist schief gelaufen</string>
     <string name="feedback_submit_success">Feedback erfolgreich abgeschickt.\nVielen Dank!</string>
     <string name="checking_version">Überprüfen</string>
-    <string name="feedback_submit_image_upload">Anhänge hochladen...</string>
-    <string name="feedback_submit_logfiles_upload">Log-Dateien hochladen...</string>
+    <string name="feedback_submit_image_upload">Anhänge hochladen…</string>
+    <string name="feedback_submit_logfiles_upload">Log-Dateien hochladen…</string>
     <string name="debug_check_device_info">Gerätedaten</string>
     <string name="debug_usage_data">Nutzungsdaten</string>
     <string name="header_usage_data_info">Diese Nutzungsdaten können wir erheben:</string>
@@ -126,7 +125,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="store_detail_update_notes">Update-Info</string>
     <string name="store_add_review">Bewertung hinzufügen</string>
     <string name="store_detail_version">Version %s</string>
-    <string name="theme_default">Standart Design</string>
+    <string name="theme_default">Standard Design</string>
     <string name="theme_pink">Pink</string>
     <string name="theme_magenta">Lila</string>
     <string name="theme_blue">Blau</string>
@@ -170,7 +169,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="reason_login_issues">Probleme bei Anmeldeversuchen</string>
     <string name="reason_app_useless">Für mich ist diese App nutzlos</string>
     <string name="reason_missing_hardware">Mir fehlt die benötigte Hardware (wie zum Beispiel eine AR-Brille)</string>
-    <string name="reason_other">Andere...</string>
+    <string name="reason_other">Andere…</string>
     <string name="reason_header">Warum verlässt du uns?</string>
     <string name="leave_action_activity">Wollen sie die Sitzung beenden?</string>
     <string name="help_hint_vertical_plane_detection_msg">Diese App unterstützt vertikale Flächenerkennung. Sehen sie sich dazu nach vertikalen Flächen mit auffäligen Texturen.</string>
@@ -209,16 +208,16 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="store_featured">Top</string>
     <string name="code_aborted">Operation unterbrochen. Wiederholen sie den Vorgang und kontaktieren sie uns, wenn dass Problem beständig bleibt.</string>
     <string name="code_cancelled">Operation abgebrochen.</string>
-    <string name="code_data_loss">Ein Datenverlust wurde festgestellt. Versuchen sie es nocheinmal und kontaktieren sie den Support, falls das Problem bestehen bleibt.</string>
+    <string name="code_data_loss">Ein Datenverlust wurde festgestellt. Versuchen sie es noch einmal und kontaktieren sie den Support, falls das Problem bestehen bleibt.</string>
     <string name="code_deadline_exceeded">Timeout: Die Antwort der Servers hat zu lange gedauert.</string>
-    <string name="code_exhausted">Nicht genügend Resourcen frei um Daten zu laden; Geben sie auf ihrem Handy Speicherplatz frei und versuchen sie es noch einmal.</string>
+    <string name="code_exhausted">Nicht genügend Ressourcen frei um Daten zu laden; Geben sie auf ihrem Handy Speicherplatz frei und versuchen sie es noch einmal.</string>
     <string name="code_internal">Interner Fehler!\\nUnsere Entwickler wurden per automatischem Debug-Bericht informiert. Dieser Fehler liegt bei uns.</string>
     <string name="code_invalid_arg">Ein ungültiges Argument wurde in der Anfrage übermittelt. Dieser Fehler liegt nicht bei ihnen.</string>
     <string name="code_not_found">Beim Laden der Daten von dem Server ist ein Fehler aufgetreten. Dieser Fehler liegt bei uns. Eine Warnung wurde zu unseren Entwicklern geschickt.</string>
     <string name="code_perm_denied">Zugriff verweigert. Dies hat mit Ihrem Konto zu tun. Dieser Fehler kann durch ein gesperrtes oder deaktiviertes Konto verursacht werden. Wenn dies nicht der Fall ist, wenden Sie sich an unseren Support.</string>
     <string name="code_unauthenticated">Sie sind nicht angemeldet. Um diese Funktion zu verwenden, melden sie sich über \">Profil >Anmelden\" an un versuchen sie es erneut.</string>
     <string name="code_unavailable">Service ist nicht erreichbar. Bitte überprüfen sie ihre Netzwerkverbindung und versuchen sie es später erneut.</string>
-    <string name="code_unknown">EIn unbekannter Fehler ist aufgetreten.</string>
+    <string name="unknown_error">EIn unbekannter Fehler ist aufgetreten.</string>
     <string name="submit_feedback">Submit feedback</string>
     <string name="developer_options">Entwickleroptionen</string>
     <string name="license_activity_label">Open-Source Lizenzen</string>
@@ -265,8 +264,8 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="store_plugin_status_installed">Installiert</string>
     <string name="store_plugin_uninstall">Deinstallieren</string>
     <string name="pluginInstaller_error_invalid_zip_file">Diese Datei ist beschädigt und/oder keine valides Friday-Pluginarchiv</string>
-    <string name="pluginInstaller_progressMessage_installing">Installieren...</string>
-    <string name="pluginInstaller_progressMessage_verifying">Verifizieren des Plugins...</string>
+    <string name="pluginInstaller_progressMessage_installing">Installieren…</string>
+    <string name="pluginInstaller_progressMessage_verifying">Verifizieren des Plugins…</string>
     <string name="pluginInstaller_error_io_exception">Die Plugindatei konnte aufgrund eines unbekannten Fehlers nicht installiet werden.</string>
     <string name="pref_devmode_use_beta_channel">Beta-Kanal für Updates benutzen</string>
     <string name="update">Aktualisieren</string>
@@ -277,4 +276,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="feedbackSender_storageException">Feedback konnte nicht hochgeladen werden. Möglicherweise sind sie nicht angemeldet - melden sie sich an und versuchen sie es erneut.</string>
     <string name="fileSelector_permission_required">Sie müssen den Speicherzugrff erlauben, um Ihre Dateien anzuzeigen</string>
     <string name="auth_pswd_empty_error">Das Passwort darf nicht leer sein</string>
+    <string name="auth_server_error_title">Serverehler</string>
+    <string name="auth_server_error_msg">Der Server hat eine Anmeldung über dieses Gerät abgelehnt. Dies ist wahrscheinlih nicht ihr Fehler. Eine automatische Warnung wurde an unsere Techniker gesendet. Versuchen sie, die App zu updaten und versuchen sie die Anmeldung danach erneut.</string>
 </resources>

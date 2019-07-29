@@ -15,7 +15,6 @@ class Constant {
         val NOTIF_CHANNEL_UPDATE_ID = "channel_update"
         val NOTIF_CHANNEL_INSTALLER_ID = "channel_plugin_installer"
         val LOGTAG_STORE = "FridayMarketplace"
-
         /**
          * get the plugin storage directory.
          *
@@ -58,5 +57,16 @@ class Constant {
             }
             return dir
         }
+    }
+
+    object BroadcasteceiverActions {
+        /**
+         * Use this broadcast receiver action to always be notified about synchronization changes of [com.friday.ar.service.AccountSyncService]
+         *
+         * @see android.content.BroadcastReceiver
+         * @see com.friday.ar.service.AccountSyncService
+         */
+
+        val BROADCAST_ACCOUNT_SYNCED = "BROADCAST_ACCOUNT_SYNCHRONIZED"
     }
 }

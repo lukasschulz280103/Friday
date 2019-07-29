@@ -1,8 +1,10 @@
 package com.friday.ar.fragments
 
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.friday.ar.Constant
 import com.friday.ar.R
 import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
@@ -51,6 +54,12 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
         }
     }
 
+    private val accountSynchronizedReceiver = object : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            setupSignInScreen()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
@@ -73,16 +82,13 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
             //TODO show auth dialog here
             val authenticationDialog = AuthDialog()
             authenticationDialog.show(childFragmentManager, "AuthenticationDialog")
-            authenticationDialog.signInFragment.onAuthCompletedListener = object : OnAuthCompletedListener {
+            authenticationDialog.signInFragment.addOnAuthCompletedListener(object : OnAuthCompletedListener {
                 override fun onAuthCompleted() {
                     setupSignInScreen()
                     authenticationDialog.dismiss()
                 }
 
-                override fun onCanceled() {
-                }
-
-            }
+            })
         }
         toLayoutEditor.setOnClickListener(intentManager)
         toSettings.setOnClickListener(intentManager)
@@ -90,14 +96,13 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
         toFeedback.setOnClickListener(intentManager)
         setupSignInScreen()
 
+        mContext.registerReceiver(accountSynchronizedReceiver, IntentFilter(Constant.BroadcasteceiverActions.BROADCAST_ACCOUNT_SYNCED))
         return fragmentView
     }
 
     override fun onResume() {
         super.onResume()
-        if (firebaseAuth.currentUser == null) {
-            viewSwitcher!!.displayedChild = 0
-        }
+        setupSignInScreen()
     }
 
     private fun setupSignInScreen() {
@@ -139,4 +144,4 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
         private const val LOGTAG = "ProfileFragment"
         private const val REQUEST_CODE_SETTINGS = 200
     }
-}// Required empty public constructor
+}

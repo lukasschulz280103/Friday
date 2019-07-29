@@ -20,10 +20,6 @@ class WizardActivity : AppIntro() {
         override fun onAuthCompleted() {
             nextButton.callOnClick()
         }
-
-        override fun onCanceled() {
-
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +37,7 @@ class WizardActivity : AppIntro() {
         project_info_page.description = getString(R.string.app_friday_description)
 
         val signin_fragment = DefaultSignInFragment()
-        signin_fragment.onAuthCompletedListener = onAuthCompletedListener
+        signin_fragment.addOnAuthCompletedListener(onAuthCompletedListener)
 
         addSlide(AppIntroFragment.newInstance(welcomePage))
         addSlide(AppIntroFragment.newInstance(project_info_page))

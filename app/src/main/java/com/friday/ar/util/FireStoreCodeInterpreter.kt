@@ -38,7 +38,7 @@ class FireStoreCodeInterpreter(c: Context, e: FirebaseFirestoreException) {
         exceptionMessage = e.message!!
         when (e.code) {
             FirebaseFirestoreException.Code.CANCELLED -> message = c.getString(R.string.code_cancelled)
-            FirebaseFirestoreException.Code.UNKNOWN -> message = c.getString(R.string.code_unknown)
+            FirebaseFirestoreException.Code.UNKNOWN -> message = c.getString(R.string.unknown_error)
             FirebaseFirestoreException.Code.INVALID_ARGUMENT -> message = c.getString(R.string.code_invalid_arg)
             FirebaseFirestoreException.Code.DEADLINE_EXCEEDED -> message = c.getString(R.string.code_deadline_exceeded)
             FirebaseFirestoreException.Code.NOT_FOUND -> message = c.getString(R.string.code_not_found)

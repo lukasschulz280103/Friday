@@ -1,28 +1,30 @@
 package com.friday.ar.fragments
 
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.DownloadManager
-import android.content.*
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.ViewFlipper
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.crashlytics.android.Crashlytics
+import com.friday.ar.FridayApplication
 import com.friday.ar.R
-import com.friday.ar.extensionMethods.notNull
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
-import com.friday.ar.util.FileUtil
-import com.friday.ar.util.UserUtil
+import com.friday.ar.service.AccountSyncService
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -37,27 +39,19 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.*
 import kotlinx.android.synthetic.main.default_signin_fragment_layout.*
-import java.io.File
-import java.io.IOException
 
 
 //TODO renew this messed up code
 class DefaultSignInFragment : Fragment() {
     private var resetResultText: TextView? = null
     private var resetPasswordText: TextView? = null
-    var onAuthCompletedListener: OnAuthCompletedListener? = null
+    private var onAuthCompletedListenerList = ArrayList<OnAuthCompletedListener>()
     private val firebaseAuth = FirebaseAuth.getInstance()
-    private var loadingDialogBuilder: MaterialAlertDialogBuilder? = null
-    private var loadingDialog: AlertDialog? = null
     private var emailInput: TextInputEditText? = null
     private var emailInputWrapper: TextInputLayout? = null
     private var googleSignInButton: SignInButton? = null
     private var mSignInClient: GoogleSignInClient? = null
     private lateinit var mActivity: Activity
-    private var requestSignIn = View.OnClickListener {
-        val signInIntent = mSignInClient!!.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
     private var loader: ProgressBar? = null
     private var passwordEditText: TextInputEditText? = null
     private var submitbtn: MaterialButton? = null
@@ -81,7 +75,7 @@ class DefaultSignInFragment : Fragment() {
         setInputsEnabled(true)
         if (task.isSuccessful) {
             Snackbar.make(mActivity.findViewById(android.R.id.content), getString(R.string.signin_welcome, emailInput!!.text!!.toString()), Snackbar.LENGTH_SHORT).show()
-            onAuthCompletedListener!!.notNull { onAuthCompletedListener!!.onAuthCompleted() }
+            notifyAuthCompleted()
         } else {
             val errorDialogBuilder = MaterialAlertDialogBuilder(context!!)
             try {
@@ -149,7 +143,10 @@ class DefaultSignInFragment : Fragment() {
                 .requestEmail()
                 .build()
         mSignInClient = GoogleSignIn.getClient(mActivity, gso)
-        googleSignInButton!!.setOnClickListener(requestSignIn)
+        googleSignInButton!!.setOnClickListener {
+            val signInIntent = mSignInClient!!.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
         resetPasswordText!!.setOnClickListener { resetPassword() }
         emailInput!!.setOnEditorActionListener(mOnEditorActionListener)
         return fragmentView
@@ -162,11 +159,6 @@ class DefaultSignInFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        loadingDialogBuilder = MaterialAlertDialogBuilder(context!!)
-        loadingDialogBuilder!!.setView(R.layout.loading_dialog)
-        loadingDialogBuilder!!.setCancelable(false)
-        loadingDialog = loadingDialogBuilder!!.create()
-        loadingDialog!!.show()
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
@@ -177,11 +169,17 @@ class DefaultSignInFragment : Fragment() {
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.e(TAG, "Google sign in failed", e)
-                loadingDialog!!.dismiss()
                 val apiErrorDialog = MaterialAlertDialogBuilder(context!!)
-                apiErrorDialog.setTitle(e.statusCode.toString() + ": " + getString(R.string.internal_error_title))
-                apiErrorDialog.setMessage(e.message)
+                if (e.statusCode == 10) {
+                    apiErrorDialog.setTitle(R.string.simple_action_error_title)
+                    apiErrorDialog.setMessage(R.string.auth_server_error_msg)
+                    Crashlytics.log(Log.ERROR, "ServerError", "ApiException 10: could not sign in user: fingerprint invalid")
+                    Crashlytics.logException(e)
+                } else {
+                    apiErrorDialog.setTitle(e.statusCode.toString() + ": " + getString(R.string.internal_error_title))
+                    apiErrorDialog.setMessage(e.message)
+                }
+                Log.e(TAG, "Google sign in failed", e)
                 apiErrorDialog.setPositiveButton(android.R.string.ok, null)
                 apiErrorDialog.create().show()
 
@@ -199,37 +197,25 @@ class DefaultSignInFragment : Fragment() {
                     if (task.isSuccessful) {
                         Crashlytics.setUserIdentifier(firebaseAuth.currentUser!!.uid)
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d("CONTEXT", "Activity is " + mActivity)
-                        val downloadManager = mActivity.applicationContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                         Log.d(TAG, "signInWithCredential:success")
-                        val user = firebaseAuth.currentUser
-                        //TODO throw out this avatar download logic and let AccountSyncService do it
-                        val downloadManagerRequest = DownloadManager.Request(user!!.photoUrl)
-                        downloadManagerRequest.setVisibleInDownloadsUi(false)
-                        downloadManagerRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
-                        downloadManagerRequest.setDestinationInExternalFilesDir(mActivity, "profile", File.separator + "avatar.jpg")
-                        mActivity.registerReceiver(object : BroadcastReceiver() {
-                            override fun onReceive(context: Context, intent: Intent) {
-                                loadingDialog!!.dismiss()
-                                val userUtil = UserUtil(context)
-                                val avatarTempFile = File(mActivity.getExternalFilesDir("profile"), "avatar.jpg")
-                                val avatarFileDestination = userUtil.avatarFile
-                                try {
-                                    FileUtil.moveFile(avatarTempFile, avatarFileDestination)
-                                } catch (e: IOException) {
-                                    Log.e("AuthDialog", e.localizedMessage, e)
-                                }
-                                (context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view!!.windowToken, 0)
-
-                                onAuthCompletedListener!!.notNull { onAuthCompletedListener!!.onAuthCompleted() }
-                            }
-                        }, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-                        downloadManager.enqueue(downloadManagerRequest)
+                        val user = firebaseAuth.currentUser!!
+                        val jobScheduler = context!!.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+                        val jobInfo = JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, ComponentName(context!!, AccountSyncService::class.java))
+                                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                                .setBackoffCriteria(60000 * 5, JobInfo.BACKOFF_POLICY_LINEAR)
+                                .build()
+                        jobScheduler.schedule(jobInfo)
                         Snackbar.make(mActivity.findViewById(android.R.id.content), getString(R.string.signin_welcome, user.displayName), Snackbar.LENGTH_SHORT).show()
+                        notifyAuthCompleted()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
-                        Snackbar.make(mActivity.findViewById(android.R.id.content), "Sign in error.", Snackbar.LENGTH_SHORT).show()
+                        val apiErrorDialog = MaterialAlertDialogBuilder(context!!)
+                        apiErrorDialog.setTitle(R.string.simple_action_error_title)
+                        if (task.exception != null) apiErrorDialog.setMessage(task.exception!!.message)
+                        else apiErrorDialog.setMessage(R.string.unknown_error)
+                        apiErrorDialog.setPositiveButton(android.R.string.ok, null)
+                        apiErrorDialog.create().show()
                     }
                 }
     }
@@ -260,6 +246,7 @@ class DefaultSignInFragment : Fragment() {
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun resetPassword() {
         val askResetPassword = MaterialAlertDialogBuilder(context!!)
         askResetPassword.setTitle(R.string.auth_forgot_password)
@@ -276,7 +263,7 @@ class DefaultSignInFragment : Fragment() {
             val negative = askResetPasswordDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
             positive.setOnClickListener {
                 askResetPasswordDialog.setCancelable(false)
-                //TODO check email validity to verifiy that email is not empty
+                //TODO check email validity to verify that email is not empty
                 val resetPassword = firebaseAuth.sendPasswordResetEmail(emailInput!!.text!!.toString())
                 flipper.showNext()
                 positive.isEnabled = false
@@ -296,6 +283,18 @@ class DefaultSignInFragment : Fragment() {
 
         }
         askResetPasswordDialog.show()
+    }
+
+    fun addOnAuthCompletedListener(listener: OnAuthCompletedListener) {
+        onAuthCompletedListenerList.add(listener)
+    }
+
+    fun removeOnAuthCompletedListener(listener: OnAuthCompletedListener) {
+        onAuthCompletedListenerList.remove(listener)
+    }
+
+    private fun notifyAuthCompleted() {
+        onAuthCompletedListenerList.forEach { listener -> listener.onAuthCompleted() }
     }
 
     companion object {
