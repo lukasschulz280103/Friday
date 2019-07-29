@@ -129,6 +129,7 @@ class DefaultSignInFragment : Fragment() {
                 .requestEmail()
                 .build()
         mSignInClient = GoogleSignIn.getClient(mContext, gso)
+        mSignInClient!!.signOut()
         fragmentView.signin_google_button.setOnClickListener {
             val signInIntent = mSignInClient!!.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)

@@ -60,7 +60,6 @@ class Theme {
         return -1
     }
 
-    //TODO gradients do not appear top-to-bottom on some devices
     /**
      * @param pos color index in theme
      * @return gradient of the two colors at the position

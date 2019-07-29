@@ -99,6 +99,11 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
         return fragmentView
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mContext.unregisterReceiver(accountSynchronizedReceiver)
+    }
+
     override fun onResume() {
         super.onResume()
         setupSignInScreen()

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.ViewTreeObserver
@@ -21,7 +20,6 @@ import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
 import com.friday.ar.dashboard.DashboardListItem
-import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.fragments.dialogFragments.ChangelogDialogFragment
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
@@ -44,12 +42,10 @@ import kotlinx.android.synthetic.main.page_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-//TODO move all the work to viewModels
 class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     private var storeFragment = MainStoreFragment()
     internal lateinit var app: FridayApplication
     private lateinit var viewModel: MainActivityViewModel
-    var authDialogFragment: AuthDialog? = null
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.main_nav_dashboard -> main_view_flipper!!.displayedChild = 0
@@ -135,7 +131,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             })
 
             val theme = Theme(this@MainActivity)
-            val appThemeIndex = theme.indexOf(Theme.getCurrentAppTheme(this@MainActivity))
             runOnUiThread { mainTitleView.background = theme.createAppThemeGadient() }
 
 
@@ -152,7 +147,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             }
         }).start()
         Handler().postDelayed({ start_actionmode.shrink() }, 2500)
-        //app.registerForSyncStateChange(this);
         val dataList = ArrayList<DashboardListItem>()
         mainPageDashboardList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mainPageDashboardList.adapter = DashboardAdapter(this, dataList)
@@ -198,12 +192,8 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     }
 
     override fun onBackPressed() {
-        if (authDialogFragment != null && authDialogFragment!!.isAdded) {
-            authDialogFragment!!.dismiss()
-        } else {
-            Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
-                    .setAction(getString(R.string.action_leave)) { finishAffinity() }.show()
-        }
+        Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
+                .setAction(getString(R.string.action_leave)) { finishAffinity() }.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -254,16 +244,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             }
 
         }
-    }
-
-    fun promptSignin() {
-        Log.d("FirebaseAuth", "showing auth dialog")
-        authDialogFragment = AuthDialog()
-        //TODO UninitializedPropertyException: property accessed but not initialized
-        supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
-                .replace(android.R.id.content, authDialogFragment!!)
-                .commit()
     }
 
     fun goToStore() {
