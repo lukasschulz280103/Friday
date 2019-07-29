@@ -1,6 +1,7 @@
 package com.friday.ar.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,8 +25,9 @@ import com.mikhaellopez.circularimageview.CircularImageView
  * A simple [Fragment] subclass.
  */
 class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
-    private var firebaseAuth: FirebaseAuth? = null
+    private lateinit var firebaseAuth: FirebaseAuth
     private var firebaseUser: FirebaseUser? = null
+    private lateinit var mContext: Context
 
     private var accountImageView: CircularImageView? = null
     private var emailText: TextView? = null
@@ -52,7 +54,7 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
-        firebaseUser = firebaseAuth!!.currentUser
+        firebaseUser = firebaseAuth.currentUser
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -93,20 +95,21 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
 
     override fun onResume() {
         super.onResume()
-        if (firebaseAuth!!.currentUser == null) {
+        if (firebaseAuth.currentUser == null) {
             viewSwitcher!!.displayedChild = 0
         }
     }
 
     private fun setupSignInScreen() {
-        if (firebaseAuth!!.currentUser == null) {
+        if (firebaseAuth.currentUser == null) {
             viewSwitcher!!.displayedChild = 0
         } else {
-            val userUtil = UserUtil(context!!)
+            firebaseUser = firebaseAuth.currentUser
+            val userUtil = UserUtil(mContext)
             viewSwitcher!!.displayedChild = 1
+
             if (firebaseUser!!.photoUrl != null && userUtil.avatarFile.exists()) {
-                val accountImageUri = Uri.parse("file://" + context!!.filesDir + "/profile/avatar.jpg")
-                accountImageView!!.setImageURI(accountImageUri)
+                accountImageView!!.setImageURI(Uri.parse(userUtil.avatarFile.path))
             } else {
                 accountImageView!!.background = activity!!.getDrawable(R.drawable.ic_twotone_account_circle_24px)
             }
@@ -125,6 +128,11 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
 
     override fun onSyncStateChanged() {
         setupSignInScreen()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
     }
 
     companion object {
