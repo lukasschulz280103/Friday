@@ -327,4 +327,7 @@
     <string name="auth_pswd_empty_error">The password may not be empty</string>
     <string name="auth_server_error_title">Server error</string>
     <string name="auth_server_error_msg">The server did not allow an user authentication from this device. This may not be your fault. This error was reported to the technicians. Try to update this app and then retry.</string>
+    <string name="auth_user_creation_success">User was created successfully.</string>
+    <string name="auth_user_creation_success_hint">You should now be able to sign in by using the given email and your password.</string>
+    <string name="lets_go">Let\'s go</string>
 </resources>

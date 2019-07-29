@@ -1,4 +1,4 @@
-package com.friday.ar.ui.store.packageInstaller
+package com.friday.ar.ui.store
 
 import android.app.Notification
 import android.app.NotificationManager

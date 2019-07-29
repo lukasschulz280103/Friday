@@ -115,7 +115,7 @@
             android:required="false" />
 
         <activity android:name=".ui.FileSelectorActivity" />
-        <activity android:name=".ui.store.packageInstaller.StoreInstallationManagerActivity" />
+        <activity android:name=".ui.store.StoreInstallationManagerActivity" />
         <activity
             android:name=".ui.WizardActivity"
             android:theme="@style/AppTheme.NoActionBar">

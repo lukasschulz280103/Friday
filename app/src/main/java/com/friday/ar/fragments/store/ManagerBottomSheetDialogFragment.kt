@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 
 import com.friday.ar.R
-import com.friday.ar.ui.store.packageInstaller.StoreInstallationManagerActivity
+import com.friday.ar.ui.store.StoreInstallationManagerActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ManagerBottomSheetDialogFragment : BottomSheetDialogFragment() {

@@ -278,4 +278,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="auth_pswd_empty_error">Das Passwort darf nicht leer sein</string>
     <string name="auth_server_error_title">Serverehler</string>
     <string name="auth_server_error_msg">Der Server hat eine Anmeldung über dieses Gerät abgelehnt. Dies ist wahrscheinlih nicht ihr Fehler. Eine automatische Warnung wurde an unsere Techniker gesendet. Versuchen sie, die App zu updaten und versuchen sie die Anmeldung danach erneut.</string>
+    <string name="auth_user_creation_success">Registrierung erfolgreich</string>
+    <string name="auth_user_creation_success_hint">Sie können sich nun mit Ihrer Email und Ihrem asswort anmelden.</string>
+    <string name="lets_go">Los gehts!</string>
 </resources>

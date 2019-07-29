@@ -276,4 +276,7 @@
     <string name="auth_pswd_empty_error">Le mot de passe peut ne pas être vide</string>
     <string name="auth_server_error_title">Erreur de serveur</string>
     <string name="auth_server_error_msg">Le serveur n\'a pas permis l\'authentification des utilisateurs à partir de cet appareil. Ce n\'est peut-être pas ta faute. Cette erreur a été signalée aux techniciens. Essayez de mettre à jour cette application, puis réessayez.</string>
+    <string name="auth_user_creation_success">L\'utilisateur a été créé avec succès.</string>
+    <string name="auth_user_creation_success_hint">Vous devriez maintenant être en mesure de vous connecter en utilisant l\'email donné et votre mot de passe.</string>
+    <string name="lets_go">C\'est parti !</string>
 </resources>
