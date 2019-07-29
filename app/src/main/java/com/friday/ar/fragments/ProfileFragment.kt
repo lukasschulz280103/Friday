@@ -1,10 +1,7 @@
 package com.friday.ar.fragments
 
 import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -79,7 +76,7 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
         val toLayoutEditor = fragmentView.findViewById<LinearLayout>(R.id.main_layout_editor)
         val toHelp = fragmentView.findViewById<LinearLayout>(R.id.main_help)
         signInButton.setOnClickListener {
-            //TODO show auth dialog here
+            signInButton.isEnabled = false
             val authenticationDialog = AuthDialog()
             authenticationDialog.show(childFragmentManager, "AuthenticationDialog")
             authenticationDialog.signInFragment.addOnAuthCompletedListener(object : OnAuthCompletedListener {
@@ -87,7 +84,9 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
                     setupSignInScreen()
                     authenticationDialog.dismiss()
                 }
-
+            })
+            authenticationDialog.setOnDismissListener(DialogInterface.OnDismissListener {
+                signInButton.isEnabled = true
             })
         }
         toLayoutEditor.setOnClickListener(intentManager)

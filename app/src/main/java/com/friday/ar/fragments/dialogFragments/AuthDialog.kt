@@ -2,19 +2,21 @@ package com.friday.ar.fragments.dialogFragments
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import com.friday.ar.R
+import com.friday.ar.extensionMethods.notNull
 import com.friday.ar.fragments.DefaultSignInFragment
 import kotlinx.android.synthetic.main.signin_layout.view.*
 
 class AuthDialog : FullscreenDialog() {
     private lateinit var mContext: Context
     val signInFragment: DefaultSignInFragment = DefaultSignInFragment()
-
+    private var onDismissListener: DialogInterface.OnDismissListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -40,7 +42,11 @@ class AuthDialog : FullscreenDialog() {
 
     override fun dismiss() {
         (mContext.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view!!.windowToken, 0)
+        onDismissListener.notNull { onDismissListener!!.onDismiss(null) }
         super.dismiss()
     }
 
+    fun setOnDismissListener(listener: DialogInterface.OnDismissListener) {
+        onDismissListener = listener
+    }
 }
