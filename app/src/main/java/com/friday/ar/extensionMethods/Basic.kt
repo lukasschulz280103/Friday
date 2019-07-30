@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.friday.ar.extensionMethods
 
 fun Any?.notNull(f: () -> Unit): Any? {

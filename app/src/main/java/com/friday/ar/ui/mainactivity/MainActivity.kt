@@ -44,6 +44,7 @@ import kotlinx.android.synthetic.main.page_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Suppress("unused")
 class MainActivity : FridayActivity() {
     private var storeFragment = MainStoreFragment()
     internal lateinit var app: FridayApplication
@@ -207,16 +208,16 @@ class MainActivity : FridayActivity() {
             alertDialog.setNeutralButton(R.string.app_feedback) { _, _ -> startActivity(Intent(this@MainActivity, FeedbackSenderActivity::class.java)) }
             when (errtype) {
                 "TYPE_NOT_INSTALLED" -> {
-                        alertDialog.setMessage(R.string.errtype_not_installed)
-                        val apk = ArCoreApk.getInstance()
-                        try {
-                            apk.requestInstall(this, true)
-                        } catch (e: UnavailableDeviceNotCompatibleException) {
-                            data.putExtra("errtype", "TYPE_DEVICE_NOT_SUPPORTED")
-                            onActivityResult(requestCode, resultCode, data)
-                        } catch (e: UnavailableUserDeclinedInstallationException) {
-                            e.printStackTrace()
-                        }
+                    alertDialog.setMessage(R.string.errtype_not_installed)
+                    val apk = ArCoreApk.getInstance()
+                    try {
+                        apk.requestInstall(this, true)
+                    } catch (e: UnavailableDeviceNotCompatibleException) {
+                        data.putExtra("errtype", "TYPE_DEVICE_NOT_SUPPORTED")
+                        onActivityResult(requestCode, resultCode, data)
+                    } catch (e: UnavailableUserDeclinedInstallationException) {
+                        e.printStackTrace()
+                    }
                 }
                 "TYPE_OLD_APK" -> {
                     alertDialog.setMessage(R.string.errtype_arcore_apk_too_old)

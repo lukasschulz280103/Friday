@@ -47,6 +47,6 @@ class SettingsActivity : FridayActivity(), ThemeDialog.OnSelectedTheme {
     }
 
     companion object {
-        private val LOGTAG = "SettingsActivity"
+        private const val LOGTAG = "SettingsActivity"
     }
 }

@@ -21,6 +21,6 @@ abstract class FridayActivity : AppCompatActivity() {
     }
 
     companion object {
-        val LOGTAG = "FridayActivity"
+        const val LOGTAG = "FridayActivity"
     }
 }

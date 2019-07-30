@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-
 import androidx.fragment.app.Fragment
-
-import com.friday.ar.Constant
 import com.friday.ar.R
 import com.friday.ar.dialog.ErrorDialog
 import com.friday.ar.fragments.net.ConnectionFragment
@@ -25,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot
  */
 class AppCardFragment(private val mAppRef: CollectionReference)//CollectionReference is already apps reference
     : Fragment() {
-    internal lateinit var thumbnail: ImageView
+    private lateinit var thumbnail: ImageView
     private var errorDialog: ErrorDialog? = null
     private var title: TextView? = null
     private var author: TextView? = null
@@ -83,9 +80,5 @@ class AppCardFragment(private val mAppRef: CollectionReference)//CollectionRefer
             errorDialog = ErrorDialog(activity!!, R.drawable.ic_warning_black_24dp, e!!)
             errorDialog!!.show()
         }
-    }
-
-    companion object {
-        private val LOGTAG = Constant.LOGTAG_STORE
     }
 }

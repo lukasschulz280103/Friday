@@ -1,5 +1,6 @@
 package com.friday.ar.list.store
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ class PluginListAdapter(private val context: Context, private val dataList: Muta
         return SimplePluginListItemHolder(itemView)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SimplePluginListItemHolder, position: Int) {
         val plugin = dataList[position]
         holder.iconView.setImageURI(plugin.iconURI)

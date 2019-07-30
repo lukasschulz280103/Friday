@@ -4,7 +4,7 @@ import android.util.Log
 import java.io.*
 
 object FileUtil {
-    private val LOGTAG = "FileUtility"
+    private const val LOGTAG = "FileUtility"
 
     @Throws(IOException::class)
     @Deprecated("Use Files.move instead")

@@ -15,13 +15,9 @@ import com.friday.ar.R
 import com.friday.ar.util.UserUtil
 import com.google.firebase.auth.FirebaseAuth
 
-class AccountPreference : Preference {
-    internal var auth = FirebaseAuth.getInstance()
+class AccountPreference(context: Context, attributeSet: AttributeSet) : Preference(context, attributeSet) {
+    private var auth = FirebaseAuth.getInstance()
     private var firebaseUser = auth.currentUser
-
-    constructor(context: Context) : super(context)
-
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         val accountName: TextView = holder.findViewById(R.id.account_pref_name) as TextView

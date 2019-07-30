@@ -6,14 +6,14 @@ import java.io.File
 class Constant {
 
     object NotificationIDs {
-        val NOTIFICATION_INSTALL_SUCCESS = 200
-        val NOTIFICATION_INSTALL_ERROR = 201
+        const val NOTIFICATION_INSTALL_SUCCESS = 200
+        const val NOTIFICATION_INSTALL_ERROR = 201
     }
 
     companion object {
-        val NOTIF_CHANNEL_UPDATE_ID = "channel_update"
-        val NOTIF_CHANNEL_INSTALLER_ID = "channel_plugin_installer"
-        val LOGTAG_STORE = "FridayMarketplace"
+        const val NOTIF_CHANNEL_UPDATE_ID = "channel_update"
+        const val NOTIF_CHANNEL_INSTALLER_ID = "channel_plugin_installer"
+        const val LOGTAG_STORE = "FridayMarketplace"
         /**
          * get the plugin storage directory.
          *
@@ -70,11 +70,11 @@ class Constant {
          * @see com.friday.ar.service.AccountSyncService
          */
 
-        val BROADCAST_ACCOUNT_SYNCED = "BROADCAST_ACCOUNT_SYNCHRONIZED"
+        const val BROADCAST_ACCOUNT_SYNCED = "BROADCAST_ACCOUNT_SYNCHRONIZED"
     }
 
     object AnalyticEvent {
-        val LOGIN_EVENT_EMAIL = "Email + password"
-        val CUSTOM_EVENT_ACTIONMODE = "ActionMode start"
+        const val LOGIN_EVENT_EMAIL = "Email + password"
+        const val CUSTOM_EVENT_ACTIONMODE = "ActionMode start"
     }
 }

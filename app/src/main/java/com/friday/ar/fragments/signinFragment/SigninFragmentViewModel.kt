@@ -22,7 +22,9 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 
 class SigninFragmentViewModel(application: Application) : AndroidViewModel(application) {
-    val LOGTAG = "SigninFragmentViewModel"
+    companion object {
+        private const val LOGTAG = "SignInFragmentViewModel"
+    }
     val inputsUsabilityState = MutableLiveData<Boolean>()
     val newUserCretionTask = MutableLiveData<Task<AuthResult>>()
     val onEmailSigninCompleted = MutableLiveData<Task<AuthResult>>()

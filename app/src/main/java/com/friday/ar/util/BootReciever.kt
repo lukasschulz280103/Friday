@@ -15,6 +15,7 @@ import com.friday.ar.service.PluginIndexer
 class BootReciever : BroadcastReceiver() {
 
     override fun onReceive(context: Context, pIntent: Intent) {
+        if (pIntent.action != Intent.ACTION_BOOT_COMPLETED) return
         val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         if (preferences.getBoolean("check_update_auto", false)) {
@@ -36,9 +37,5 @@ class BootReciever : BroadcastReceiver() {
                 .setBackoffCriteria((30 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
                 .build()
         jobScheduler.schedule(jobIndexerInfo)
-    }
-
-    companion object {
-        private val LOGTAG = "BootReciever"
     }
 }

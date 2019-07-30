@@ -19,10 +19,12 @@ import com.github.paolorotolo.appintro.ISlidePolicy
  * A simple [Fragment] subclass.
  */
 class PermissionRequestFragment : Fragment(), ISlidePolicy {
-    private val PERMS_REQ_CODE = 301
+    companion object {
+        private const val PERMS_REQ_CODE = 301
+    }
     internal var permissions = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
-    lateinit var requestPermissionsButton: Button
-    lateinit var warning: TextView
+    private lateinit var requestPermissionsButton: Button
+    private lateinit var warning: TextView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

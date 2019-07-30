@@ -21,6 +21,7 @@ import androidx.fragment.app.DialogFragment
 
 import com.friday.ar.R
 import com.friday.ar.Theme
+import com.friday.ar.activities.FridayActivity.Companion.LOGTAG
 import com.friday.ar.ui.SettingsActivity
 
 /**
@@ -79,7 +80,6 @@ class ThemeDialog : DialogFragment() {
     }
 
     private inner class ThemeSelectItemAdapter(internal var context: Context, @LayoutRes res: Int) : ArrayAdapter<Theme>(context, res) {
-        val LOGTAG = "ThemeSelectAdapter"
         internal lateinit var gradientDrawable: GradientDrawable
         internal lateinit var itemView: ImageView
         internal var selectedItem: Int = 0

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.friday.ar
 
 import android.content.res.Configuration

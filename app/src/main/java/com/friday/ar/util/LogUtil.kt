@@ -22,7 +22,7 @@ object LogUtil {
     private val MODEL = Build.MODEL!!
     private val BRAND = Build.BRAND!!
     private val SDK_VERSION = Build.VERSION.SDK_INT
-    private val BASE_OS: String? = if (Build.VERSION.SDK_INT < 23) null else Build.VERSION.BASE_OS
+    private val BASE_OS: String? = Build.VERSION.BASE_OS
     private val TAGS = Build.TAGS!!
     private val MANUFACTURER = Build.MANUFACTURER!!
     private val PRODUCT = Build.PRODUCT!!

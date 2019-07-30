@@ -55,7 +55,7 @@ class FeedbackSenderActivity : FridayActivity() {
     }
     private var attachedFile: File? = null
 
-    private val attachment_upload = OnCompleteListener<UploadTask.TaskSnapshot> { task ->
+    private val attachmentUpload = OnCompleteListener<UploadTask.TaskSnapshot> { task ->
         fileUploadDialog.dismiss()
         if (task.isSuccessful) {
             Toast.makeText(this@FeedbackSenderActivity, R.string.feedback_submit_success, Toast.LENGTH_LONG).show()
@@ -143,7 +143,7 @@ class FeedbackSenderActivity : FridayActivity() {
                             attachedImageBitmpap.recycle()
                             fileUploadDialog.setMessage(R.string.feedback_submit_image_upload)
                             val uploadImageFile = feedbackLogFolder.child("$folderName/feedback-image.jpg").putBytes(byteStream.toByteArray())
-                            uploadImageFile.addOnCompleteListener(attachment_upload)
+                            uploadImageFile.addOnCompleteListener(attachmentUpload)
                         } else {
                             Toast.makeText(this@FeedbackSenderActivity, R.string.feedback_submit_success, Toast.LENGTH_LONG).show()
                             Log.d(LOGTAG, "Submitted log without attached file")
@@ -203,6 +203,6 @@ class FeedbackSenderActivity : FridayActivity() {
     }
 
     companion object {
-        private val LOGTAG = "FeedbackSenderActivity"
+        private const val LOGTAG = "FeedbackSenderActivity"
     }
 }

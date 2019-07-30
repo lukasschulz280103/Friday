@@ -61,7 +61,6 @@ class Theme {
     }
 
     /**
-     * @param pos color index in theme
      * @return gradient of the two colors at the position
      */
     fun createAppThemeGadient(): Drawable {

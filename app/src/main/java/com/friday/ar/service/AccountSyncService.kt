@@ -20,23 +20,20 @@ class AccountSyncService : Service() {
     override fun onBind(p0: Intent?): IBinder? {
         Log.d(LOGTAG, "started synchronization service")
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-        if (firebaseUser == null) {
-            return null
-        }
-        if (firebaseUser.photoUrl != null) {
+        if (firebaseUser != null && firebaseUser.photoUrl != null) {
             UserUtil(applicationContext).avatarFile.delete()
             val request = DownloadManager.Request(firebaseUser.photoUrl)
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
                     .setDestinationInExternalFilesDir(applicationContext, "profile", "/avatar.jpg")
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
-            registerReceiver(downloadFinishReciever, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+            registerReceiver(downloadFinishReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
             val dm = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             dm.enqueue(request)
         }
         return SyncServiceBinder()
     }
 
-    private val downloadFinishReciever = object : BroadcastReceiver() {
+    private val downloadFinishReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             context.unregisterReceiver(this)
             val util = UserUtil(applicationContext)
@@ -58,7 +55,6 @@ class AccountSyncService : Service() {
     }
 
     inner class SyncServiceBinder : Binder() {
-
         fun getService(): AccountSyncService = this@AccountSyncService
     }
 }

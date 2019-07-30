@@ -19,7 +19,7 @@ class FireStoreCodeInterpreter(c: Context, e: FirebaseFirestoreException) {
     /**
      * @return get the integer casted error code
      */
-    val code: Int
+    val code: Int = e.code.value()
     /**
      * Get the translated message
      *
@@ -34,7 +34,6 @@ class FireStoreCodeInterpreter(c: Context, e: FirebaseFirestoreException) {
     private var shouldShowRetryButton = true
 
     init {
-        code = e.code.value()
         exceptionMessage = e.message!!
         when (e.code) {
             FirebaseFirestoreException.Code.CANCELLED -> message = c.getString(R.string.code_cancelled)

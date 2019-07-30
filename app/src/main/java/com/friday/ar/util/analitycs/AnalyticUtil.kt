@@ -22,7 +22,7 @@ class AnalyticUtil {
             FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
         }
 
-        //we currently can't track google signups, firebase is not telling us about these. Backend may need to take over this job.
+        //we currently can't track google Sign-Ups, firebase is not telling us about these. Backend may need to take over this job.
         fun logUserCreation(context: Context) {
             val bundle = Bundle()
             bundle.putBoolean(FirebaseAnalytics.Param.SUCCESS, true)

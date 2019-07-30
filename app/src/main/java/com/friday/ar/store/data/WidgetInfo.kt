@@ -27,8 +27,7 @@ class WidgetInfo {
 
     class ExtraInfo(private var mData: Map<String, Boolean>) {
         private var hasExtra: Boolean = false
-        var isFreeLimited: Boolean = false
-            internal set
+        private var isFreeLimited: Boolean = false
         var extraType: String? = null
             internal set
 

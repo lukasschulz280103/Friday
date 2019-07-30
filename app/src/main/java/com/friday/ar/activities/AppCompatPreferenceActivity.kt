@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.friday.ar.activities
 
 

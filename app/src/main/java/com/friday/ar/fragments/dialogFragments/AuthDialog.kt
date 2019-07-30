@@ -14,6 +14,7 @@ import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.fragments.signinFragment.DefaultSignInFragment
 import kotlinx.android.synthetic.main.signin_layout.view.*
 
+@Suppress("unused")
 class AuthDialog : FullscreenDialog() {
     private lateinit var mContext: Context
     private val signInFragment: DefaultSignInFragment = DefaultSignInFragment()

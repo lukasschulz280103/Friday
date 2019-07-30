@@ -24,7 +24,6 @@ class PackageInstallerActivity : AppCompatActivity() {
     }
 
     companion object {
-
-        private val LOGTAG = "PackageInstallerActivity"
+        private const val LOGTAG = "PackageInstallerActivity"
     }
 }

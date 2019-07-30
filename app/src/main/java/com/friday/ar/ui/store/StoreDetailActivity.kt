@@ -24,8 +24,6 @@ import org.json.JSONObject
 import java.nio.charset.Charset
 
 class StoreDetailActivity : FridayActivity() {
-    private val ONE_MB = (1024 * 1024).toLong()
-    internal val FIVE_MB: Long = 5242880
     private var manifestListener = { task: Task<*> ->
         if (task.isCanceled) {
 
@@ -66,7 +64,7 @@ class StoreDetailActivity : FridayActivity() {
             Log.e(LOGTAG, e.localizedMessage, e)
         }
     }
-    private val logoListener = OnSuccessListener<QuerySnapshot> { _ ->
+    private val logoListener = OnSuccessListener<QuerySnapshot> {
     }
     private val logoSuccesListener = OnCompleteListener<Any> { task ->
         if (task.isCanceled) {
@@ -150,6 +148,7 @@ class StoreDetailActivity : FridayActivity() {
     }
 
     companion object {
-        private val LOGTAG = "StoreDetailActivity"
+        private const val LOGTAG = "StoreDetailActivity"
+        private const val ONE_MB = (1024 * 1024).toLong()
     }
 }

@@ -42,6 +42,7 @@ class DefaultSignInFragment : Fragment() {
     private var onAuthCompletedListenerList = ArrayList<OnAuthCompletedListener>()
 
     fun addOnAuthCompletedListener(listener: OnAuthCompletedListener) = onAuthCompletedListenerList.add(listener)
+    @Suppress("unused")
     fun removeOnAuthCompletedListener(listener: OnAuthCompletedListener) = onAuthCompletedListenerList.remove(listener)
 
     private var mOnEditorActionListener = TextView.OnEditorActionListener { _, imeAction, _ ->
@@ -188,7 +189,7 @@ class DefaultSignInFragment : Fragment() {
 
     }
 
-    fun submitForm() {
+    private fun submitForm() {
         if (!Validator.validateEmail(email_input_signin.text.toString())) {
             fragmentView.email_input_layout.error = getString(R.string.mail_invalid_error)
         } else if (email_password.text.toString().isEmpty()) {
@@ -247,7 +248,6 @@ class DefaultSignInFragment : Fragment() {
 
 
     companion object {
-        private const val LOGTAG = "DeafultSigninFragment"
         private const val RC_SIGN_IN = 9001
     }
 

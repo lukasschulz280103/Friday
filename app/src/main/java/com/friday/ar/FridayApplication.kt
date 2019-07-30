@@ -15,7 +15,6 @@ import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.service.AccountSyncService
 import com.friday.ar.service.PluginIndexer
 import com.friday.ar.util.UpdateUtil
-import edu.cmu.pocketsphinx.SpeechRecognizer
 import io.fabric.sdk.android.Fabric
 import java.io.File
 import java.util.*
@@ -25,12 +24,6 @@ import java.util.*
  * Application class
  */
 class FridayApplication : Application() {
-    /**
-     * This is the global [SpeechRecognizer].
-     * Its purpose is to transform speech input from the voice assistant into text.
-     * Loaded when [com.friday.ar.ui.MainActivity]'s onCreate() is called.
-     */
-    val speechToTextRecognizer: SpeechRecognizer? = null
 
     var indexedInstallablePluginFiles = ArrayList<ZippedPluginFile>()
 
@@ -40,7 +33,6 @@ class FridayApplication : Application() {
      */
     var applicationPluginLoader: PluginLoader? = null
         private set
-    private val applicationPluginIndexer: PluginIndexer? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -78,14 +70,14 @@ class FridayApplication : Application() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this@FridayApplication)
         val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         if (preferences.getBoolean("sync_account_auto", true)) {
-            val info = JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, ComponentName(this, AccountSyncService::class.java))
+            val info = JobInfo.Builder(Jobs.JOB_SYNC_ACCOUNT, ComponentName(this, AccountSyncService::class.java))
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setBackoffCriteria((2 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
                     .build()
             jobScheduler.schedule(info)
         }
 
-        val jobIndexerInfo = JobInfo.Builder(FridayApplication.Jobs.JOB_INDEX_PLUGINS, ComponentName(this, PluginIndexer::class.java))
+        val jobIndexerInfo = JobInfo.Builder(Jobs.JOB_INDEX_PLUGINS, ComponentName(this, PluginIndexer::class.java))
                 .setBackoffCriteria((30 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
                 .setOverrideDeadline(0)
                 .build()

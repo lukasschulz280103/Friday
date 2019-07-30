@@ -23,11 +23,11 @@ import com.friday.ar.dialog.ProgressDialog
 import com.friday.ar.dialog.ThemeDialog
 import com.friday.ar.preference.ThemeSelectPreference
 import com.friday.ar.service.FeedbackService
+import com.friday.ar.util.UserUtil
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
-import java.io.File
 import java.util.*
 
 //TODO handle avatar file not existant
@@ -67,21 +67,25 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
     private val onAccountDeletionCompleteListener = OnCompleteListener<Void> { task ->
         val deletionErrorDialog = MaterialAlertDialogBuilder(mActivity!!)
         loadingDialog!!.dismiss()
-        if (task.isSuccessful) {
-            deleteLocalUserData()
-            Toast.makeText(activity, getString(R.string.deletion_success), Toast.LENGTH_LONG).show()
-            mActivity!!.finish()
-        } else if (task.isCanceled) {
-            deletionErrorDialog.setTitle(R.string.deletion_error_canceled_title)
-            deletionErrorDialog.setMessage(R.string.deletion_error_canceled_message)
-            deletionErrorDialog.setPositiveButton(android.R.string.ok, null)
-            deletionErrorDialog.create().show()
-        } else {
-            deletionErrorDialog.setTitle(R.string.deletion_error_unknown_title)
-            deletionErrorDialog.setMessage(Objects.requireNonNull<Exception>(task.exception).message)
-            deletionErrorDialog.setPositiveButton(android.R.string.ok, null)
-            deletionErrorDialog.create().show()
-            Log.e("AccountDeletion", "Could not delete account", task.exception)
+        when {
+            task.isSuccessful -> {
+                deleteLocalUserData()
+                Toast.makeText(activity, getString(R.string.deletion_success), Toast.LENGTH_LONG).show()
+                mActivity!!.finish()
+            }
+            task.isCanceled -> {
+                deletionErrorDialog.setTitle(R.string.deletion_error_canceled_title)
+                deletionErrorDialog.setMessage(R.string.deletion_error_canceled_message)
+                deletionErrorDialog.setPositiveButton(android.R.string.ok, null)
+                deletionErrorDialog.create().show()
+            }
+            else -> {
+                deletionErrorDialog.setTitle(R.string.deletion_error_unknown_title)
+                deletionErrorDialog.setMessage(Objects.requireNonNull<Exception>(task.exception).message)
+                deletionErrorDialog.setPositiveButton(android.R.string.ok, null)
+                deletionErrorDialog.create().show()
+                Log.e("AccountDeletion", "Could not delete account", task.exception)
+            }
         }
     }
     private val onAccountDeletionClickListener = Preference.OnPreferenceClickListener {
@@ -199,12 +203,11 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun deleteLocalUserData() {
-        val account_file = File(context!!.filesDir, "/profile/avatar.jpg")
-        val isFileDeleted = account_file.delete()
+        val isFileDeleted = UserUtil(context!!).avatarFile.delete()
         Log.d("ProfilePage", "Account image file was deleted:$isFileDeleted")
     }
 
     companion object {
-        private val LOGTAG = "SettingsFragment"
+        private const val LOGTAG = "SettingsFragment"
     }
 }

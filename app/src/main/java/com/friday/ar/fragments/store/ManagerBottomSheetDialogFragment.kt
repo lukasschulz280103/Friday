@@ -21,7 +21,7 @@ class ManagerBottomSheetDialogFragment : BottomSheetDialogFragment() {
         return dialogView
     }
 
-    fun startActivityAnimated(intent: Intent, animationTarget: View) {
+    private fun startActivityAnimated(intent: Intent, animationTarget: View) {
         val activityOptions = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(mActivity, animationTarget, animationTarget.transitionName)
                 .toBundle()
