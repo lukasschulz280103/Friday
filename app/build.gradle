@@ -96,7 +96,7 @@ apply plugin: 'com.google.ar.sceneform.plugin'
 ant.importBuild 'assets.xml'
 preBuild.dependsOn(list, checksum)
 clean.dependsOn(clean_assets)
-GoogleServicesPlugin.config.disableVersionCheck = true
+//GoogleServicesPlugin.config.disableVersionCheck = true
 
 
 sceneform.asset('sampledata/models/project_friday_text.fbx',

@@ -34,7 +34,6 @@ import kotlinx.android.synthetic.main.default_signin_fragment_layout.view.*
 import kotlinx.android.synthetic.main.reset_password_dialog.view.*
 
 
-//TODO renew this messed up code
 class DefaultSignInFragment : Fragment() {
     companion object {
         private const val RC_SIGN_IN = 9001
@@ -59,14 +58,15 @@ class DefaultSignInFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentView = inflater.inflate(R.layout.default_signin_fragment_layout, container, false)
-        fragmentView.submit.setOnClickListener { submitForm() }
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.request_id_token))
                 .requestEmail()
                 .build()
-
         val mSignInClient = GoogleSignIn.getClient(activity!!, gso)
         mSignInClient.signOut()
+
+        fragmentView.submit.setOnClickListener { submitForm() }
         fragmentView.signin_google_button.setOnClickListener {
             val signInIntent = mSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -80,6 +80,8 @@ class DefaultSignInFragment : Fragment() {
         super.onAttach(context)
         this.mContext = context
         viewModel = ViewModelProvider.AndroidViewModelFactory(activity!!.application).create(SigninFragmentViewModel::class.java)
+
+        //Wait for the viewModel to attach and then set all the listeners
         viewModel.onAuthCompletedListenerList.addAll(onAuthCompletedListenerList)
         viewModel.inputsUsabilityState.observe(this, Observer { shouldEnableInputs ->
             setInputsEnabled(shouldEnableInputs)

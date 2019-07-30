@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.ViewTreeObserver
@@ -85,6 +86,7 @@ class MainActivity : FridayActivity() {
 
         viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(MainActivityViewModel::class.java)
 
+
         viewModel.isFirstUse.observe(this, Observer { isFirstUse ->
             if (isFirstUse) {
                 val showWizard = Intent(this, WizardActivity::class.java)
@@ -104,21 +106,20 @@ class MainActivity : FridayActivity() {
         })
         viewModel.isUpdatedVersion.observe(this@MainActivity, Observer { isUpdatedVersion ->
             if (isUpdatedVersion) {
-                runOnUiThread {
-                    val changeLogDialog = ChangelogDialogFragment()
-                    changeLogDialog.show(supportFragmentManager, "ChangeLogDialog")
-                }
+                val changeLogDialog = ChangelogDialogFragment()
+                changeLogDialog.show(supportFragmentManager, "ChangeLogDialog")
             }
         })
 
-        viewModel.isOldVersionInstalled.observe(this@MainActivity, Observer { isOldVersionInstalled ->
+        viewModel.isOldVersionInstalled.observe(this@MainActivity, Observer { pair ->
+            val isOldVersionInstalled = pair.first
             if (isOldVersionInstalled) {
-                val uninstallOldDialogFragment = UninstallOldAppDialog()
-                //Using FragmentManager to replace content view with dialog(to make animation work better)
-                supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
-                        .replace(android.R.id.content, uninstallOldDialogFragment)
-                        .commit()
+                val dialog = UninstallOldAppDialog()
+                val bundle = Bundle()
+                Log.d("oldversion", pair.second)
+                bundle.putString("packageName", pair.second)
+                dialog.arguments = bundle
+                dialog.show(supportFragmentManager, "UninstallOldAppDialog")
             }
         })
 

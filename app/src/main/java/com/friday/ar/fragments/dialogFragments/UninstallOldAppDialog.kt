@@ -26,10 +26,14 @@ class UninstallOldAppDialog : FullscreenDialog() {
     }
 
     private fun promptUninstall() {
-        val unins = Intent(Intent.ACTION_DELETE)
-        unins.data = Uri.parse("package:com.code_design_camp.client.rasberrypie.rbpieclient")
-        unins.putExtra(Intent.EXTRA_RETURN_RESULT, true)
-        startActivityForResult(unins, 2)
+        if (arguments != null && arguments!!.getString("packageName", "").isNotEmpty()) {
+            val uninstaller = Intent(Intent.ACTION_DELETE)
+            uninstaller.data = Uri.parse("package:" + arguments!!.getString("packageName"))
+            uninstaller.putExtra(Intent.EXTRA_RETURN_RESULT, true)
+            startActivityForResult(uninstaller, 2)
+        } else {
+            dismiss()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

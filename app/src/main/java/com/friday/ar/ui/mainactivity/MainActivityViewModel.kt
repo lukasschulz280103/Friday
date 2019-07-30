@@ -2,7 +2,8 @@ package com.friday.ar.ui.mainactivity
 
 import android.app.Application
 import android.content.Context
-import android.content.pm.PackageManager
+import android.content.pm.PackageManager.GET_ACTIVITIES
+import android.content.pm.PackageManager.NameNotFoundException
 import android.os.PowerManager
 import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
@@ -11,7 +12,7 @@ import androidx.lifecycle.MutableLiveData
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     val energySaverActive = MutableLiveData<Boolean>()
     val isUpdatedVersion = MutableLiveData<Boolean>()
-    val isOldVersionInstalled = MutableLiveData<Boolean>()
+    val isOldVersionInstalled = MutableLiveData<Pair<Boolean, String?>>()
     val isFirstUse = MutableLiveData<Boolean>()
 
     init {
@@ -25,7 +26,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 editor.putString("version", pkgInf.versionName)
                 editor.apply()
             }
-        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (e: NameNotFoundException) {
             isUpdatedVersion.postValue(false)
         }
 
@@ -33,11 +34,20 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         val pm = application.getSystemService(Context.POWER_SERVICE) as PowerManager
         energySaverActive.postValue(pm.isPowerSaveMode)
 
+        var currentAppPackageName = ""
         try {
-            packageManager.getPackageInfo("com.code_design_camp.client.rasberrypie.rbpieclient", PackageManager.GET_ACTIVITIES)
-            isOldVersionInstalled.postValue(true)
-        } catch (e: PackageManager.NameNotFoundException) {
-            isOldVersionInstalled.postValue(false)
+            currentAppPackageName = "com.code_design_camp.client.rasberrypie.rbpieclient"
+            packageManager.getPackageInfo(currentAppPackageName, GET_ACTIVITIES)
+            isOldVersionInstalled.postValue(Pair(true, currentAppPackageName))
+        } catch (e: NameNotFoundException) {
+            isOldVersionInstalled.postValue(Pair(false, null))
+        }
+        try {
+            currentAppPackageName = "com.code_design_camp.client.friday.HeadDisplayClient"
+            packageManager.getPackageInfo(currentAppPackageName, GET_ACTIVITIES)
+            isOldVersionInstalled.postValue(Pair(true, currentAppPackageName))
+        } catch (e: NameNotFoundException) {
+            isOldVersionInstalled.postValue(Pair(false, null))
         }
 
 

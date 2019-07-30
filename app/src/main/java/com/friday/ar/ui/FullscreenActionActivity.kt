@@ -1,7 +1,6 @@
 package com.friday.ar.ui
 
-import com.friday.ar.activities.FridayActivity
+import androidx.appcompat.app.AppCompatActivity
 
 
-//TODO: remove this class
-class FullscreenActionActivity : FridayActivity()
+class FullscreenActionActivity : AppCompatActivity()

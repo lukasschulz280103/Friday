@@ -26,7 +26,7 @@ import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
-import com.friday.ar.plugin.PluginVerticalListAdapter
+import com.friday.ar.plugin.PluginFileListVerticalAdapter
 import com.google.android.material.appbar.AppBarLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_file_selector.*
@@ -79,7 +79,7 @@ class FileSelectorActivity : FridayActivity() {
             }
             val indexedFilesList = findViewById<RecyclerView>(R.id.indexedFilesList)
             indexedFilesList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            indexedFilesList.adapter = PluginVerticalListAdapter(this, (application as FridayApplication).indexedInstallablePluginFiles)
+            indexedFilesList.adapter = PluginFileListVerticalAdapter(this, (application as FridayApplication).indexedInstallablePluginFiles)
         } else if (Arrays.equals(grantResults, intArrayOf(PERMISSION_DENIED))) {
             Log.d(LOGTAG, "perms not granted")
             fileListFlipper.displayedChild = 2

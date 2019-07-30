@@ -13,8 +13,7 @@ import com.friday.ar.plugin.file.ZippedPluginFile
 import java.io.File
 import java.util.*
 
-//TODO: Add functionality that makes an item selectable
-class PluginVerticalListAdapter(private val context: Activity, private val dataList: ArrayList<ZippedPluginFile>) : RecyclerView.Adapter<PluginViewHolder>() {
+class PluginFileListVerticalAdapter(private val context: Activity, private val dataList: ArrayList<ZippedPluginFile>) : RecyclerView.Adapter<PluginViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PluginViewHolder {
         return PluginViewHolder(LayoutInflater.from(context).inflate(R.layout.file_selector_list_item, parent, false))
@@ -25,7 +24,7 @@ class PluginVerticalListAdapter(private val context: Activity, private val dataL
         holder.title.text = file.file.name
         holder.path.text = file.file.name
         holder.icon.setImageDrawable(context.getDrawable(R.drawable.ic_twotone_insert_drive_file_24px))
-        holder.root.setOnClickListener { v ->
+        holder.root.setOnClickListener {
             val resultIntent = Intent()
             resultIntent.data = Uri.fromFile(File(file.file.name))
             context.setResult(RESULT_OK, resultIntent)
