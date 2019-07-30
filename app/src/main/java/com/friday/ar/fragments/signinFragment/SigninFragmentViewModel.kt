@@ -25,6 +25,7 @@ class SigninFragmentViewModel(application: Application) : AndroidViewModel(appli
     companion object {
         private const val LOGTAG = "SignInFragmentViewModel"
     }
+
     val inputsUsabilityState = MutableLiveData<Boolean>()
     val newUserCretionTask = MutableLiveData<Task<AuthResult>>()
     val onEmailSigninCompleted = MutableLiveData<Task<AuthResult>>()

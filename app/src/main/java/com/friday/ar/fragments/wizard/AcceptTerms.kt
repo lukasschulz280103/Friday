@@ -12,6 +12,16 @@ import com.github.paolorotolo.appintro.ISlidePolicy
 
 
 class AcceptTerms : Fragment(), ISlidePolicy {
+    companion object {
+        fun newInstance(): AcceptTerms {
+            val args = Bundle()
+
+            val fragment = AcceptTerms()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     private lateinit var acceptTOU: CheckBox
     private lateinit var acceptPP: CheckBox
 
@@ -30,16 +40,5 @@ class AcceptTerms : Fragment(), ISlidePolicy {
 
     override fun onUserIllegallyRequestedNextPage() {
 
-    }
-
-    companion object {
-
-        fun newInstance(): AcceptTerms {
-            val args = Bundle()
-
-            val fragment = AcceptTerms()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }

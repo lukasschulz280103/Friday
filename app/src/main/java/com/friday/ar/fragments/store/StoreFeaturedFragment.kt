@@ -23,6 +23,10 @@ import java.util.*
  * @see MainStoreFragment
  */
 class StoreFeaturedFragment : Fragment() {
+    companion object {
+        private const val LOGTAG = "StoreMainPager"
+    }
+
     private var mContext: Context? = null
     private var fridayStoreFirestore: FirebaseFirestore
     private val storeData: DocumentReference? = null
@@ -67,9 +71,4 @@ class StoreFeaturedFragment : Fragment() {
         loadedStoreData.get().addOnCompleteListener(storeDataLoaded)
         return v
     }
-
-    companion object {
-        private const val LOGTAG = "StoreMainPager"
-    }
-
 }

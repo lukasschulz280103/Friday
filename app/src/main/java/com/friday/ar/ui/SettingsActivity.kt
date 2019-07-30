@@ -10,6 +10,10 @@ import com.friday.ar.dialog.ThemeDialog
 import com.friday.ar.fragments.preferenceFragments.MainSettingsFragment
 
 class SettingsActivity : FridayActivity(), ThemeDialog.OnSelectedTheme {
+    companion object {
+        private const val LOGTAG = "SettingsActivity"
+    }
+
     private var mainSettingsFragment = MainSettingsFragment()
     private var themeChanged = false
 
@@ -44,9 +48,5 @@ class SettingsActivity : FridayActivity(), ThemeDialog.OnSelectedTheme {
         }
         super.onBackPressed()
         return true
-    }
-
-    companion object {
-        private const val LOGTAG = "SettingsActivity"
     }
 }

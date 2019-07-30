@@ -15,5 +15,4 @@ class CacheUtil {
             return PluginFile(Constant.getPluginCacheDir(context, zippedPluginFile.file.name.replace(".fpl", "")).path)
         }
     }
-
 }

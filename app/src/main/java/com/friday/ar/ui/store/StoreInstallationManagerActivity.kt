@@ -34,6 +34,10 @@ import java.io.IOException
 import java.util.*
 
 class StoreInstallationManagerActivity : FridayActivity() {
+    companion object {
+        private const val LOGTAG = "StoreInstallations"
+        const val OPEN_PLUGIN_INTENT_CODE = 733
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Theme.getCurrentAppTheme(this))
@@ -162,10 +166,5 @@ class StoreInstallationManagerActivity : FridayActivity() {
 
             }.start()
         }
-    }
-
-    companion object {
-        private const val LOGTAG = "StoreInstallations"
-        const val OPEN_PLUGIN_INTENT_CODE = 733
     }
 }

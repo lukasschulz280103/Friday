@@ -18,6 +18,9 @@ import java.io.File
  * This dialog shows up when an external file browser app sends an intent to this app.
  */
 class PackageInstallerDialog(chosenFile: File, context: Context) : BottomSheetDialogFragment() {
+    companion object {
+        private const val LOGTAG = "PackageInstallerDialog"
+    }
     private var pluginFile: PluginFile? = null
     private var zippedPluginFile: ZippedPluginFile? = null
 
@@ -60,7 +63,4 @@ class PackageInstallerDialog(chosenFile: File, context: Context) : BottomSheetDi
         activity!!.finish()
     }
 
-    companion object {
-        private const val LOGTAG = "PackageInstallerDialog"
-    }
 }

@@ -17,6 +17,10 @@ import java.util.*
  * This class loads all plugins when the app starts.
  */
 class PluginLoader(context: Context) {
+    companion object {
+        private const val LOGTAG = "PluginLoader"
+    }
+
     /**
      * @return List of all installed Plugins
      */
@@ -83,9 +87,5 @@ class PluginLoader(context: Context) {
             }
         })
         verifier.verify(packageDir, false)
-    }
-
-    companion object {
-        private const val LOGTAG = "PluginLoader"
     }
 }

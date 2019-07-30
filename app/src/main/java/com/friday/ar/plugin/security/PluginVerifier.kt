@@ -40,6 +40,9 @@ import java.nio.file.NoSuchFileException
  *
  */
 class PluginVerifier {
+    companion object {
+        private const val LOGTAG = "PluginVerifier"
+    }
 
     private var onVerificationCompleteListener: OnVerificationCompleteListener? = null
 
@@ -136,9 +139,5 @@ class PluginVerifier {
         fun onIOException(e: IOException)
         fun onJSONException(e: JSONException)
         fun onVerificationFailed(e: VerificationSecurityException)
-    }
-
-    companion object {
-        private const val LOGTAG = "PluginVerifier"
     }
 }

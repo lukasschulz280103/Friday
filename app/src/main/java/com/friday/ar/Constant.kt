@@ -4,12 +4,6 @@ import android.content.Context
 import java.io.File
 
 class Constant {
-
-    object NotificationIDs {
-        const val NOTIFICATION_INSTALL_SUCCESS = 200
-        const val NOTIFICATION_INSTALL_ERROR = 201
-    }
-
     companion object {
         const val NOTIF_CHANNEL_UPDATE_ID = "channel_update"
         const val NOTIF_CHANNEL_INSTALLER_ID = "channel_plugin_installer"
@@ -60,6 +54,11 @@ class Constant {
             }
             return dir
         }
+    }
+
+    object NotificationIDs {
+        const val NOTIFICATION_INSTALL_SUCCESS = 200
+        const val NOTIFICATION_INSTALL_ERROR = 201
     }
 
     object BroadcasteceiverActions {

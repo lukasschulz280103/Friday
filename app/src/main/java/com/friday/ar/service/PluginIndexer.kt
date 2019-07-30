@@ -19,6 +19,10 @@ import java.util.*
  * <b>It does not list installed plugins.</b>
  */
 class PluginIndexer : JobService() {
+    companion object {
+        private const val LOGTAG = "InstallablePluginIndexer"
+    }
+
     private val indexedFiles = ArrayList<ZippedPluginFile>()
     private val excludedDirs = listOf("Android")
     private var isIndexing = false
@@ -96,9 +100,4 @@ class PluginIndexer : JobService() {
             }
         }
     }
-
-    companion object {
-        private const val LOGTAG = "InstallablePluginIndexer"
-    }
-
 }

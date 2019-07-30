@@ -9,6 +9,28 @@ import androidx.annotation.StyleRes
  * Manages the apps Theme resources
  */
 class Theme {
+    companion object {
+        var colors = intArrayOf(R.color.colorPrimary, R.color.GreenPrimaryColor, R.color.BluePrimaryColor, R.color.MagentaPrimaryColor, R.color.DarkPrimaryColor, R.color.RedPrimaryColor, R.color.PinkPrimaryColor)
+        /**
+         * @return returns all available app themes
+         */
+        val themes = intArrayOf(R.style.AppTheme, R.style.AppTheme_Custom_Green, R.style.AppTheme_Custom_Blue, R.style.AppTheme_Custom_Magenta, R.style.AppTheme_Custom_Dark, R.style.AppTheme_Custom_Red, R.style.AppTheme_Custom_Pink)
+        /**
+         * @return Returns every themes **bottom left** gradient color(Gradient is visible in e.g. Settings>Design)
+         */
+        val gradientColors = intArrayOf(R.color.colorSecondary, R.color.GreenSecondaryColor, R.color.BlueSecondaryColor, R.color.MagentaSecondaryColor, R.color.DarkSecondaryColor, R.color.RedSecondaryColor, R.color.PinkSecondaryColor)
+        private val textSecondaryColors = intArrayOf(android.R.color.black, R.color.GreenSecondaryTextColor, R.color.BlueSecondaryTextColor, R.color.MagentaSecondaryTextColor, R.color.DarkSecondaryTextColor, R.color.RedSecondaryTextColor, R.color.PinkSecondaryTextColor)
+        private val names = intArrayOf(R.string.theme_default, R.string.theme_green, R.string.theme_blue, R.string.theme_magenta, R.string.theme_dark, R.string.theme_red, R.string.theme_pink)
+
+        /**
+         * @param c Context to resolve saved info from
+         * @return Returns the current app themes style resource integer
+         */
+        fun getCurrentAppTheme(c: Context): Int {
+            return PreferenceManager.getDefaultSharedPreferences(c).getInt("theme", R.style.AppTheme)
+        }
+    }
+
     private var mContext: Context? = null
     /**
      * @return get current app themes [StyleRes]
@@ -65,27 +87,5 @@ class Theme {
      */
     fun createAppThemeGadient(): Drawable {
         return mContext!!.getDrawable(R.drawable.app_colors_gradient)!!
-    }
-
-    companion object {
-        var colors = intArrayOf(R.color.colorPrimary, R.color.GreenPrimaryColor, R.color.BluePrimaryColor, R.color.MagentaPrimaryColor, R.color.DarkPrimaryColor, R.color.RedPrimaryColor, R.color.PinkPrimaryColor)
-        /**
-         * @return returns all available app themes
-         */
-        val themes = intArrayOf(R.style.AppTheme, R.style.AppTheme_Custom_Green, R.style.AppTheme_Custom_Blue, R.style.AppTheme_Custom_Magenta, R.style.AppTheme_Custom_Dark, R.style.AppTheme_Custom_Red, R.style.AppTheme_Custom_Pink)
-        /**
-         * @return Returns every themes **bottom left** gradient color(Gradient is visible in e.g. Settings>Design)
-         */
-        val gradientColors = intArrayOf(R.color.colorSecondary, R.color.GreenSecondaryColor, R.color.BlueSecondaryColor, R.color.MagentaSecondaryColor, R.color.DarkSecondaryColor, R.color.RedSecondaryColor, R.color.PinkSecondaryColor)
-        private val textSecondaryColors = intArrayOf(android.R.color.black, R.color.GreenSecondaryTextColor, R.color.BlueSecondaryTextColor, R.color.MagentaSecondaryTextColor, R.color.DarkSecondaryTextColor, R.color.RedSecondaryTextColor, R.color.PinkSecondaryTextColor)
-        private val names = intArrayOf(R.string.theme_default, R.string.theme_green, R.string.theme_blue, R.string.theme_magenta, R.string.theme_dark, R.string.theme_red, R.string.theme_pink)
-
-        /**
-         * @param c Context to resolve saved info from
-         * @return Returns the current app themes style resource integer
-         */
-        fun getCurrentAppTheme(c: Context): Int {
-            return PreferenceManager.getDefaultSharedPreferences(c).getInt("theme", R.style.AppTheme)
-        }
     }
 }

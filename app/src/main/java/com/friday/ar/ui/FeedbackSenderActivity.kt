@@ -33,6 +33,9 @@ import java.io.IOException
 import java.util.*
 
 class FeedbackSenderActivity : FridayActivity() {
+    companion object {
+        private const val LOGTAG = "FeedbackSenderActivity"
+    }
 
     private var firebaseStorage = FirebaseStorage.getInstance()
     private var feedbackLogFolder = firebaseStorage.getReference("feedback")
@@ -200,9 +203,5 @@ class FeedbackSenderActivity : FridayActivity() {
             }
             Log.d("FeedbackAttachedFile", attachedFile!!.path)
         }
-    }
-
-    companion object {
-        private const val LOGTAG = "FeedbackSenderActivity"
     }
 }

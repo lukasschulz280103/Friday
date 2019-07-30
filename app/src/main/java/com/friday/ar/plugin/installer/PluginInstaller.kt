@@ -18,6 +18,10 @@ import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
 class PluginInstaller(private val context: Context) {
+    companion object {
+        private const val LOGTAG = "PluginInstaller"
+    }
+
     private var onInstallProgressChangedListener: OnInstallProgressChangedListener? = null
 
     @Throws(IOException::class)
@@ -70,9 +74,5 @@ class PluginInstaller(private val context: Context) {
         fun onProgressChanged(progressMessage: String)
         fun onSuccess()
         fun onFailure(e: Exception)
-    }
-
-    companion object {
-        private const val LOGTAG = "PluginInstaller"
     }
 }

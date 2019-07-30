@@ -17,6 +17,10 @@ import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
 class AccountSyncService : Service() {
+    companion object {
+        private const val LOGTAG = "SynchronizationService"
+    }
+
     override fun onBind(p0: Intent?): IBinder? {
         Log.d(LOGTAG, "started synchronization service")
         val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -48,10 +52,6 @@ class AccountSyncService : Service() {
                 Log.e(LOGTAG, e.localizedMessage, e)
             }
         }
-    }
-
-    companion object {
-        private const val LOGTAG = "SynchronizationService"
     }
 
     inner class SyncServiceBinder : Binder() {

@@ -14,6 +14,10 @@ import java.nio.file.Files
  */
 class PluginFile @Throws(IOException::class, JSONException::class)
 constructor(pathname: String) : File(pathname) {
+    companion object {
+        private const val LOGTAG = "PluginFile"
+    }
+
     /**
      * returns a [Manifest] object with the values obtained from this plugin file.
      *
@@ -36,9 +40,5 @@ constructor(pathname: String) : File(pathname) {
             )
         }
 
-    }
-
-    companion object {
-        private const val LOGTAG = "PluginFile"
     }
 }

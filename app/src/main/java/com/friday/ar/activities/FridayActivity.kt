@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 
 
 /*
-This file is necessarry for analytics, in order to record usage statistics.
+This file is necessary for analytics, in order to record usage statistics.
  */
 abstract class FridayActivity : AppCompatActivity() {
+    companion object {
+        const val LOGTAG = "FridayActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,9 +21,5 @@ abstract class FridayActivity : AppCompatActivity() {
     override fun onStop() {
         Log.d(LOGTAG, "stopped activity")
         super.onStop()
-    }
-
-    companion object {
-        const val LOGTAG = "FridayActivity"
     }
 }

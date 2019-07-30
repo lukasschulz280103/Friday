@@ -8,6 +8,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class FeedbackService : JobService() {
+    companion object {
+        private const val LOGTAG = "FeedbackService"
+    }
 
     override fun onStartJob(jobParameters: JobParameters): Boolean {
         Log.d(LOGTAG, "Started Feedback service")
@@ -35,9 +38,5 @@ class FeedbackService : JobService() {
     override fun onStopJob(jobParameters: JobParameters): Boolean {
         Log.d(LOGTAG, "Stopped Feedback service")
         return false
-    }
-
-    companion object {
-        private const val LOGTAG = "FeedbackService"
     }
 }

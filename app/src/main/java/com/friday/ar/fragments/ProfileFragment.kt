@@ -24,6 +24,11 @@ import com.mikhaellopez.circularimageview.CircularImageView
  * A simple [Fragment] subclass.
  */
 class ProfileFragment : Fragment() {
+    companion object {
+        private const val LOGTAG = "ProfileFragment"
+        private const val REQUEST_CODE_SETTINGS = 200
+    }
+
     private lateinit var firebaseAuth: FirebaseAuth
     private var firebaseUser: FirebaseUser? = null
     private lateinit var mContext: Context
@@ -137,10 +142,5 @@ class ProfileFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
-    }
-
-    companion object {
-        private const val LOGTAG = "ProfileFragment"
-        private const val REQUEST_CODE_SETTINGS = 200
     }
 }

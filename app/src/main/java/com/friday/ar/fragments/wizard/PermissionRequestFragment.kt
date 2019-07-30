@@ -22,6 +22,7 @@ class PermissionRequestFragment : Fragment(), ISlidePolicy {
     companion object {
         private const val PERMS_REQ_CODE = 301
     }
+
     internal var permissions = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
     private lateinit var requestPermissionsButton: Button
     private lateinit var warning: TextView

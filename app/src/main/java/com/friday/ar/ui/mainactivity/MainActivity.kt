@@ -46,6 +46,12 @@ import kotlin.collections.ArrayList
 
 @Suppress("unused")
 class MainActivity : FridayActivity() {
+    companion object {
+        const val FULLSCREEN_REQUEST_CODE = 22
+        private const val REQUEST_PERMISSIONS_CODE = 900
+        private const val LOGTAG = "FridayMainActivity"
+    }
+
     private var storeFragment = MainStoreFragment()
     internal lateinit var app: FridayApplication
     private lateinit var viewModel: MainActivityViewModel
@@ -258,11 +264,5 @@ class MainActivity : FridayActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.store_default_toolbar, menu)
         return true
-    }
-
-    companion object {
-        const val FULLSCREEN_REQUEST_CODE = 22
-        private const val REQUEST_PERMISSIONS_CODE = 900
-        private const val LOGTAG = "FridayMainActivity"
     }
 }

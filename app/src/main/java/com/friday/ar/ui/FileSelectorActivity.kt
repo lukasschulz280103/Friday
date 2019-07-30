@@ -35,6 +35,9 @@ import java.util.Arrays
 import kotlin.Comparator
 
 class FileSelectorActivity : FridayActivity() {
+    companion object {
+        private const val LOGTAG = "FileSelector"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Theme.getCurrentAppTheme(this))
@@ -180,9 +183,5 @@ class FileSelectorActivity : FridayActivity() {
         var fileName: TextView = itemView.findViewById(R.id.fileName)
         var fileSize: TextView = itemView.findViewById(R.id.fileSize)
 
-    }
-
-    companion object {
-        private const val LOGTAG = "FileSelector"
     }
 }

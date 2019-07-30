@@ -24,6 +24,10 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import java.util.*
 
 class ChangelogDialogFragment : DialogFragment() {
+    companion object {
+        private const val LOGTAG = "ChangeLogDialog"
+    }
+
     private var container: LinearLayout? = null
     private var title: TextView? = null
     private var timestamp: TextView? = null
@@ -103,9 +107,4 @@ class ChangelogDialogFragment : DialogFragment() {
         dismiss!!.isEnabled = false
         return dialogView
     }
-
-    companion object {
-        private const val LOGTAG = "ChangeLogDialog"
-    }
-
 }

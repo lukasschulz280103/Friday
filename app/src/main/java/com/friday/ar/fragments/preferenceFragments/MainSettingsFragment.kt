@@ -32,6 +32,9 @@ import java.util.*
 
 //TODO handle avatar file not existant
 class MainSettingsFragment : PreferenceFragmentCompat() {
+    companion object {
+        private const val LOGTAG = "SettingsFragment"
+    }
 
     private var mActivity: Activity? = null
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -205,9 +208,5 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
     private fun deleteLocalUserData() {
         val isFileDeleted = UserUtil(context!!).avatarFile.delete()
         Log.d("ProfilePage", "Account image file was deleted:$isFileDeleted")
-    }
-
-    companion object {
-        private const val LOGTAG = "SettingsFragment"
     }
 }

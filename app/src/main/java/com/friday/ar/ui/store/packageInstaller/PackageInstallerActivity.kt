@@ -8,6 +8,9 @@ import com.friday.ar.dialog.store.packageInstaller.PackageInstallerDialog
 import java.io.File
 
 class PackageInstallerActivity : AppCompatActivity() {
+    companion object {
+        private const val LOGTAG = "PackageInstallerActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +24,5 @@ class PackageInstallerActivity : AppCompatActivity() {
             val packageInstallerDialog = PackageInstallerDialog(File(filePath), this)
             packageInstallerDialog.show(supportFragmentManager, "PackageInstallerDialog")
         }
-    }
-
-    companion object {
-        private const val LOGTAG = "PackageInstallerActivity"
     }
 }

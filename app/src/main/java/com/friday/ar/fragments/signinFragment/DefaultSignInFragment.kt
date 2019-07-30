@@ -36,6 +36,10 @@ import kotlinx.android.synthetic.main.reset_password_dialog.view.*
 
 //TODO renew this messed up code
 class DefaultSignInFragment : Fragment() {
+    companion object {
+        private const val RC_SIGN_IN = 9001
+    }
+
     private lateinit var viewModel: SigninFragmentViewModel
     private lateinit var fragmentView: View
     private lateinit var mContext: Context
@@ -245,10 +249,4 @@ class DefaultSignInFragment : Fragment() {
         }
         askResetPasswordDialog.show()
     }
-
-
-    companion object {
-        private const val RC_SIGN_IN = 9001
-    }
-
 }

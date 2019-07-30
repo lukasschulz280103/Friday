@@ -17,6 +17,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class PluginListAdapter(private val context: Context, private val dataList: MutableList<Plugin>) : RecyclerView.Adapter<SimplePluginListItemHolder>() {
+    companion object {
+        private const val LOGTAG = "PluginListAdapter"
+    }
+
     var onDataUpdateListener: OnDataUpdateListener<Plugin>? = null
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimplePluginListItemHolder {
@@ -72,9 +76,5 @@ class PluginListAdapter(private val context: Context, private val dataList: Muta
 
         this.dataList.addAll(updatedData)
         diffResult.dispatchUpdatesTo(this)
-    }
-
-    companion object {
-        private const val LOGTAG = "PluginListAdapter"
     }
 }

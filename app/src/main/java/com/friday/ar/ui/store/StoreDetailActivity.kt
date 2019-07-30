@@ -24,6 +24,11 @@ import org.json.JSONObject
 import java.nio.charset.Charset
 
 class StoreDetailActivity : FridayActivity() {
+    companion object {
+        private const val LOGTAG = "StoreDetailActivity"
+        private const val ONE_MB = (1024 * 1024).toLong()
+    }
+
     private var manifestListener = { task: Task<*> ->
         if (task.isCanceled) {
 
@@ -145,10 +150,5 @@ class StoreDetailActivity : FridayActivity() {
         val params = store_collapsing_bar!!.layoutParams as AppBarLayout.LayoutParams
         params.scrollFlags = 0
         store_collapsing_bar!!.layoutParams = params
-    }
-
-    companion object {
-        private const val LOGTAG = "StoreDetailActivity"
-        private const val ONE_MB = (1024 * 1024).toLong()
     }
 }
