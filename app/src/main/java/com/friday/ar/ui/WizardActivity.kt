@@ -1,12 +1,10 @@
 package com.friday.ar.ui
 
 import android.os.Bundle
-
 import androidx.fragment.app.Fragment
-
 import com.friday.ar.R
-import com.friday.ar.fragments.DefaultSignInFragment
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
+import com.friday.ar.fragments.signinFragment.DefaultSignInFragment
 import com.friday.ar.fragments.wizard.AcceptTerms
 import com.friday.ar.fragments.wizard.PermissionRequestFragment
 import com.github.paolorotolo.appintro.AppIntro
@@ -16,7 +14,7 @@ import com.github.paolorotolo.appintro.model.SliderPage
 
 class WizardActivity : AppIntro() {
 
-    internal var onAuthCompletedListener: OnAuthCompletedListener = object : OnAuthCompletedListener {
+    private var onAuthCompletedListener: OnAuthCompletedListener = object : OnAuthCompletedListener {
         override fun onAuthCompleted() {
             nextButton.callOnClick()
         }
@@ -32,17 +30,17 @@ class WizardActivity : AppIntro() {
         welcomePage.description = getString(R.string.wizard_welcome_descr)
         welcomePage.imageDrawable = R.mipmap.ic_launcher
 
-        val project_info_page = SliderPage()
-        project_info_page.title = getString(R.string.project_friday)
-        project_info_page.description = getString(R.string.app_friday_description)
+        val projectInfoPage = SliderPage()
+        projectInfoPage.title = getString(R.string.project_friday)
+        projectInfoPage.description = getString(R.string.app_friday_description)
 
-        val signin_fragment = DefaultSignInFragment()
-        signin_fragment.addOnAuthCompletedListener(onAuthCompletedListener)
+        val signinFragment = DefaultSignInFragment()
+        signinFragment.addOnAuthCompletedListener(onAuthCompletedListener)
 
         addSlide(AppIntroFragment.newInstance(welcomePage))
-        addSlide(AppIntroFragment.newInstance(project_info_page))
+        addSlide(AppIntroFragment.newInstance(projectInfoPage))
         addSlide(AcceptTerms.newInstance())
-        addSlide(signin_fragment)
+        addSlide(signinFragment)
         addSlide(PermissionRequestFragment())
     }
 

@@ -10,13 +10,15 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import com.friday.ar.R
 import com.friday.ar.extensionMethods.notNull
-import com.friday.ar.fragments.DefaultSignInFragment
+import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
+import com.friday.ar.fragments.signinFragment.DefaultSignInFragment
 import kotlinx.android.synthetic.main.signin_layout.view.*
 
 class AuthDialog : FullscreenDialog() {
     private lateinit var mContext: Context
-    val signInFragment: DefaultSignInFragment = DefaultSignInFragment()
+    private val signInFragment: DefaultSignInFragment = DefaultSignInFragment()
     private var onDismissListener: DialogInterface.OnDismissListener? = null
+    private val onAuthCompletedListenerList = ArrayList<OnAuthCompletedListener>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -38,12 +40,21 @@ class AuthDialog : FullscreenDialog() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
+        onAuthCompletedListenerList.forEach { listener -> signInFragment.addOnAuthCompletedListener(listener) }
     }
 
     override fun dismiss() {
         (mContext.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view!!.windowToken, 0)
         onDismissListener.notNull { onDismissListener!!.onDismiss(null) }
         super.dismiss()
+    }
+
+    fun addOnAuthCompletedListener(listener: OnAuthCompletedListener) {
+        onAuthCompletedListenerList.add(listener)
+    }
+
+    fun removeOnAuthCompletedListener(listener: OnAuthCompletedListener) {
+        onAuthCompletedListenerList.remove(listener)
     }
 
     fun setOnDismissListener(listener: DialogInterface.OnDismissListener) {

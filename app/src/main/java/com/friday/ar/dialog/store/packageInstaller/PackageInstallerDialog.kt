@@ -45,11 +45,11 @@ class PackageInstallerDialog(chosenFile: File, context: Context) : BottomSheetDi
             val authorName = dialogView.findViewById<TextView>(R.id.authorName)
             pluginName.text = pluginManifest!!.pluginName
             if (pluginManifest.author == null) {
-                authorName.text = "Unknown author!"
+                authorName.setText(R.string.packageInstaller_unknown_author)
             } else {
                 authorName.text = pluginManifest.author
             }
-            dialogView.findViewById<View>(R.id.pluginInstaller_activity_cancel).setOnClickListener { view -> dismiss() }
+            dialogView.findViewById<View>(R.id.pluginInstaller_activity_cancel).setOnClickListener { dismiss() }
         }
         return dialogView
     }

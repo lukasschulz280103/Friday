@@ -16,7 +16,7 @@ import java.util.*
 /**
  * This class loads all plugins when the app starts.
  */
-class PluginLoader(private val context: Context) {
+class PluginLoader(context: Context) {
     /**
      * @return List of all installed Plugins
      */

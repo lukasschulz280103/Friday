@@ -13,8 +13,11 @@ import android.view.ViewTreeObserver
 import android.view.Window
 import android.widget.ImageButton
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.crashlytics.android.answers.Answers
+import com.crashlytics.android.answers.CustomEvent
+import com.friday.ar.Constant
 import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
@@ -26,7 +29,6 @@ import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
 import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.list.dashboard.DashboardAdapter
-import com.friday.ar.service.OnAccountSyncStateChanged
 import com.friday.ar.ui.FeedbackSenderActivity
 import com.friday.ar.ui.FullscreenActionActivity
 import com.friday.ar.ui.WizardActivity
@@ -42,7 +44,7 @@ import kotlinx.android.synthetic.main.page_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
+class MainActivity : FridayActivity() {
     private var storeFragment = MainStoreFragment()
     internal lateinit var app: FridayApplication
     private lateinit var viewModel: MainActivityViewModel
@@ -74,7 +76,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
         setContentView(R.layout.activity_main)
         app = application as FridayApplication
 
-        viewModel = ViewModelProviders.of(this, MainActivityViewModel.Factory(app)).get(MainActivityViewModel::class.java)
+        viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(MainActivityViewModel::class.java)
 
         viewModel.isFirstUse.observe(this, Observer { isFirstUse ->
             if (isFirstUse) {
@@ -139,6 +141,7 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
             start_actionmode.setOnClickListener {
                 val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
                 startActivity(intent)
+                Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
             }
 
             val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
@@ -254,10 +257,6 @@ class MainActivity : FridayActivity(), OnAccountSyncStateChanged {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.store_default_toolbar, menu)
         return true
-    }
-
-    override fun onSyncStateChanged() {
-
     }
 
     companion object {

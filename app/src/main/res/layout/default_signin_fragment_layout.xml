@@ -56,17 +56,21 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/password_forgot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/auth_forgot_password" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/password_forgot"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_margin="8dp"
+            android:text="@string/auth_forgot_password" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/submit"
@@ -74,9 +78,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:layout_gravity="end"
             android:text="@string/common_signin_button_text" />
 
-    </LinearLayout>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textView7"

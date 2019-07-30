@@ -281,4 +281,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="auth_user_creation_success">Registrierung erfolgreich</string>
     <string name="auth_user_creation_success_hint">Sie können sich nun mit Ihrer Email und Ihrem asswort anmelden.</string>
     <string name="lets_go">Los gehts!</string>
+    <string name="packageInstaller_unknown_author">Unbekannter Autor</string>
+    <string name="auth_could_not_create_new_user">Neuer Nutzer konnte nicht registriert werden: %s</string>
 </resources>

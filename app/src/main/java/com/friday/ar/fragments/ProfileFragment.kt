@@ -14,7 +14,6 @@ import com.friday.ar.Constant
 import com.friday.ar.R
 import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
-import com.friday.ar.service.OnAccountSyncStateChanged
 import com.friday.ar.ui.FeedbackSenderActivity
 import com.friday.ar.util.UserUtil
 import com.google.firebase.auth.FirebaseAuth
@@ -24,7 +23,7 @@ import com.mikhaellopez.circularimageview.CircularImageView
 /**
  * A simple [Fragment] subclass.
  */
-class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
+class ProfileFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private var firebaseUser: FirebaseUser? = null
     private lateinit var mContext: Context
@@ -79,7 +78,7 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
             signInButton.isEnabled = false
             val authenticationDialog = AuthDialog()
             authenticationDialog.show(childFragmentManager, "AuthenticationDialog")
-            authenticationDialog.signInFragment.addOnAuthCompletedListener(object : OnAuthCompletedListener {
+            authenticationDialog.addOnAuthCompletedListener(object : OnAuthCompletedListener {
                 override fun onAuthCompleted() {
                     setupSignInScreen()
                     authenticationDialog.dismiss()
@@ -133,10 +132,6 @@ class ProfileFragment : Fragment(), OnAccountSyncStateChanged {
             activity!!.recreate()
         }
         super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    override fun onSyncStateChanged() {
-        setupSignInScreen()
     }
 
     override fun onAttach(context: Context) {

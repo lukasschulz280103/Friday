@@ -13,8 +13,6 @@ import com.crashlytics.android.Crashlytics
 import com.friday.ar.plugin.application.PluginLoader
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.service.AccountSyncService
-import com.friday.ar.service.OnAccountSyncStateChanged
-import com.friday.ar.service.OnAccountSyncStateChangedList
 import com.friday.ar.service.PluginIndexer
 import com.friday.ar.util.UpdateUtil
 import edu.cmu.pocketsphinx.SpeechRecognizer
@@ -26,7 +24,7 @@ import java.util.*
 /**
  * Application class
  */
-class FridayApplication : Application(), OnAccountSyncStateChanged {
+class FridayApplication : Application() {
     /**
      * This is the global [SpeechRecognizer].
      * Its purpose is to transform speech input from the voice assistant into text.
@@ -43,9 +41,6 @@ class FridayApplication : Application(), OnAccountSyncStateChanged {
     var applicationPluginLoader: PluginLoader? = null
         private set
     private val applicationPluginIndexer: PluginIndexer? = null
-
-
-    private val syncStateChangedNotifyList = OnAccountSyncStateChangedList<OnAccountSyncStateChanged>()
 
     override fun onCreate() {
         super.onCreate()
@@ -79,19 +74,6 @@ class FridayApplication : Application(), OnAccountSyncStateChanged {
         }
     }
 
-
-    fun <Object : OnAccountSyncStateChanged> registerForSyncStateChange(context: Object?) {
-        if (context != null) {
-            syncStateChangedNotifyList.add(context)
-        } else {
-            throw NullPointerException("")
-        }
-    }
-
-    fun unregisterForSyncStateChange(context: Any) {
-        syncStateChangedNotifyList.remove(context)
-    }
-
     private fun runServices() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this@FridayApplication)
         val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
@@ -113,12 +95,6 @@ class FridayApplication : Application(), OnAccountSyncStateChanged {
         applicationPluginLoader!!.startLoading()
 
         UpdateUtil.checkForUpdate(this)
-    }
-
-    override fun onSyncStateChanged() {
-        for (listener in syncStateChangedNotifyList) {
-            listener.onSyncStateChanged()
-        }
     }
 
     object Jobs {

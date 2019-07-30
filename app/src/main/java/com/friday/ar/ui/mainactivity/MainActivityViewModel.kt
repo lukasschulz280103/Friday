@@ -7,8 +7,6 @@ import android.os.PowerManager
 import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     val energySaverActive = MutableLiveData<Boolean>()
@@ -47,12 +45,5 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             isFirstUse.postValue(true)
             defaultSharedPreferences.edit().putBoolean("isFirstUse", false).apply()
         } else isFirstUse.postValue(false)
-    }
-
-    class Factory(val application: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MainActivityViewModel(application) as T
-        }
-
     }
 }

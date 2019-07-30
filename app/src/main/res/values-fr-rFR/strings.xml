@@ -279,4 +279,6 @@
     <string name="auth_user_creation_success">L\'utilisateur a été créé avec succès.</string>
     <string name="auth_user_creation_success_hint">Vous devriez maintenant être en mesure de vous connecter en utilisant l\'email donné et votre mot de passe.</string>
     <string name="lets_go">C\'est parti !</string>
+    <string name="auth_could_not_create_new_user">Impossible de créer un nouvel utilisateur: %s</string>
+    <string name="packageInstaller_unknown_author">auteur inconnu</string>
 </resources>

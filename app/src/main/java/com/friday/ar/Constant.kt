@@ -1,7 +1,6 @@
 package com.friday.ar
 
 import android.content.Context
-
 import java.io.File
 
 class Constant {
@@ -21,8 +20,12 @@ class Constant {
          * @param context application context
          * @return returns the cache directory to temporarily store zipped plugins.
          */
-        fun getPluginDir(context: Context): File {
-            return File(context.getExternalFilesDir("/plugin/")!!.path)
+        fun getPluginDir(context: Context?): File {
+            if (context == null) {
+                throw IllegalArgumentException("context is null!")
+            } else {
+                return File(context.getExternalFilesDir("/plugin/")!!.path)
+            }
         }
 
         /**
@@ -68,5 +71,10 @@ class Constant {
          */
 
         val BROADCAST_ACCOUNT_SYNCED = "BROADCAST_ACCOUNT_SYNCHRONIZED"
+    }
+
+    object AnalyticEvent {
+        val LOGIN_EVENT_EMAIL = "Email + password"
+        val CUSTOM_EVENT_ACTIONMODE = "ActionMode start"
     }
 }

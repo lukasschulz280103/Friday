@@ -47,9 +47,14 @@ class PluginIndexer : JobService() {
     }
 
     private fun indexDirectories(directory: File) {
+        if (directory.listFiles() == null) {
+            Log.i(LOGTAG, "no installed plugins found")
+            return
+        }
+
         for (file in directory.listFiles { pathname ->
             pathname.isDirectory && !excludedDirs.contains(pathname.name)
-        }) {
+        }!!) {
             if (file.canRead()) {
                 if (file.isDirectory && !file.isFile) {
                     indexDirectories(file)

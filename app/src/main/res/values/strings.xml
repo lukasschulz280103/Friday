@@ -85,7 +85,7 @@
     <string name="delete_dialog_loading_text">Deleting Account…</string>
     <string name="pref_header_info">Info</string>
     <string name="info_phrase_love" translatable="false">© 2018 Stark Industries</string>
-    <string name="made_by" translatable="false"><b>by \nLukas Faber \nLukas Schulz</b></string>
+    <string name="made_by" translatable="false"><b>by \nLukas Konstantin Faber \nLukas Eric Schulz</b></string>
     <string name="checking_version">Checking…</string>
     <string name="feature_soon">This feature is non-existent in the current version</string>
     <string name="pref_title_sync_frequency">Sync frequency</string>
@@ -330,4 +330,6 @@
     <string name="auth_user_creation_success">User was created successfully.</string>
     <string name="auth_user_creation_success_hint">You should now be able to sign in by using the given email and your password.</string>
     <string name="lets_go">Let\'s go</string>
+    <string name="packageInstaller_unknown_author">Unknown author</string>
+    <string name="auth_could_not_create_new_user">Could not create new user:b %s</string>
 </resources>
