@@ -5,7 +5,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
@@ -23,7 +22,6 @@ import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
-import com.friday.ar.dashboard.DashboardListItem
 import com.friday.ar.fragments.dialogFragments.ChangelogDialogFragment
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
@@ -51,6 +49,9 @@ class MainActivity : FridayActivity() {
         const val FULLSCREEN_REQUEST_CODE = 22
         private const val REQUEST_PERMISSIONS_CODE = 900
         private const val LOGTAG = "FridayMainActivity"
+        private const val SITE_DASHBOARD = 0
+        private const val SITE_STORE = 1
+        private const val SITE_PROFILE = 2
     }
 
     private var storeFragment = MainStoreFragment()
@@ -58,20 +59,20 @@ class MainActivity : FridayActivity() {
     private lateinit var viewModel: MainActivityViewModel
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.main_nav_dashboard -> main_view_flipper!!.displayedChild = 0
+            R.id.main_nav_dashboard -> main_view_flipper!!.displayedChild = SITE_DASHBOARD
             R.id.main_nav_store -> {
                 if (findViewById<View>(R.id.stub_page_store) != null) {
                     stub_page_store.visibility = View.VISIBLE
                     setupSorePage()
                 }
-                main_view_flipper!!.displayedChild = 1
+                main_view_flipper!!.displayedChild = SITE_STORE
             }
             R.id.main_nav_profile -> {
                 if (findViewById<View>(R.id.stub_page_profile) != null) {
                     stub_page_profile.visibility = View.VISIBLE
                     setupProfilePage()
                 }
-                main_view_flipper!!.displayedChild = 2
+                main_view_flipper!!.displayedChild = SITE_PROFILE
             }
         }
         true
@@ -157,14 +158,21 @@ class MainActivity : FridayActivity() {
                 defaultSharedPreferences.edit().putInt("theme", R.style.AppTheme).apply()
             }
         }).start()
-        Handler().postDelayed({ start_actionmode.shrink() }, 2500)
-        val dataList = ArrayList<DashboardListItem>()
-        mainPageDashboardList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mainPageDashboardList.adapter = DashboardAdapter(this, dataList)
-        mainSwipeRefreshLayout.setOnRefreshListener {
-            val newData = ArrayList<DashboardListItem>()
 
+        mainPageDashboardList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mainPageDashboardList.adapter = DashboardAdapter(this, ArrayList(0))
+        mainSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.runRefresh()
         }
+
+        viewModel.dashboardListData.observe(this, Observer { list ->
+            mainSwipeRefreshLayout.isRefreshing = false
+            if (list.size == 0) {
+
+            } else {
+                mainPageDashboardList.adapter!!.notifyDataSetChanged()
+            }
+        })
     }
 
 
@@ -204,7 +212,7 @@ class MainActivity : FridayActivity() {
 
     override fun onBackPressed() {
         Snackbar.make(findViewById(R.id.viewflipperparent), getString(R.string.leave_app), Snackbar.LENGTH_SHORT)
-                .setAction(getString(R.string.action_leave)) { finishAffinity() }.show()
+                .setAction(getString(R.string.action_leave)) { finishAndRemoveTask() }.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

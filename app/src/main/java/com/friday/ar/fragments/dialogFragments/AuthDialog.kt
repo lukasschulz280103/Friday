@@ -46,7 +46,7 @@ class AuthDialog : FullscreenDialog() {
 
     override fun dismiss() {
         (mContext.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view!!.windowToken, 0)
-        onDismissListener.notNull { onDismissListener!!.onDismiss(null) }
+        onDismissListener.notNull { onDismiss(null) }
         super.dismiss()
     }
 

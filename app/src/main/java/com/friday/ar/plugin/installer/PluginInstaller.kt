@@ -10,7 +10,7 @@ import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.PluginVerifier
 import com.friday.ar.plugin.security.VerificationSecurityException
 import com.friday.ar.util.FileUtil
-import com.friday.ar.util.cache.CacheUtil
+import com.friday.ar.util.cache.PluginFileCacheUtil
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import java.io.IOException
@@ -22,41 +22,41 @@ class PluginInstaller(private val context: Context) {
         private const val LOGTAG = "PluginInstaller"
     }
 
-    private var onInstallProgressChangedListener: OnInstallProgressChangedListener? = null
+    private var onInstallationStateChangedListenerList: ArrayList<OnInstallationStateChangedListener> = ArrayList()
 
     @Throws(IOException::class)
     fun installFrom(pluginDir: ZippedPluginFile) {
         val verifier = PluginVerifier()
-        val cachedPluginFile = CacheUtil.cachePluginFile(context, pluginDir)
+        val cachedPluginFile = PluginFileCacheUtil.cachePluginFile(context, pluginDir)
         verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
             override fun onSuccess() {
-                onInstallProgressChangedListener!!.onProgressChanged(context.getString(R.string.pluginInstaller_progressMessage_installing))
+                notifyInstallProgressChange(context.getString(R.string.pluginInstaller_progressMessage_installing))
                 Files.move(cachedPluginFile.toPath(), Constant.getPluginDir(context, cachedPluginFile.name).toPath(), StandardCopyOption.REPLACE_EXISTING)
-                onInstallProgressChangedListener!!.onSuccess()
+                notifyInstallSuccess()
                 cachedPluginFile.deleteRecursively()
             }
 
             override fun onZipException(e: ZipException) {
                 Log.e(LOGTAG, e.message, e)
-                onInstallProgressChangedListener!!.onFailure(e)
+                notifyInstallationFailed(e)
             }
 
             override fun onIOException(e: IOException) {
                 Log.e(LOGTAG, e.message, e)
-                onInstallProgressChangedListener!!.onFailure(e)
+                notifyInstallationFailed(e)
             }
 
             override fun onJSONException(e: JSONException) {
                 Log.e(LOGTAG, e.message, e)
-                onInstallProgressChangedListener!!.onFailure(e)
+                notifyInstallationFailed(e)
             }
 
             override fun onVerificationFailed(e: VerificationSecurityException) {
                 Log.e(LOGTAG, e.message, e)
-                onInstallProgressChangedListener!!.onFailure(e)
+                notifyInstallationFailed(e)
             }
         })
-        onInstallProgressChangedListener!!.onProgressChanged(context.getString(R.string.pluginInstaller_progressMessage_verifying))
+        notifyInstallProgressChange(context.getString(R.string.pluginInstaller_progressMessage_verifying))
         verifier.verify(cachedPluginFile, true)
     }
 
@@ -66,11 +66,33 @@ class PluginInstaller(private val context: Context) {
         (context.applicationContext as FridayApplication).applicationPluginLoader!!.indexedPlugins.remove(plugin)
     }
 
-    fun setOnInstallProgressChangedListener(onInstallProgressChangedListener: OnInstallProgressChangedListener) {
-        this.onInstallProgressChangedListener = onInstallProgressChangedListener
+    fun addOnInstallationProgressChangedListener(onInstallationStateChangedListener: OnInstallationStateChangedListener) {
+        onInstallationStateChangedListenerList.add(onInstallationStateChangedListener)
     }
 
-    interface OnInstallProgressChangedListener {
+    fun removeOnInstallationStateChangedListener(onInstallationStateChangedListener: OnInstallationStateChangedListener) {
+        onInstallationStateChangedListenerList.remove(onInstallationStateChangedListener)
+    }
+
+    private fun notifyInstallProgressChange(msg: String) {
+        onInstallationStateChangedListenerList.forEach { listener ->
+            listener.onProgressChanged(msg)
+        }
+    }
+
+    private fun notifyInstallSuccess() {
+        onInstallationStateChangedListenerList.forEach { listener ->
+            listener.onSuccess()
+        }
+    }
+
+    private fun notifyInstallationFailed(e: Exception) {
+        onInstallationStateChangedListenerList.forEach { listener ->
+            listener.onFailure(e)
+        }
+    }
+
+    interface OnInstallationStateChangedListener {
         fun onProgressChanged(progressMessage: String)
         fun onSuccess()
         fun onFailure(e: Exception)

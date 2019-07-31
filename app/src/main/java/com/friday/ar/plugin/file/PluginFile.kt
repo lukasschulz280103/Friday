@@ -23,7 +23,7 @@ constructor(pathname: String) : File(pathname) {
      *
      * @return [Manifest] object of meta/manifest
      */
-    var manifest: Manifest? = null
+    lateinit var manifest: Manifest
 
     init {
         if (!isDirectory) {

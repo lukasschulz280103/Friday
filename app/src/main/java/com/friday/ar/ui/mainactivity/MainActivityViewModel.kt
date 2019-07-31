@@ -8,12 +8,14 @@ import android.os.PowerManager
 import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.friday.ar.dashboard.DashboardListItem
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     val energySaverActive = MutableLiveData<Boolean>()
     val isUpdatedVersion = MutableLiveData<Boolean>()
     val isOldVersionInstalled = MutableLiveData<Pair<Boolean, String?>>()
     val isFirstUse = MutableLiveData<Boolean>()
+    val dashboardListData = MutableLiveData<ArrayList<DashboardListItem>>()
 
     init {
         val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
@@ -55,5 +57,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             isFirstUse.postValue(true)
             defaultSharedPreferences.edit().putBoolean("isFirstUse", false).apply()
         } else isFirstUse.postValue(false)
+
+
+        val dataList = ArrayList<DashboardListItem>()
+        dashboardListData.postValue(dataList)
+    }
+
+    fun runRefresh() {
+        dashboardListData.postValue(ArrayList(0))
     }
 }

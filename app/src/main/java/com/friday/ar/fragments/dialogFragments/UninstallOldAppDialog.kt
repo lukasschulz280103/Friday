@@ -22,6 +22,7 @@ class UninstallOldAppDialog : FullscreenDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isCancelable = false
         promptUninstall()
     }
 
@@ -44,4 +45,6 @@ class UninstallOldAppDialog : FullscreenDialog() {
             }
         }
     }
+
+
 }

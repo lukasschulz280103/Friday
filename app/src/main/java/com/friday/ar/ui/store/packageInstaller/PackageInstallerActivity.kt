@@ -12,6 +12,8 @@ class PackageInstallerActivity : AppCompatActivity() {
         private const val LOGTAG = "PackageInstallerActivity"
     }
 
+    private lateinit var packageInstallerDialog: PackageInstallerDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_package_installer)
@@ -21,8 +23,12 @@ class PackageInstallerActivity : AppCompatActivity() {
         if (uri != null) {
             var filePath = uri.replace("content://", "")
             filePath = "file://" + filePath.substring(filePath.indexOf("/"))
-            val packageInstallerDialog = PackageInstallerDialog(File(filePath), this)
+            packageInstallerDialog = PackageInstallerDialog(File(filePath))
             packageInstallerDialog.show(supportFragmentManager, "PackageInstallerDialog")
         }
+    }
+
+    override fun onBackPressed() {
+        if (!packageInstallerDialog.onBackPressed()) super.onBackPressed()
     }
 }

@@ -2,16 +2,16 @@
 
 package com.friday.ar.extensionMethods
 
-fun Any?.notNull(f: () -> Unit): Any? {
+fun <T> T?.notNull(block: T.() -> Unit): T? {
     if (this != null) {
-        f()
+        block()
     }
     return this
 }
 
-fun Any?.isNull(f: () -> Unit): Any? {
+fun <T> T?.isNull(block: T?.() -> Unit): T? {
     if (this == null) {
-        f()
+        block()
     }
     return this
 }

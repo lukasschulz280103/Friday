@@ -84,11 +84,13 @@ class SigninFragmentViewModel(application: Application) : AndroidViewModel(appli
     }
 
     fun signinUserWithEmailAndPassword(email: String, password: String) {
+        inputsUsabilityState.postValue(false)
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(onSignInCompletionListener)
     }
 
     fun firebaseAuthWithGoogle(googleAccount: GoogleSignInAccount) {
+        inputsUsabilityState.postValue(false)
         Log.d(ContentValues.TAG, "firebaseAuthWithGoogle:" + googleAccount.id!!)
         val credential = GoogleAuthProvider.getCredential(googleAccount.idToken, null)
         firebaseAuth.signInWithCredential(credential)

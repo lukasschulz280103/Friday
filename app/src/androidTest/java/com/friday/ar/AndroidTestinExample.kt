@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.friday.ar.plugin.file.ZippedPluginFile
-import com.friday.ar.util.cache.CacheUtil
+import com.friday.ar.util.cache.PluginFileCacheUtil
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,6 +23,6 @@ class UtilityTests {
     @Test
     fun cacheUtilTest() {
         val testFile = File(context.getExternalFilesDir("/tests/myplugin.fpl")!!.path)
-        val cacheUtil = CacheUtil.cachePluginFile(context, ZippedPluginFile(testFile))
+        val cacheUtil = PluginFileCacheUtil.cachePluginFile(context, ZippedPluginFile(testFile))
     }
 }

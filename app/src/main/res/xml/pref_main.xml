@@ -41,9 +41,7 @@
             android:title="@string/info">
             <intent android:action="com.friday.Info" />
         </androidx.preference.Preference>
-        <androidx.preference.Preference android:title="@string/help">
-
-        </androidx.preference.Preference>
+        <androidx.preference.Preference android:title="@string/help" />
     </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/developer_options">
         <androidx.preference.SwitchPreference

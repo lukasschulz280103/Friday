@@ -8,7 +8,7 @@ import com.friday.ar.plugin.file.Manifest.ManifestSecurityException
 import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.util.FileUtil
-import com.friday.ar.util.cache.CacheUtil
+import com.friday.ar.util.cache.PluginFileCacheUtil
 
 import net.lingala.zip4j.exception.ZipException
 
@@ -46,6 +46,7 @@ class PluginVerifier {
 
     private var onVerificationCompleteListener: OnVerificationCompleteListener? = null
 
+    //TODO: add functionality that only extracts the manifest from the plugin file
     /**
      * Verify a plugin which is zipped.
      * Throws an exception if an plugin file seems o be corrupted.
@@ -55,7 +56,7 @@ class PluginVerifier {
      * @param deleteOnException boolean whether the cached file should be deleted if the verification fails.
      */
     fun verify(plugin: ZippedPluginFile, context: Context, deleteOnException: Boolean) {
-        val cachedPluginFile = CacheUtil.cachePluginFile(context, plugin)
+        val cachedPluginFile = PluginFileCacheUtil.cachePluginFile(context, plugin)
         try {
             for (file in Constant.getPluginCacheDir(context).listFiles()) {
                 Log.d(LOGTAG, file.name)

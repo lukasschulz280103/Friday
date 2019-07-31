@@ -24,7 +24,7 @@
             android:layout_marginBottom="8dp"
             android:clickable="true"
             app:icon="@drawable/google_cardboard"
-            tools:text="Start ActionMode" />
+            android:text="@string/start_action_mode" />
 
         <ViewFlipper
             android:id="@+id/main_view_flipper"

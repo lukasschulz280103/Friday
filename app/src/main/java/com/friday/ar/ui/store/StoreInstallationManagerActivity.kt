@@ -118,7 +118,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
             Log.d(LOGTAG, "oldData:" + data.data!!.toString())
             val openedFile = File(Objects.requireNonNull(data.data!!.path))
             val installer = PluginInstaller(this)
-            installer.setOnInstallProgressChangedListener(object : PluginInstaller.OnInstallProgressChangedListener {
+            installer.addOnInstallationProgressChangedListener(object : PluginInstaller.OnInstallationStateChangedListener {
                 override fun onProgressChanged(progressMessage: String) {
                     Log.d(LOGTAG, "progress changed")
                 }
