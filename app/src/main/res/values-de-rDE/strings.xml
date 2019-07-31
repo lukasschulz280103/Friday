@@ -283,4 +283,5 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="lets_go">Los gehts!</string>
     <string name="packageInstaller_unknown_author">Unbekannter Autor</string>
     <string name="auth_could_not_create_new_user">Neuer Nutzer konnte nicht registriert werden: %s</string>
+    <string name="pref_notifs_notify_update_available">Über verfügbare Updates benachrichtigen</string>
 </resources>
