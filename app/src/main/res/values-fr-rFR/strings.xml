@@ -284,4 +284,6 @@
     <string name="pref_notifs_notify_update_available">notification des mises à jour</string>
     <string name="pref_user">usager</string>
     <string name="title_activity_fullscreen_action">mode AR</string>
+    <string name="errtype_arcore_device_not_capable">Votre appareil n\'est pas pris en charge</string>
+    <string name="errtype_arcore_installation_declined">Cette application nécessite ArCore sur l\'appareil. Veuillez installer ArCore et réessayer.</string>
 </resources>

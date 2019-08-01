@@ -72,15 +72,6 @@ class Constant {
         const val BROADCAST_ACCOUNT_SYNCED = "BROADCAST_ACCOUNT_SYNCHRONIZED"
     }
 
-    object ArCoreSession {
-        object Error {
-            const val NOT_INSTALLED = "TYPE_NOT_INSTALLED"
-            const val OLD_APK = "TYPE_OLD_APK"
-            const val OLD_SDK_TOOL = "TYPE_OLD_SDK_TOOL"
-            const val DEVICE_INCOMPATIBLE = "TYPE_DEVICE_INCOMPATIBLE"
-            const val USER_DECLINED_INSTALLATION = "TYPE_USER_DECLINED_INSTALLATION"
-        }
-    }
 
     object AnalyticEvent {
         const val LOGIN_EVENT_EMAIL = "Email + password"
