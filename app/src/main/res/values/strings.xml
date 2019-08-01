@@ -13,7 +13,7 @@
         <item>de</item>
         <item>en</item>
     </string-array>
-    <string name="title_activity_fullscreen_action" translatable="false">FullscreenActionActivity</string>
+    <string name="title_activity_fullscreen_action">AR Mode</string>
     <string name="app_back">Back</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="dismiss_btn_seconds">I understood and agree (%d)</string>
@@ -332,4 +332,6 @@
     <string name="packageInstaller_unknown_author">Unknown author</string>
     <string name="auth_could_not_create_new_user">Could not create new user:b %s</string>
     <string name="pref_notifs_notify_update_available">Notify about available updates</string>
+    <string name="pref_user">User</string>
+    <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. PLease install ArCore and retry.</string>
 </resources>

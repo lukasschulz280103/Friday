@@ -144,7 +144,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.FullscreenActionActivity"
+            android:name=".ui.armode.FullscreenActionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_action"
             android:parentActivityName=".ui.mainactivity.MainActivity"
@@ -207,6 +207,7 @@
         <service
             android:name=".service.PluginIndexer"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
     </application>
 
 </manifest>

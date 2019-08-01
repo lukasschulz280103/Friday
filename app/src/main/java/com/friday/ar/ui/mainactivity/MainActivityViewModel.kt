@@ -9,6 +9,8 @@ import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.friday.ar.dashboard.DashboardListItem
+import com.google.ar.core.ArCoreApk
+
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     val energySaverActive = MutableLiveData<Boolean>()
@@ -16,6 +18,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val isOldVersionInstalled = MutableLiveData<Pair<Boolean, String?>>()
     val isFirstUse = MutableLiveData<Boolean>()
     val dashboardListData = MutableLiveData<ArrayList<DashboardListItem>>()
+    val arCoreApkAvailability = MutableLiveData<ArCoreApk.Availability>()
 
     init {
         val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)

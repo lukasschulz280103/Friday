@@ -5,6 +5,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
@@ -29,8 +30,8 @@ import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.list.dashboard.DashboardAdapter
 import com.friday.ar.ui.FeedbackSenderActivity
-import com.friday.ar.ui.FullscreenActionActivity
 import com.friday.ar.ui.WizardActivity
+import com.friday.ar.ui.armode.FullscreenActionActivity
 import com.friday.ar.ui.store.StoreDetailActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -97,12 +98,12 @@ class MainActivity : FridayActivity() {
 
         viewModel.energySaverActive.observe(this@MainActivity, Observer { isEnergySaverActive ->
             if (isEnergySaverActive) {
-                val builder = MaterialAlertDialogBuilder(this)
-                builder.setTitle(R.string.energy_saver_warn_title)
-                builder.setMessage(R.string.energy_saver_warn_msg)
-                builder.setPositiveButton(R.string.deactivate) { _, _ -> }
-                builder.setNegativeButton(R.string.later, null)
-                builder.create().show()
+                //val builder = MaterialAlertDialogBuilder(this)
+                //builder.setTitle(R.string.energy_saver_warn_title)
+                //builder.setMessage(R.string.energy_saver_warn_msg)
+                //builder.setPositiveButton(R.string.deactivate) { _, _ -> }
+                //builder.setNegativeButton(R.string.later, null)
+                //builder.create().show()
             }
         })
         viewModel.isUpdatedVersion.observe(this@MainActivity, Observer { isUpdatedVersion ->
@@ -148,8 +149,17 @@ class MainActivity : FridayActivity() {
             main_bottom_nav.setOnNavigationItemSelectedListener(navselected)
 
             start_actionmode.setOnClickListener {
-                val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
-                startActivity(intent)
+                if (checkArCoreAvailability()) {
+                    val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                    startActivity(intent)
+                } else {
+                    MaterialAlertDialogBuilder(this@MainActivity)
+                            .setTitle(R.string.unsupported_device_header)
+                            .setMessage(R.string.errtype_device_incompatible)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .create().show()
+                }
                 Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
             }
 
@@ -222,8 +232,7 @@ class MainActivity : FridayActivity() {
             alertDialog.setPositiveButton(android.R.string.ok, null)
             alertDialog.setNeutralButton(R.string.app_feedback) { _, _ -> startActivity(Intent(this@MainActivity, FeedbackSenderActivity::class.java)) }
             when (errtype) {
-                "TYPE_NOT_INSTALLED" -> {
-                    alertDialog.setMessage(R.string.errtype_not_installed)
+                Constant.ArCoreSession.Error.NOT_INSTALLED -> {
                     val apk = ArCoreApk.getInstance()
                     try {
                         apk.requestInstall(this, true)
@@ -234,14 +243,17 @@ class MainActivity : FridayActivity() {
                         e.printStackTrace()
                     }
                 }
-                "TYPE_OLD_APK" -> {
+                Constant.ArCoreSession.Error.OLD_APK -> {
                     alertDialog.setMessage(R.string.errtype_arcore_apk_too_old)
                 }
-                "TYPE_OLD_SDK_TOOL" -> {
+                Constant.ArCoreSession.Error.OLD_SDK_TOOL -> {
                     alertDialog.setMessage(R.string.errtype_sdk_too_old)
                 }
-                "TYPE_DEVICE_INCOMPATIBLE" -> {
+                Constant.ArCoreSession.Error.DEVICE_INCOMPATIBLE -> {
                     alertDialog.setMessage(R.string.errtype_device_incompatible)
+                }
+                Constant.ArCoreSession.Error.USER_DECLINED_INSTALLATION -> {
+                    alertDialog.setMessage(R.string.errtype_arcore_installation_declined)
                 }
             }
             alertDialog.create().show()
@@ -273,5 +285,18 @@ class MainActivity : FridayActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.store_default_toolbar, menu)
         return true
+    }
+
+    private fun checkArCoreAvailability(): Boolean {
+        val availability = ArCoreApk.getInstance().checkAvailability(this)
+        if (availability.isTransient) {
+            // Re-query at 5Hz while compatibility is checked in the background.
+            Handler().postDelayed({
+                checkArCoreAvailability()
+                Log.d(LOGTAG, "checking")
+            }, 200)
+        }
+        Log.d(LOGTAG, "is device supported:${availability.isSupported}")
+        return availability.isSupported
     }
 }

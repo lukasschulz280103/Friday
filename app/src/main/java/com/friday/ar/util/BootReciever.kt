@@ -34,6 +34,7 @@ class BootReciever : BroadcastReceiver() {
         }
 
         val jobIndexerInfo = JobInfo.Builder(FridayApplication.Jobs.JOB_INDEX_PLUGINS, ComponentName(context, PluginIndexer::class.java))
+                .setOverrideDeadline(0)
                 .setBackoffCriteria((30 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
                 .build()
         jobScheduler.schedule(jobIndexerInfo)

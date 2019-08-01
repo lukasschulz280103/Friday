@@ -2,6 +2,7 @@ package com.friday.ar.util
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.preference.PreferenceManager
 import android.util.Log
 import com.crashlytics.android.Crashlytics
@@ -15,7 +16,7 @@ object UpdateUtil {
     fun checkForUpdate(context: Context) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val database = FirebaseDatabase.getInstance()
-        val updateRef = if (sharedPreferences.getBoolean("pref_devmode_use_beta_channel", false)) database.getReference("versionPre") else database.getReference("version")
+        val updateRef = if (sharedPreferences.getBoolean("pref_devmode_use_beta_channel", false) || Build.TYPE == "debug") database.getReference("versionPre") else database.getReference("version")
         updateRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 try {
