@@ -3,111 +3,64 @@ package com.friday.ar.dialog.store.packageInstaller
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
+import android.view.animation.AnimationUtils
+import androidx.lifecycle.Observer
 import com.friday.ar.R
 import com.friday.ar.databinding.PackageInstallerDialogBinding
-import com.friday.ar.extensionMethods.notNull
-import com.friday.ar.plugin.file.Manifest
-import com.friday.ar.plugin.file.PluginFile
-import com.friday.ar.plugin.file.ZippedPluginFile
-import com.friday.ar.plugin.installer.PluginInstaller
-import com.friday.ar.plugin.security.VerificationSecurityException
-import com.friday.ar.util.cache.PluginFileCacheUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.package_installer_dialog.view.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.File
-import java.io.IOException
-import java.util.zip.ZipException
 
 /**
  * This dialog shows up when an external file browser app sends an intent to this app.
  */
-class PackageInstallerDialog(val chosenFile: File) : BottomSheetDialogFragment() {
+class PackageInstallerDialog : BottomSheetDialogFragment() {
+    private lateinit var chosenFile: File
     companion object {
-        private const val LOGTAG = "PackageInstallerDialog"
-        private const val SITE_VIEW_PLUGIN = 0
-        private const val SITE_INSTALL_PROGRESS = 1
-        private const val SITE_ERROR = 2
+        internal const val LOGTAG = "PackageInstallerDialog"
+        internal const val SITE_VIEW_PLUGIN = 0
+        internal const val SITE_INSTALL_PROGRESS = 1
+        internal const val SITE_ERROR = 2
+        fun getInstance(chosenFilePath: String): PackageInstallerDialog {
+            val bundle = Bundle()
+            bundle.putString("filePath", chosenFilePath)
+            val packageInstallerDialog = PackageInstallerDialog()
+            packageInstallerDialog.arguments = bundle
+            return packageInstallerDialog
+        }
     }
-
-    val installProgressMessage = MutableLiveData<String>()
 
     private lateinit var dialogView: View
     private lateinit var mContext: Context
     private lateinit var viewModel: PackageInstallerDialogViewModel
-    private var pluginFile: PluginFile? = null
-    lateinit var cachedPluginFileManifest: Manifest
-    private var zippedPluginFile: ZippedPluginFile? = null
 
-    private val onInstallStateChangedListener = object : PluginInstaller.OnInstallationStateChangedListener {
-        override fun onProgressChanged(progressMessage: String) {
-            installProgressMessage.postValue(progressMessage)
-            dialogView.view_animator.displayedChild = SITE_INSTALL_PROGRESS
-        }
-
-        override fun onSuccess() {
-            dialogView.view_animator.displayedChild = SITE_INSTALL_PROGRESS
-        }
-
-        override fun onFailure(e: Exception) {
-            dialogView.view_animator.displayedChild = SITE_ERROR
-        }
-
-    }
-
+    //TODO:outsource work to the viewmodel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (arguments!!.getString("filePath", "").isEmpty()) throw IllegalArgumentException("Cannot open file dialog without a passed file argument.")
+        chosenFile = File(arguments!!.getString("filePath")!!)
         val dataBinding = PackageInstallerDialogBinding.inflate(inflater, container, false)
+        dataBinding.lifecycleOwner = this
         viewModel = PackageInstallerDialogViewModel.Factory(chosenFile, activity!!.application).create(PackageInstallerDialogViewModel::class.java)
+        dataBinding.progressText = viewModel.installProgressMessage
+        dataBinding.errorMessage = viewModel.errorMessage
+        dataBinding.manifest = viewModel.manifest
+
         dialogView = dataBinding.root
+        dialogView.view_animator.outAnimation = AnimationUtils.loadAnimation(mContext, R.anim.anim_slideout_left)
+        dialogView.view_animator.inAnimation = AnimationUtils.loadAnimation(mContext, R.anim.anim_slidein_right)
         dialogView.view_animator.displayedChild = SITE_INSTALL_PROGRESS
-        installProgressMessage.postValue(getString(R.string.asset_loader_loading))
-        zippedPluginFile = ZippedPluginFile(chosenFile)
-        GlobalScope.launch {
-            var errorMessage = ""
-            try {
-                pluginFile = PluginFileCacheUtil.extractManifest(mContext, zippedPluginFile!!)
-                cachedPluginFileManifest = pluginFile!!.manifest
-                activity!!.runOnUiThread {
-                    if (!zippedPluginFile!!.isValidZipFile) {
-                        dialogView.view_animator.displayedChild = SITE_ERROR
-                        dialogView.pluginInstaller_error_description.setText(R.string.pluginInstaller_error_invalid_zip_file)
-                    } else {
-                        dialogView.pluginName.text = cachedPluginFileManifest.pluginName
-                        if (cachedPluginFileManifest.author == null) {
-                            dialogView.authorName.setText(R.string.packageInstaller_unknown_author)
-                        } else {
-                            dialogView.authorName.text = cachedPluginFileManifest.author
-                        }
-                        dialogView.pluginInstaller_activity_cancel.setOnClickListener { dismiss() }
-                        dialogView.startInstallation.setOnClickListener {
-                            viewModel.doInstall().addOnInstallationProgressChangedListener(onInstallStateChangedListener)
-                            dialogView.view_animator.displayedChild = SITE_INSTALL_PROGRESS
-                        }
-                    }
-                }
-            } catch (e: ZipException) {
-                Log.e(LOGTAG, "Error extracting manifest: ${e.message}", e)
-                errorMessage = e.message!!
-            } catch (e: IOException) {
-                Log.e(LOGTAG, "Error extracting manifest: ${e.message}", e)
-                errorMessage = e.message!!
-            } catch (e: VerificationSecurityException) {
-                Log.e(LOGTAG, "Error verifying manifest: ${e.message}", e)
-                errorMessage = e.message!!
-            } finally {
-                activity!!.runOnUiThread {
-                    dialogView.view_animator.displayedChild = SITE_ERROR
-                    dialogView.pluginInstaller_error_description.text = errorMessage
-                }
-            }
-        }
         dialogView.errorOk.setOnClickListener { dismiss() }
+        dialogView.pluginInstaller_activity_cancel.setOnClickListener { dismiss() }
+        dialogView.startInstallation.setOnClickListener { viewModel.doInstall() }
+        viewModel.displayedSite.observe(this, Observer { site -> dialogView.view_animator.displayedChild = site })
+        viewModel.isProgressShown.observe(this, Observer { isShown ->
+            dialogView.installProgressbar.visibility = if (isShown) View.VISIBLE else View.GONE
+            dialogView.installProgressIcon.visibility = if (isShown) View.GONE else View.VISIBLE
+        })
+        viewModel.progressIcon.observe(this, Observer { drawableRes -> dialogView.installProgressIcon.setImageDrawable(mContext.getDrawable(drawableRes)) })
         return dialogView
     }
 
@@ -118,9 +71,6 @@ class PackageInstallerDialog(val chosenFile: File) : BottomSheetDialogFragment()
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        pluginFile.notNull {
-            deleteRecursively()
-        }
         activity!!.finishAndRemoveTask()
     }
 

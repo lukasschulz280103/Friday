@@ -219,7 +219,7 @@
     <string name="help_hint_vertical_plane_detection_title">Vertical surface detection</string>
     <string name="help_hint_vertical_plane_detection_msg">This app supports vertical plane detection. To make it work, you should search for remarkable surfaces such as brick-walls, or walls with images, posterrs etc. Detected walls will show the same indicator as horizontal detected surfaces.</string>
     <string name="licenses">Licenses</string>
-    <string name="errtype_not_installed">The ArCore-Application is missing on this device. PLease visit Google Play, install Google ArCore and retry.</string>
+    <string name="errtype_not_installed">The ArCore-Application is missing on this device. Please visit Google Play, install Google ArCore and retry.</string>
     <string name="errtype_arcore_apk_too_old">The installed version arcore is outdated to  be used with this app. Please ensure that the newest version of ArCore is installed and retry.</string>
     <string name="errtype_sdk_too_old">The SDK is outdated for the installed version of ArCore. Please ensure that the newest version of friday is installed. If this problem persists, you can try to contact us or wait until this app receives an update.</string>
     <string name="errtype_device_incompatible">Your device is incompatible with ArCore.</string>
@@ -333,6 +333,8 @@
     <string name="auth_could_not_create_new_user">Could not create new user:b %s</string>
     <string name="pref_notifs_notify_update_available">Notify about available updates</string>
     <string name="pref_user">User</string>
-    <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. PLease install ArCore and retry.</string>
+    <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. Please install ArCore and retry.</string>
     <string name="errtype_arcore_device_not_capable">Your device is not supported.</string>
+    <string name="packageInstaller_perms_denied_accessError">Access error</string>
+    <string name="packageInstaller_perms_denied_accessError_explanation">We need to access your storage in order to install files from your device.</string>
 </resources>

@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:animateLayoutChanges="true">
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
         <ViewAnimator
             android:id="@+id/view_animator"
             android:layout_width="match_parent"
@@ -16,7 +9,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -30,7 +23,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/pluginInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
                     <ImageView
@@ -58,7 +51,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="@{viewModel.manifest.pluginName}"
+                            android:text="@{manifest.pluginName}"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
                         <TextView
@@ -68,7 +61,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="4dp"
                             android:layout_marginEnd="8dp"
-                            android:text="@{viewModel.manifest.author}"
+                            android:text="@{manifest.author}"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -99,34 +92,45 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <ImageView
-                    android:id="@+id/installProgressbar"
-                    style="?android:attr/progressBarStyle"
+                <FrameLayout
+                    android:id="@+id/progressIndicatorContainer"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginBottom="24dp" />
+                    android:layout_marginBottom="24dp">
+
+                    <ImageView
+                        android:id="@+id/installProgressIcon"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <ProgressBar
+                        android:id="@+id/installProgressbar"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:indeterminate="true" />
+                </FrameLayout>
 
                 <TextView
-                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{progressMessage}" />
+                    android:text="@{progressText}" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
-
                 <Button
                     android:id="@+id/errorOk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:text="@android:string/ok" />
-
                 <TextView
                     android:id="@+id/pluginInstaller_error_description"
+                    android:text="@{errorMessage}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp" />
@@ -139,18 +143,22 @@
                     android:text="@string/pluginInstaller_error_could_not_parse"
                     android:textAppearance="@android:style/TextAppearance.Material.Title" />
             </LinearLayout>
-
         </ViewAnimator>
-    </LinearLayout>
-
     <data>
 
         <variable
-            name="viewModel"
-            type="com.friday.ar.dialog.store.packageInstaller.PackageInstallerDialogViewModel" />
+            name="manifest"
+            type="androidx.lifecycle.LiveData&lt;com.friday.ar.plugin.file.Manifest>" />
 
         <variable
-            name="progressMessage"
-            type="String" />
+            name="progressIcon"
+            type="androidx.lifecycle.LiveData&lt;Number>" />
+
+        <variable
+            name="errorMessage"
+            type="androidx.lifecycle.LiveData&lt;String>" />
+        <variable
+            name="progressText"
+            type="androidx.lifecycle.LiveData&lt;String>" />
     </data>
 </layout>
