@@ -29,31 +29,25 @@ class MainStoreFragment : ConnectionFragment(), OnConnectionStateChangedListener
         toolbar.title = ""
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         activity!!.invalidateOptionsMenu()
-        addFragment(R.id.store_featured_fragment_container, StoreFeaturedFragment())
+        //addFragment(R.id.store_featured_fragment_container, StoreFeaturedFragment())
         return v
     }
 
     override fun onConnected() {
-
+        if (childFragmentManager.backStackEntryCount != 0) childFragmentManager.popBackStack()
     }
 
     override fun onError(e: Exception) {
         Log.e("StoreError", "Error occured at store")
-        if (fragmentManager == null) {
-            return
-        }
-        fragmentManager!!.beginTransaction()
+        childFragmentManager.beginTransaction()
                 .add(R.id.store_frag_container, ErrorFragment(e as FirebaseFirestoreException))
                 .remove(this)
                 .commitAllowingStateLoss()
     }
 
     private fun addFragment(@IdRes containerId: Int, newFragment: Fragment) {
-        if (fragmentManager == null) {
-            return
-        }
         childFragmentManager.beginTransaction()
                 .replace(containerId, newFragment)
                 .commitAllowingStateLoss()
     }
-}// Required empty public constructor
+}

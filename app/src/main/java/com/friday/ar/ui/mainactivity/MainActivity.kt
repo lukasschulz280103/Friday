@@ -29,15 +29,13 @@ import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.list.dashboard.DashboardAdapter
 import com.friday.ar.ui.FeedbackSenderActivity
-import com.friday.ar.ui.FullscreenActionActivity
 import com.friday.ar.ui.WizardActivity
+import com.friday.ar.ui.armode.FullscreenActionActivity
 import com.friday.ar.ui.store.StoreDetailActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.ar.core.ArCoreApk
-import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException
-import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.page_main.*
 import java.util.*
@@ -97,12 +95,12 @@ class MainActivity : FridayActivity() {
 
         viewModel.energySaverActive.observe(this@MainActivity, Observer { isEnergySaverActive ->
             if (isEnergySaverActive) {
-                val builder = MaterialAlertDialogBuilder(this)
-                builder.setTitle(R.string.energy_saver_warn_title)
-                builder.setMessage(R.string.energy_saver_warn_msg)
-                builder.setPositiveButton(R.string.deactivate) { _, _ -> }
-                builder.setNegativeButton(R.string.later, null)
-                builder.create().show()
+                //val builder = MaterialAlertDialogBuilder(this)
+                //builder.setTitle(R.string.energy_saver_warn_title)
+                //builder.setMessage(R.string.energy_saver_warn_msg)
+                //builder.setPositiveButton(R.string.deactivate) { _, _ -> }
+                //builder.setNegativeButton(R.string.later, null)
+                //builder.create().show()
             }
         })
         viewModel.isUpdatedVersion.observe(this@MainActivity, Observer { isUpdatedVersion ->
@@ -149,7 +147,7 @@ class MainActivity : FridayActivity() {
 
             start_actionmode.setOnClickListener {
                 val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
-                startActivity(intent)
+                startActivityForResult(intent, FULLSCREEN_REQUEST_CODE)
                 Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
             }
 
@@ -217,32 +215,22 @@ class MainActivity : FridayActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == FULLSCREEN_REQUEST_CODE && data != null) {
-            val errtype = data.getStringExtra("errtype")
+            val errtype = data.extras!!.getString("errtype")
             val alertDialog = MaterialAlertDialogBuilder(this)
             alertDialog.setPositiveButton(android.R.string.ok, null)
             alertDialog.setNeutralButton(R.string.app_feedback) { _, _ -> startActivity(Intent(this@MainActivity, FeedbackSenderActivity::class.java)) }
-            when (errtype) {
-                "TYPE_NOT_INSTALLED" -> {
+            when (ArCoreApk.Availability.valueOf(errtype!!)) {
+                ArCoreApk.Availability.UNKNOWN_ERROR -> alertDialog.setMessage(R.string.unknown_error)
+                ArCoreApk.Availability.UNKNOWN_CHECKING -> return
+                ArCoreApk.Availability.UNKNOWN_TIMED_OUT -> return
+                ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE -> alertDialog.setMessage(R.string.errtype_arcore_device_not_capable)
+                ArCoreApk.Availability.SUPPORTED_NOT_INSTALLED -> {
                     alertDialog.setMessage(R.string.errtype_not_installed)
-                    val apk = ArCoreApk.getInstance()
-                    try {
-                        apk.requestInstall(this, true)
-                    } catch (e: UnavailableDeviceNotCompatibleException) {
-                        data.putExtra("errtype", "TYPE_DEVICE_NOT_SUPPORTED")
-                        onActivityResult(requestCode, resultCode, data)
-                    } catch (e: UnavailableUserDeclinedInstallationException) {
-                        e.printStackTrace()
-                    }
+                    alertDialog.setPositiveButton(R.string.pluginInstaller_activity_installNow) { _, _ -> ArCoreApk.getInstance().requestInstall(this@MainActivity, true) }
+                    alertDialog.setNegativeButton(android.R.string.cancel, null)
                 }
-                "TYPE_OLD_APK" -> {
-                    alertDialog.setMessage(R.string.errtype_arcore_apk_too_old)
-                }
-                "TYPE_OLD_SDK_TOOL" -> {
-                    alertDialog.setMessage(R.string.errtype_sdk_too_old)
-                }
-                "TYPE_DEVICE_INCOMPATIBLE" -> {
-                    alertDialog.setMessage(R.string.errtype_device_incompatible)
-                }
+                ArCoreApk.Availability.SUPPORTED_APK_TOO_OLD -> alertDialog.setMessage(R.string.errtype_arcore_apk_too_old)
+                ArCoreApk.Availability.SUPPORTED_INSTALLED -> alertDialog.setMessage(R.string.errtype_sdk_too_old)
             }
             alertDialog.create().show()
             return

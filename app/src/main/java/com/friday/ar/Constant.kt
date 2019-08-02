@@ -72,6 +72,7 @@ class Constant {
         const val BROADCAST_ACCOUNT_SYNCED = "BROADCAST_ACCOUNT_SYNCHRONIZED"
     }
 
+
     object AnalyticEvent {
         const val LOGIN_EVENT_EMAIL = "Email + password"
         const val CUSTOM_EVENT_ACTIONMODE = "ActionMode start"

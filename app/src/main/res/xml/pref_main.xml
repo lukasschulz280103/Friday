@@ -1,7 +1,5 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.preference.PreferenceCategory
-        android:title="User">
-
+    <androidx.preference.PreferenceCategory android:title="@string/pref_user">
         <com.friday.ar.preference.AccountPreference
             android:key="account_main_preference"
             android:layout="@layout/account_preference_layout" />
@@ -12,16 +10,23 @@
             android:key="delete_account"
             android:title="@string/delete_account" />
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory android:title="@string/more_sync_settings">
+    <androidx.preference.PreferenceCategory
+        android:icon="@drawable/twotone_sync_24"
+        android:title="@string/more_sync_settings">
         <androidx.preference.SwitchPreference
-            android:key="sync_account_auto"
             android:defaultValue="true"
+            android:key="sync_account_auto"
             android:title="@string/auto_sync" />
         <androidx.preference.SwitchPreference
             android:key="check_update_auto"
             android:title="@string/auto_check_update" />
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory android:title="@string/notifications">
+    <androidx.preference.PreferenceCategory
+        android:icon="@drawable/twotone_notifications_24"
+        android:title="@string/notifications">
+        <androidx.preference.SwitchPreference
+            android:key="notif_update_available"
+            android:title="@string/pref_notifs_notify_update_available" />
         <androidx.preference.Preference android:title="@string/more_notification_settings">
             <intent android:action="android.settings.APP_NOTIFICATION_SETTINGS">
                 <extra
@@ -30,27 +35,27 @@
             </intent>
         </androidx.preference.Preference>
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory android:title="@string/look">
+    <androidx.preference.PreferenceCategory
+        android:icon="@drawable/twotone_brightness_medium_24"
+        android:title="@string/look">
         <com.friday.ar.preference.ThemeSelectPreference
             android:key="dialog_theme_pref"
             android:title="@string/design" />
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory android:title="@string/app_name">
-        <androidx.preference.Preference
-            android:key=""
-            android:title="@string/info">
+    <androidx.preference.PreferenceCategory
+        android:title="@string/app_name">
+        <androidx.preference.Preference android:title="@string/info">
             <intent android:action="com.friday.Info" />
         </androidx.preference.Preference>
         <androidx.preference.Preference android:title="@string/help" />
     </androidx.preference.PreferenceCategory>
     <androidx.preference.PreferenceCategory android:title="@string/developer_options">
         <androidx.preference.SwitchPreference
-            android:title="@string/pref_devmode"
-            android:key="devmode" />
+            android:key="devmode"
+            android:title="@string/pref_devmode" />
         <androidx.preference.CheckBoxPreference
-            android:title="@string/pref_devmode_show_changelog"
             android:key="pref_devmode_show_changelog"
-            />
+            android:title="@string/pref_devmode_show_changelog" />
         <androidx.preference.CheckBoxPreference
             android:key="pref_devmode_use_beta_channel"
             android:title="@string/pref_devmode_use_beta_channel" />
