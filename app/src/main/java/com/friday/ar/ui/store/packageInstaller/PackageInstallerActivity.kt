@@ -22,7 +22,8 @@ class PackageInstallerActivity : AppCompatActivity() {
         Log.d(LOGTAG, uri)
         if (uri != null) {
             var filePath = uri.replace("content://", "")
-            filePath = "file://" + filePath.substring(filePath.indexOf("/"))
+            filePath = filePath.substring(filePath.indexOf("/"))
+            Log.d(LOGTAG, filePath)
             packageInstallerDialog = PackageInstallerDialog(File(filePath))
             packageInstallerDialog.show(supportFragmentManager, "PackageInstallerDialog")
         }
@@ -30,5 +31,10 @@ class PackageInstallerActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (!packageInstallerDialog.onBackPressed()) super.onBackPressed()
+    }
+
+    override fun onPause() {
+        finishAndRemoveTask()
+        super.onPause()
     }
 }

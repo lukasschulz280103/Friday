@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -16,7 +16,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -107,15 +107,14 @@
                     android:layout_marginBottom="24dp" />
 
                 <TextView
-                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{progressMessage}" />
+                    android:text="@{progressText}" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <Button
@@ -138,11 +137,11 @@
                     android:layout_margin="16dp"
                     android:text="@string/pluginInstaller_error_could_not_parse"
                     android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
             </LinearLayout>
 
         </ViewAnimator>
     </LinearLayout>
-
     <data>
 
         <variable
@@ -150,7 +149,7 @@
             type="com.friday.ar.dialog.store.packageInstaller.PackageInstallerDialogViewModel" />
 
         <variable
-            name="progressMessage"
-            type="String" />
+            name="progressText"
+            type="androidx.lifecycle.LiveData&lt;String>" />
     </data>
 </layout>

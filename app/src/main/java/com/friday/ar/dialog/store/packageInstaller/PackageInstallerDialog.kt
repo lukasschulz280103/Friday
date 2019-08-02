@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import com.friday.ar.R
 import com.friday.ar.databinding.PackageInstallerDialogBinding
-import com.friday.ar.extensionMethods.notNull
 import com.friday.ar.plugin.file.Manifest
-import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.installer.PluginInstaller
 import com.friday.ar.plugin.security.VerificationSecurityException
@@ -41,8 +39,7 @@ class PackageInstallerDialog(val chosenFile: File) : BottomSheetDialogFragment()
     private lateinit var dialogView: View
     private lateinit var mContext: Context
     private lateinit var viewModel: PackageInstallerDialogViewModel
-    private var pluginFile: PluginFile? = null
-    lateinit var cachedPluginFileManifest: Manifest
+    private lateinit var cachedPluginFileManifest: Manifest
     private var zippedPluginFile: ZippedPluginFile? = null
 
     private val onInstallStateChangedListener = object : PluginInstaller.OnInstallationStateChangedListener {
@@ -61,8 +58,12 @@ class PackageInstallerDialog(val chosenFile: File) : BottomSheetDialogFragment()
 
     }
 
+
+    //TODO:outsource work to the viewmodel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val dataBinding = PackageInstallerDialogBinding.inflate(inflater, container, false)
+        dataBinding.lifecycleOwner = this
+        dataBinding.progressText = installProgressMessage
         viewModel = PackageInstallerDialogViewModel.Factory(chosenFile, activity!!.application).create(PackageInstallerDialogViewModel::class.java)
         dialogView = dataBinding.root
         dialogView.view_animator.displayedChild = SITE_INSTALL_PROGRESS
@@ -71,8 +72,7 @@ class PackageInstallerDialog(val chosenFile: File) : BottomSheetDialogFragment()
         GlobalScope.launch {
             var errorMessage = ""
             try {
-                pluginFile = PluginFileCacheUtil.extractManifest(mContext, zippedPluginFile!!)
-                cachedPluginFileManifest = pluginFile!!.manifest
+                cachedPluginFileManifest = PluginFileCacheUtil.extractManifest(mContext, zippedPluginFile!!)
                 activity!!.runOnUiThread {
                     if (!zippedPluginFile!!.isValidZipFile) {
                         dialogView.view_animator.displayedChild = SITE_ERROR
@@ -89,6 +89,8 @@ class PackageInstallerDialog(val chosenFile: File) : BottomSheetDialogFragment()
                             viewModel.doInstall().addOnInstallationProgressChangedListener(onInstallStateChangedListener)
                             dialogView.view_animator.displayedChild = SITE_INSTALL_PROGRESS
                         }
+                        dialogView.view_animator.displayedChild = SITE_VIEW_PLUGIN
+
                     }
                 }
             } catch (e: ZipException) {
@@ -100,10 +102,15 @@ class PackageInstallerDialog(val chosenFile: File) : BottomSheetDialogFragment()
             } catch (e: VerificationSecurityException) {
                 Log.e(LOGTAG, "Error verifying manifest: ${e.message}", e)
                 errorMessage = e.message!!
+            } catch (e: IllegalStateException) {
+                Log.e(LOGTAG, "Error verifying manifest: ${e.message}", e)
+                errorMessage = e.message!!
             } finally {
-                activity!!.runOnUiThread {
-                    dialogView.view_animator.displayedChild = SITE_ERROR
-                    dialogView.pluginInstaller_error_description.text = errorMessage
+                if (errorMessage.isNotEmpty()) {
+                    activity!!.runOnUiThread {
+                        dialogView.view_animator.displayedChild = SITE_ERROR
+                        dialogView.pluginInstaller_error_description.text = errorMessage
+                    }
                 }
             }
         }
@@ -118,9 +125,6 @@ class PackageInstallerDialog(val chosenFile: File) : BottomSheetDialogFragment()
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        pluginFile.notNull {
-            deleteRecursively()
-        }
         activity!!.finishAndRemoveTask()
     }
 

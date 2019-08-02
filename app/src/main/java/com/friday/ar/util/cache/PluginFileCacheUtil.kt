@@ -3,12 +3,13 @@ package com.friday.ar.util.cache
 import android.content.Context
 import android.util.Log
 import com.friday.ar.Constant
+import com.friday.ar.plugin.file.Manifest
 import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.VerificationSecurityException
-import java.io.File
-import java.io.IOException
-import java.util.zip.ZipException
+import net.lingala.zip4j.exception.ZipException
+import org.json.JSONObject
+import java.nio.charset.Charset
 
 class PluginFileCacheUtil {
     companion object {
@@ -20,21 +21,20 @@ class PluginFileCacheUtil {
             return PluginFile(Constant.getPluginCacheDir(context, zippedPluginFile.file.name.replace(".fpl", "")).path)
         }
 
-        @Throws(VerificationSecurityException::class)
-        fun extractManifest(context: Context, zippedPluginFile: ZippedPluginFile): PluginFile {
-            val cacheDirPath = Constant.getPluginCacheDir(context).path
-            val cacheDirNewName = zippedPluginFile.file.name.replace(".fpl", "")
-            if (!zippedPluginFile.file.exists()) {
-                throw IOException("zippedPluginFile does not exist anymore.")
-            }
-            zippedPluginFile.extractFile(zippedPluginFile.file.path + "/meta/manifest.json", cacheDirPath)
-            val manifestFile = File(cacheDirPath + cacheDirNewName + "meta/manifest.json")
-            if (!manifestFile.exists()) {
-                throw VerificationSecurityException("No manifest file could be extracted; no manifest found in pluginFile $cacheDirNewName")
-            }
-            Log.d(LOGTAG, Constant.getPluginCacheDir(context, zippedPluginFile.file.name.replace(".fpl", "")).path)
-            val pluginFile = PluginFile(Constant.getPluginCacheDir(context, zippedPluginFile.file.name.replace(".fpl", "")).path)
-            return pluginFile
+        @Throws(VerificationSecurityException::class, ZipException::class, IllegalStateException::class)
+        fun extractManifest(context: Context, zippedPluginFile: ZippedPluginFile): Manifest {
+            if (!zippedPluginFile.isValidZipFile) throw IllegalStateException("This plugin installation file is invalid.")
+            if (zippedPluginFile.isEncrypted) throw IllegalArgumentException("Cannot read from an encrypted plugin installation file.")
+
+            val shortenedName = zippedPluginFile.file.name.replace(".fpl", "")
+            val manifestFileHeader = zippedPluginFile.getFileHeader("$shortenedName/meta/manifest.json")
+                    ?: throw VerificationSecurityException("No manifest was found.")
+
+            val manifestInputStream = zippedPluginFile.getInputStream(manifestFileHeader)
+            val manifestString = manifestInputStream.readBytes().toString(Charset.defaultCharset())
+            if (manifestString.isEmpty()) throw VerificationSecurityException("manifest was found, but is empty")
+
+            return Manifest.fromJSON(JSONObject(manifestString))
         }
     }
 }
