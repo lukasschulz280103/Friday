@@ -335,4 +335,6 @@
     <string name="pref_user">User</string>
     <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. Please install ArCore and retry.</string>
     <string name="errtype_arcore_device_not_capable">Your device is not supported.</string>
+    <string name="packageInstaller_perms_denied_accessError">Access error</string>
+    <string name="packageInstaller_perms_denied_accessError_explanation">We need to access your storage in order to install files from your device.</string>
 </resources>

@@ -288,4 +288,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="title_activity_fullscreen_action">AR-Modus</string>
     <string name="errtype_arcore_installation_declined">Diese App benötigt ArCore auf dem Gerät. Bitte installieren sie ArCore und versuchen sie es erneut.</string>
     <string name="errtype_arcore_device_not_capable">Ihr Gerät wird leider nicht unterstützt.</string>
+    <string name="packageInstaller_perms_denied_accessError">Zugriffsfehler</string>
+    <string name="packageInstaller_perms_denied_accessError_explanation">WIr benötigen Zugriffsrechte auf den Gerätespeicher, um von dort Plugindatein zu installieren</string>
 </resources>

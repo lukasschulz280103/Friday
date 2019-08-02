@@ -286,4 +286,6 @@
     <string name="title_activity_fullscreen_action">mode AR</string>
     <string name="errtype_arcore_device_not_capable">Votre appareil n\'est pas pris en charge</string>
     <string name="errtype_arcore_installation_declined">Cette application nécessite ArCore sur l\'appareil. Veuillez installer ArCore et réessayer.</string>
+    <string name="packageInstaller_perms_denied_accessError">Erreur d\'accès</string>
+    <string name="packageInstaller_perms_denied_accessError_explanation">Nous avons besoin d\'accéder à votre stockage afin d\'installer des fichiers à partir de votre appareil.</string>
 </resources>

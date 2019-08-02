@@ -9,7 +9,7 @@ class Manifest(
         /**
          * * source file of the plugin
          * */
-        private val sourceFile: PluginFile?, val pluginName: String, val author: String?, var version: String?) {
+        private var sourceFile: PluginFile?, var pluginName: String, var author: String?, var version: String?) {
     companion object {
         @Throws(ManifestSecurityException.MissingFieldException::class)
         fun fromJSON(jsonObject: JSONObject): Manifest {
@@ -18,6 +18,7 @@ class Manifest(
             return Manifest(null, meta.getString("applicationName"), meta.getString("authorName"), meta.getString("versionName"))
         }
     }
+
     fun toPlugin(): Plugin {
         val returnPlugin = Plugin()
         returnPlugin.name = pluginName
