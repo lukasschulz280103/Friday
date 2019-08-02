@@ -28,35 +28,35 @@ class FullscreenActionActivity : AppCompatActivity() {
 
         var arFragment: ArFragment?
         viewModel.isArCoreSupported.observe(this, Observer { arCoreAvailability ->
-            Log.d(LOGTAG, "observed change.")
+            Log.d(LOGTAG, "observed change. availability: $arCoreAvailability")
             when (arCoreAvailability) {
                 ArCoreApk.Availability.UNKNOWN_ERROR -> {
                     Log.d(LOGTAG, "could not start ARMode. code $arCoreAvailability")
-                    intent.putExtra("errtype", arCoreAvailability)
+                    intent.putExtra("errtype", arCoreAvailability.toString())
                     setResult(RESULT_OK, intent)
                     finish()
                 }
                 ArCoreApk.Availability.UNKNOWN_TIMED_OUT -> {
                     Log.d(LOGTAG, "could not start ARMode. code $arCoreAvailability")
-                    intent.putExtra("errtype", arCoreAvailability)
+                    intent.putExtra("errtype", arCoreAvailability.toString())
                     setResult(RESULT_OK, intent)
                     finish()
                 }
                 ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE -> {
                     Log.d(LOGTAG, "could not start ARMode. code $arCoreAvailability")
-                    intent.putExtra("errtype", arCoreAvailability)
+                    intent.putExtra("errtype", arCoreAvailability.toString())
                     setResult(RESULT_OK, intent)
                     finish()
                 }
                 ArCoreApk.Availability.SUPPORTED_NOT_INSTALLED -> {
                     Log.d(LOGTAG, "could not start ARMode. code $arCoreAvailability")
-                    intent.putExtra("errtype", arCoreAvailability)
+                    intent.putExtra("errtype", arCoreAvailability.toString())
                     setResult(RESULT_OK, intent)
                     finish()
                 }
                 ArCoreApk.Availability.SUPPORTED_APK_TOO_OLD -> {
                     Log.d(LOGTAG, "could not start ARMode. code $arCoreAvailability")
-                    intent.putExtra("errtype", arCoreAvailability)
+                    intent.putExtra("errtype", arCoreAvailability.toString())
                     setResult(RESULT_OK, intent)
                     finish()
                 }

@@ -215,18 +215,19 @@ class MainActivity : FridayActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == FULLSCREEN_REQUEST_CODE && data != null) {
-            val errtype = data.getStringExtra("errtype") ?: return
+            val errtype = data.extras!!.getString("errtype")
             val alertDialog = MaterialAlertDialogBuilder(this)
             alertDialog.setPositiveButton(android.R.string.ok, null)
             alertDialog.setNeutralButton(R.string.app_feedback) { _, _ -> startActivity(Intent(this@MainActivity, FeedbackSenderActivity::class.java)) }
-            when (ArCoreApk.Availability.valueOf(errtype)) {
+            when (ArCoreApk.Availability.valueOf(errtype!!)) {
                 ArCoreApk.Availability.UNKNOWN_ERROR -> alertDialog.setMessage(R.string.unknown_error)
                 ArCoreApk.Availability.UNKNOWN_CHECKING -> return
                 ArCoreApk.Availability.UNKNOWN_TIMED_OUT -> return
                 ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE -> alertDialog.setMessage(R.string.errtype_arcore_device_not_capable)
                 ArCoreApk.Availability.SUPPORTED_NOT_INSTALLED -> {
                     alertDialog.setMessage(R.string.errtype_not_installed)
-                    ArCoreApk.getInstance().requestInstall(this@MainActivity, true)
+                    alertDialog.setPositiveButton(R.string.pluginInstaller_activity_installNow) { _, _ -> ArCoreApk.getInstance().requestInstall(this@MainActivity, true) }
+                    alertDialog.setNegativeButton(android.R.string.cancel, null)
                 }
                 ArCoreApk.Availability.SUPPORTED_APK_TOO_OLD -> alertDialog.setMessage(R.string.errtype_arcore_apk_too_old)
                 ArCoreApk.Availability.SUPPORTED_INSTALLED -> alertDialog.setMessage(R.string.errtype_sdk_too_old)

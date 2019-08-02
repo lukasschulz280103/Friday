@@ -72,7 +72,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:20.2.0'
     implementation 'com.google.firebase:firebase-ml-vision:22.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation('com.google.cloud:google-cloud-dialogflow:0.102.0-alpha') {
+    implementation('com.google.cloud:google-cloud-dialogflow:0.103.0-alpha') {
         exclude group: 'com.google.api.grpc'
         exclude group: 'com.google.protobuf'
     }
