@@ -37,7 +37,6 @@ class PackageInstallerDialog : BottomSheetDialogFragment() {
     private lateinit var mContext: Context
     private lateinit var viewModel: PackageInstallerDialogViewModel
 
-    //TODO:outsource work to the viewmodel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (arguments!!.getString("filePath", "").isEmpty()) throw IllegalArgumentException("Cannot open file dialog without a passed file argument.")
         chosenFile = File(arguments!!.getString("filePath")!!)
@@ -52,6 +51,7 @@ class PackageInstallerDialog : BottomSheetDialogFragment() {
         dialogView.view_animator.outAnimation = AnimationUtils.loadAnimation(mContext, R.anim.anim_slideout_left)
         dialogView.view_animator.inAnimation = AnimationUtils.loadAnimation(mContext, R.anim.anim_slidein_right)
         dialogView.view_animator.displayedChild = SITE_INSTALL_PROGRESS
+
         dialogView.errorOk.setOnClickListener { dismiss() }
         dialogView.pluginInstaller_activity_cancel.setOnClickListener { dismiss() }
         dialogView.startInstallation.setOnClickListener { viewModel.doInstall() }

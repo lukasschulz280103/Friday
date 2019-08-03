@@ -290,4 +290,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="errtype_arcore_device_not_capable">Ihr Gerät wird leider nicht unterstützt.</string>
     <string name="packageInstaller_perms_denied_accessError">Zugriffsfehler</string>
     <string name="packageInstaller_perms_denied_accessError_explanation">WIr benötigen Zugriffsrechte auf den Gerätespeicher, um von dort Plugindatein zu installieren</string>
+    <string name="compatibility_ar">ArCore unterstützt</string>
+    <string name="compatibility_ar_installed">ArCore ist installiert</string>
+    <string name="compatibility_ar_up_to_date">ArCore ist aktuell</string>
 </resources>

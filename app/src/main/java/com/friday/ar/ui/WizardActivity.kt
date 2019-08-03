@@ -2,11 +2,13 @@ package com.friday.ar.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.friday.ar.R
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.fragments.signinFragment.DefaultSignInFragment
 import com.friday.ar.fragments.wizard.AcceptTerms
 import com.friday.ar.fragments.wizard.PermissionRequestFragment
+import com.friday.ar.fragments.wizard.deviceCompatibility.DeviceCompatibilityFragment
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntroFragment
 import com.github.paolorotolo.appintro.model.SliderPage
@@ -38,6 +40,7 @@ class WizardActivity : AppIntro() {
         signinFragment.addOnAuthCompletedListener(onAuthCompletedListener)
 
         addSlide(AppIntroFragment.newInstance(welcomePage))
+        addSlide(DeviceCompatibilityFragment())
         addSlide(AppIntroFragment.newInstance(projectInfoPage))
         addSlide(AcceptTerms.newInstance())
         addSlide(signinFragment)
@@ -50,6 +53,7 @@ class WizardActivity : AppIntro() {
 
     override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("isFirstUse", false).apply()
         finish()
     }
 }
