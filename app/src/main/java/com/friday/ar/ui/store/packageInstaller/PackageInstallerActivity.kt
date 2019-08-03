@@ -26,7 +26,6 @@ class PackageInstallerActivity : AppCompatActivity() {
             setupDialog()
         }
         setContentView(R.layout.activity_package_installer)
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -46,7 +45,7 @@ class PackageInstallerActivity : AppCompatActivity() {
         }
     }
 
-    fun setupDialog() {
+    private fun setupDialog() {
         val intent = intent
         val uri = intent.dataString
         Log.d(LOGTAG, uri)

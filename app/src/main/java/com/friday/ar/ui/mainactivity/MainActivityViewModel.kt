@@ -9,7 +9,6 @@ import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.friday.ar.dashboard.DashboardListItem
-import com.google.ar.core.ArCoreApk
 
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
@@ -18,7 +17,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val isOldVersionInstalled = MutableLiveData<Pair<Boolean, String?>>()
     val isFirstUse = MutableLiveData<Boolean>()
     val dashboardListData = MutableLiveData<ArrayList<DashboardListItem>>()
-    val arCoreApkAvailability = MutableLiveData<ArCoreApk.Availability>()
 
     init {
         val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
@@ -58,7 +56,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
         if (defaultSharedPreferences.getBoolean("isFirstUse", true)) {
             isFirstUse.postValue(true)
-            defaultSharedPreferences.edit().putBoolean("isFirstUse", false).apply()
         } else isFirstUse.postValue(false)
 
 

@@ -1,1 +1,1 @@
-include ':app', ':pocketsphinx-android-5prealpha-release', ':fridaysdk'
+include ':app', ':pocketsphinx-android-5prealpha-release', ':plugin-system'

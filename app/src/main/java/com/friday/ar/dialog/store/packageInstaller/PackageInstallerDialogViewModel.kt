@@ -106,4 +106,5 @@ class PackageInstallerDialogViewModel(chosenFile: File, application: Application
             return PackageInstallerDialogViewModel(chosenFile, application) as T
         }
     }
+
 }

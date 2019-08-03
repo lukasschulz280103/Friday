@@ -262,4 +262,6 @@ class MainActivity : FridayActivity() {
         menuInflater.inflate(R.menu.store_default_toolbar, menu)
         return true
     }
+
+    fun goToStore(view: View) {}
 }

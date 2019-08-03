@@ -1,4 +1,8 @@
 <resources>
+    <plurals name="pluginInstaller_indexingStatus">
+        <item quantity="one">One plugin file found</item>
+        <item quantity="other">%d plugin files found</item>
+    </plurals>
     <string name="app_name" translatable="false">friday</string>
     <string name="leave_app">Do you really want to leave the app?</string>
     <string name="action_leave">Leave</string>
@@ -8,11 +12,6 @@
     <string name="main_nav_dashboard">Dashboard</string>
     <string name="friday_use_help">To use firday, you have to put this phone into the provided case.</string>
     <string name="nav_history_short">history</string>
-    <string-array name="pref_language_entries">
-        <item>sys</item>
-        <item>de</item>
-        <item>en</item>
-    </string-array>
     <string name="title_activity_fullscreen_action">AR Mode</string>
     <string name="app_back">Back</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
@@ -139,20 +138,6 @@
     <string name="help">Help</string>
     <string name="design">Design</string>
     <string name="theme_dialog_title">Select theme</string>
-    <string-array name="theme_entry_values">
-        <item>Light Theme</item>
-        <item>Dark Theme</item>
-        <item>Green</item>
-        <item>Orange</item>
-        <item>Blue</item>
-    </string-array>
-    <string-array name="theme_entries">
-        <item>light</item>
-        <item>dark</item>
-        <item>green</item>
-        <item>orange</item>
-        <item>blue</item>
-    </string-array>
     <string name="auto_sync">Synchronize with cloud</string>
     <string name="theme">Theme</string>
     <string name="select_theme">Select Theme</string>
@@ -287,10 +272,6 @@
     <string name="storeInstallationsManager_diskInstallWarningMessage">If you install plugins from unknown sources, there is a risk that they will show unwanted behavior. Among other things, these side effects can cause unexpected damage to your device. No responsibility is taken for this.</string>
     <string name="dont_show_again">Don\'t show again</string>
     <string name="pluginInstaller_noItemsIndexed">No plugin files found</string>
-    <plurals name="pluginInstaller_indexingStatus">
-        <item quantity="one">One plugin file found</item>
-        <item quantity="other">%d plugin files found</item>
-    </plurals>
     <string name="pluginInstaller_succes_install_title">Installation success</string>
     <string name="pluginInstaller_name" translatable="false">PluginInstaller</string>
     <string name="pluginInstaller_success_ticker_text">The installation of %s was successful</string>
@@ -337,4 +318,29 @@
     <string name="errtype_arcore_device_not_capable">Your device is not supported.</string>
     <string name="packageInstaller_perms_denied_accessError">Access error</string>
     <string name="packageInstaller_perms_denied_accessError_explanation">We need to access your storage in order to install files from your device.</string>
+    <string name="device_compatibility">Device compatibility check</string>
+    <string name="compatibility_ar">ArCore support</string>
+    <string name="compatibility_ar_installed">ArCore is installed</string>
+    <string name="compatibility_ar_up_to_date">ArCore is up to date</string>
+    <string name="title_plugin">Plugin System Module</string>
+    <string name="title_devtools">Developer Tools</string>
+    <string-array name="pref_language_entries">
+        <item>sys</item>
+        <item>de</item>
+        <item>en</item>
+    </string-array>
+    <string-array name="theme_entry_values">
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
+        <item>Green</item>
+        <item>Orange</item>
+        <item>Blue</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>light</item>
+        <item>dark</item>
+        <item>green</item>
+        <item>orange</item>
+        <item>blue</item>
+    </string-array>
 </resources>
