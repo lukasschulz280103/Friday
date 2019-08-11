@@ -38,6 +38,7 @@ class SigninFragmentViewModel(application: Application) : AndroidViewModel(appli
         newUserCretionTask.postValue(task)
         inputsUsabilityState.postValue(true)
         if (task.isSuccessful) {
+            task.result!!.user.sendEmailVerification()
             AnalyticUtil.logUserCreation(application)
         } else {
             if (task.exception != null) {
@@ -104,7 +105,7 @@ class SigninFragmentViewModel(application: Application) : AndroidViewModel(appli
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(ContentValues.TAG, "signInWithCredential:success")
                         val jobScheduler = getApplication<Application>().getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-                        val jobInfo = JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, ComponentName(getApplication(), AccountSyncService::class.java))
+                        val jobInfo = JobInfo.Builder(Constant.Jobs.JOB_SYNC_ACCOUNT, ComponentName(getApplication(), AccountSyncService::class.java))
                                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                                 .setBackoffCriteria(60000 * 5, JobInfo.BACKOFF_POLICY_LINEAR)
                                 .build()

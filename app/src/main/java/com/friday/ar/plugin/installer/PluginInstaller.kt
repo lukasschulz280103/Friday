@@ -63,7 +63,7 @@ class PluginInstaller(private val context: Context) {
     fun uninstallPlugin(plugin: Plugin) {
         Log.i(LOGTAG, "uninstalling plugin:${plugin.name}")
         FileUtil.deleteDirectory(plugin.pluginFile)
-        (context.applicationContext as FridayApplication).applicationPluginLoader!!.indexedPlugins.remove(plugin)
+        //TODO remove plugin from list
     }
 
     fun addOnInstallationProgressChangedListener(onInstallationStateChangedListener: OnInstallationStateChangedListener) {

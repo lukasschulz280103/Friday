@@ -117,7 +117,7 @@
             android:required="false" />
 
         <activity android:name=".ui.FileSelectorActivity" />
-        <activity android:name=".ui.store.StoreInstallationManagerActivity" />
+        <activity android:name=".ui.store.storeInstallationManagerActivity.StoreInstallationManagerActivity" />
         <activity
             android:name=".ui.WizardActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -205,7 +205,7 @@
             android:name=".service.AccountSyncService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".service.PluginIndexer"
+            android:name=".service.plugin.PluginIndexer"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>

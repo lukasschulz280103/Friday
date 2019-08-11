@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.friday.ar.R
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.Timestamp
@@ -69,7 +70,7 @@ class ChangelogDialogFragment : DialogFragment() {
             loadingbar!!.visibility = View.GONE
             Log.e(LOGTAG, e.localizedMessage, e)
         } else {
-            dismiss()
+            dismissAllowingStateLoss()
             Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
         }
         dismiss!!.isEnabled = true
@@ -106,5 +107,13 @@ class ChangelogDialogFragment : DialogFragment() {
         dismiss!!.setOnClickListener { dismiss() }
         dismiss!!.isEnabled = false
         return dialogView
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        if(!isAdded){
+            manager.beginTransaction()
+                    .add(this, tag)
+                    .commitAllowingStateLoss()
+        }
     }
 }

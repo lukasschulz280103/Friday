@@ -85,7 +85,6 @@ class MainActivity : FridayActivity() {
 
         viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(MainActivityViewModel::class.java)
 
-
         viewModel.isFirstUse.observe(this, Observer { isFirstUse ->
             if (isFirstUse) {
                 val showWizard = Intent(this, WizardActivity::class.java)

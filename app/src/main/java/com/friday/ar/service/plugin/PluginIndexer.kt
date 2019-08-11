@@ -1,10 +1,11 @@
-package com.friday.ar.service
+package com.friday.ar.service.plugin
 
 import android.app.job.JobParameters
 import android.app.job.JobService
+import android.content.Intent
 import android.os.Environment
 import android.util.Log
-import com.friday.ar.FridayApplication
+import com.friday.ar.Constant
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.PluginVerifier
 import com.friday.ar.plugin.security.VerificationSecurityException
@@ -41,7 +42,9 @@ class PluginIndexer : JobService() {
                 indexDirectories(defaultDir)
                 isIndexing = false
                 Log.d(LOGTAG, "indexed Plugins:$indexedFiles")
-                (application as FridayApplication).indexedInstallablePluginFiles = indexedFiles
+                val pluginIndexerBroadcastIntent = Intent(Constant.BroadcastReceiverActions.BROADCAST_PLUGINS_INDEXED)
+                pluginIndexerBroadcastIntent.putExtra("indexList", indexedFiles)
+                sendBroadcast(pluginIndexerBroadcastIntent)
                 jobFinished(params, true)
             } catch (e: Exception) {
                 Log.e(LOGTAG, e.localizedMessage, e)

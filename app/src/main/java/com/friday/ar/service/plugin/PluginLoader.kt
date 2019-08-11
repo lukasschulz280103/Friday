@@ -1,4 +1,4 @@
-package com.friday.ar.plugin.application
+package com.friday.ar.service.plugin
 
 import android.content.Context
 import android.util.Log

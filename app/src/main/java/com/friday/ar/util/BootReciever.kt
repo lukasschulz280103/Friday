@@ -7,10 +7,11 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.preference.PreferenceManager
+import com.friday.ar.Constant
 import com.friday.ar.FridayApplication
-import com.friday.ar.plugin.application.PluginLoader
+import com.friday.ar.service.plugin.PluginLoader
 import com.friday.ar.service.AccountSyncService
-import com.friday.ar.service.PluginIndexer
+import com.friday.ar.service.plugin.PluginIndexer
 
 class BootReciever : BroadcastReceiver() {
 
@@ -22,7 +23,7 @@ class BootReciever : BroadcastReceiver() {
             UpdateUtil.checkForUpdate(context)
         }
         if (preferences.getBoolean("sync_account_auto", true)) {
-            val info = JobInfo.Builder(FridayApplication.Jobs.JOB_SYNC_ACCOUNT, ComponentName(context, AccountSyncService::class.java))
+            val info = JobInfo.Builder(Constant.Jobs.JOB_SYNC_ACCOUNT, ComponentName(context, AccountSyncService::class.java))
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setBackoffCriteria((2 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
                     .build()
@@ -33,7 +34,7 @@ class BootReciever : BroadcastReceiver() {
 
         }
 
-        val jobIndexerInfo = JobInfo.Builder(FridayApplication.Jobs.JOB_INDEX_PLUGINS, ComponentName(context, PluginIndexer::class.java))
+        val jobIndexerInfo = JobInfo.Builder(Constant.Jobs.JOB_INDEX_PLUGINS, ComponentName(context, PluginIndexer::class.java))
                 .setOverrideDeadline(0)
                 .setBackoffCriteria((30 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
                 .build()

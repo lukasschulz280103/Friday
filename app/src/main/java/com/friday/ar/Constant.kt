@@ -61,17 +61,29 @@ class Constant {
         const val NOTIFICATION_INSTALL_ERROR = 201
     }
 
-    object BroadcasteceiverActions {
+    object BroadcastReceiverActions {
         /**
          * Use this broadcast receiver action to always be notified about synchronization changes of [com.friday.ar.service.AccountSyncService]
          *
          * @see android.content.BroadcastReceiver
          * @see com.friday.ar.service.AccountSyncService
          */
+        const val BROADCAST_ACCOUNT_SYNCED = "ACCOUNT_SYNCHRONIZED"
 
-        const val BROADCAST_ACCOUNT_SYNCED = "BROADCAST_ACCOUNT_SYNCHRONIZED"
+        /**
+         * Use this broadcast receiver action to always be notified when the PluginIndexer service is done indexing plugins.
+         *
+         * @see android.content.BroadcastReceiver
+         * @see com.friday.ar.service.plugin.PluginIndexer
+         */
+        const val BROADCAST_PLUGINS_INDEXED = "PLUGINS_INDEXED"
     }
 
+    object Jobs {
+        const val JOB_SYNC_ACCOUNT = 8000
+        const val JOB_FEEDBACK = 8001
+        const val JOB_INDEX_PLUGINS = 8002
+    }
 
     object AnalyticEvent {
         const val LOGIN_EVENT_EMAIL = "Email + password"

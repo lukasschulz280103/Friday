@@ -48,9 +48,8 @@ class FileSelectorActivity : FridayActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle(R.string.open_plugin_file)
         setResult(Activity.RESULT_CANCELED)
-        val app = application as FridayApplication
-        indexing_status.text = if (app.indexedInstallablePluginFiles.size != 0)
-            resources.getQuantityString(R.plurals.pluginInstaller_indexingStatus, app.indexedInstallablePluginFiles.size, app.indexedInstallablePluginFiles.size)
+        indexing_status.text = if (FridayApplication.indexedPlugins.isNotEmpty())
+            resources.getQuantityString(R.plurals.pluginInstaller_indexingStatus, FridayApplication.indexedPlugins.size, FridayApplication.indexedPlugins.size)
         else
             getString(R.string.pluginInstaller_noItemsIndexed)
         contentPane.setDragView(R.id.buttonbar)
@@ -79,7 +78,7 @@ class FileSelectorActivity : FridayActivity() {
             }
             val indexedFilesList = findViewById<RecyclerView>(R.id.indexedFilesList)
             indexedFilesList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-            indexedFilesList.adapter = PluginFileListVerticalAdapter(this, (application as FridayApplication).indexedInstallablePluginFiles)
+            indexedFilesList.adapter = PluginFileListVerticalAdapter(this, FridayApplication.indexedPlugins)
         } else if (Arrays.equals(grantResults, intArrayOf(PERMISSION_DENIED))) {
             Log.d(LOGTAG, "perms not granted")
             fileListFlipper.displayedChild = 2

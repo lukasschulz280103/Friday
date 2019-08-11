@@ -16,6 +16,7 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import com.friday.ar.Constant
 import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
@@ -130,7 +131,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
             val extra = PersistableBundle()
             extra.putString("reason", reasonKeyword)
             extra.putString("uid", firebaseUser.uid)
-            val info = JobInfo.Builder(FridayApplication.Jobs.JOB_FEEDBACK, ComponentName(mActivity!!, FeedbackService::class.java))
+            val info = JobInfo.Builder(Constant.Jobs.JOB_FEEDBACK, ComponentName(mActivity!!, FeedbackService::class.java))
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setBackoffCriteria(30000, JobInfo.BACKOFF_POLICY_LINEAR)
                     .setExtras(extra)

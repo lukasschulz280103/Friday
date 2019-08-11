@@ -5,34 +5,37 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
-import android.content.ComponentName
-import android.content.Context
+import android.content.*
 import android.os.Build
 import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
-import com.friday.ar.plugin.application.PluginLoader
+import com.friday.ar.extensionMethods.notNull
+import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.ZippedPluginFile
+import com.friday.ar.service.plugin.PluginLoader
 import com.friday.ar.service.AccountSyncService
-import com.friday.ar.service.PluginIndexer
+import com.friday.ar.service.plugin.PluginIndexer
 import com.friday.ar.util.UpdateUtil
 import io.fabric.sdk.android.Fabric
 import java.io.File
-import java.util.*
 
 //TODO remove data handling from application class to sperate models
 /**
  * Application class
  */
 class FridayApplication : Application() {
+    companion object{
+        lateinit var pluginLoader: PluginLoader
+        lateinit var indexedPlugins: ArrayList<ZippedPluginFile>
+    }
 
-    var indexedInstallablePluginFiles = ArrayList<ZippedPluginFile>()
-
-    /**
-     * This variable is the application global plugin loader.
-     * Use this variable to get information about installed plugins, or to interact with them
-     */
-    var applicationPluginLoader: PluginLoader? = null
-        private set
+    val pluginIndexerReciever = object: BroadcastReceiver(){
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            if(p1 != null && p1.extras != null){
+                indexedPlugins = p1.extras!!.getSerializable("indexList") as ArrayList<ZippedPluginFile>
+            }
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -42,6 +45,7 @@ class FridayApplication : Application() {
         }
         Constant.getPluginDir(this).delete()
         Thread {
+            registerReceiver(pluginIndexerReciever, IntentFilter(Constant.BroadcastReceiverActions.BROADCAST_PLUGINS_INDEXED))
             runServices()
             createNotificationChannels()
         }.start()
@@ -62,7 +66,7 @@ class FridayApplication : Application() {
             )
             pluginInstallerChannel.description = getString(R.string.notification_channel_plugin_installer_description)
             val nm = getSystemService(NotificationManager::class.java)
-            nm!!.createNotificationChannels(Arrays.asList(updateChannel, pluginInstallerChannel))
+            nm!!.createNotificationChannels(listOf(updateChannel, pluginInstallerChannel))
         }
     }
 
@@ -70,29 +74,22 @@ class FridayApplication : Application() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this@FridayApplication)
         val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         if (preferences.getBoolean("sync_account_auto", true)) {
-            val info = JobInfo.Builder(Jobs.JOB_SYNC_ACCOUNT, ComponentName(this, AccountSyncService::class.java))
+            val info = JobInfo.Builder(Constant.Jobs.JOB_SYNC_ACCOUNT, ComponentName(this, AccountSyncService::class.java))
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setBackoffCriteria((2 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
                     .build()
             jobScheduler.schedule(info)
         }
 
-        val jobIndexerInfo = JobInfo.Builder(Jobs.JOB_INDEX_PLUGINS, ComponentName(this, PluginIndexer::class.java))
+        val jobIndexerInfo = JobInfo.Builder(Constant.Jobs.JOB_INDEX_PLUGINS, ComponentName(this, PluginIndexer::class.java))
                 .setBackoffCriteria((30 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
                 .setOverrideDeadline(0)
                 .build()
         jobScheduler.schedule(jobIndexerInfo)
 
-        applicationPluginLoader = PluginLoader(this)
-        applicationPluginLoader!!.startLoading()
+        pluginLoader = PluginLoader(this)
+        pluginLoader.startLoading()
 
         UpdateUtil.checkForUpdate(this)
     }
-
-    object Jobs {
-        const val JOB_SYNC_ACCOUNT = 8000
-        const val JOB_FEEDBACK = 8001
-        const val JOB_INDEX_PLUGINS = 8002
-    }
-
 }

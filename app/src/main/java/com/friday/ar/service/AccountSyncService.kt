@@ -46,7 +46,7 @@ class AccountSyncService : Service() {
             try {
                 Files.move(getExternalFilesDir("profile/avatar.jpg")!!.toPath(), avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 val avatarSyncedIntent = Intent()
-                avatarSyncedIntent.action = Constant.BroadcasteceiverActions.BROADCAST_ACCOUNT_SYNCED
+                avatarSyncedIntent.action = Constant.BroadcastReceiverActions.BROADCAST_ACCOUNT_SYNCED
                 sendBroadcast(avatarSyncedIntent)
             } catch (e: IOException) {
                 Log.e(LOGTAG, e.localizedMessage, e)

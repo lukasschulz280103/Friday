@@ -99,7 +99,7 @@ class ProfileFragment : Fragment() {
         toFeedback.setOnClickListener(intentManager)
         setupSignInScreen()
 
-        mContext.registerReceiver(accountSynchronizedReceiver, IntentFilter(Constant.BroadcasteceiverActions.BROADCAST_ACCOUNT_SYNCED))
+        mContext.registerReceiver(accountSynchronizedReceiver, IntentFilter(Constant.BroadcastReceiverActions.BROADCAST_ACCOUNT_SYNCED))
         return fragmentView
     }
 

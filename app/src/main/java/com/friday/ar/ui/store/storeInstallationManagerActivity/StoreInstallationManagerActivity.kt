@@ -1,4 +1,4 @@
-package com.friday.ar.ui.store
+package com.friday.ar.ui.store.storeInstallationManagerActivity
 
 import android.app.Notification
 import android.app.NotificationManager
@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.friday.ar.Constant
@@ -38,17 +39,19 @@ class StoreInstallationManagerActivity : FridayActivity() {
         private const val LOGTAG = "StoreInstallations"
         const val OPEN_PLUGIN_INTENT_CODE = 733
     }
+    private lateinit var viewModel: StoreInstallationsManagerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Theme.getCurrentAppTheme(this))
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_store_installation_manager)
+        viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(StoreInstallationsManagerViewModel::class.java)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        val pluginLoader = (application as FridayApplication).applicationPluginLoader
+        val pluginLoader = FridayApplication.pluginLoader
         appList.adapter = PluginListAdapter(this, pluginLoader!!.indexedPlugins)
         registerForContextMenu(appList)
         appList.layoutManager = LinearLayoutManager(this)
@@ -125,7 +128,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
 
                 override fun onSuccess() {
                     Log.d(LOGTAG, "success")
-                    val pluginLoader = (application as FridayApplication).applicationPluginLoader!!
+                    val pluginLoader = FridayApplication.pluginLoader
                     pluginLoader.startLoading()
                     (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginLoader.indexedPlugins)
                 }
