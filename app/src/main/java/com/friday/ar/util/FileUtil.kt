@@ -22,7 +22,6 @@ object FileUtil {
         }
     }
 
-
     fun deleteDirectory(directory: File?) {
         if (directory?.listFiles() == null) return
         for (fileOrDirectory in directory.listFiles()) {

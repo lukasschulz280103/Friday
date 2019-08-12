@@ -35,7 +35,8 @@ class PluginInstallerNotificationService(val context: Context) {
     fun notificationShowSuccess(name: String) {
         val notification = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
                 .setContentTitle(context.getString(R.string.pluginInstaller_success_install_title))
-                .setSubText(context.getString(R.string.pluginInstaller_success_ticker_text, name))
+                .setContentText(context.getString(R.string.pluginInstaller_success_ticker_text, name))
+                .setStyle(NotificationCompat.BigTextStyle())
                 .setSmallIcon(R.drawable.ic_twotone_archive_24px)
                 .setGroup(Constant.Notification.Groups.NOTIFICATION_GROUP_INSTALLER)
                 .build()
