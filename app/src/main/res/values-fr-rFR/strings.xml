@@ -242,7 +242,7 @@
         <item quantity="one" tools:ignore="ImpliedQuantity">Un fichier plugin trouvé</item>
         <item quantity="other">%d fichiers de plugins trouvés</item>
     </plurals>
-    <string name="pluginInstaller_succes_install_title">Installation réussie</string>
+    <string name="pluginInstaller_success_install_title">Installation réussie</string>
     <string name="pluginInstaller_success_ticker_text">L\'installation du plugin %s a été un succès.</string>
     <string name="notification_channel_plugin_installer">service d\'installation du plugin</string>
     <string name="notification_channel_update">Vérification de mise à jour</string>

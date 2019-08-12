@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.friday.ar.R
 import com.friday.ar.plugin.file.Manifest
 import com.friday.ar.plugin.file.ZippedPluginFile
-import com.friday.ar.plugin.installer.PluginInstaller
 import com.friday.ar.plugin.security.VerificationSecurityException
+import com.friday.ar.service.plugin.installer.PluginInstaller
 import com.friday.ar.util.cache.PluginFileCacheUtil
 import java.io.File
 import java.io.IOException

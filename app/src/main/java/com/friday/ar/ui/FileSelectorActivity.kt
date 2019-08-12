@@ -10,7 +10,6 @@ import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +33,7 @@ import java.io.File
 import java.util.Arrays
 import kotlin.Comparator
 
+@Deprecated("deprecated in API level 29!")
 class FileSelectorActivity : FridayActivity() {
     companion object {
         private const val LOGTAG = "FileSelector"
@@ -63,7 +63,7 @@ class FileSelectorActivity : FridayActivity() {
             fileListFlipper.displayedChild = 0
             val fileListLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
             fileList.layoutManager = fileListLayoutManager
-            fileList.adapter = FileSystemArrayAdapter(Environment.getExternalStorageDirectory())
+            fileList.adapter = FileSystemArrayAdapter(applicationContext.getExternalFilesDir("")!!)
             val appBarLayout = findViewById<AppBarLayout>(R.id.appbar)
             val stateListAnimator = StateListAnimator()
             fileList.setOnScrollChangeListener { _, _, _, _, _ ->
@@ -101,7 +101,7 @@ class FileSelectorActivity : FridayActivity() {
 
     internal inner class FileSystemArrayAdapter(startFrom: File) : RecyclerView.Adapter<FileViewHolder>() {
         var sourceFile: File? = null
-        private lateinit var directoryList: List<File>
+        private lateinit var directoryList: Array<File>
 
         init {
             Log.d(LOGTAG, "starting file array adapter")
@@ -142,7 +142,9 @@ class FileSelectorActivity : FridayActivity() {
         }
 
         override fun getItemCount(): Int {
-            return sourceFile!!.listFiles().size
+            return if (sourceFile != null && sourceFile!!.listFiles() != null) {
+                sourceFile!!.listFiles()!!.size
+            } else 0
         }
 
         fun setDirectoryList(directoryFile: File) {
@@ -158,7 +160,7 @@ class FileSelectorActivity : FridayActivity() {
                 }
             }
             sourceFile = directoryFile
-            directoryList = Arrays.asList(*directoryFile.listFiles())
+            directoryList = directoryFile.listFiles()
             directoryList.sortedWith(Comparator { file1: File, file2: File ->
                 if (file1.isDirectory && file2.isFile)
                     return@Comparator -1

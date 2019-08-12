@@ -3,6 +3,7 @@ package com.friday.ar.service.plugin
 import android.content.Context
 import android.util.Log
 import com.friday.ar.Constant
+import com.friday.ar.extensionMethods.notNull
 import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.security.PluginVerifier
@@ -67,7 +68,9 @@ class PluginLoader(context: Context) {
         verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
             override fun onSuccess() {
                 val pluginManifest = packageDir.manifest
-                indexedPlugins.add(pluginManifest.toPlugin())
+                pluginManifest.notNull {
+                    indexedPlugins.add(this.toPlugin())
+                }
             }
 
             override fun onZipException(e: ZipException) {

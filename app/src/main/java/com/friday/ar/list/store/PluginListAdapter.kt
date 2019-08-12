@@ -10,18 +10,16 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.friday.ar.R
+import com.friday.ar.extensionMethods.isNull
 import com.friday.ar.plugin.Plugin
-import com.friday.ar.plugin.installer.PluginInstaller
-import com.friday.ar.util.list.OnDataUpdateListener
+import com.friday.ar.service.plugin.installer.PluginInstaller
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-class PluginListAdapter(private val context: Context, private val dataList: MutableList<Plugin>) : RecyclerView.Adapter<SimplePluginListItemHolder>() {
+class PluginListAdapter(private val context: Context, private var dataList: MutableList<Plugin>?) : RecyclerView.Adapter<SimplePluginListItemHolder>() {
     companion object {
         private const val LOGTAG = "PluginListAdapter"
     }
-
-    var onDataUpdateListener: OnDataUpdateListener<Plugin>? = null
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimplePluginListItemHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.listitem_app_item, parent, false)
@@ -30,7 +28,7 @@ class PluginListAdapter(private val context: Context, private val dataList: Muta
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SimplePluginListItemHolder, position: Int) {
-        val plugin = dataList[position]
+        val plugin = dataList!![position]
         holder.iconView.setImageURI(plugin.iconURI)
         holder.title.text = plugin.name
         if (plugin.rating != null) {
@@ -52,8 +50,6 @@ class PluginListAdapter(private val context: Context, private val dataList: Muta
                                 .setPositiveButton(R.string.store_plugin_uninstall) { _, _ ->
                                     PluginInstaller(context).uninstallPlugin(plugin)
                                     notifyItemRemoved(position)
-                                    onDataUpdateListener
-                                            ?: onDataUpdateListener!!.onUpdate(dataList)
                                 }
                                 .create()
                         confirmationDialog.show()
@@ -63,18 +59,20 @@ class PluginListAdapter(private val context: Context, private val dataList: Muta
             }
             menu.show()
         }
-        holder.size.text = java.lang.Long.toString(plugin.pluginFile!!.length())
+        holder.size.text = plugin.pluginFile!!.length().toString()
     }
 
     override fun getItemCount(): Int {
-        return dataList.size
+        return dataList?.size ?: 0
     }
 
     fun onRecieveUpdatedData(updatedData: List<Plugin>) {
-        val diffResult = DiffUtil.calculateDiff(PluginListDiffUtilCallback(updatedData, dataList))
-        this.dataList.clear()
+        dataList.isNull { dataList = updatedData as MutableList<Plugin> }
+        val diffResult = DiffUtil.calculateDiff(PluginListDiffUtilCallback(updatedData, dataList!!))
 
-        this.dataList.addAll(updatedData)
+        this.dataList!!.clear()
+
+        this.dataList!!.addAll(updatedData)
         diffResult.dispatchUpdatesTo(this)
     }
 }

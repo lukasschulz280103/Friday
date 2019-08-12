@@ -1,9 +1,8 @@
-package com.friday.ar.plugin.installer
+package com.friday.ar.service.plugin.installer
 
 import android.content.Context
 import android.util.Log
 import com.friday.ar.Constant
-import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.ZippedPluginFile
@@ -24,12 +23,20 @@ class PluginInstaller(private val context: Context) {
 
     private var onInstallationStateChangedListenerList: ArrayList<OnInstallationStateChangedListener> = ArrayList()
 
-    @Throws(IOException::class)
+    /**
+     * Determines whether the installation service will show a notification or not. Is false by default.
+     */
+    var isSilent = false
+
+    @Throws(IOException::class, ZipException::class)
     fun installFrom(pluginDir: ZippedPluginFile) {
+        if (!pluginDir.isValidZipFile) throw ZipException("Zip file is invalid")
+        val notificationService = PluginInstallerNotificationService(context)
         val verifier = PluginVerifier()
         val cachedPluginFile = PluginFileCacheUtil.cachePluginFile(context, pluginDir)
         verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
             override fun onSuccess() {
+                if (!isSilent) notificationService.notificationShowSuccess(cachedPluginFile.manifest!!.pluginName)
                 notifyInstallProgressChange(context.getString(R.string.pluginInstaller_progressMessage_installing))
                 Files.move(cachedPluginFile.toPath(), Constant.getPluginDir(context, cachedPluginFile.name).toPath(), StandardCopyOption.REPLACE_EXISTING)
                 notifyInstallSuccess()
@@ -37,25 +44,30 @@ class PluginInstaller(private val context: Context) {
             }
 
             override fun onZipException(e: ZipException) {
+                if (!isSilent) notificationService.notificationShowError(e.message!!)
                 Log.e(LOGTAG, e.message, e)
                 notifyInstallationFailed(e)
             }
 
             override fun onIOException(e: IOException) {
+                if (!isSilent) notificationService.notificationShowError(e.message!!)
                 Log.e(LOGTAG, e.message, e)
                 notifyInstallationFailed(e)
             }
 
             override fun onJSONException(e: JSONException) {
+                if (!isSilent) notificationService.notificationShowError(e.message!!)
                 Log.e(LOGTAG, e.message, e)
                 notifyInstallationFailed(e)
             }
 
             override fun onVerificationFailed(e: VerificationSecurityException) {
+                if (!isSilent) notificationService.notificationShowError(e.message!!)
                 Log.e(LOGTAG, e.message, e)
                 notifyInstallationFailed(e)
             }
         })
+        if (!isSilent) notificationService.notificationShowProgress(context.getString(R.string.pluginInstaller_progressMessage_verifying))
         notifyInstallProgressChange(context.getString(R.string.pluginInstaller_progressMessage_verifying))
         verifier.verify(cachedPluginFile, true)
     }

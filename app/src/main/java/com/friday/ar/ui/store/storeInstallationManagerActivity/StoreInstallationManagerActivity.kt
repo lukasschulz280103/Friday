@@ -1,38 +1,23 @@
 package com.friday.ar.ui.store.storeInstallationManagerActivity
 
-import android.app.Notification
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.friday.ar.Constant
-import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
 import com.friday.ar.list.store.PluginListAdapter
-import com.friday.ar.plugin.Plugin
-import com.friday.ar.plugin.file.ZippedPluginFile
-import com.friday.ar.plugin.installer.PluginInstaller
-import com.friday.ar.plugin.security.VerificationSecurityException
 import com.friday.ar.ui.FileSelectorActivity
 import com.friday.ar.util.DisplayUtil
-import com.friday.ar.util.list.OnDataUpdateListener
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_store_installation_manager.*
-import net.lingala.zip4j.exception.ZipException
-import org.json.JSONException
-import java.io.File
-import java.io.IOException
-import java.util.*
 
 class StoreInstallationManagerActivity : FridayActivity() {
     companion object {
@@ -46,24 +31,26 @@ class StoreInstallationManagerActivity : FridayActivity() {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_store_installation_manager)
-        viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(StoreInstallationsManagerViewModel::class.java)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        val pluginLoader = FridayApplication.pluginLoader
-        appList.adapter = PluginListAdapter(this, pluginLoader!!.indexedPlugins)
+
+        viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(StoreInstallationsManagerViewModel::class.java)
+
+        appList.adapter = PluginListAdapter(this, null)
+
+        viewModel.pluginListData.observe(this, Observer { pluginList ->
+            (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginList)
+            setEmptyViewVisibleByInt(pluginList.size)
+        })
+
         registerForContextMenu(appList)
+
         appList.layoutManager = LinearLayoutManager(this)
-        setEmptyViewVisibleByInt(pluginLoader.indexedPlugins.size)
-        (appList.adapter as PluginListAdapter).onDataUpdateListener = object : OnDataUpdateListener<Plugin> {
-            override fun onUpdate(data: List<Plugin>) {
-                setEmptyViewVisibleByInt(data.size)
-            }
-        }
     }
 
-    fun setEmptyViewVisibleByInt(dataSize: Int) {
+    private fun setEmptyViewVisibleByInt(dataSize: Int) {
         if (dataSize == 0) {
             emptyView.visibility = View.VISIBLE
             appList.visibility = View.GONE
@@ -107,7 +94,9 @@ class StoreInstallationManagerActivity : FridayActivity() {
                     warnDialog.show()
 
                 } else {
-                    val selectPluginIntent = Intent(this, FileSelectorActivity::class.java)
+                    val selectPluginIntent = Intent()
+                    selectPluginIntent.action = Intent.ACTION_GET_CONTENT
+                    selectPluginIntent.type = "*/*"
                     startActivityForResult(selectPluginIntent, OPEN_PLUGIN_INTENT_CODE)
                 }
             }
@@ -118,56 +107,8 @@ class StoreInstallationManagerActivity : FridayActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == OPEN_PLUGIN_INTENT_CODE && resultCode == RESULT_OK && data != null) {
-            Log.d(LOGTAG, "oldData:" + data.data!!.toString())
-            val openedFile = File(Objects.requireNonNull(data.data!!.path))
-            val installer = PluginInstaller(this)
-            installer.addOnInstallationProgressChangedListener(object : PluginInstaller.OnInstallationStateChangedListener {
-                override fun onProgressChanged(progressMessage: String) {
-                    Log.d(LOGTAG, "progress changed")
-                }
 
-                override fun onSuccess() {
-                    Log.d(LOGTAG, "success")
-                    val pluginLoader = FridayApplication.pluginLoader
-                    pluginLoader.startLoading()
-                    (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginLoader.indexedPlugins)
-                }
-
-                override fun onFailure(e: Exception) {
-                    val notification = Notification.Builder(this@StoreInstallationManagerActivity, Constant.NOTIF_CHANNEL_INSTALLER_ID)
-                            .setContentTitle(getString(R.string.pluginInstaller_error_installation_failed))
-                            .setSmallIcon(R.drawable.ic_twotone_error_outline_24px)
-                    when (e) {
-                        is VerificationSecurityException -> {
-                            notification.setContentText(getString(R.string.pluginInstaller_error_manifest_security))
-                                    .setSmallIcon(R.drawable.ic_twotone_security_24px)
-                        }
-                        is ZipException -> {
-                            notification.setContentText(getString(R.string.pluginInstaller_error_invalid_zip_file))
-                        }
-                        is IOException -> {
-                            Log.d(LOGTAG, e.message)
-                            notification.setContentText(getString(R.string.pluginInstaller_error_io_exception))
-                        }
-                        is JSONException -> {
-                            notification.setContentText(getString(R.string.pluginInstaller_error_could_not_parse))
-                        }
-                    }
-                    val notificationManagerCompat = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notificationManagerCompat.notify(Constant.NotificationIDs.NOTIFICATION_INSTALL_ERROR, notification.build())
-                }
-            })
-            Thread {
-                try {
-                    installer.installFrom(ZippedPluginFile(File(openedFile.path)))
-                } catch (e: IOException) {
-                    Log.e(LOGTAG, e.localizedMessage, e)
-                } catch (e: ZipException) {
-                    Log.e(LOGTAG, e.localizedMessage, e)
-                }
-
-
-            }.start()
+            viewModel.requestInstallFromInputStream(contentResolver.openInputStream(data.data!!)!!)
         }
     }
 }

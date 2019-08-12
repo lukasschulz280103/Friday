@@ -272,7 +272,7 @@
     <string name="storeInstallationsManager_diskInstallWarningMessage">If you install plugins from unknown sources, there is a risk that they will show unwanted behavior. Among other things, these side effects can cause unexpected damage to your device. No responsibility is taken for this.</string>
     <string name="dont_show_again">Don\'t show again</string>
     <string name="pluginInstaller_noItemsIndexed">No plugin files found</string>
-    <string name="pluginInstaller_succes_install_title">Installation success</string>
+    <string name="pluginInstaller_success_install_title">Installation success</string>
     <string name="pluginInstaller_name" translatable="false">PluginInstaller</string>
     <string name="pluginInstaller_success_ticker_text">The installation of %s was successful</string>
     <string name="notification_channel_update">Update check</string>

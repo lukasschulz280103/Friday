@@ -56,9 +56,14 @@ class Constant {
         }
     }
 
-    object NotificationIDs {
+    object Notification {
         const val NOTIFICATION_INSTALL_SUCCESS = 200
         const val NOTIFICATION_INSTALL_ERROR = 201
+        const val NOTIFICATION_INSTALL_PROGRESS = 202
+
+        object Groups {
+            const val NOTIFICATION_GROUP_INSTALLER = "NOTIF_GROUP_INSTALLER"
+        }
     }
 
     object BroadcastReceiverActions {

@@ -8,6 +8,7 @@ import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.VerificationSecurityException
 import net.lingala.zip4j.exception.ZipException
+import net.lingala.zip4j.model.FileHeader
 import org.json.JSONObject
 import java.nio.charset.Charset
 
@@ -18,7 +19,10 @@ class PluginFileCacheUtil {
         fun cachePluginFile(context: Context, zippedPluginFile: ZippedPluginFile): PluginFile {
             zippedPluginFile.extractAll(Constant.getPluginCacheDir(context).path)
             Log.d(LOGTAG, Constant.getPluginCacheDir(context, zippedPluginFile.file.name.replace(".fpl", "")).path)
-            return PluginFile(Constant.getPluginCacheDir(context, zippedPluginFile.file.name.replace(".fpl", "")).path)
+            return if (zippedPluginFile.fileHeaders.size != 0) {
+                val extractedFileName = (zippedPluginFile.fileHeaders[0] as FileHeader).fileName
+                PluginFile(Constant.getPluginCacheDir(context, extractedFileName).path)
+            } else PluginFile(zippedPluginFile.file.name.replace(".fpl", ""))
         }
 
         @Throws(VerificationSecurityException::class, ZipException::class, IllegalStateException::class)

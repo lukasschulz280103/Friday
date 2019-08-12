@@ -1,20 +1,13 @@
 package com.friday.ar.plugin.security
 
-import android.content.Context
 import android.util.Log
-
-import com.friday.ar.Constant
+import com.friday.ar.extensionMethods.notNull
 import com.friday.ar.plugin.file.Manifest.ManifestSecurityException
 import com.friday.ar.plugin.file.PluginFile
-import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.util.FileUtil
-import com.friday.ar.util.cache.PluginFileCacheUtil
-
 import net.lingala.zip4j.exception.ZipException
-
 import org.json.JSONException
 import org.json.JSONObject
-
 import java.io.File
 import java.io.IOException
 import java.nio.charset.StandardCharsets
@@ -46,86 +39,45 @@ class PluginVerifier {
 
     private var onVerificationCompleteListener: OnVerificationCompleteListener? = null
 
-    //TODO: add functionality that only extracts the manifest from the plugin file
-    /**
-     * Verify a plugin which is zipped.
-     * Throws an exception if an plugin file seems o be corrupted.
-     *
-     * @param plugin            [ZippedPluginFile] to run verification on
-     * @param context           [Context] application context
-     * @param deleteOnException boolean whether the cached file should be deleted if the verification fails.
-     */
-    fun verify(plugin: ZippedPluginFile, context: Context, deleteOnException: Boolean) {
-        val cachedPluginFile = PluginFileCacheUtil.cachePluginFile(context, plugin)
-        try {
-            for (file in Constant.getPluginCacheDir(context).listFiles()) {
-                Log.d(LOGTAG, file.name)
-            }
-            val cacheFile = PluginFile(cachedPluginFile.path)
-            verify(cacheFile, deleteOnException)
-        } catch (e: ZipException) {
-            if (onVerificationCompleteListener != null) {
-                onVerificationCompleteListener!!.onZipException(e)
-            }
-        } catch (e: JSONException) {
-            Log.e(LOGTAG, e.localizedMessage, e)
-            if (onVerificationCompleteListener != null) {
-                onVerificationCompleteListener!!.onJSONException(e)
-            }
-        } catch (e: IOException) {
-            Log.e(LOGTAG, e.localizedMessage, e)
-            if (onVerificationCompleteListener != null) {
-                onVerificationCompleteListener!!.onIOException(e)
-            }
-        } finally {
-            cachedPluginFile.deleteRecursively()
-        }
-
-    }
 
     fun verify(pluginFile: PluginFile, deleteOnException: Boolean) {
         val manifestContentString: String
         try {
             if (pluginFile.manifest == null) throw VerificationSecurityException("No manifest found!")
+
             manifestContentString = String(Files.readAllBytes(File(pluginFile.path + "/meta/manifest.json").toPath()), StandardCharsets.UTF_8)
+
             val manifestObject = JSONObject(manifestContentString)
             val meta = manifestObject.getJSONObject("meta")
-            if (meta == null) {
+            if (manifestObject.isNull("meta")) {
                 if (deleteOnException) FileUtil.deleteDirectory(pluginFile)
                 throw ManifestSecurityException("Manifest does not contain required meta info!")
             }
-            if (meta.getString("applicationName") == null || meta.getString("applicationName").isEmpty()) {
+            if (meta.isNull("applicationName") || meta.getString("applicationName").isEmpty()) {
                 if (deleteOnException) FileUtil.deleteDirectory(pluginFile)
                 throw ManifestSecurityException.MissingFieldException("The manifest meta info is missing an application name, or its value is empty.")
             }
-            if (meta.getString("authorName") == null || meta.getString("authorName").isEmpty()) {
+            if (meta.isNull("authorName") || meta.getString("authorName").isEmpty()) {
                 Log.w(LOGTAG, "The plugin '" + pluginFile.name + "' has not provided an authors name and thus is untrusted.")
             }
-            if (meta.getString("versionName") == null || meta.getString("versionName").isEmpty()) {
+            if (meta.isNull("versionName") || meta.getString("versionName").isEmpty()) {
                 if (deleteOnException) FileUtil.deleteDirectory(pluginFile)
                 throw ManifestSecurityException.MissingFieldException("The manifest meta info is missing the versionName, or its value is empty.")
             }
             onVerificationCompleteListener!!.onSuccess()
         } catch (e: NoSuchFileException) {
             if (deleteOnException) FileUtil.deleteDirectory(pluginFile)
-            if (onVerificationCompleteListener != null)
-                onVerificationCompleteListener!!.onVerificationFailed(VerificationSecurityException("Could not find manifest file in the given plugin file."))
+            onVerificationCompleteListener.notNull { onVerificationFailed(VerificationSecurityException("Could not find manifest file in the given plugin file.")) }
         } catch (e: IOException) {
-            if (onVerificationCompleteListener != null) {
-                onVerificationCompleteListener!!.onIOException(e)
-            }
+            onVerificationCompleteListener.notNull { onIOException(e) }
         } catch (e: JSONException) {
-            if (onVerificationCompleteListener != null) {
-                onVerificationCompleteListener!!.onJSONException(e)
-            }
+            onVerificationCompleteListener.notNull { onJSONException(e) }
         } catch (e: ManifestSecurityException.MissingFieldException) {
-            if (onVerificationCompleteListener != null) {
-                onVerificationCompleteListener!!.onVerificationFailed(e)
-            }
+            onVerificationCompleteListener.notNull { onVerificationFailed(e) }
         } catch (e: ManifestSecurityException) {
-            if (onVerificationCompleteListener != null) {
-                onVerificationCompleteListener!!.onVerificationFailed(e)
-            }
+            onVerificationCompleteListener.notNull { onVerificationFailed(e) }
+        } catch (e: VerificationSecurityException) {
+            onVerificationCompleteListener.notNull { onVerificationFailed(e) }
         }
 
     }

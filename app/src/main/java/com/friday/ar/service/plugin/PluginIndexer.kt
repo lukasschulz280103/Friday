@@ -9,6 +9,7 @@ import com.friday.ar.Constant
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.PluginVerifier
 import com.friday.ar.plugin.security.VerificationSecurityException
+import com.friday.ar.util.cache.PluginFileCacheUtil
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import java.io.File
@@ -94,7 +95,7 @@ class PluginIndexer : JobService() {
                                 Log.e(LOGTAG, "File '" + file.name + "' was not added to index; invalid manifest:" + e.localizedMessage)
                             }
                         })
-                        verifier.verify(ZippedPluginFile(file), applicationContext, true)
+                        verifier.verify(PluginFileCacheUtil.cachePluginFile(applicationContext, ZippedPluginFile(file)), true)
                     } catch (e: ZipException) {
                         Log.e(LOGTAG, e.localizedMessage, e)
                     }
