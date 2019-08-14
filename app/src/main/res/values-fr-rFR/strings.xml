@@ -288,4 +288,8 @@
     <string name="errtype_arcore_installation_declined">Cette application nécessite ArCore sur l\'appareil. Veuillez installer ArCore et réessayer.</string>
     <string name="packageInstaller_perms_denied_accessError">Erreur d\'accès</string>
     <string name="packageInstaller_perms_denied_accessError_explanation">Nous avons besoin d\'accéder à votre stockage afin d\'installer des fichiers à partir de votre appareil.</string>
+    <string name="compatibility_ar">ArCore est supporté</string>
+    <string name="compatibility_ar_installed">ArCore est installé</string>
+    <string name="compatibility_ar_up_to_date">ArCore est à jour</string>
+    <string name="device_compatibility">Vérification de la compatibilité de l\'appareil</string>
 </resources>

@@ -295,7 +295,7 @@
     <string name="pluginInstaller_error_invalid_zip_file">This file is corrupted and/or not a valid plugin-archive</string>
     <string name="pluginInstaller_progressMessage_installing">Installing…</string>
     <string name="pluginInstaller_progressMessage_verifying">Verifying plugin…</string>
-    <string name="pluginInstaller_error_io_exception">The plugin could not be installed due to an unknown error.</string>
+    <string name="pluginInstaller_error_io_exception">The plugin could not be installed due to an file system error.</string>
     <string name="pref_devmode_use_beta_channel">Use beta channel for updates</string>
     <string name="update">Update</string>
     <string name="update_available">Update available</string>
@@ -322,8 +322,6 @@
     <string name="compatibility_ar">ArCore support</string>
     <string name="compatibility_ar_installed">ArCore is installed</string>
     <string name="compatibility_ar_up_to_date">ArCore is up to date</string>
-    <string name="title_plugin">Plugin System Module</string>
-    <string name="title_devtools">Developer Tools</string>
     <string-array name="pref_language_entries">
         <item>sys</item>
         <item>de</item>

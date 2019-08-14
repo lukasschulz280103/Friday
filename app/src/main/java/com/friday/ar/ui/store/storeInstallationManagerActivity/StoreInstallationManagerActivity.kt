@@ -108,7 +108,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == OPEN_PLUGIN_INTENT_CODE && resultCode == RESULT_OK && data != null) {
 
-            viewModel.requestInstallFromInputStream(contentResolver.openInputStream(data.data!!)!!)
+            viewModel.install(contentResolver.openInputStream(data.data!!)!!)
         }
     }
 }

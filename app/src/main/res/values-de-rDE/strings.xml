@@ -266,7 +266,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="pluginInstaller_error_invalid_zip_file">Diese Datei ist beschädigt und/oder keine valides Friday-Pluginarchiv</string>
     <string name="pluginInstaller_progressMessage_installing">Installieren…</string>
     <string name="pluginInstaller_progressMessage_verifying">Verifizieren des Plugins…</string>
-    <string name="pluginInstaller_error_io_exception">Die Plugindatei konnte aufgrund eines unbekannten Fehlers nicht installiet werden.</string>
+    <string name="pluginInstaller_error_io_exception">Die Plugindatei konnte aufgrund eines unbekannten Dateifehlers nicht installiet werden.</string>
     <string name="pref_devmode_use_beta_channel">Beta-Kanal für Updates benutzen</string>
     <string name="update">Aktualisieren</string>
     <string name="update_available">Update verfügbar</string>
@@ -293,4 +293,5 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="compatibility_ar">ArCore unterstützt</string>
     <string name="compatibility_ar_installed">ArCore ist installiert</string>
     <string name="compatibility_ar_up_to_date">ArCore ist aktuell</string>
+    <string name="device_compatibility">Kompatibillitätstest</string>
 </resources>

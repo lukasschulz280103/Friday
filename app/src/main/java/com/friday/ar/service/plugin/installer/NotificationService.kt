@@ -5,10 +5,29 @@ import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.friday.ar.Constant
 import com.friday.ar.R
+import com.friday.ar.plugin.security.VerificationSecurityException
+import org.json.JSONException
+import java.io.IOException
+import java.util.zip.ZipException
 
 class PluginInstallerNotificationService(val context: Context) {
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-    fun notificationShowError(message: String) {
+    fun notificationShowError(exception: Exception) {
+        val message = when (exception) {
+            is ZipException -> {
+                context.getString(R.string.pluginInstaller_error_invalid_zip_file)
+            }
+            is IOException -> {
+                context.getString(R.string.pluginInstaller_error_io_exception)
+            }
+            is JSONException -> {
+                context.getString(R.string.pluginInstaller_error_could_not_parse)
+            }
+            is VerificationSecurityException -> {
+                context.getString(R.string.pluginInstaller_error_manifest_security)
+            }
+            else -> context.getString(R.string.unknown_error)
+        }
         val notification = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
                 .setContentTitle(context.getString(R.string.pluginInstaller_error_installation_failed))
                 .setContentText(message)

@@ -50,7 +50,6 @@
                 android:id="@+id/arcore_installed_indicator"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_weight="1"
                 android:src="@drawable/ic_twotone_error_outline_24px"
                 android:tint="@android:color/white" />
 

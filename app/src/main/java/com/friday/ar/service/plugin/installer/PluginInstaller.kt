@@ -4,17 +4,22 @@ import android.content.Context
 import android.util.Log
 import com.friday.ar.Constant
 import com.friday.ar.R
+import com.friday.ar.extensionMethods.toFile
 import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.PluginVerifier
 import com.friday.ar.plugin.security.VerificationSecurityException
+import com.friday.ar.ui.store.storeInstallationManagerActivity.StoreInstallationsManagerViewModel
 import com.friday.ar.util.FileUtil
 import com.friday.ar.util.cache.PluginFileCacheUtil
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import java.io.IOException
+import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PluginInstaller(private val context: Context) {
     companion object {
@@ -44,25 +49,25 @@ class PluginInstaller(private val context: Context) {
             }
 
             override fun onZipException(e: ZipException) {
-                if (!isSilent) notificationService.notificationShowError(e.message!!)
+                if (!isSilent) notificationService.notificationShowError(e)
                 Log.e(LOGTAG, e.message, e)
                 notifyInstallationFailed(e)
             }
 
             override fun onIOException(e: IOException) {
-                if (!isSilent) notificationService.notificationShowError(e.message!!)
+                if (!isSilent) notificationService.notificationShowError(e)
                 Log.e(LOGTAG, e.message, e)
                 notifyInstallationFailed(e)
             }
 
             override fun onJSONException(e: JSONException) {
-                if (!isSilent) notificationService.notificationShowError(e.message!!)
+                if (!isSilent) notificationService.notificationShowError(e)
                 Log.e(LOGTAG, e.message, e)
                 notifyInstallationFailed(e)
             }
 
             override fun onVerificationFailed(e: VerificationSecurityException) {
-                if (!isSilent) notificationService.notificationShowError(e.message!!)
+                if (!isSilent) notificationService.notificationShowError(e)
                 Log.e(LOGTAG, e.message, e)
                 notifyInstallationFailed(e)
             }
@@ -70,6 +75,20 @@ class PluginInstaller(private val context: Context) {
         if (!isSilent) notificationService.notificationShowProgress(context.getString(R.string.pluginInstaller_progressMessage_verifying))
         notifyInstallProgressChange(context.getString(R.string.pluginInstaller_progressMessage_verifying))
         verifier.verify(cachedPluginFile, true)
+    }
+
+    fun requestInstallFromInputStream(inputStream: InputStream) {
+        val installer = PluginInstaller(context)
+        installer.isSilent = false
+        try {
+            val cacheFile = inputStream.toFile(Constant.getPluginCacheDir(context).path + "/" + UUID.randomUUID().toString() + ".fpl")
+            installer.installFrom(ZippedPluginFile(cacheFile))
+            cacheFile.delete()
+        } catch (e: IOException) {
+            Log.e(StoreInstallationsManagerViewModel.LOGTAG, e.localizedMessage, e)
+        } catch (e: ZipException) {
+            Log.e(StoreInstallationsManagerViewModel.LOGTAG, e.localizedMessage, e)
+        }
     }
 
     fun uninstallPlugin(plugin: Plugin) {

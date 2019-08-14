@@ -1,1 +1,1 @@
-include ':app', ':pocketsphinx-android-5prealpha-release', ':plugin-system'
+include ':app', ':pocketsphinx-android-5prealpha-release', ':plugin-system', ':wizard', ':src'

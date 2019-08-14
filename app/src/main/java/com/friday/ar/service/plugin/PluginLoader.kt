@@ -1,5 +1,7 @@
 package com.friday.ar.service.plugin
 
+import android.app.job.JobParameters
+import android.app.job.JobService
 import android.content.Context
 import android.util.Log
 import com.friday.ar.Constant
@@ -17,9 +19,18 @@ import java.util.*
 /**
  * This class loads all plugins when the app starts.
  */
-class PluginLoader(context: Context) {
+class PluginLoader(context: Context) : JobService() {
     companion object {
         private const val LOGTAG = "PluginLoader"
+    }
+
+    override fun onStopJob(p0: JobParameters?): Boolean {
+        Log.i(LOGTAG, "PluginLoader service finished")
+        return true
+    }
+
+    override fun onStartJob(p0: JobParameters?): Boolean {
+        return startLoading()
     }
 
     /**
