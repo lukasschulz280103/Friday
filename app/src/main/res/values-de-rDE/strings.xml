@@ -294,4 +294,7 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="compatibility_ar_installed">ArCore ist installiert</string>
     <string name="compatibility_ar_up_to_date">ArCore ist aktuell</string>
     <string name="device_compatibility">Kompatibillitätstest</string>
+    <string name="changelog_dialog_no_title">Kein Titel bereitgestellt</string>
+    <string name="changelog_dialog_no_timestamp">Kein Zeitstempel bereitgestellt</string>
+    <string name="changelog_dialog_no_body">Keine weitere Detailinformationen wurden bereitgestellt.</string>
 </resources>

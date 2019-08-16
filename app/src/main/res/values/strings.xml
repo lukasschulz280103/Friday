@@ -341,4 +341,7 @@
         <item>orange</item>
         <item>blue</item>
     </string-array>
+    <string name="changelog_dialog_no_title">No title provided</string>
+    <string name="changelog_dialog_no_timestamp">No timestamp provided</string>
+    <string name="changelog_dialog_no_body">No detailed information provided.</string>
 </resources>

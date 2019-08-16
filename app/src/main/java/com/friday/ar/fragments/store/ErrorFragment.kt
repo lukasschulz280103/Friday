@@ -6,13 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-
 import com.friday.ar.R
 import com.friday.ar.util.FireStoreCodeInterpreter
 import com.google.firebase.firestore.FirebaseFirestoreException
+import kotlinx.android.synthetic.main.fragment_error.*
 
 
 /**
@@ -20,9 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException
  *
  * @see MainStoreFragment, com.friday.HeadDisplayClient.store.fragments.StoreFeaturedFragment
  */
-class ErrorFragment(private val e: FirebaseFirestoreException)// Required empty public constructor
-    : Fragment() {
-    private var mContext: Context? = null
+class ErrorFragment(private val e: FirebaseFirestoreException) : Fragment() {
+    private lateinit var mContext: Context
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -32,12 +29,15 @@ class ErrorFragment(private val e: FirebaseFirestoreException)// Required empty 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val errInterpreter = FireStoreCodeInterpreter(mContext!!, e)
-        val v = inflater.inflate(R.layout.fragment_error, container, false)
-        val retry = v.findViewById<Button>(R.id.retry)
-        (v.findViewById<View>(R.id.errTitle) as TextView).text = getString(R.string.loading_err_title, errInterpreter.code.toString())
-        (v.findViewById<View>(R.id.subtitle_err) as TextView).text = errInterpreter.message
-        (v.findViewById<View>(R.id.fullMessage) as TextView).text = errInterpreter.exceptionMessage
+        return inflater.inflate(R.layout.fragment_error, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val errInterpreter = FireStoreCodeInterpreter(mContext, e)
+        super.onViewCreated(view, savedInstanceState)
+        errTitle.text = getString(R.string.loading_err_title, errInterpreter.code.toString())
+        subtitle_err.text = errInterpreter.message
+        fullMessage.text = errInterpreter.exceptionMessage
         retry.setOnClickListener {
             fragmentManager!!.beginTransaction()
                     .setCustomAnimations(R.anim.slide_up, R.anim.slide_down)
@@ -45,7 +45,6 @@ class ErrorFragment(private val e: FirebaseFirestoreException)// Required empty 
                     .remove(this)
                     .commit()
         }
-        return v
     }
 
 }

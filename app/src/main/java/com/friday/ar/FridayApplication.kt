@@ -9,14 +9,16 @@ import android.content.*
 import android.os.Build
 import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
-import com.friday.ar.extensionMethods.notNull
-import com.friday.ar.plugin.Plugin
+import com.friday.ar.modules.appModule
 import com.friday.ar.plugin.file.ZippedPluginFile
-import com.friday.ar.service.plugin.PluginLoader
 import com.friday.ar.service.AccountSyncService
 import com.friday.ar.service.plugin.PluginIndexer
+import com.friday.ar.service.plugin.PluginLoader
 import com.friday.ar.util.UpdateUtil
 import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import java.io.File
 
 //TODO remove data handling from application class to sperate models
@@ -39,6 +41,11 @@ class FridayApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        startKoin {
+            androidLogger()
+            androidContext(this@FridayApplication)
+            modules(appModule)
+        }
         Fabric.with(this, Crashlytics())
         if (!File(externalCacheDir!!.toString() + "/pluginZipCache").delete()) {
             File(externalCacheDir!!.toString() + "/pluginZipCache").deleteOnExit()

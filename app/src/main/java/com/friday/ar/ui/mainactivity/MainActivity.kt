@@ -22,9 +22,9 @@ import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
-import com.friday.ar.fragments.dialogFragments.ChangelogDialogFragment
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
+import com.friday.ar.fragments.dialogFragments.changelog.ChangelogDialogFragment
 import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.list.dashboard.DashboardAdapter

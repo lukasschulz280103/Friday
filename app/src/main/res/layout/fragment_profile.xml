@@ -5,7 +5,7 @@
     style="roboto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment">
+    tools:context=".fragments.profileFragment.ProfileFragment">
 
     <ViewSwitcher
         android:id="@+id/page_profile_account_vswitcher"

@@ -1,5 +1,6 @@
 package com.friday.ar.store.pager
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -15,6 +16,10 @@ class CardViewPagerAdapter(fm: FragmentManager, private val dataList: ArrayList<
 
 
     override fun getItem(position: Int): Fragment {
-        return AppCardFragment(dataList[position])
+        val card = AppCardFragment()
+        val bundle = Bundle()
+        bundle.putString("path", dataList[position].path)
+        card.arguments = bundle
+        return card
     }
 }

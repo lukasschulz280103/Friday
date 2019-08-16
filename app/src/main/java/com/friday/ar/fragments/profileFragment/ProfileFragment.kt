@@ -1,4 +1,4 @@
-package com.friday.ar.fragments
+package com.friday.ar.fragments.profileFragment
 
 import android.app.Activity
 import android.content.*
@@ -8,7 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.friday.ar.Constant
 import com.friday.ar.R
@@ -18,7 +18,8 @@ import com.friday.ar.ui.FeedbackSenderActivity
 import com.friday.ar.util.UserUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.mikhaellopez.circularimageview.CircularImageView
+import kotlinx.android.synthetic.main.account_preference_layout.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 /**
  * A simple [Fragment] subclass.
@@ -33,11 +34,6 @@ class ProfileFragment : Fragment() {
     private var firebaseUser: FirebaseUser? = null
     private lateinit var mContext: Context
 
-    private var accountImageView: CircularImageView? = null
-    private var emailText: TextView? = null
-    private var welcomeText: TextView? = null
-
-    private var viewSwitcher: ViewSwitcher? = null
     private val intentManager = View.OnClickListener { view ->
         when (view.id) {
             R.id.main_layout_editor -> {
@@ -69,18 +65,13 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val fragmentView = inflater.inflate(R.layout.fragment_profile, container, false)
-        viewSwitcher = fragmentView.findViewById(R.id.page_profile_account_vswitcher)
-        emailText = fragmentView.findViewById(R.id.page_profile_email)
-        accountImageView = fragmentView.findViewById(R.id.page_profile_image_account)
-        welcomeText = fragmentView.findViewById(R.id.page_profile_header)
-        val signInButton = fragmentView.findViewById<Button>(R.id.page_profile_signin_button)
-        val toFeedback = fragmentView.findViewById<LinearLayout>(R.id.main_feedback)
-        val toSettings = fragmentView.findViewById<LinearLayout>(R.id.main_settings)
-        val toLayoutEditor = fragmentView.findViewById<LinearLayout>(R.id.main_layout_editor)
-        val toHelp = fragmentView.findViewById<LinearLayout>(R.id.main_help)
-        signInButton.setOnClickListener {
-            signInButton.isEnabled = false
+        return inflater.inflate(R.layout.fragment_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        page_profile_signin_button.setOnClickListener {
+            page_profile_signin_button.isEnabled = false
             val authenticationDialog = AuthDialog()
             authenticationDialog.show(childFragmentManager, "AuthenticationDialog")
             authenticationDialog.addOnAuthCompletedListener(object : OnAuthCompletedListener {
@@ -90,17 +81,16 @@ class ProfileFragment : Fragment() {
                 }
             })
             authenticationDialog.setOnDismissListener(DialogInterface.OnDismissListener {
-                signInButton.isEnabled = true
+                page_profile_signin_button.isEnabled = true
             })
         }
-        toLayoutEditor.setOnClickListener(intentManager)
-        toSettings.setOnClickListener(intentManager)
-        toHelp.setOnClickListener(intentManager)
-        toFeedback.setOnClickListener(intentManager)
+        main_layout_editor.setOnClickListener(intentManager)
+        main_settings.setOnClickListener(intentManager)
+        main_help.setOnClickListener(intentManager)
+        main_feedback.setOnClickListener(intentManager)
         setupSignInScreen()
 
         mContext.registerReceiver(accountSynchronizedReceiver, IntentFilter(Constant.BroadcastReceiverActions.BROADCAST_ACCOUNT_SYNCED))
-        return fragmentView
     }
 
     override fun onDestroy() {
@@ -115,19 +105,19 @@ class ProfileFragment : Fragment() {
 
     private fun setupSignInScreen() {
         if (firebaseAuth.currentUser == null) {
-            viewSwitcher!!.displayedChild = 0
+            page_profile_account_vswitcher.displayedChild = 0
         } else {
             firebaseUser = firebaseAuth.currentUser
             val userUtil = UserUtil(mContext)
-            viewSwitcher!!.displayedChild = 1
+            page_profile_account_vswitcher!!.displayedChild = 1
 
             if (firebaseUser!!.photoUrl != null && userUtil.avatarFile.exists()) {
-                accountImageView!!.setImageURI(Uri.parse(userUtil.avatarFile.path))
+                account_img.setImageURI(Uri.parse(userUtil.avatarFile.path))
             } else {
-                accountImageView!!.background = activity!!.getDrawable(R.drawable.ic_twotone_account_circle_24px)
+                account_img.background = activity!!.getDrawable(R.drawable.ic_twotone_account_circle_24px)
             }
-            emailText!!.text = firebaseUser!!.email
-            welcomeText!!.text = if (firebaseUser!!.displayName != null && firebaseUser!!.displayName != "") getString(R.string.page_profile_header_text, firebaseUser!!.displayName) else getString(R.string.greet_no_name)
+            page_profile_email.text = firebaseUser!!.email
+            page_profile_header.text = if (firebaseUser!!.displayName != null && firebaseUser!!.displayName != "") getString(R.string.page_profile_header_text, firebaseUser!!.displayName) else getString(R.string.greet_no_name)
         }
     }
 

@@ -4,7 +4,7 @@ package com.friday.ar.store.data
 import android.media.Image
 import java.util.*
 
-class WidgetInfo {
+class PluginInfo {
     var id: Int = 0
     var title: String? = null
     var authorName: String? = null

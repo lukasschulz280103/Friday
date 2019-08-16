@@ -21,3 +21,4 @@ build/
 output.json
 obj/
 *.md5
+captures
