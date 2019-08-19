@@ -6,9 +6,6 @@ import androidx.preference.PreferenceManager
 import com.friday.ar.R
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.fragments.signinFragment.DefaultSignInFragment
-import com.friday.ar.fragments.wizard.AcceptTerms
-import com.friday.ar.fragments.wizard.PermissionRequestFragment
-import com.friday.ar.fragments.wizard.deviceCompatibility.DeviceCompatibilityFragment
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntroFragment
 import com.github.paolorotolo.appintro.model.SliderPage
@@ -40,11 +37,11 @@ class WizardActivity : AppIntro() {
         signinFragment.addOnAuthCompletedListener(onAuthCompletedListener)
 
         addSlide(AppIntroFragment.newInstance(welcomePage))
-        addSlide(DeviceCompatibilityFragment())
+        //addSlide(DeviceCompatibilityFragment())
         addSlide(AppIntroFragment.newInstance(projectInfoPage))
-        addSlide(AcceptTerms.newInstance())
+        //addSlide(AcceptTerms.newInstance())
         addSlide(signinFragment)
-        addSlide(PermissionRequestFragment())
+        //addSlide(PermissionRequestFragment())
     }
 
     override fun onBackPressed() {

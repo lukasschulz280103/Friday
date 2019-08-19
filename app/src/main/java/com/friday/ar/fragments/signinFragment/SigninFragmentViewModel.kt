@@ -12,7 +12,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.crashlytics.android.Crashlytics
 import com.friday.ar.Constant
-import com.friday.ar.FridayApplication
 import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.service.AccountSyncService
 import com.friday.ar.util.analitycs.AnalyticUtil
@@ -38,7 +37,7 @@ class SigninFragmentViewModel(application: Application) : AndroidViewModel(appli
         newUserCretionTask.postValue(task)
         inputsUsabilityState.postValue(true)
         if (task.isSuccessful) {
-            task.result!!.user.sendEmailVerification()
+            task.result!!.user!!.sendEmailVerification()
             AnalyticUtil.logUserCreation(application)
         } else {
             if (task.exception != null) {
