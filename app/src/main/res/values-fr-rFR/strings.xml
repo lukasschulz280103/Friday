@@ -201,7 +201,6 @@
     <string name="version_update">Mise à jour %s</string>
     <string name="warning_auto_account_creation">Si aucun compte n\'existe, nous en créerons automatiquement un nouveau.</string>
     <string name="warning_decline">Déclin</string>
-    <string name="wizard_welcome_descr">Cet assistant vous guidera tout au long de la mise en place de l\'installation de friday.</string>
     <string name="app_friday_description">"friday est puissant. Nous transformons votre téléphone en un HeadUp Display Client compétent, compatible avec nos lunettes AR de haute qualité.         Utilisez \\\"Widgets\\\" pour convertir vendredi en assistant - affichez toutes les informations dont vous avez besoin, du simple texte au calendrier google sans même toucher votre appareil. "</string>
     <string name="store_featured">En vedette</string>
     <string name="code_aborted">Opération interrompue. Répétez la procédure et contactez-nous si le problème persiste.</string>

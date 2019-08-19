@@ -1,4 +1,4 @@
-apply(rootProject.file("base.gradle.kts"))
+apply(from = rootProject.file("base.gradle"))
 apply(plugin = "com.google.gms.google-services")
 
 plugins {
@@ -6,24 +6,8 @@ plugins {
     id("com.google.ar.sceneform.plugin")
 }
 android {
-    compileSdkVersion(29)
     defaultConfig {
         applicationId = "com.friday.ar"
-        minSdkVersion(26)
-        targetSdkVersion(29)
-        versionCode = 10
-        versionName = "1.3.1-alpha01"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
@@ -39,12 +23,13 @@ android {
     }
     useLibrary("android.test.base")
     useLibrary("android.test.mock")
-    dataBinding {
-        isEnabled = true
-    }
 }
 dependencies {
-    implementation(fileTree(mapOf("include" to listOf("*.aar", "*.jar"), "dir" to "libs")))
+
+    implementation(project(":wizard"))
+    implementation(project(":auth"))
+
+
     implementation("androidx.preference:preference:1.1.0-rc01")
     implementation("androidx.appcompat:appcompat:1.1.0-rc01")
     implementation("android.arch.lifecycle:extensions:1.1.1")
@@ -72,7 +57,6 @@ dependencies {
     implementation("com.google.ar.sceneform.ux:sceneform-ux:1.11.0")
     implementation("com.google.ar.sceneform:core:1.11.0")
     implementation("com.google.ar:core:1.11.0")
-    implementation("com.github.AppIntro:AppIntro:v5.1.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("com.crashlytics.sdk.android:crashlytics:2.10.1")
     implementation("com.sothree.slidinguppanel:library:3.4.0")

@@ -1,4 +1,4 @@
-package com.friday.ar.fragments.signinFragment
+package com.friday.ar.auth.fragments
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -18,7 +18,6 @@ import com.friday.ar.util.analitycs.AnalyticUtil
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.*
 
 class SigninFragmentViewModel(application: Application) : AndroidViewModel(application) {
     companion object {

@@ -1,4 +1,4 @@
-package com.friday.ar.fragments.signinFragment
+package com.friday.ar.auth.fragments
 
 import android.content.ContentValues.TAG
 import android.content.Context

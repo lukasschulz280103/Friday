@@ -1,8 +1,8 @@
-apply(from = rootProject.file("base.gradle"))
-
 plugins {
     id("com.android.library")
 }
+apply(from = rootProject.file("base.gradle"))
+
 dependencies {
     implementation("org.koin:koin-core:2.0.1")
 // Koin extended & experimental features
@@ -10,6 +10,7 @@ dependencies {
 // Koin for Unit tests
     testImplementation("org.koin:koin-test:2.0.1")
 // Koin for Java developers
+
     implementation("androidx.preference:preference:1.1.0-rc01")
     implementation("org.koin:koin-java:2.0.1")
     implementation("com.github.AppIntro:AppIntro:v5.1.0")

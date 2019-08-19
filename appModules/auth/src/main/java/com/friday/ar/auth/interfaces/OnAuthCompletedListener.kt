@@ -1,4 +1,4 @@
-package com.friday.ar.fragments.interfaces
+package com.friday.ar.auth.interfaces
 
 interface OnAuthCompletedListener {
     fun onAuthCompleted()

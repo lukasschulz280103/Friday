@@ -29,9 +29,9 @@ import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.list.dashboard.DashboardAdapter
 import com.friday.ar.ui.FeedbackSenderActivity
-import com.friday.ar.ui.WizardActivity
 import com.friday.ar.ui.armode.FullscreenActionActivity
 import com.friday.ar.ui.store.StoreDetailActivity
+import com.friday.ar.wizard.ui.WizardActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar

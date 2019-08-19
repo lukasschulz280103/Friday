@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">wizard</string>
+    <string name="module_name">wizard</string>
+    <string name="app_welcome">Welcome to Friday</string>
+    <string name="project_friday">Project Friday</string>
+    <string name="welcome_descriptioon">This wizard will guide you through the setup of friday</string>
 </resources>

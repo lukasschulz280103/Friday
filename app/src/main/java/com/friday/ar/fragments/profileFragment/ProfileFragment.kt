@@ -12,8 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.friday.ar.Constant
 import com.friday.ar.R
+import com.friday.ar.auth.interfaces.OnAuthCompletedListener
 import com.friday.ar.fragments.dialogFragments.AuthDialog
-import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
 import com.friday.ar.ui.FeedbackSenderActivity
 import com.friday.ar.util.UserUtil
 import com.google.firebase.auth.FirebaseAuth

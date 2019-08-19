@@ -28,7 +28,7 @@
         android:gravity="center"
         android:padding="32dp"
         android:text="@string/unsupported_device_tablet_subheader"
-        android:textAppearance="@style/AppIntroDefaultHeading"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
         android:textColor="#000" />
 
     <TextView

@@ -189,7 +189,6 @@ In dem sie <i>\"Verstanden und Nutzung bestätigen\"</i> auswählen, akzeptieren
     <string name="err_unable_to_load_speech_assets">Sprachdaten konnten nicht geladen werden</string>
     <string name="err_following_permissions_required">Friday benötigt folgende Berechtigungen:</string>
     <string name="err_permission_need_explanation">Diese Zugriffsberechtigungen werden benötigt, um grundlegende Funktionen anzubieten.</string>
-    <string name="wizard_welcome_descr">Dieser Guide führt sie durch den Setup von friday.</string>
     <string name="project_friday">Projekt friday</string>
     <string name="terms_of_use">Nutzungsbedinungen</string>
     <string name="privacy_policy">Datenschutzbedingungen</string>

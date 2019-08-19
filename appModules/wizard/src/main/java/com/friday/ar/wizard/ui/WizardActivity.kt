@@ -1,11 +1,11 @@
-package com.friday.ar.ui
+package com.friday.ar.wizard.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.friday.ar.R
-import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
-import com.friday.ar.fragments.signinFragment.DefaultSignInFragment
+import com.friday.ar.auth.fragments.DefaultSignInFragment
+import com.friday.ar.auth.interfaces.OnAuthCompletedListener
+import com.friday.ar.wizard.R
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntroFragment
 import com.github.paolorotolo.appintro.model.SliderPage
@@ -26,12 +26,10 @@ class WizardActivity : AppIntro() {
 
         val welcomePage = SliderPage()
         welcomePage.title = getString(R.string.app_welcome)
-        welcomePage.description = getString(R.string.wizard_welcome_descr)
-        welcomePage.imageDrawable = R.mipmap.ic_launcher
+        welcomePage.description = getString(R.string.welcome_descriptioon)
 
         val projectInfoPage = SliderPage()
         projectInfoPage.title = getString(R.string.project_friday)
-        projectInfoPage.description = getString(R.string.app_friday_description)
 
         val signinFragment = DefaultSignInFragment()
         signinFragment.addOnAuthCompletedListener(onAuthCompletedListener)

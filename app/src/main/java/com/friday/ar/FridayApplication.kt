@@ -15,6 +15,7 @@ import com.friday.ar.service.AccountSyncService
 import com.friday.ar.service.plugin.PluginIndexer
 import com.friday.ar.service.plugin.PluginLoader
 import com.friday.ar.util.UpdateUtil
+import com.friday.ar.wizard.di.wizard
 import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -44,7 +45,10 @@ class FridayApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@FridayApplication)
-            modules(appModule)
+            modules(listOf(
+                    appModule,
+                    wizard
+            ))
         }
         Fabric.with(this, Crashlytics())
         if (!File(externalCacheDir!!.toString() + "/pluginZipCache").delete()) {

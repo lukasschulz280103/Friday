@@ -122,10 +122,6 @@
         <item name="android:textSize">60sp</item>
 
     </style>
-    <style name="AppIntroPageTitle" parent="AppIntroDefaultHeading">
-        <item name="android:textSize">@dimen/appIntroHeadingTextSize</item>
-        <item name="android:textStyle">bold</item>
-    </style>
 
     <style name="HeaderMiddle">
         <item name="android:textSize">20sp</item>

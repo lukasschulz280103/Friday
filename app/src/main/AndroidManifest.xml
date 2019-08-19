@@ -119,7 +119,7 @@
         <activity android:name=".ui.FileSelectorActivity" />
         <activity android:name=".ui.store.storeInstallationManagerActivity.StoreInstallationManagerActivity" />
         <activity
-            android:name=".ui.WizardActivity"
+            android:name=".wizard.ui.WizardActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="com.friday.Wizard" />
