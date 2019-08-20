@@ -6,28 +6,27 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.friday.ar.R
-import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
 import com.friday.ar.list.store.PluginListAdapter
-import com.friday.ar.ui.FileSelectorActivity
 import com.friday.ar.util.DisplayUtil
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_store_installation_manager.*
+import org.koin.android.ext.android.get
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class StoreInstallationManagerActivity : FridayActivity() {
     companion object {
         private const val LOGTAG = "StoreInstallations"
         const val OPEN_PLUGIN_INTENT_CODE = 733
     }
-    private lateinit var viewModel: StoreInstallationsManagerViewModel
+
+    private val viewModel by viewModel<StoreInstallationsManagerViewModel> { get() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(Theme.getCurrentAppTheme(this))
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_store_installation_manager)
@@ -35,8 +34,6 @@ class StoreInstallationManagerActivity : FridayActivity() {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
-        viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(StoreInstallationsManagerViewModel::class.java)
 
         appList.adapter = PluginListAdapter(this, null)
 
@@ -85,8 +82,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
                             .setTitle(R.string.storeInstallationsManager_diskInstallWarningTitle)
                             .setMessage(R.string.storeInstallationsManager_diskInstallWarningMessage)
                             .setPositiveButton(android.R.string.ok) { _, _ ->
-                                val selectPluginIntent = Intent(this@StoreInstallationManagerActivity, FileSelectorActivity::class.java)
-                                startActivityForResult(selectPluginIntent, OPEN_PLUGIN_INTENT_CODE)
+                                startFilePicker()
                             }
                             .setView(contentFrame)
                             .setCancelable(false)
@@ -94,14 +90,18 @@ class StoreInstallationManagerActivity : FridayActivity() {
                     warnDialog.show()
 
                 } else {
-                    val selectPluginIntent = Intent()
-                    selectPluginIntent.action = Intent.ACTION_GET_CONTENT
-                    selectPluginIntent.type = "*/*"
-                    startActivityForResult(selectPluginIntent, OPEN_PLUGIN_INTENT_CODE)
+                    startFilePicker()
                 }
             }
         }
         return true
+    }
+
+    private fun startFilePicker() {
+        val selectPluginIntent = Intent()
+        selectPluginIntent.action = Intent.ACTION_GET_CONTENT
+        selectPluginIntent.type = "*/*"
+        startActivityForResult(selectPluginIntent, OPEN_PLUGIN_INTENT_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

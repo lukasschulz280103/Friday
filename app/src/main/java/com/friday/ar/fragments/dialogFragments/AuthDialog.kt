@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import com.friday.ar.R
 import com.friday.ar.auth.fragments.DefaultSignInFragment
 import com.friday.ar.auth.interfaces.OnAuthCompletedListener
-import com.friday.ar.extensionMethods.notNull
+import extensioneer.notNull
 import kotlinx.android.synthetic.main.signin_layout.view.*
 
 @Suppress("unused")

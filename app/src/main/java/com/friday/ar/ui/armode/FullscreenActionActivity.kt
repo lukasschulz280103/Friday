@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.friday.ar.R
-import com.friday.ar.extensionMethods.notNull
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.sceneform.ux.ArFragment
+import extensioneer.notNull
+import org.koin.android.ext.android.get
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class FullscreenActionActivity : AppCompatActivity() {
@@ -20,11 +20,10 @@ class FullscreenActionActivity : AppCompatActivity() {
     }
 
     private lateinit var mArCoreSession: Session
-    private lateinit var viewModel: FullscreenActionActivityViewModel
+    private val viewModel by viewModel<FullscreenActionActivityViewModel> { get() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, ViewModelProvider.AndroidViewModelFactory(application)).get(FullscreenActionActivityViewModel::class.java)
 
         var arFragment: ArFragment?
         viewModel.isArCoreSupported.observe(this, Observer { arCoreAvailability ->

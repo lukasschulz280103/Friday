@@ -1,0 +1,15 @@
+<resources>
+    <string name="module_core_name" translatable="false">core</string>
+    <string name="request_id_token" translatable="false">993428557619-umbmutm9i238kmtth7vcoa4nhfedvemg.apps.googleusercontent.com</string>
+    <string name="unknown_error">An unknown error has occurred!</string>
+    <string name="lets_go">Let\'s go</string>
+    <string name="exception_user_disabled_title">User account blocked</string>
+    <string name="exception_user_disabled_msg">This account was blocked by an administrator or is currently disabled</string>
+    <string name="more">More</string>
+    <string name="simple_action_error_title">An error has occurred :(</string>
+    <string name="internal_error_title">Internal error</string>
+    <string name="later">later</string>
+    <string name="simple_action_error_msg">We don\'t know what happened.</string>
+    <string name="perms_granted">All needed permissions are granted.</string>
+    <string name="permissions_required">These permissions are required to use this app.</string>
+</resources>

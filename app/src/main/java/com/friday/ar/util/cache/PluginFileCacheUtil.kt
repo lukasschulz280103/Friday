@@ -2,7 +2,7 @@ package com.friday.ar.util.cache
 
 import android.content.Context
 import android.util.Log
-import com.friday.ar.Constant
+import com.friday.ar.core.Constant
 import com.friday.ar.plugin.file.Manifest
 import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.file.ZippedPluginFile

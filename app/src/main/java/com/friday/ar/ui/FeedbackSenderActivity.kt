@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -12,13 +11,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.Toast
+import androidx.preference.PreferenceManager
 import com.friday.ar.R
-import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
+import com.friday.ar.core.util.validation.Validator
 import com.friday.ar.dialog.ProgressDialog
 import com.friday.ar.util.Connectivity
 import com.friday.ar.util.LogUtil
-import com.friday.ar.util.Validator
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
@@ -69,7 +68,6 @@ class FeedbackSenderActivity : FridayActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(Theme.getCurrentAppTheme(this))
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_feedback)
@@ -103,7 +101,7 @@ class FeedbackSenderActivity : FridayActivity() {
                         feedback_mail.error = null
                         return submitFeedback()
                     } else {
-                        feedback_mail.error = getString(R.string.mail_invalid_error)
+                        feedback_mail.error = "Email-Adress invalid"
                     }
                 } else {
                     val errorui = MaterialAlertDialogBuilder(this)
@@ -134,10 +132,9 @@ class FeedbackSenderActivity : FridayActivity() {
             try {
                 val deviceInfoFile = LogUtil.createDebugInfoFile(this, "email", feedback_mail.text!!.toString(), "body", feedback_body.text!!.toString())
                 val folderName = createTimeStampString()
-                var uploadDeviceInfoFile: UploadTask? = null
                 fileUploadDialog = ProgressDialog(this, getString(R.string.feedback_submit_logfiles_upload))
                 fileUploadDialog.show()
-                uploadDeviceInfoFile = feedbackLogFolder.child("$folderName/device_info.json").putBytes(LogUtil.fileToString(deviceInfoFile!!).toByteArray())
+                val uploadDeviceInfoFile = feedbackLogFolder.child("$folderName/device_info.json").putBytes(LogUtil.fileToString(deviceInfoFile!!).toByteArray())
                 uploadDeviceInfoFile.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         if (attachedFile != null) {

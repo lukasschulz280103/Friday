@@ -1,14 +1,16 @@
 package com.friday.ar
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
-import android.preference.PreferenceManager
 import androidx.annotation.StyleRes
+import org.koin.core.KoinComponent
+import org.koin.core.get
 
 /**
  * Manages the apps Theme resources
  */
-class Theme {
+class Theme : KoinComponent {
     companion object {
         var colors = intArrayOf(R.color.colorPrimary, R.color.GreenPrimaryColor, R.color.BluePrimaryColor, R.color.MagentaPrimaryColor, R.color.DarkPrimaryColor, R.color.RedPrimaryColor, R.color.PinkPrimaryColor)
         /**
@@ -26,12 +28,16 @@ class Theme {
          * @param c Context to resolve saved info from
          * @return Returns the current app themes style resource integer
          */
-        fun getCurrentAppTheme(c: Context): Int {
-            return PreferenceManager.getDefaultSharedPreferences(c).getInt("theme", R.style.AppTheme)
-        }
     }
 
-    private var mContext: Context? = null
+    private var mContext: Context
+    private val preferences: SharedPreferences = get()
+
+
+    fun getCurrentAppTheme(): Int {
+        return preferences.getInt("theme", R.style.AppTheme)
+    }
+
     /**
      * @return get current app themes [StyleRes]
      */
@@ -52,7 +58,7 @@ class Theme {
      * @return return gradient colors for the theme at the specified position
      */
     fun getColorsForPos(pos: Int): IntArray {
-        return intArrayOf(mContext!!.getColor(colors[pos]), mContext!!.getColor(gradientColors[pos]))
+        return intArrayOf(mContext.getColor(colors[pos]), mContext.getColor(gradientColors[pos]))
     }
 
     /**
@@ -60,7 +66,7 @@ class Theme {
      * @return secondary color of theme
      */
     fun getTextColorSecondary(pos: Int): Int {
-        return mContext!!.getColor(textSecondaryColors[pos])
+        return mContext.getColor(textSecondaryColors[pos])
     }
 
     /**
@@ -68,7 +74,7 @@ class Theme {
      * @return get theme name at position
      */
     fun getNameForPos(pos: Int): String {
-        return mContext!!.getString(names[pos])
+        return mContext.getString(names[pos])
     }
 
     /**
@@ -86,6 +92,6 @@ class Theme {
      * @return gradient of the two colors at the position
      */
     fun createAppThemeGadient(): Drawable {
-        return mContext!!.getDrawable(R.drawable.app_colors_gradient)!!
+        return mContext.getDrawable(R.drawable.app_colors_gradient)!!
     }
 }

@@ -5,11 +5,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 
-import androidx.appcompat.app.AppCompatActivity
-
 import com.friday.ar.R
+import com.friday.ar.activities.FridayActivity
 
-class LicenseActivity : AppCompatActivity() {
+class LicenseActivity : FridayActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

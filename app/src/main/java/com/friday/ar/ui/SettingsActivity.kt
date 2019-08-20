@@ -3,8 +3,6 @@ package com.friday.ar.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-
-import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
 import com.friday.ar.dialog.ThemeDialog
 import com.friday.ar.fragments.preferenceFragments.MainSettingsFragment
@@ -18,7 +16,6 @@ class SettingsActivity : FridayActivity(), ThemeDialog.OnSelectedTheme {
     private var themeChanged = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(Theme.getCurrentAppTheme(this))
         super.onCreate(savedInstanceState)
         supportFragmentManager.beginTransaction().replace(android.R.id.content,
                 mainSettingsFragment).commit()

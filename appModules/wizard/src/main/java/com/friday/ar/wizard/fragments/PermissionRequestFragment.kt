@@ -1,4 +1,4 @@
-package com.friday.ar.fragments.wizard
+package com.friday.ar.wizard.fragments
 
 
 import android.Manifest
@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
-import com.friday.ar.R
+import com.friday.ar.wizard.R
 import com.github.paolorotolo.appintro.ISlidePolicy
 
 

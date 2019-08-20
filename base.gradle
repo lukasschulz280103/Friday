@@ -1,6 +1,6 @@
-apply plugin : 'kotlin-android'
-apply plugin : 'kotlin-android-extensions'
-apply plugin : 'kotlin-kapt'
+apply plugin : BuildPlugins.kotlinAndroid
+apply plugin : BuildPlugins.kotlinAndroidExtensions
+apply plugin : BuildPlugins.kotlinKapt
 
 android {
     compileSdkVersion 29
@@ -26,5 +26,37 @@ android {
     }
 }
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
+    implementation fileTree(dir: rootProject.name+'libs', include: ['*.jar','*.aar'])
+    implementation fileTree(dir: rootProject.file('libs'), include: ['*.jar','*.aar'])
+    implementation Dependencies.kotlinStdLib
+    implementation Dependencies.ktxCore
+    implementation Dependencies.kotlinCoroutines
+    implementation Dependencies.androidPreference
+
+    implementation Dependencies.firebaseCore
+    implementation Dependencies.firebaseAuth
+    implementation Dependencies.firebasePerformance
+
+    implementation Dependencies.playServices
+
+    implementation Dependencies.legacy
+
+    implementation Dependencies.appCompat
+    implementation Dependencies.material
+
+    implementation Dependencies.androidArchLifecycleViewModel
+    implementation Dependencies.androidArchLifecyleExtensions
+    implementation Dependencies.androidArchLifeCycleRuntime
+
+    implementation Dependencies.koinAndroid
+    implementation Dependencies.koinAndroidScope
+    implementation Dependencies.koinAndroidViewModel
+
+    // Testing
+    testImplementation Testing.junitJupiterApi
+    testRuntimeOnly Testing.junitJupiterEngine
+    testImplementation Testing.mockitoKotlin
+    testImplementation Testing.lifecycle
+    testImplementation Testing.kotlinTestAssertions
+    testImplementation Testing.kotlinCoroutines
 }

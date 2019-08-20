@@ -5,7 +5,7 @@ import android.app.job.JobService
 import android.content.Intent
 import android.os.Environment
 import android.util.Log
-import com.friday.ar.Constant
+import com.friday.ar.core.Constant
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.PluginVerifier
 import com.friday.ar.plugin.security.VerificationSecurityException

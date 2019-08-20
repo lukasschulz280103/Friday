@@ -7,16 +7,15 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.*
 import android.os.Build
-import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
-import com.friday.ar.modules.appModule
+import com.friday.ar.account.service.AccountSyncService
+import com.friday.ar.core.Constant
+import com.friday.ar.di.modules
 import com.friday.ar.plugin.file.ZippedPluginFile
-import com.friday.ar.service.AccountSyncService
 import com.friday.ar.service.plugin.PluginIndexer
 import com.friday.ar.service.plugin.PluginLoader
-import com.friday.ar.util.UpdateUtil
-import com.friday.ar.wizard.di.wizard
 import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -45,11 +44,9 @@ class FridayApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@FridayApplication)
-            modules(listOf(
-                    appModule,
-                    wizard
-            ))
+            modules()
         }
+
         Fabric.with(this, Crashlytics())
         if (!File(externalCacheDir!!.toString() + "/pluginZipCache").delete()) {
             File(externalCacheDir!!.toString() + "/pluginZipCache").deleteOnExit()
@@ -82,7 +79,8 @@ class FridayApplication : Application() {
     }
 
     private fun runServices() {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this@FridayApplication)
+        val preferences: SharedPreferences = get()
+
         val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         if (preferences.getBoolean("sync_account_auto", true)) {
             val info = JobInfo.Builder(Constant.Jobs.JOB_SYNC_ACCOUNT, ComponentName(this, AccountSyncService::class.java))
@@ -100,7 +98,5 @@ class FridayApplication : Application() {
 
         pluginLoader = PluginLoader(this)
         pluginLoader.startLoading()
-
-        UpdateUtil.checkForUpdate(this)
     }
 }

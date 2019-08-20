@@ -74,7 +74,7 @@
         android:name=".FridayApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/module_name"
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -202,7 +202,7 @@
             android:name=".service.FeedbackService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".service.AccountSyncService"
+            android:name=".account.service.AccountSyncService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".service.plugin.PluginIndexer"

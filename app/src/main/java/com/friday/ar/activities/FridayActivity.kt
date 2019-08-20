@@ -3,6 +3,8 @@ package com.friday.ar.activities
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.friday.ar.Theme
+import org.koin.android.ext.android.get
 
 
 /*
@@ -14,6 +16,7 @@ abstract class FridayActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(get<Theme>().getCurrentAppTheme())
         super.onCreate(savedInstanceState)
         Log.d(LOGTAG, "started activity")
     }

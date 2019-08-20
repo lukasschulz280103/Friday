@@ -10,7 +10,6 @@ import android.view.View
 import android.view.Window
 import android.widget.TextView
 import com.friday.ar.R
-import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
 import com.friday.ar.util.Connectivity
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_info.*
 import java.util.*
 
 
-@Suppress("UNUSED_PARAMETER")
 class InfoActivity : FridayActivity() {
     private lateinit var firebaseVersionDB: FirebaseDatabase
     private lateinit var versionRef: DatabaseReference
@@ -37,7 +35,6 @@ class InfoActivity : FridayActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(Theme.getCurrentAppTheme(this))
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_info)

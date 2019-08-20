@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import com.friday.ar.R
-import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -58,7 +57,7 @@ class StoreDetailActivity : FridayActivity() {
             if (manifest!!.getString("versionExtra") == "beta") {
                 start_download!!.setText(R.string.beta)
                 start_download!!.setStrokeColorResource(R.color.colorBeta)
-                start_download!!.setTextColor(resources.getColor(R.color.colorBeta))
+                start_download!!.setTextColor(getColor(R.color.colorBeta))
             }
             for (i in 0 until tags.length()) {
                 val tag = Chip(this@StoreDetailActivity)
@@ -87,7 +86,6 @@ class StoreDetailActivity : FridayActivity() {
     }
     private val reviewSuccessListener = OnSuccessListener<QuerySnapshot> { o ->
         val snapshot = o as QuerySnapshot
-        val reviewlist = snapshot.documents
     }
     private val metaDataListener = OnCompleteListener<DocumentSnapshot> {
     }
@@ -97,7 +95,6 @@ class StoreDetailActivity : FridayActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(Theme.getCurrentAppTheme(this))
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_store_detail)

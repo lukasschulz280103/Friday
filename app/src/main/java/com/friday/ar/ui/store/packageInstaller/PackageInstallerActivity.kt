@@ -4,13 +4,13 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.friday.ar.R
+import com.friday.ar.activities.FridayActivity
 import com.friday.ar.dialog.store.packageInstaller.PackageInstallerDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.*
 
-class PackageInstallerActivity : AppCompatActivity() {
+class PackageInstallerActivity : FridayActivity() {
     companion object {
         private const val RQ_CODE_READ_STORAGE = 8007
         private const val LOGTAG = "PackageInstallerActivity"

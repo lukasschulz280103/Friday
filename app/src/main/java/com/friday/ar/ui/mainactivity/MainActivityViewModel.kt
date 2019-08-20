@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager.GET_ACTIVITIES
 import android.content.pm.PackageManager.NameNotFoundException
 import android.os.PowerManager
-import android.preference.PreferenceManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import com.friday.ar.dashboard.DashboardListItem
 
 
@@ -37,7 +37,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         val pm = application.getSystemService(Context.POWER_SERVICE) as PowerManager
         energySaverActive.postValue(pm.isPowerSaveMode)
 
-        var currentAppPackageName = ""
+        lateinit var currentAppPackageName: String
         try {
             currentAppPackageName = "com.code_design_camp.client.rasberrypie.rbpieclient"
             packageManager.getPackageInfo(currentAppPackageName, GET_ACTIVITIES)

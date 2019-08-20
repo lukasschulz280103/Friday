@@ -5,7 +5,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.view.View
@@ -14,14 +13,15 @@ import android.view.Window
 import android.widget.ImageButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.friday.ar.Constant
 import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
+import com.friday.ar.core.Constant
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
 import com.friday.ar.fragments.dialogFragments.changelog.ChangelogDialogFragment
@@ -77,7 +77,6 @@ class MainActivity : FridayActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(Theme.getCurrentAppTheme(this))
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
@@ -114,7 +113,7 @@ class MainActivity : FridayActivity() {
             if (isOldVersionInstalled) {
                 val dialog = UninstallOldAppDialog()
                 val bundle = Bundle()
-                Log.d("oldversion", pair.second)
+                Log.d("oldversion", pair.second!!)
                 bundle.putString("packageName", pair.second)
                 dialog.arguments = bundle
                 dialog.show(supportFragmentManager, "UninstallOldAppDialog")

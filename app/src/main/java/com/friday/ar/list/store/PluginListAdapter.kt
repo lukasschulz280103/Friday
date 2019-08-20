@@ -10,10 +10,10 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.friday.ar.R
-import com.friday.ar.extensionMethods.isNull
 import com.friday.ar.plugin.Plugin
 import com.friday.ar.service.plugin.installer.PluginInstaller
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import extensioneer.isNull
 
 
 class PluginListAdapter(private val context: Context, private var dataList: MutableList<Plugin>?) : RecyclerView.Adapter<SimplePluginListItemHolder>() {

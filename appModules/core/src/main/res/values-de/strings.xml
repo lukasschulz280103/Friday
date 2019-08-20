@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unknown_error">EIn unbekannter Fehler ist aufgetreten.</string>
+    <string name="exception_user_disabled_msg">Dieser Account wurde durch einen Administrator geperrt oder temporär deaktiviert</string>
+    <string name="exception_user_disabled_title">Nutzeraccount ist geblockt</string>
+    <string name="internal_error_title">Interner Fehler</string>
+    <string name="lets_go">Los gehts!</string>
+    <string name="more">Mehr</string>
+    <string name="later">später</string>
+    <string name="simple_action_error_title">Ein Fehler ist aufgetreten :(</string>
+    <string name="simple_action_error_msg">Bei dem Bearbeiten der Anfrage ist ein Fehler aufgetreten.</string>
+    <string name="perms_granted">Alle benötigten Berechtigungen sind gegeben.</string>
+    <string name="permissions_required">Diese Berechtigungen sind zwingend notwendig, um friday zu nutzen</string>
+</resources>

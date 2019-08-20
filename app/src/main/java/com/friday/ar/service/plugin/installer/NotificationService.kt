@@ -3,8 +3,8 @@ package com.friday.ar.service.plugin.installer
 import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationCompat
-import com.friday.ar.Constant
 import com.friday.ar.R
+import com.friday.ar.core.Constant
 import com.friday.ar.plugin.security.VerificationSecurityException
 import org.json.JSONException
 import java.io.IOException

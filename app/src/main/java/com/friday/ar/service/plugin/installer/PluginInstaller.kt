@@ -2,9 +2,8 @@ package com.friday.ar.service.plugin.installer
 
 import android.content.Context
 import android.util.Log
-import com.friday.ar.Constant
 import com.friday.ar.R
-import com.friday.ar.extensionMethods.toFile
+import com.friday.ar.core.Constant
 import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.plugin.security.PluginVerifier
@@ -12,6 +11,7 @@ import com.friday.ar.plugin.security.VerificationSecurityException
 import com.friday.ar.ui.store.storeInstallationManagerActivity.StoreInstallationsManagerViewModel
 import com.friday.ar.util.FileUtil
 import com.friday.ar.util.cache.PluginFileCacheUtil
+import extensioneer.files.toFile
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import java.io.IOException

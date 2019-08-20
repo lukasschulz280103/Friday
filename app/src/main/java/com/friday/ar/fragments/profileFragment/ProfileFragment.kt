@@ -10,12 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.friday.ar.Constant
 import com.friday.ar.R
+import com.friday.ar.account.data.UserStore
 import com.friday.ar.auth.interfaces.OnAuthCompletedListener
+import com.friday.ar.core.Constant
 import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.ui.FeedbackSenderActivity
-import com.friday.ar.util.UserUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.account_preference_layout.*
@@ -108,7 +108,7 @@ class ProfileFragment : Fragment() {
             page_profile_account_vswitcher.displayedChild = 0
         } else {
             firebaseUser = firebaseAuth.currentUser
-            val userUtil = UserUtil(mContext)
+            val userUtil = UserStore(mContext)
             page_profile_account_vswitcher!!.displayedChild = 1
 
             if (firebaseUser!!.photoUrl != null && userUtil.avatarFile.exists()) {

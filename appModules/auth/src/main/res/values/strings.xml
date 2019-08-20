@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">auth</string>
+    <string name="module_name" translatable="false">auth</string>
+    <string name="auth_user_creation_success">User was created successfully.</string>
+    <string name="auth_user_creation_success_hint">You should now be able to sign in by using the given email and your password.</string>
+    <string name="auth_could_not_create_new_user">Could not create new user:b %s</string>
+    <string name="signin_welcome">Welcome back, %s</string>
+    <string name="exception_email_title">Email error</string>
+    <string name="exception_email_msg">Email error : %s</string>
+    <string name="exception_invalid_credentials_title">Invalid Credentials</string>
+    <string name="exception_invalid_credentials_msg">You have entered invalid credentials: %s</string>
+    <string name="exception_user_not_found_title">User not found</string>
+    <string name="exception_user_not_found_msg">User \"%s\" was not found. You can create a new account if you want to.</string>
+    <string name="action_createnew_account">Create account</string>
+    <string name="auth_server_error_msg">Server error</string>
+    <string name="mail_invalid_error">The given mail address is not valid.</string>
+    <string name="auth_pswd_empty_error">The password may not be empty</string>
+    <string name="auth_forgot_password">Reset password</string>
+    <string name="auth_send_reset_pswd_email">Send reset email</string>
+    <string name="email_reset_succes">Email sent successfully</string>
+    <string name="email_reset_error">Could not send reset email: %s</string>
 </resources>

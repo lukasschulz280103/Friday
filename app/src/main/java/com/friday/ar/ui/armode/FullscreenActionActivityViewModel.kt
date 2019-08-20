@@ -2,7 +2,7 @@ package com.friday.ar.ui.armode
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.friday.ar.util.ArCoreCompatibilityUtil
+import com.friday.ar.core.util.ar.ArCoreCompatibilityUtil
 
 class FullscreenActionActivityViewModel(application: Application) : AndroidViewModel(application) {
     private val arCoreCompatibilityUtil = ArCoreCompatibilityUtil(application)

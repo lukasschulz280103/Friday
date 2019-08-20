@@ -14,12 +14,10 @@ import android.widget.TextView
 import android.widget.ViewFlipper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.crashlytics.android.Crashlytics
-import com.friday.ar.R
-import com.friday.ar.extensionMethods.notNull
-import com.friday.ar.fragments.interfaces.OnAuthCompletedListener
-import com.friday.ar.util.Validator
+import com.friday.ar.auth.R
+import com.friday.ar.auth.interfaces.OnAuthCompletedListener
+import com.friday.ar.core.util.validation.Validator
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -29,9 +27,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthEmailException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import extensioneer.notNull
 import kotlinx.android.synthetic.main.default_signin_fragment_layout.*
 import kotlinx.android.synthetic.main.default_signin_fragment_layout.view.*
 import kotlinx.android.synthetic.main.reset_password_dialog.view.*
+import org.koin.android.ext.android.get
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class DefaultSignInFragment : Fragment() {
@@ -39,7 +40,8 @@ class DefaultSignInFragment : Fragment() {
         private const val RC_SIGN_IN = 9001
     }
 
-    private lateinit var viewModel: SigninFragmentViewModel
+    private val viewModel: SignInFragmentViewModel by viewModel { get() }
+
     private lateinit var fragmentView: View
     private lateinit var mContext: Context
     private var onAuthCompletedListenerList = ArrayList<OnAuthCompletedListener>()
@@ -65,7 +67,6 @@ class DefaultSignInFragment : Fragment() {
                 .build()
         val mSignInClient = GoogleSignIn.getClient(activity!!, gso)
         mSignInClient.signOut()
-
         fragmentView.submit.setOnClickListener { submitForm() }
         fragmentView.signin_google_button.setOnClickListener {
             val signInIntent = mSignInClient.signInIntent
@@ -79,14 +80,12 @@ class DefaultSignInFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         this.mContext = context
-        viewModel = ViewModelProvider.AndroidViewModelFactory(activity!!.application).create(SigninFragmentViewModel::class.java)
 
         //Wait for the viewModel to attach and then set all the listeners
         viewModel.onAuthCompletedListenerList.addAll(onAuthCompletedListenerList)
         viewModel.inputsUsabilityState.observe(this, Observer { shouldEnableInputs ->
             setInputsEnabled(shouldEnableInputs)
         })
-
         viewModel.newUserCretionTask.observe(this, Observer { task ->
             if (task.isSuccessful) {
                 MaterialAlertDialogBuilder(context)

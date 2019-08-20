@@ -12,7 +12,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 
 import com.friday.ar.R
-import com.friday.ar.util.UserUtil
+import com.friday.ar.account.data.UserStore
 import com.google.firebase.auth.FirebaseAuth
 
 class AccountPreference(context: Context, attributeSet: AttributeSet) : Preference(context, attributeSet) {
@@ -28,7 +28,7 @@ class AccountPreference(context: Context, attributeSet: AttributeSet) : Preferen
         val content: ConstraintLayout = holder.findViewById(R.id.account_preference_content) as ConstraintLayout
         if (firebaseUser != null) {
             notSignedInTextView.visibility = View.GONE
-            val user = UserUtil(context)
+            val user = UserStore(context)
             if (user.avatarFile.exists()) accountImage.setImageURI(Uri.parse(user.avatarFile.path))
             else accountImage.setImageResource(R.drawable.ic_twotone_account_circle_24px)
             accountName.text = firebaseUser!!.displayName

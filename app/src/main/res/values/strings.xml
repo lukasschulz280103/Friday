@@ -40,9 +40,7 @@
     <string name="app_settings">Settings</string>
     <string name="app_feedback">Feedback</string>
     <string name="signin_choice">or use</string>
-    <string name="mail_invalid_error">The given mail address is not valid.</string>
     <string name="warning_decline">Decline</string>
-    <string name="signin_welcome">Welcome back, %s</string>
     <string name="internal_error_title">Internal error</string>
     <string name="internal_error_message">There was an internal error while processing your request.</string>
     <string name="title_activity_settings">Settings</string>
@@ -114,14 +112,12 @@
     <string name="device_data_info_sdkversion">The Android SDK Version of your device</string>
     <string name="device_data_info_android_version">The android version your device is running on</string>
     <string name="device_data_info_manufacturer">The manufacturer of your device</string>
-    <string name="simple_action_error_title">An error has occurred :(</string>
-    <string name="simple_action_error_message">We don\'t know what happened.</string>
     <string name="error_network_missing_info">Please check if you entered an email address and if you are connected to a network</string>
     <string name="retry">Retry</string>
     <string name="network_error_title">Network error</string>
     <string name="attach_file">Attach file</string>
     <string name="placeholder_add_debug_body">Add more additional debug infos</string>
-    <string name="header_how_to_use">How to use friday?</string>
+    <string name="header_how_to_use" translatable="false">How to use friday?</string>
     <string name="app_welcome">Welcome to friday</string>
     <string name="app_friday_description">friday is powerful. We turn your phone into a competent HeadUp Display Client, which is compatible with our high-qualtiy AR-glasses.
         Use \"Widgets\" to convert friday into an assistant - display every info you need from simple text to google calendar events without even touching your device.
@@ -171,29 +167,19 @@
     <string name="energy_saver_warn_title">Energy saver is on</string>
     <string name="energy_saver_warn_msg">You should turn off the energy saver mode in order to experience a good performance when using the AR-mode</string>
     <string name="deactivate">deactivate</string>
-    <string name="later">later</string>
     <string name="recommendation_picked_widgets_title">Picked Widgets</string>
     <string name="more">More</string>
     <string name="to_store">to store</string>
     <string name="password">Password</string>
-    <string name="exception_invalid_credentials_title">Invalid Credentials</string>
-    <string name="exception_invalid_credentials_msg">You have entered invalid credentials: %s</string>
-    <string name="exception_email_title">Email error</string>
     <string name="exception_email_in_use_title">Email already in use</string>
-    <string name="exception_email_msg">Error : %s</string>
     <string name="exception_weak_pswd_title">Password strength validation failed</string>
     <string name="exception_weak_pswd_msg">The given password couldn\'t pass the strength verification: %s</string>
     <string name="exception_user_disabled_title">User account blocked</string>
     <string name="exception_user_disabled_msg">This account was blocked by an administrator or is currently disabled</string>
-    <string name="exception_user_not_found_msg">User \"%s\" was not found. You can create a new account if you want to.</string>
     <string name="action_createnew_account">Create account</string>
-    <string name="exception_user_not_found_title">User not found</string>
-    <string name="auth_forgot_password">Reset password</string>
     <string name="auth_reset_pswd_msg">An password reset email will be sent to the following email-address:</string>
     <string name="auth_reset_pswd_explanation">The email conatins a link to a password reset site. Please also check the spam folder. The trusted sender-email should be equal to <b>account-manager-noreply@raspberry-pi-ab274.firebaseapp.com</b></string>
     <string name="auth_send_reset_pswd_email">Send reset email</string>
-    <string name="email_reset_succes">Email sent successfully</string>
-    <string name="email_reset_error">Could not send reset email: %s</string>
     <string name="reason_bad_experience">Bad experience with the software</string>
     <string name="reason_login_issues">Issues while trying to log in</string>
     <string name="reason_app_useless">The app is useless to me</string>
@@ -221,7 +207,6 @@
     <string name="project_friday">Project friday</string>
     <string name="terms_of_use">Terms of use</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="request_id_token" translatable="false">993428557619-umbmutm9i238kmtth7vcoa4nhfedvemg.apps.googleusercontent.com</string>
     <string name="request_permissions">Request permissions</string>
     <string name="grant_permission">Grant</string>
     <string name="req_cam_retionale_title">Camera</string>
@@ -229,8 +214,6 @@
     <string name="req_mic_rationale_title">Microphone</string>
     <string name="req_files_rationale_title">File system</string>
     <string name="req_mic_rationale">The mircophone is needed to be able to use the voice assistant.</string>
-    <string name="permissions_required">These permissions are required to use this app.</string>
-    <string name="perms_granted">All needed permissions are granted.</string>
     <string name="search">Search</string>
     <string name="store">Store</string>
     <string name="store_soon">We are currently onto developing the store!</string>
@@ -303,14 +286,8 @@
     <string name="unsupported_device_tablet_description">But you can still get Friday on any Android device with Android 8.0 or higher!</string>
     <string name="feedbackSender_storageException">Could not upload feedback. Most likely you are not signed in. Please sign in first and then retry.</string>
     <string name="fileSelector_permission_required">You need to grant the storage permission in order to access your files.</string>
-    <string name="auth_pswd_empty_error">The password may not be empty</string>
     <string name="auth_server_error_title">Server error</string>
-    <string name="auth_server_error_msg">The server did not allow an user authentication from this device. This may not be your fault. This error was reported to the technicians. Try to update this app and then retry.</string>
-    <string name="auth_user_creation_success">User was created successfully.</string>
-    <string name="auth_user_creation_success_hint">You should now be able to sign in by using the given email and your password.</string>
-    <string name="lets_go">Let\'s go</string>
     <string name="packageInstaller_unknown_author">Unknown author</string>
-    <string name="auth_could_not_create_new_user">Could not create new user:b %s</string>
     <string name="pref_notifs_notify_update_available">Notify about available updates</string>
     <string name="pref_user">User</string>
     <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. Please install ArCore and retry.</string>

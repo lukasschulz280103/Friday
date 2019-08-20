@@ -2,12 +2,12 @@ package com.friday.ar.service.plugin
 
 import android.content.Context
 import android.util.Log
-import com.friday.ar.Constant
-import com.friday.ar.extensionMethods.notNull
+import com.friday.ar.core.Constant
 import com.friday.ar.plugin.Plugin
 import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.plugin.security.PluginVerifier
 import com.friday.ar.plugin.security.VerificationSecurityException
+import extensioneer.notNull
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import java.io.File

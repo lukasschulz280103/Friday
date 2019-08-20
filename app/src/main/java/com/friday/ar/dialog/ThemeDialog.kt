@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,16 +12,16 @@ import android.widget.ArrayAdapter
 import android.widget.GridView
 import android.widget.ImageView
 import android.widget.TextView
-
 import androidx.annotation.LayoutRes
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-
 import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity.Companion.LOGTAG
 import com.friday.ar.ui.SettingsActivity
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 /**
  * Displays a dialog to the user where he is able to choose one of six themes for friday
@@ -35,7 +34,7 @@ class ThemeDialog : DialogFragment() {
     private lateinit var mContext: Context
     var listener: OnSelectedTheme? = null
         private set
-    private var preferences: SharedPreferences? = null
+    private val preferences: SharedPreferences by inject()
     private val doneclick = View.OnClickListener {
         dismiss()
         (activity as SettingsActivity).onSelectedTheme(hasChanged)
@@ -48,7 +47,6 @@ class ThemeDialog : DialogFragment() {
                 this@ThemeDialog.hasChanged = hasChanged
             }
         }
-        preferences = PreferenceManager.getDefaultSharedPreferences(mContext)
     }
 
     override fun onStart() {
@@ -86,8 +84,8 @@ class ThemeDialog : DialogFragment() {
         private lateinit var gradient: ImageView
         internal var themeClick = View.OnClickListener { view ->
             selectedItem = view.tag as Int
-            listener!!.onSelectedTheme(preferences!!.getInt("theme", Theme.getCurrentAppTheme(getContext())) != Theme.themes[selectedItem])
-            preferences!!.edit().putInt("theme", Theme.themes[selectedItem]).apply()
+            listener!!.onSelectedTheme(preferences.getInt("theme", get<Theme>().getCurrentAppTheme()) != Theme.themes[selectedItem])
+            preferences.edit().putInt("theme", Theme.themes[selectedItem]).apply()
             gradient.setImageDrawable(createGradient(true, view.tag as Int))
             Log.d(LOGTAG, "Clicked theme is already selected.Tag:" + view.tag)
             notifyDataSetChanged()
@@ -105,7 +103,7 @@ class ThemeDialog : DialogFragment() {
             text.text = th.getNameForPos(i)
             text.setTextColor(th.getTextColorSecondary(i))
             gradientDrawable = createGradient(false, i)
-            if (th.styleRes == preferences!!.getInt("theme", R.style.AppTheme)) {
+            if (th.styleRes == preferences.getInt("theme", R.style.AppTheme)) {
                 gradientDrawable = createGradient(true, i)
                 selectedItem = i
             }

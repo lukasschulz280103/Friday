@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unknown_error">Une erreur inconnue s\'est produite !</string>
+    <string name="exception_user_disabled_msg">Ce compte a été bloqué par un administrateur ou est actuellement désactivé</string>
+    <string name="exception_user_disabled_title">Compte utilisateur bloqué</string>
+    <string name="internal_error_title">erruer interne</string>
+    <string name="lets_go">C\'est parti !</string>
+    <string name="more">Plus</string>
+    <string name="later">postérieures</string>
+    <string name="simple_action_error_title">Une erreur est survenue :(</string>
+    <string name="simple_action_error_msg">On ne sait pas ce qui s\'est passé.</string>
+    <string name="perms_granted">Toutes les autorisations nécessaires sont accordées.</string>
+    <string name="permissions_required">Ces permissions sont nécessaires pour utiliser cette application.</string>
+</resources>

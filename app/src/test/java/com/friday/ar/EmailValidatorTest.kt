@@ -1,6 +1,6 @@
 package com.friday.ar
 
-import com.friday.ar.util.Validator
+import com.friday.ar.core.util.validation.Validator
 import org.junit.Test
 import kotlin.test.assertEquals
 

@@ -1,10 +1,10 @@
 package com.friday.ar.plugin.security
 
 import android.util.Log
-import com.friday.ar.extensionMethods.notNull
 import com.friday.ar.plugin.file.Manifest.ManifestSecurityException
 import com.friday.ar.plugin.file.PluginFile
 import com.friday.ar.util.FileUtil
+import extensioneer.notNull
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import org.json.JSONObject

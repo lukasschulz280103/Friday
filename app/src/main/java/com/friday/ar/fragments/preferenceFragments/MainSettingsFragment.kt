@@ -16,19 +16,19 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
-import com.friday.ar.Constant
-import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
+import com.friday.ar.account.data.UserStore
+import com.friday.ar.core.Constant
 import com.friday.ar.dialog.ProgressDialog
 import com.friday.ar.dialog.ThemeDialog
 import com.friday.ar.preference.ThemeSelectPreference
 import com.friday.ar.service.FeedbackService
-import com.friday.ar.util.UserUtil
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.get
 import java.util.*
 
 class MainSettingsFragment : PreferenceFragmentCompat() {
@@ -197,8 +197,8 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
             devModeUseBetaChannel!!.isEnabled = false
             devModeUseBetaChannel!!.isChecked = false
         }
-        val theme = Theme(mActivity!!)
-        themePreference.summary = theme.getNameForPos(theme.indexOf(Theme.getCurrentAppTheme(mActivity!!)))
+        val theme = get<Theme>()
+        themePreference.summary = theme.getNameForPos(theme.indexOf(theme.getCurrentAppTheme()))
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -206,7 +206,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun deleteLocalUserData() {
-        val isFileDeleted = UserUtil(context!!).avatarFile.delete()
+        val isFileDeleted = UserStore(context!!).avatarFile.delete()
         Log.d("ProfilePage", "Account image file was deleted:$isFileDeleted")
     }
 }

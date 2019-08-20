@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_user_creation_success">Sie können sich nun mit Ihrer Email und Ihrem asswort anmelden.</string>
+    <string name="auth_user_creation_success_hint">Automatisch nach Updates suchen</string>
+    <string name="action_createnew_account">Neu registrieren</string>
+    <string name="auth_could_not_create_new_user">Neuer Nutzer konnte nicht registriert werden: %s</string>
+    <string name="auth_forgot_password">Passwort zurücksetzen</string>
+    <string name="auth_pswd_empty_error">Das Passwort darf nicht leer sein</string>
+    <string name="auth_send_reset_pswd_email">Mail senden</string>
+    <string name="auth_server_error_msg">Der Server hat eine Anmeldung über dieses Gerät abgelehnt. Dies ist wahrscheinlih nicht ihr Fehler. Eine automatische Warnung wurde an unsere Techniker gesendet. Versuchen sie, die App zu updaten und versuchen sie die Anmeldung danach erneut.</string>
+    <string name="email_reset_error">Zurücksetzungs-mail konnte nicht versandt werden: %s</string>
+    <string name="email_reset_succes">Email wurde erfolgreich versendet</string>
+    <string name="exception_email_msg">Email-Fehler aufgetreten: %s</string>
+    <string name="exception_email_title">Emailfehler</string>
+    <string name="exception_invalid_credentials_msg">Ungültige Angaben wurde gefunden: %s</string>
+    <string name="exception_invalid_credentials_title">Ungültige Angaben</string>
+    <string name="exception_user_not_found_msg">Nutzer \"%s\" wurde nicht gefunden. Sie können nun einen neuen Account erstellen.</string>
+    <string name="exception_user_not_found_title">Nutzer nicht gefunden</string>
+    <string name="mail_invalid_error">Die Formatierung ist nicht korrekt.</string>
+    <string name="signin_welcome">Willkommen zurück, %s</string>
+</resources>
