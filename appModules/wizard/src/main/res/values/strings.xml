@@ -3,4 +3,5 @@
     <string name="app_welcome">Welcome to Friday</string>
     <string name="project_friday">Project Friday</string>
     <string name="welcome_descriptioon">This wizard will guide you through the setup of friday</string>
+    <string name="acceptance_of_pp_and_tou_text">I have read and accept the <a>Terms of Use</a> and the <a>Privacy Policy</a>:</string>
 </resources>

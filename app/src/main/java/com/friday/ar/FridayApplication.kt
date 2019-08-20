@@ -7,14 +7,12 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.*
 import android.os.Build
-import com.crashlytics.android.Crashlytics
 import com.friday.ar.account.service.AccountSyncService
 import com.friday.ar.core.Constant
-import com.friday.ar.di.modules
+import com.friday.ar.di.moduleList
 import com.friday.ar.plugin.file.ZippedPluginFile
 import com.friday.ar.service.plugin.PluginIndexer
 import com.friday.ar.service.plugin.PluginLoader
-import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -44,10 +42,11 @@ class FridayApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@FridayApplication)
-            modules()
+            modules(moduleList())
         }
 
-        Fabric.with(this, Crashlytics())
+        //Fabric.with(this, Crashlytics())
+
         if (!File(externalCacheDir!!.toString() + "/pluginZipCache").delete()) {
             File(externalCacheDir!!.toString() + "/pluginZipCache").deleteOnExit()
         }

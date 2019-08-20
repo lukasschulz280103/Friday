@@ -1,5 +1,6 @@
 apply(from = rootProject.file("base.gradle"))
 apply(plugin = "com.google.gms.google-services")
+apply(plugin = "io.fabric")
 
 plugins {
     id(Dependencies.Modules.androidApplicationPlugin)

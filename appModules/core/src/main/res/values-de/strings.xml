@@ -11,4 +11,6 @@
     <string name="simple_action_error_msg">Bei dem Bearbeiten der Anfrage ist ein Fehler aufgetreten.</string>
     <string name="perms_granted">Alle benötigten Berechtigungen sind gegeben.</string>
     <string name="permissions_required">Diese Berechtigungen sind zwingend notwendig, um friday zu nutzen</string>
+    <string name="terms_of_use">Nutzungsbedinungen</string>
+    <string name="privacy_policy">Datenschutzbestimmungen</string>
 </resources>

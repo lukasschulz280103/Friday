@@ -7,7 +7,7 @@ private object Versions {
     const val zip4j = "1.3.3"
 
     const val jetpack = "1.1.0-rc01"
-    const val constraintLayout = "1.1.2"
+    const val constraintLayout = "1.1.3"
     const val gridLayout = "1.0.0"
     const val ktx = "1.1.0-alpha05"
     const val guava = "28.0-jre"
@@ -65,7 +65,6 @@ object Dependencies {
         const val sceneFromPLugin = "com.google.ar.sceneform.plugin"
     }
 
-    // Dependency Injection
     const val koinAndroid = "org.koin:koin-android:${Versions.koin}"
     const val koinAndroidScope = "org.koin:koin-android-scope:${Versions.koin}"
     const val koinAndroidViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"

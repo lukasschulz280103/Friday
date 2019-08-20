@@ -159,21 +159,6 @@
     <string name="theme_red">Rouge</string>
     <string name="title_activity_settings">Paramètres</string>
     <string name="to_store">à store</string>
-    <string name="tou_content">
-        N\'utilisez jamais le vendredi dans un environnement, où son utilisation cause un manque de concentration qui peut conduire à des erreurs ou à toute autre situation dangereuse.
-
-        friday n\'assume aucune responsabilité pour les erreurs ou tout autre type de défaillance humaine causée par l\'utilisation de ce produit.
-
-        En utilisant ce produit, vous acceptez que cette application puisse contenir des informations erronées lors de l\'obtention d\'informations de notre application, widgets, etc. Nous ne sommes pas responsables des informations transmises par des widgets tiers, ou des widgets qui utilisent des sources tierces, telles que des cartes ou des nouvelles.
-
-        Nous ne collectons pas de données personnelles ou de données de votre téléphone, sauf dans les cas suivants:\n
-            \t<b>- Bug-reporting</b> : Afin d\'améliorer constamment la qualité de notre service, nous collecterons des données sur votre utilisation de l\'application (Quelles fonctionnalités vous utilisez, version android, nom du périphérique, version de l\'application[, la fonctionnalité qui a provoqué le crash de l\'application])
-              Vous pouvez désactiver le rapport de bogue dans les paramètres de l\'application.
-
-            \t<b>- Fonctions intelligentes:</b> L\'utilisateur a accepté l\'utilisation des contacts, du service de localisation, de la caméra, du microphone, des notifications\n\n\n\n\n
-
-        En cliquant sur <i>\"J\'ai compris et j\'accepte\"</i> vous acceptez de lire les conditions d\'utilisation (ci-dessus) de notre politique de confidentialité et de les accepter.
-    </string>
     <string name="uninstall_old_title">Désinstaller l\'ancienne version</string>
     <string name="uninstall_old_body">Vous ne pouvez pas utiliser cette version du friday avec une version plus ancienne installée en même temps. \\n \\n \\n <b>Vous n\'avez à le faire qu\'une seule fois. </b></string>
     <string name="notification_channel_update_description">Usage time and way of the AR-feature</string>

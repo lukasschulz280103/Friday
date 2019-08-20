@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.friday.ar.R
 import kotlinx.android.synthetic.main.fragment_changelog_dialog.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ChangelogDialogFragment : DialogFragment() {
     companion object {
@@ -30,7 +30,7 @@ class ChangelogDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = ViewModelProviders.of(this).get(ChangeLogDialogViewModel::class.java)
+        val viewModel: ChangeLogDialogViewModel by viewModel()
         viewModel.getUpdateTitle().observe(this, Observer { title ->
             chld_infocontainer.visibility = View.VISIBLE
             changelog_dialog_progress.visibility = View.GONE

@@ -1,4 +1,5 @@
 buildscript {
+    extensions.add("enableCrashlytics", true)
     repositories {
         maven("https://maven.fabric.io/public")
         google()

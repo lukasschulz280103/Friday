@@ -42,7 +42,7 @@
             android:key="dialog_theme_pref"
             android:title="@string/design" />
     </androidx.preference.PreferenceCategory>
-    <androidx.preference.PreferenceCategory android:title="@string/module_name">
+    <androidx.preference.PreferenceCategory android:title="@string/app_name">
         <androidx.preference.Preference android:title="@string/info">
             <intent android:action="com.friday.Info" />
         </androidx.preference.Preference>

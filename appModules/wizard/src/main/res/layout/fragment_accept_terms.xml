@@ -23,9 +23,15 @@
             android:id="@+id/tou_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tou_content"
+            tools:text="This is were the Terms of use will go."
             android:textColor="@android:color/white" />
     </ScrollView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/acceptance_of_pp_and_tou_text"
+        android:textColor="@android:color/white" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/check_accept_tou"

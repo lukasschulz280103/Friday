@@ -18,7 +18,6 @@ import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.friday.ar.ui.FeedbackSenderActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.account_preference_layout.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 /**
@@ -112,9 +111,9 @@ class ProfileFragment : Fragment() {
             page_profile_account_vswitcher!!.displayedChild = 1
 
             if (firebaseUser!!.photoUrl != null && userUtil.avatarFile.exists()) {
-                account_img.setImageURI(Uri.parse(userUtil.avatarFile.path))
+                page_profile_image_account.setImageURI(Uri.parse(userUtil.avatarFile.path))
             } else {
-                account_img.background = activity!!.getDrawable(R.drawable.ic_twotone_account_circle_24px)
+                page_profile_image_account.background = activity!!.getDrawable(R.drawable.ic_twotone_account_circle_24px)
             }
             page_profile_email.text = firebaseUser!!.email
             page_profile_header.text = if (firebaseUser!!.displayName != null && firebaseUser!!.displayName != "") getString(R.string.page_profile_header_text, firebaseUser!!.displayName) else getString(R.string.greet_no_name)

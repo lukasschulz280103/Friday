@@ -12,4 +12,6 @@
     <string name="simple_action_error_msg">We don\'t know what happened.</string>
     <string name="perms_granted">All needed permissions are granted.</string>
     <string name="permissions_required">These permissions are required to use this app.</string>
+    <string name="terms_of_use">Terms Of Use</string>
+    <string name="privacy_policy">Privacy policy</string>
 </resources>

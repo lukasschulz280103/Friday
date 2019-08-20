@@ -74,7 +74,7 @@
         android:name=".FridayApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/module_name"
+        android:label="@string/app_name"
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -116,7 +116,6 @@
             android:name="android.test.mock"
             android:required="false" />
 
-        <activity android:name=".ui.FileSelectorActivity" />
         <activity android:name=".ui.store.storeInstallationManagerActivity.StoreInstallationManagerActivity" />
         <activity
             android:name=".wizard.ui.WizardActivity"
@@ -194,6 +193,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="9a85d5ff39417c8b72a7242e63d6fd53f43fe7f9" />
+
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="ocr" />
