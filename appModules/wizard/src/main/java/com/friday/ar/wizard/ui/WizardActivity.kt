@@ -31,15 +31,11 @@ class WizardActivity : AppIntro() {
         welcomePage.title = getString(R.string.app_welcome)
         welcomePage.description = getString(R.string.welcome_descriptioon)
 
-        val projectInfoPage = SliderPage()
-        projectInfoPage.title = getString(R.string.project_friday)
-
         val signinFragment = DefaultSignInFragment()
         signinFragment.addOnAuthCompletedListener(onAuthCompletedListener)
 
         addSlide(AppIntroFragment.newInstance(welcomePage))
         addSlide(DeviceCompatibilityFragment())
-        addSlide(AppIntroFragment.newInstance(projectInfoPage))
         addSlide(AcceptTerms.newInstance())
         addSlide(signinFragment)
         addSlide(PermissionRequestFragment())

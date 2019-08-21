@@ -21,6 +21,7 @@ import com.friday.ar.FridayApplication
 import com.friday.ar.R
 import com.friday.ar.Theme
 import com.friday.ar.activities.FridayActivity
+import com.friday.ar.base.ui.FullscreenActionActivity
 import com.friday.ar.core.Constant
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
@@ -29,7 +30,6 @@ import com.friday.ar.fragments.store.MainStoreFragment
 import com.friday.ar.fragments.store.ManagerBottomSheetDialogFragment
 import com.friday.ar.list.dashboard.DashboardAdapter
 import com.friday.ar.ui.FeedbackSenderActivity
-import com.friday.ar.ui.armode.FullscreenActionActivity
 import com.friday.ar.ui.store.StoreDetailActivity
 import com.friday.ar.wizard.ui.WizardActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -148,6 +148,7 @@ class MainActivity : FridayActivity() {
                 startActivityForResult(intent, FULLSCREEN_REQUEST_CODE)
                 Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
             }
+
 
             val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
             if (defaultSharedPreferences.getInt("theme", 0) == 0) {

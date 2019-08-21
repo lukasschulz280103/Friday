@@ -1,115 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.MaterialComponents.Light">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="android:fontFamily">@font/questrial_regular</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
-        <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1
-        </item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2
-        </item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3
-        </item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4
-        </item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5
-        </item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6
-        </item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1
-        </item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2
-        </item>
-        <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
-        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
-        <item name="bottomSheetDialogTheme">@style/BottomSheetMaterial</item>
-        <item name="android:windowActivityTransitions">true</item>
-    </style>
 
-    <style name="AppTheme.Transparent">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
-        <item name="windowActionBar">false</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-    <style name="AppTheme.Custom" parent="AppTheme" />
-
-    <style name="AppTheme.Custom.Magenta">
-        <item name="colorPrimary">@color/MagentaPrimaryColor</item>
-        <item name="colorPrimaryDark">@color/MagentaPrimaryDarkColor</item>
-        <item name="colorSecondary">@color/MagentaSecondaryColor</item>
-        <item name="colorOnPrimary">@color/MagentaPrimaryTextColor</item>
-        <item name="colorOnSecondary">@color/MagentaSecondaryTextColor</item>
-    </style>
-
-    <style name="AppTheme.Custom.Pink">
-        <item name="colorPrimary">@color/PinkPrimaryColor</item>
-        <item name="colorPrimaryDark">@color/PinkPrimaryDarkColor</item>
-        <item name="colorSecondary">@color/PinkSecondaryColor</item>
-        <item name="colorOnPrimary">@color/PinkPrimaryTextColor</item>
-        <item name="colorOnSecondary">@color/PinkSecondaryTextColor</item>
-    </style>
-
-    <style name="AppTheme.Custom.Green">
-        <item name="colorPrimary">@color/GreenPrimaryColor</item>
-        <item name="colorPrimaryDark">@color/GreenPrimaryDarkColor</item>
-        <item name="colorSecondary">@color/GreenSecondaryColor</item>
-        <item name="colorOnPrimary">@color/GreenPrimaryTextColor</item>
-        <item name="colorOnSecondary">@color/GreenSecondaryTextColor</item>
-    </style>
-
-    <style name="AppTheme.Custom.Blue" parent="AppTheme">
-        <item name="colorPrimary">@color/BluePrimaryColor</item>
-        <item name="colorPrimaryVariant">@color/BluePrimaryLightColor</item>
-        <item name="colorPrimaryDark">@color/BluePrimaryDarkColor</item>
-        <item name="colorSecondary">@color/BlueSecondaryColor</item>
-        <item name="colorOnPrimary">@color/BluePrimaryTextColor</item>
-        <item name="colorOnSecondary">@color/BlueSecondaryTextColor</item>
-    </style>
-
-    <style name="AppTheme.Custom.Red">
-        <item name="colorPrimary">@color/RedPrimaryColor</item>
-        <item name="colorPrimaryDark">@color/RedPrimaryDarkColor</item>
-        <item name="colorSecondary">@color/RedSecondaryColor</item>
-        <item name="colorOnPrimary">@color/RedPrimaryTextColor</item>
-        <item name="colorOnSecondary">@color/RedSecondaryTextColor</item>
-    </style>
-
-    <style name="AppTheme.Custom.Dark">
-        <item name="colorPrimary">@color/DarkPrimaryColor</item>
-        <item name="colorPrimaryDark">@color/DarkPrimaryDarkColor</item>
-        <item name="colorSecondary">@color/DarkSecondaryColor</item>
-        <item name="colorOnPrimary">@color/DarkPrimaryTextColor</item>
-        <item name="colorOnSecondary">@color/DarkSecondaryTextColor</item>
-    </style>
-
-    <style name="AppTheme.Custom.Magenta.ActionBar" parent="AppTheme" />
-
-    <style name="AppTheme.Custom.Pink.ActionBar" parent="AppTheme" />
-
-    <style name="AppTheme.Custom.Red.ActionBar" parent="AppTheme" />
-
-    <style name="AppTheme.Custom.Blue.ActionBar" parent="AppTheme" />
-
-    <style name="AppTheme.Custom.Green.ActionBar" parent="AppTheme" />
-
-    <style name="AppTheme.Custom.Dark.ActionBar" parent="AppTheme" />
     <style name="AppTheme.AppBarOverlay" parent="Base.Theme.MaterialComponents.Light.DarkActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
@@ -164,13 +55,7 @@
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
-    <style name="BottomSheetMaterial" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheetMaterial.Style</item>
-    </style>
 
-    <style name="BottomSheetMaterial.Style" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/manager_background</item>
-    </style>
     <style name="UppercaseWarn">
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/warn_red</item>

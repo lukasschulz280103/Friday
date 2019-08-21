@@ -31,7 +31,6 @@ import extensioneer.notNull
 import kotlinx.android.synthetic.main.default_signin_fragment_layout.*
 import kotlinx.android.synthetic.main.default_signin_fragment_layout.view.*
 import kotlinx.android.synthetic.main.reset_password_dialog.view.*
-import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -40,7 +39,7 @@ class DefaultSignInFragment : Fragment() {
         private const val RC_SIGN_IN = 9001
     }
 
-    private val viewModel: SignInFragmentViewModel by viewModel { get() }
+    private val viewModel: SignInFragmentViewModel by viewModel()
 
     private lateinit var fragmentView: View
     private lateinit var mContext: Context

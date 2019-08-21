@@ -1,4 +1,4 @@
-package com.friday.ar.ui.armode
+package com.friday.ar.base.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

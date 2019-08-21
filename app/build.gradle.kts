@@ -4,7 +4,6 @@ apply(plugin = "io.fabric")
 
 plugins {
     id(Dependencies.Modules.androidApplicationPlugin)
-    id(Dependencies.Modules.sceneFromPLugin)
 }
 android {
     defaultConfig {
@@ -30,6 +29,7 @@ dependencies {
     implementation(project(":wizard"))
     implementation(project(":auth"))
     implementation(project(":account"))
+    implementation(project(":ar"))
     implementation(project(Dependencies.pocketSphinx))
 
 
@@ -64,7 +64,4 @@ dependencies {
 
 ant.importBuild("assets.xml")
 //GoogleServicesPlugin.config.disableVersionCheck = true
-sceneform.asset("sampledata/models/project_friday_text.fbx",
-        "default",
-        "sampledata/models/project_friday_text.sfa",
-        "src/main/assets/project_friday_text")
+

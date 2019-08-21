@@ -1,16 +1,15 @@
-package com.friday.ar.ui.armode
+package com.friday.ar.base.ui
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.friday.ar.R
+import com.friday.ar.base.R
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.sceneform.ux.ArFragment
 import extensioneer.notNull
-import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -20,7 +19,7 @@ class FullscreenActionActivity : AppCompatActivity() {
     }
 
     private lateinit var mArCoreSession: Session
-    private val viewModel by viewModel<FullscreenActionActivityViewModel> { get() }
+    private val viewModel by viewModel<FullscreenActionActivityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

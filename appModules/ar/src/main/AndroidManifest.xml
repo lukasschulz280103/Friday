@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.friday.ar.base">
+
+    <application>
+
+        <activity
+            android:name="com.friday.ar.base.ui.FullscreenActionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/module_ar_name"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+</manifest>

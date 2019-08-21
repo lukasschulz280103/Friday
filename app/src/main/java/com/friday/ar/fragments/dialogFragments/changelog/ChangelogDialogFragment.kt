@@ -31,6 +31,7 @@ class ChangelogDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel: ChangeLogDialogViewModel by viewModel()
+
         viewModel.getUpdateTitle().observe(this, Observer { title ->
             chld_infocontainer.visibility = View.VISIBLE
             changelog_dialog_progress.visibility = View.GONE

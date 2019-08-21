@@ -5,7 +5,7 @@
     android:id="@+id/root_fullscreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.armode.FullscreenActionActivity">
+    tools:context="com.friday.ar.base.ui.FullscreenActionActivity">
     <fragment
         android:id="@+id/ar_fragment"
         android:name="com.google.ar.sceneform.ux.ArFragment"

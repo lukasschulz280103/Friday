@@ -1,1 +1,15 @@
-<manifest package="com.friday.ar.wizard" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.friday.ar.wizard">
+
+    <application>
+        <activity
+            android:name=".ui.WizardActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.friday.Wizard" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

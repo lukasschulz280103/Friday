@@ -143,17 +143,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.armode.FullscreenActionActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_fullscreen_action"
-            android:parentActivityName=".ui.mainactivity.MainActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.friday.ar.ui.mainactivity.MainActivity" />
-        </activity>
-        <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".ui.mainactivity.MainActivity"
@@ -190,6 +179,7 @@
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="9a85d5ff39417c8b72a7242e63d6fd53f43fe7f9" />
@@ -201,9 +191,7 @@
         <service
             android:name=".service.FeedbackService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name=".account.service.AccountSyncService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <service
             android:name=".service.plugin.PluginIndexer"
             android:permission="android.permission.BIND_JOB_SERVICE" />
