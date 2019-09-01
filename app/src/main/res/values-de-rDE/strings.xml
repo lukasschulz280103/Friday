@@ -128,16 +128,7 @@
     <string name="recommendation_picked_widgets_title">Ausgewählte Widgets</string>
     <string name="more">Mehr</string>
     <string name="to_store">zum Store</string>
-    <string name="password">Passwort</string>
-    <string name="exception_email_in_use_title">Email bereits in benutz</string>
-    <string name="exception_weak_pswd_title">Password zu schwach</string>
-    <string name="exception_user_disabled_title">Nutzeraccount ist geblockt</string>
-    <string name="exception_user_disabled_msg">Dieser Account wurde durch einen Administrator geperrt oder temporär deaktiviert</string>
-    <string name="exception_weak_pswd_msg">Das angegeben Passwort ist zu schwach: %s</string>
     <string name="action_createnew_account">Neu registrieren</string>
-    <string name="auth_reset_pswd_msg">Eine Email zur zurücksetzung ihres Passworts wird an folgende Adresse geschickt:</string>
-    <string name="auth_reset_pswd_explanation">Die Email enthält einen Link, über den sie ein neues Passwort eingeben können. Bevor sie auf den Link klicken, überprüfen sie, ob die Absenderadresse dieser Adresse gleicht: <b>account-manager-noreply@raspberry-pi-ab274.firebaseapp.com</b></string>
-    <string name="auth_send_reset_pswd_email">Mail senden</string>
     <string name="reason_bad_experience">Schlechte Erfahrung mit der Software</string>
     <string name="reason_login_issues">Probleme bei Anmeldeversuchen</string>
     <string name="reason_app_useless">Für mich ist diese App nutzlos</string>
@@ -245,7 +236,6 @@
     <string name="unsupported_device_tablet_description">Aber du kannst Friday trotzdem auf jeglichem Anroid-Gerät mit Android 8.0 oder höher benutzen.</string>
     <string name="feedbackSender_storageException">Feedback konnte nicht hochgeladen werden. Möglicherweise sind sie nicht angemeldet - melden sie sich an und versuchen sie es erneut.</string>
     <string name="fileSelector_permission_required">Sie müssen den Speicherzugrff erlauben, um Ihre Dateien anzuzeigen</string>
-    <string name="auth_server_error_title">Serverehler</string>
     <string name="packageInstaller_unknown_author">Unbekannter Autor</string>
     <string name="pref_notifs_notify_update_available">Über verfügbare Updates benachrichtigen</string>
     <string name="pref_user">Nutzer</string>

@@ -14,9 +14,6 @@
     <string name="asset_loader_loading">chargement des données</string>
     <string name="asset_loader_loading_success">Prêt</string>
     <string name="attach_file">Joindre un fichier</string>
-    <string name="auth_reset_pswd_explanation">Le courriel contient un lien vers une page de réinitialisation de mot de passe. Veuillez également vérifier le dossier de spam. L\'adresse email de l\'epédituer de confiance doit être égale à <b>account-manager-noreply@raspberry-pi-ab274.firebaseapp.com</b></string>
-    <string name="auth_reset_pswd_msg">Un courriel de réinitialisation de mot de passe sera envoyé à l\'adresse courriel suivante :</string>
-    <string name="auth_send_reset_pswd_email">Envoyer un e-mail de réinitialisation</string>
     <string name="auto_check_update">Vérification automatique des mises à jour</string>
     <string name="auto_sync">Synchronisation avec le cloud</string>
     <string name="changed_attached_file">Le fichier joint a été changé en %s</string>
@@ -59,11 +56,6 @@
     <string name="errtype_device_incompatible">Votre appareil est incompatible avec ArCore.</string>
     <string name="errtype_not_installed">L\'application ArCore est manquante sur cet appareil. Veuillez visiter Google Play, installer Google ArCore et réessayer.</string>
     <string name="errtype_sdk_too_old">Le SDK est obsolète pour la version installée d\'ArCore. Veuillez vous assurer que la dernière version de friday est installée. Si ce problème persiste, vous pouvez essayer de nous contacter ou attendre que cette application reçoive une mise à jour.</string>
-    <string name="exception_email_in_use_title">Email déjà utilisé</string>
-    <string name="exception_user_disabled_msg">Ce compte a été bloqué par un administrateur ou est actuellement désactivé</string>
-    <string name="exception_user_disabled_title">Compte utilisateur bloqué</string>
-    <string name="exception_weak_pswd_msg">Le mot de passe donné n\'a pas pu passer la vérification de force : %s</string>
-    <string name="exception_weak_pswd_title">Échec de la validation de la force du mot de passe</string>
     <string name="feature_soon">Cette fonctionnalité est inexistante dans la version actuelle</string>
     <string name="feedback_submit_image_upload">Chargement des images jointes....</string>
     <string name="feedback_submit_logfiles_upload">Chargement des fichiers journaux</string>
@@ -102,7 +94,6 @@
     <string name="new_file_attached">Fichier %s joint</string>
     <string name="note_not_signed_in">Vous n\'êtes pas connecté.</string>
     <string name="page_profile_header_text">Salut, %s</string>
-    <string name="password">mot de passe</string>
     <string name="placeholder_add_debug_body">Ajouter d\'autres infos de débogage</string>
     <string name="pref_devmode">Mode développeur</string>
     <string name="pref_devmode_show_changelog">Toujours afficher le journal des modifications au démarrage de l\'appstart</string>
@@ -241,7 +232,6 @@
     <string name="update_available">Mise à jour disponible</string>
     <string name="feedbackSender_storageException">La rétroaction n\'a pas pu être téléchargée. Vous n\'êtes peut-être pas connecté - connectez-vous et réessayez.</string>
     <string name="fileSelector_permission_required">Vous devez accorder l\'autorisation de stockage afin d\'accéder à vos fichiers.</string>
-    <string name="auth_server_error_title">Erreur de serveur</string>
     <string name="packageInstaller_unknown_author">auteur inconnu</string>
     <string name="pref_notifs_notify_update_available">notification des mises à jour</string>
     <string name="pref_user">usager</string>

@@ -15,7 +15,6 @@ import com.friday.ar.util.DisplayUtil
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_store_installation_manager.*
-import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class StoreInstallationManagerActivity : FridayActivity() {
@@ -24,7 +23,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
         const val OPEN_PLUGIN_INTENT_CODE = 733
     }
 
-    private val viewModel by viewModel<StoreInstallationsManagerViewModel> { get() }
+    private val viewModel by viewModel<StoreInstallationsManagerViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

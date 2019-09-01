@@ -18,4 +18,13 @@
     <string name="exception_user_not_found_title">Nutzer nicht gefunden</string>
     <string name="mail_invalid_error">Die Formatierung ist nicht korrekt.</string>
     <string name="signin_welcome">Willkommen zurück, %s</string>
+    <string name="auth_reset_pswd_explanation">Die Email enthält einen Link, über den sie ein neues Passwort eingeben können. Bevor sie auf den Link klicken, überprüfen sie, ob die Absenderadresse dieser Adresse gleicht: <b>account-manager-noreply@raspberry-pi-ab274.firebaseapp.com</b></string>
+    <string name="auth_reset_pswd_msg">Eine Email zur zurücksetzung ihres Passworts wird an folgende Adresse geschickt:</string>
+    <string name="auth_server_error_title">Serverfehler</string>
+    <string name="password">Passwort</string>
+    <string name="exception_email_in_use_title">Email bereits in benutzung</string>
+    <string name="exception_user_disabled_msg">Dieser Account wurde durch einen Administrator geperrt oder temporär deaktiviert</string>
+    <string name="exception_user_disabled_title">Nutzeraccount</string>
+    <string name="exception_weak_pswd_msg">Das angegeben Passwort ist zu schwach: %s</string>
+    <string name="exception_weak_pswd_title">Password zu schwach</string>
 </resources>

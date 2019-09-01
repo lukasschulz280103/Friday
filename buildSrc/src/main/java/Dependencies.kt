@@ -1,5 +1,5 @@
 private object Versions {
-    const val buildToolsVersion = "3.5.0-rc03"
+    const val buildToolsVersion = "3.5.0"
     const val kotlinVersion = "1.3.41"
     const val kotlinCoroutines = "1.3.0-M2"
     const val arCoreVersion = "1.11.0"

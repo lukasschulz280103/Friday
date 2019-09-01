@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.ViewFlipper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -64,7 +65,7 @@ class DefaultSignInFragment : Fragment() {
                 .requestIdToken(getString(R.string.request_id_token))
                 .requestEmail()
                 .build()
-        val mSignInClient = GoogleSignIn.getClient(activity!!, gso)
+        val mSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         mSignInClient.signOut()
         fragmentView.submit.setOnClickListener { submitForm() }
         fragmentView.signin_google_button.setOnClickListener {
@@ -107,7 +108,7 @@ class DefaultSignInFragment : Fragment() {
 
         viewModel.onEmailSigninCompleted.observe(this, Observer { task ->
             if (task.isSuccessful) {
-                Snackbar.make(activity!!.findViewById(android.R.id.content), getString(R.string.signin_welcome, fragmentView.email_input_signin.text.toString()), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.signin_welcome, fragmentView.email_input_signin.text.toString()), Snackbar.LENGTH_SHORT).show()
             } else {
                 val errorDialogBuilder = MaterialAlertDialogBuilder(mContext)
                 try {
@@ -151,7 +152,7 @@ class DefaultSignInFragment : Fragment() {
         viewModel.onGoogleSignInCompleted.observe(this, Observer { task ->
             if (task.isSuccessful) {
                 val user = FirebaseAuth.getInstance().currentUser!!
-                Snackbar.make(activity!!.findViewById(android.R.id.content), getString(R.string.signin_welcome, user.displayName), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireActivity().findViewById(android.R.id.content), getString(R.string.signin_welcome, user.displayName), Snackbar.LENGTH_SHORT).show()
             } else {
                 val apiErrorDialog = MaterialAlertDialogBuilder(mContext)
                 apiErrorDialog.setTitle(R.string.simple_action_error_title)
@@ -213,9 +214,14 @@ class DefaultSignInFragment : Fragment() {
     }
 
     private fun resetPassword() {
+        if (email_input_signin.text.isNullOrEmpty() || !Validator.validateEmail(email_input_signin.text.toString())) {
+            Toast.makeText(requireContext(), R.string.mail_invalid_error, Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val askResetPassword = MaterialAlertDialogBuilder(mContext)
         askResetPassword.setTitle(R.string.auth_forgot_password)
-        val dialogView = activity!!.layoutInflater.inflate(R.layout.reset_password_dialog, null, false)
+        val dialogView = requireActivity().layoutInflater.inflate(R.layout.reset_password_dialog, null, false)
         (dialogView.findViewById<View>(R.id.email) as TextView).text = fragmentView.email_input_signin.text.toString()
         val flipper = dialogView.findViewById<ViewFlipper>(R.id.viewflipper)
         askResetPassword.setView(dialogView)

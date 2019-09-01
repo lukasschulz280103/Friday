@@ -5,7 +5,6 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.friday.ar.plugin.file.ZippedPluginFile
@@ -27,7 +26,6 @@ class PluginFileListVerticalAdapter(private val context: Activity, private val d
             val resultIntent = Intent()
             resultIntent.data = Uri.fromFile(File(file.file.name))
             context.setResult(RESULT_OK, resultIntent)
-            context.findViewById<View>(com.friday.ar.R.id.select_file).isEnabled = true
         }
     }
 

@@ -155,16 +155,7 @@
     <string name="recommendation_picked_widgets_title">Picked Widgets</string>
     <string name="more">More</string>
     <string name="to_store">to store</string>
-    <string name="password">Password</string>
-    <string name="exception_email_in_use_title">Email already in use</string>
-    <string name="exception_weak_pswd_title">Password strength validation failed</string>
-    <string name="exception_weak_pswd_msg">The given password couldn\'t pass the strength verification: %s</string>
-    <string name="exception_user_disabled_title">User account blocked</string>
-    <string name="exception_user_disabled_msg">This account was blocked by an administrator or is currently disabled</string>
     <string name="action_createnew_account">Create account</string>
-    <string name="auth_reset_pswd_msg">An password reset email will be sent to the following email-address:</string>
-    <string name="auth_reset_pswd_explanation">The email conatins a link to a password reset site. Please also check the spam folder. The trusted sender-email should be equal to <b>account-manager-noreply@raspberry-pi-ab274.firebaseapp.com</b></string>
-    <string name="auth_send_reset_pswd_email">Send reset email</string>
     <string name="reason_bad_experience">Bad experience with the software</string>
     <string name="reason_login_issues">Issues while trying to log in</string>
     <string name="reason_app_useless">The app is useless to me</string>
@@ -271,7 +262,6 @@
     <string name="unsupported_device_tablet_description">But you can still get Friday on any Android device with Android 8.0 or higher!</string>
     <string name="feedbackSender_storageException">Could not upload feedback. Most likely you are not signed in. Please sign in first and then retry.</string>
     <string name="fileSelector_permission_required">You need to grant the storage permission in order to access your files.</string>
-    <string name="auth_server_error_title">Server error</string>
     <string name="packageInstaller_unknown_author">Unknown author</string>
     <string name="pref_notifs_notify_update_available">Notify about available updates</string>
     <string name="pref_user">User</string>

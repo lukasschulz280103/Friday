@@ -18,4 +18,13 @@
     <string name="auth_send_reset_pswd_email">Send reset email</string>
     <string name="email_reset_succes">Email sent successfully</string>
     <string name="email_reset_error">Could not send reset email: %s</string>
+    <string name="auth_reset_pswd_explanation">The email conatins a link to a password reset site. Please also check the spam folder. The trusted sender-email should be equal to <b>account-manager-noreply@raspberry-pi-ab274.firebaseapp.com</b></string>
+    <string name="auth_reset_pswd_msg">An password reset email will be sent to the following email-address:</string>
+    <string name="auth_server_error_title">Server error</string>
+    <string name="password">Password</string>
+    <string name="exception_email_in_use_title">Email already in use</string>
+    <string name="exception_user_disabled_msg">This account was blocked by an administrator or was disabled temporarily</string>
+    <string name="exception_user_disabled_title">User account is blocked</string>
+    <string name="exception_weak_pswd_msg">The given password couldn\'t pass the strength verification: %s</string>
+    <string name="exception_weak_pswd_title">Password strength validation failed</string>
 </resources>
