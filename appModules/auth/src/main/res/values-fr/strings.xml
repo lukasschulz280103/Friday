@@ -27,4 +27,5 @@
     <string name="exception_user_disabled_title">Compte utilisateur bloqué</string>
     <string name="exception_weak_pswd_msg">Le x de passe donné n\'a pas pu passer la vérification de force : %s</string>
     <string name="exception_weak_pswd_title">Échec de la validation de la force du mot de passe</string>
+    <string name="signin_choice">ou utiliser</string>
 </resources>

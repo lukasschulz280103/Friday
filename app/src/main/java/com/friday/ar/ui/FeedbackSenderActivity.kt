@@ -13,7 +13,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.friday.ar.R
-import com.friday.ar.activities.FridayActivity
+import com.friday.ar.core.activity.FridayActivity
 import com.friday.ar.core.util.validation.Validator
 import com.friday.ar.dialog.ProgressDialog
 import com.friday.ar.util.Connectivity

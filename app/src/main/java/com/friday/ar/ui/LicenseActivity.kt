@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 
 import com.friday.ar.R
-import com.friday.ar.activities.FridayActivity
+import com.friday.ar.core.activity.FridayActivity
 
 class LicenseActivity : FridayActivity() {
 

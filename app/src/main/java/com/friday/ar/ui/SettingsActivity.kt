@@ -3,7 +3,7 @@ package com.friday.ar.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import com.friday.ar.activities.FridayActivity
+import com.friday.ar.core.activity.FridayActivity
 import com.friday.ar.dialog.ThemeDialog
 import com.friday.ar.fragments.preferenceFragments.MainSettingsFragment
 

@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 import com.friday.ar.R
-import com.friday.ar.ui.store.StoreDetailActivity
+import com.friday.ar.store.ui.StoreDetailActivity
 
 class DashboardSimpleItem : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

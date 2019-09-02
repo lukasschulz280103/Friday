@@ -9,8 +9,8 @@ import android.content.Intent
 import androidx.preference.PreferenceManager
 import com.friday.ar.account.service.AccountSyncService
 import com.friday.ar.core.Constant
-import com.friday.ar.service.plugin.PluginIndexer
-import com.friday.ar.service.plugin.PluginLoader
+import com.friday.ar.pluginsystem.service.PluginIndexer
+import com.friday.ar.pluginsystem.service.PluginLoader
 
 class BootReciever : BroadcastReceiver() {
 

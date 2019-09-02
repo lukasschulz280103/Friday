@@ -36,6 +36,10 @@ dependencies {
     implementation Dependencies.firebaseCore
     implementation Dependencies.firebaseAuth
     implementation Dependencies.firebasePerformance
+    implementation Dependencies.firebaseDatabase
+    implementation Dependencies.firebaseFirestore
+    implementation Dependencies.firebaseStorage
+
 
     implementation Dependencies.playServices
 
@@ -43,6 +47,7 @@ dependencies {
 
     implementation Dependencies.appCompat
     implementation Dependencies.material
+    implementation Dependencies.constraintLayout
 
     implementation Dependencies.androidArchLifecycleViewModel
     implementation Dependencies.androidArchLifecyleExtensions

@@ -69,6 +69,7 @@ object LogUtil {
 
     }
 
+    @Deprecated("Use readText() instead")
     @Throws(FileNotFoundException::class)
     fun fileToString(logFile: File): String {
         val sc = Scanner(logFile)

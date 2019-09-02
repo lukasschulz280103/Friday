@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="module_store_name">Store</string>
+    <string name="storeInstallationsManager_diskInstallWarningMessage">Si vous installez des plugins à partir de sources inconnues, il y a un risque qu\'ils affichent un comportement indésirable. Entre autres choses, ces effets secondaires peuvent causer des dommages inattendus à votre appareil. Nous n\'assumons aucune responsabilité à cet égard.</string>
+    <string name="store_add_review">Ajouter une critique</string>
+    <string name="store_add_wishlist">Ajouter à la liste de souhaits</string>
+    <string name="store_detail_review_header">Critiques</string>
+    <string name="store_detail_update_notes">Informations de mise à jour</string>
+    <string name="store_detail_version">Version %s</string>
+    <string name="store_download">Télécharger</string>
+    <string name="store_featured">En vedette</string>
+    <string name="store_flag_widget">Signaler</string>
+    <string name="store_plugin_status_installed">Installé</string>
+    <string name="store_plugin_uninstall">Désinstaller</string>
+    <string name="store_soon">Le magasin est actuellement en développement et cette fonctionnalité n\'est pas encore prête. Mais restez à l\'écoute !</string>
+    <string name="store_title_installed_plugins">Installé</string>
+    <string name="emptyview_go_to_store">Visitez le store pour télécharger les plugins</string>
+    <string name="packageInstaller_perms_denied_accessError">Erreur d\'accès</string>
+    <string name="packageInstaller_perms_denied_accessError_explanation">Nous avons besoin d\'accéder à votre stockage afin d\'installer des fichiers à partir de votre appareil.</string>
+    <string name="packageInstaller_unknown_author">auteur inconnu</string>
+    <string name="retry">Réessayer</string>
+    <string name="beta">bêta</string>
+    <string name="manager_my_installations">Mes installations</string>
+    <string name="manager_subscriptions">Abonnements</string>
+    <string name="manager_transactions">Transactions</string>
+    <string name="manager_wishlist">Liste de souhaits</string>
+    <string name="loading_err_title">:Code %s:</string>
+</resources>

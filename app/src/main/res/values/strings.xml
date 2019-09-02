@@ -3,7 +3,7 @@
         <item quantity="one">One plugin file found</item>
         <item quantity="other">%d plugin files found</item>
     </plurals>
-    <string name="app_name" translatable="false">friday</string>
+    <string name="module_app_name" translatable="false">friday</string>
     <string name="leave_app">Do you really want to leave the app?</string>
     <string name="action_leave">Leave</string>
     <string name="nav_main_profile">Profile</string>
@@ -24,7 +24,6 @@
     <string name="dialog_warn_title">Please read carefully</string>
     <string name="app_settings">Settings</string>
     <string name="app_feedback">Feedback</string>
-    <string name="signin_choice">or use</string>
     <string name="warning_decline">Decline</string>
     <string name="internal_error_title">Internal error</string>
     <string name="internal_error_message">There was an internal error while processing your request.</string>
@@ -118,31 +117,14 @@
     <string name="friday_groups">Groups</string>
     <string name="help">Help</string>
     <string name="design">Design</string>
-    <string name="theme_dialog_title" translatable="false">Select theme</string>
     <string name="auto_sync">Synchronize with cloud</string>
-    <string name="theme">Theme</string>
     <string name="select_theme">Select Theme</string>
     <string name="notification_channel_update_description">This channel is used to notify about new Updates.</string>
     <string name="app_update_title">friday Update</string>
     <string name="app_update_description">friday is ready to update to %s !</string>
-    <string name="store_flag_widget">flag</string>
-    <string name="store_add_wishlist">Add to list</string>
-    <string name="store_download">Download</string>
-    <string name="store_detail_review_header">Reviews</string>
-    <string name="store_detail_update_notes">Update notes</string>
-    <string name="store_add_review">Add review</string>
     <string name="lorem_ipsum_short" translatable="false">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="lorem_ipsum_long" translatable="false">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  --   Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.  Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.  Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.  At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</string>
-    <string name="store_detail_version">Version %s</string>
     <string name="beta" translatable="false">Beta</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_red">Red</string>
-    <string name="theme_green">Green</string>
-    <string name="theme_blue">Blue</string>
-    <string name="theme_magenta">Magenta</string>
-    <string name="theme_default">Default Theme</string>
-    <string name="theme_pink">Pink</string>
-    <string name="theme_error">Could not apply theme at runtime. Please restart the app to see the changes.</string>
     <string name="save_success">Saved</string>
     <string name="info">Info</string>
     <string name="prefs_help_manually_check_update">You can manually check for updates by opening the \'About\' page of this app.</string>
@@ -191,69 +173,27 @@
     <string name="req_files_rationale_title">File system</string>
     <string name="req_mic_rationale">The mircophone is needed to be able to use the voice assistant.</string>
     <string name="search">Search</string>
-    <string name="store">Store</string>
-    <string name="store_soon">We are currently onto developing the store!</string>
     <string name="auto_check_update">Automatically check for updates</string>
-    <string name="store_featured">Featured</string>
-    <string name="loading_err_title" translatable="false">:Code %s:</string>
-    <string name="code_cancelled">Operation was cancelled.</string>
     <string name="unknown_error">An unknown error has occurred!</string>
-    <string name="code_invalid_arg">An invalid argument was handled over in the request</string>
-    <string name="code_deadline_exceeded">Timout: Server did not respond in the given maximum response time</string>
-    <string name="code_not_found">There was an error while loading data fro the server. This is not your fault. Our developers automatically received a report and will take care of this problem.</string>
-    <string name="code_aborted">This operation was aborted. Try again and contact us if this problem persists.</string>
-    <string name="code_exhausted">A resource exhaustion error occurred. Please try to free up space on your phone and try again.</string>
-    <string name="code_unavailable">Service unavailable. Please check your network connection and try again later.</string>
-    <string name="code_internal">Fatal internal error!\\nAn automatic warning was sent to our developers!</string>
-    <string name="code_data_loss">A loss of data occurred. Try again and if this problem persists, contact our support.</string>
-    <string name="code_unauthenticated">You are not authenticated. Please sign in via \">Profile >Sign in\" first to use this feature.</string>
-    <string name="code_perm_denied">Access denied. This has to do withyour account. This may leads to an blocked or deactivated account. If this is not the case, contact our support.</string>
     <string name="developer_options">Developer options</string>
     <string name="submit_feedback">Submit feedback</string>
     <string name="heat_warning_BETA">Show heat warning when starting actionmode</string>
     <string name="license_activity_label">open source licenses</string>
     <string name="greet_no_name">Welcome!</string>
     <string name="add_detail_debug_info">Add additional, more detailed debug infos</string>
-    <string name="manager_my_installations">My Installations</string>
-    <string name="manager_transactions">Transactions</string>
-    <string name="manager_subscriptions">Subscriptions</string>
     <string name="manager_wishlist">Wishlist</string>
-    <string name="store_title_installed_plugins">Installed</string>
     <string name="install_from_disk">Install from disk</string>
     <string name="open_plugin_file">Open plugin file</string>
     <string name="err_inappropriate_file_extension">Innapropriate file extension</string>
     <string name="err_inappropriate_file_extension_msg">The chosen file has an inappropriate extension and cannot be loaded.</string>
-    <string name="emptyview_nothing_here">Nothing here.</string>
-    <string name="emptyview_go_to_store">Visit the store and download some plugins!</string>
     <string name="contact">Contact us</string>
-    <string name="storeInstallationsManager_diskInstallWarningTitle">Security Warning</string>
-    <string name="storeInstallationsManager_diskInstallWarningMessage">If you install plugins from unknown sources, there is a risk that they will show unwanted behavior. Among other things, these side effects can cause unexpected damage to your device. No responsibility is taken for this.</string>
-    <string name="dont_show_again">Don\'t show again</string>
-    <string name="pluginInstaller_noItemsIndexed">No plugin files found</string>
-    <string name="pluginInstaller_success_install_title">Installation success</string>
-    <string name="pluginInstaller_name" translatable="false">PluginInstaller</string>
-    <string name="pluginInstaller_success_ticker_text">The installation of %s was successful</string>
     <string name="notification_channel_update">Update check</string>
     <string name="notification_channel_plugin_installer">Plugin installation service</string>
     <string name="notification_channel_plugin_installer_description">This channel notifies you about the status of the installed plugins when, for example, the progress of an installiong plugin changes.</string>
     <string name="notifications">Notifications</string>
     <string name="more_notification_settings">More notification settings</string>
-    <string name="pluginInstaller_error_installation_failed">Installation failed</string>
-    <string name="pluginInstaller_error_could_not_parse">Could not parse plugin</string>
-    <string name="pluginInstaller_error_manifest_security">This plugin violates security regulations and thus was not installed.</string>
     <string name="fileSelector_wrong_file_type_selected">You must select a friday plugin file (*.fpl)</string>
-    <string name="store_plugin_status_installed">Installed</string>
-    <string name="store_plugin_uninstall">Uninstall</string>
-    <string name="pluginInstaller_intent_install">Install with Friday</string>
-    <string name="pluginInstaller_activity_title">Install Plugin</string>
-    <string name="pluginInstaller_activity_installNow">Install now</string>
     <string name="start_action_mode">Start ActionMode</string>
-    <string name="pluginInstaller_uninstall_dialog_title">Uninstall plugin</string>
-    <string name="pluginInstaller_uninstall_dialog_msg">Do you really want to uninstall %s?</string>
-    <string name="pluginInstaller_error_invalid_zip_file">This file is corrupted and/or not a valid plugin-archive</string>
-    <string name="pluginInstaller_progressMessage_installing">Installing…</string>
-    <string name="pluginInstaller_progressMessage_verifying">Verifying plugin…</string>
-    <string name="pluginInstaller_error_io_exception">The plugin could not be installed due to an file system error.</string>
     <string name="pref_devmode_use_beta_channel">Use beta channel for updates</string>
     <string name="update">Update</string>
     <string name="update_available">Update available</string>
@@ -262,13 +202,10 @@
     <string name="unsupported_device_tablet_description">But you can still get Friday on any Android device with Android 8.0 or higher!</string>
     <string name="feedbackSender_storageException">Could not upload feedback. Most likely you are not signed in. Please sign in first and then retry.</string>
     <string name="fileSelector_permission_required">You need to grant the storage permission in order to access your files.</string>
-    <string name="packageInstaller_unknown_author">Unknown author</string>
     <string name="pref_notifs_notify_update_available">Notify about available updates</string>
     <string name="pref_user">User</string>
     <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. Please install ArCore and retry.</string>
     <string name="errtype_arcore_device_not_capable">Your device is not supported.</string>
-    <string name="packageInstaller_perms_denied_accessError">Access error</string>
-    <string name="packageInstaller_perms_denied_accessError_explanation">We need to access your storage in order to install files from your device.</string>
     <string name="device_compatibility">Device compatibility check</string>
     <string name="compatibility_ar">ArCore support</string>
     <string name="compatibility_ar_installed">ArCore is installed</string>

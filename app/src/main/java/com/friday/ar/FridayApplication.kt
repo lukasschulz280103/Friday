@@ -11,9 +11,9 @@ import com.crashlytics.android.Crashlytics
 import com.friday.ar.account.service.AccountSyncService
 import com.friday.ar.core.Constant
 import com.friday.ar.di.moduleList
-import com.friday.ar.plugin.file.ZippedPluginFile
-import com.friday.ar.service.plugin.PluginIndexer
-import com.friday.ar.service.plugin.PluginLoader
+import com.friday.ar.pluginsystem.file.ZippedPluginFile
+import com.friday.ar.pluginsystem.service.PluginIndexer
+import com.friday.ar.pluginsystem.service.PluginLoader
 import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext

@@ -119,4 +119,67 @@
     <style name="BottomSheetMaterial.Style" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/manager_background</item>
     </style>
+
+    <style name="PageTitle">
+        <item name="android:textSize">60sp</item>
+
+    </style>
+
+    <style name="HeaderMiddle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="UppercaseWarn">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/warn_red</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="ProfilePageItem">
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="ProfilePageItem.Title" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:fontFamily">@font/questrial_regular</item>
+    </style>
+
+    <style name="ProfilePageItemIcon">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="ThemeSelectDialog">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="ThemeSelectDialog.Item" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_height">75dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textViewStyle">@style/ThemeSelectDialog.Item.Title</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="android:background">?android:selectableItemBackground</item>
+    </style>
+
+    <style name="ThemeSelectDialog.Item.Title">
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+    </style>
+
+    <style name="Base.Theme.MaterialComponents.Dialog.CustomAnimated">
+        <item name="android:padding">0dp</item>
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
 </resources>

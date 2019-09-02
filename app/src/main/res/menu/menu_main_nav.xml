@@ -9,7 +9,7 @@
         <item
             android:id="@+id/main_nav_store"
             android:icon="@drawable/ic_twotone_store_24px"
-            android:title="@string/store" />
+            android:title="@string/module_store_name" />
         <item
             android:id="@+id/main_nav_profile"
             android:icon="@drawable/ic_twotone_person_outline_24px"

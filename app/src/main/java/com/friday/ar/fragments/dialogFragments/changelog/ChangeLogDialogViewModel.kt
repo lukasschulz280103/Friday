@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.friday.ar.R
-import com.friday.ar.util.FireStoreCodeInterpreter
+import com.friday.ar.core.util.firebase.FireStoreCodeInterpreter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 

@@ -10,7 +10,7 @@ import android.view.View
 import android.view.Window
 import android.widget.TextView
 import com.friday.ar.R
-import com.friday.ar.activities.FridayActivity
+import com.friday.ar.core.activity.FridayActivity
 import com.friday.ar.util.Connectivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

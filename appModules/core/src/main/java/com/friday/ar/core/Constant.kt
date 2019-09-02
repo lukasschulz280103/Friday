@@ -94,4 +94,10 @@ class Constant {
         const val LOGIN_EVENT_EMAIL = "Email + password"
         const val CUSTOM_EVENT_ACTIONMODE = "ActionMode start"
     }
+
+    object PreferenceKeys {
+        object Store {
+            const val INSTALLER_SHOW_DISK_INSTALL_WARNING = "storeInstallationsManager_showSecurityWarning"
+        }
+    }
 }

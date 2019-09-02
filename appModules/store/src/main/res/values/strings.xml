@@ -1,0 +1,27 @@
+<resources>
+    <string name="module_store_name">Store</string>
+    <string name="storeInstallationsManager_diskInstallWarningMessage">If you install plugins from unknown sources, there is a risk that they will show unwanted behavior. Among other things, these side effects can cause unexpected damage to your device. No responsibility is taken for this.</string>
+    <string name="store_add_review">Add review</string>
+    <string name="store_add_wishlist">Add to wishlist</string>
+    <string name="store_detail_review_header">Reviews</string>
+    <string name="store_detail_update_notes">Update info</string>
+    <string name="store_detail_version">Version %s</string>
+    <string name="store_download">Download</string>
+    <string name="store_featured">Featured</string>
+    <string name="store_flag_widget">Flag</string>
+    <string name="store_plugin_status_installed">Installed</string>
+    <string name="store_plugin_uninstall">Uninstall</string>
+    <string name="store_soon">The store is currently in development and this feature is not ready yet. But stay tuned!</string>
+    <string name="store_title_installed_plugins">Installed</string>
+    <string name="emptyview_go_to_store">Visit the store and download plugins!</string>
+    <string name="packageInstaller_perms_denied_accessError">Access error</string>
+    <string name="packageInstaller_perms_denied_accessError_explanation">We need to access your storage in order to install files from your device.</string>
+    <string name="packageInstaller_unknown_author">Unknown author</string>
+    <string name="retry">Retry</string>
+    <string name="beta">Beta</string>
+    <string name="manager_my_installations">My installations</string>
+    <string name="manager_subscriptions">Subscriptions</string>
+    <string name="manager_transactions">Transactions</string>
+    <string name="manager_wishlist">Wishlist</string>
+    <string name="loading_err_title">:Code %s:</string>
+</resources>

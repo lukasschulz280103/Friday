@@ -30,6 +30,8 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":account"))
     implementation(project(":ar"))
+    implementation(project(":store"))
+    implementation(project(":pluginSystem"))
     implementation(project(Dependencies.pocketSphinx))
 
 

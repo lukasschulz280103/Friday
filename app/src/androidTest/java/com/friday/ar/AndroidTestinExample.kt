@@ -3,8 +3,8 @@ package com.friday.ar
 import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
-import com.friday.ar.plugin.file.ZippedPluginFile
-import com.friday.ar.util.cache.PluginFileCacheUtil
+import com.friday.ar.pluginsystem.cache.PluginFileCacheUtil
+import com.friday.ar.pluginsystem.file.ZippedPluginFile
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

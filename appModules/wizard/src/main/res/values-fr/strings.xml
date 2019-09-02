@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="module_name">wizard</string>
+    <string name="module_wizard_name">wizard</string>
     <string name="app_welcome">Salut à friday!</string>
     <string name="project_friday">Projet Friday</string>
     <string name="welcome_descriptioon">Cet assistant vous guidera tout au long de la mise en place de l\'installation de friday.</string>

@@ -16,3 +16,9 @@ project(":auth").projectDir = File(rootDir, "appModules/auth")
 
 include(":account")
 project(":account").projectDir = File(rootDir, "appModules/account")
+
+include(":store")
+project(":store").projectDir = File(rootDir, "appModules/store")
+
+include(":pluginSystem")
+project(":pluginSystem").projectDir = File(rootDir, "appModules/pluginSystem")

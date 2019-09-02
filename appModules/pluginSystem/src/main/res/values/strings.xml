@@ -1,0 +1,19 @@
+<resources>
+    <string name="module_plugin_system_name" translatable="false">pluginsystem</string>
+    <string name="pluginInstaller_activity_installNow">Install now</string>
+    <string name="pluginInstaller_activity_title">Install plugin</string>
+    <string name="pluginInstaller_error_could_not_parse">Could not parse plugin</string>
+    <string name="pluginInstaller_error_installation_failed">Installation failed</string>
+    <string name="pluginInstaller_error_invalid_zip_file">This file is corrupted and/or not a valid plugin-archive</string>
+    <string name="pluginInstaller_error_io_exception">The plugin could not be installed due to an file system error.</string>
+    <string name="pluginInstaller_error_manifest_security">This plugin violates security regulations and thus was not installed.</string>
+    <string name="pluginInstaller_intent_install">Install with Friday</string>
+    <string name="pluginInstaller_name">PluginInstaller</string>
+    <string name="pluginInstaller_noItemsIndexed">No plugin files found</string>
+    <string name="pluginInstaller_progressMessage_verifying">Verifying plugin…</string>
+    <string name="pluginInstaller_progressMessage_installing">Installing…</string>
+    <string name="pluginInstaller_success_install_title">INstallation success</string>
+    <string name="pluginInstaller_success_ticker_text">The installation of %s was successful</string>
+    <string name="pluginInstaller_uninstall_dialog_msg">Do you really want to uninstall %s?</string>
+    <string name="pluginInstaller_uninstall_dialog_title">Uninstall plugin</string>
+</resources>

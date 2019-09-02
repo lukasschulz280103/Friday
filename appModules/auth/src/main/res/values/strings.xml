@@ -1,5 +1,5 @@
 <resources>
-    <string name="module_name" translatable="false">auth</string>
+    <string name="module_wizard_name" translatable="false">auth</string>
     <string name="auth_user_creation_success">User was created successfully.</string>
     <string name="auth_user_creation_success_hint">You should now be able to sign in by using the given email and your password.</string>
     <string name="auth_could_not_create_new_user">Could not create new user:b %s</string>
@@ -27,4 +27,5 @@
     <string name="exception_user_disabled_title">User account is blocked</string>
     <string name="exception_weak_pswd_msg">The given password couldn\'t pass the strength verification: %s</string>
     <string name="exception_weak_pswd_title">Password strength validation failed</string>
+    <string name="signin_choice">or use</string>
 </resources>

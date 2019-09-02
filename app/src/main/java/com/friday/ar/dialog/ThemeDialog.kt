@@ -17,8 +17,8 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.friday.ar.R
-import com.friday.ar.Theme
-import com.friday.ar.activities.FridayActivity.Companion.LOGTAG
+import com.friday.ar.core.Theme
+import com.friday.ar.core.activity.FridayActivity.Companion.LOGTAG
 import com.friday.ar.ui.SettingsActivity
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject

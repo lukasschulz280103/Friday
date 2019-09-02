@@ -17,9 +17,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.friday.ar.R
-import com.friday.ar.Theme
 import com.friday.ar.account.data.UserStore
 import com.friday.ar.core.Constant
+import com.friday.ar.core.Theme
 import com.friday.ar.dialog.ProgressDialog
 import com.friday.ar.dialog.ThemeDialog
 import com.friday.ar.preference.ThemeSelectPreference

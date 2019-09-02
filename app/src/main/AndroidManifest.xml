@@ -74,12 +74,12 @@
         android:name=".FridayApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/module_app_name"
         android:resizeableActivity="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.store.packageInstaller.PackageInstallerActivity"
+            android:name=".store.ui.packageInstaller.PackageInstallerActivity"
             android:allowEmbedded="true"
             android:theme="@style/AppTheme.Transparent"
             android:launchMode="singleInstance"
@@ -116,7 +116,7 @@
             android:name="android.test.mock"
             android:required="false" />
 
-        <activity android:name=".ui.store.storeInstallationManagerActivity.StoreInstallationManagerActivity" />
+        <activity android:name=".store.ui.storeInstallationManagerActivity.StoreInstallationManagerActivity" />
         <activity
             android:name=".wizard.ui.WizardActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -130,7 +130,7 @@
             android:name=".ui.LicenseActivity"
             android:label="@string/license_activity_label" />
         <activity
-            android:name=".ui.store.StoreDetailActivity"
+            android:name=".store.ui.StoreDetailActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.mainactivity.MainActivity"
@@ -193,7 +193,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
-            android:name=".service.plugin.PluginIndexer"
+            android:name=".pluginsystem.service.PluginIndexer"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
