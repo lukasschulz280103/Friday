@@ -143,7 +143,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name=".preferences.ui.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".ui.mainactivity.MainActivity"
             android:theme="@style/PreferenceActivityStyle">
@@ -189,7 +189,7 @@
             android:value="ocr" />
 
         <service
-            android:name=".service.FeedbackService"
+            android:name="com.friday.ar.account.sync.AccountDeletionFeedbackService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service

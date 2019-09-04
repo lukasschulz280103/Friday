@@ -1,4 +1,4 @@
-package com.friday.ar.preference
+package com.friday.ar.preferences.ui.preference
 
 import android.content.Context
 import android.net.Uri
@@ -11,8 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 
-import com.friday.ar.R
 import com.friday.ar.account.data.UserStore
+import com.friday.ar.preferences.R
 import com.google.firebase.auth.FirebaseAuth
 
 class AccountPreference(context: Context, attributeSet: AttributeSet) : Preference(context, attributeSet) {

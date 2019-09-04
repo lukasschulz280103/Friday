@@ -1,4 +1,4 @@
-package com.friday.ar.account.service
+package com.friday.ar.account.sync
 
 import android.app.DownloadManager
 import android.app.job.JobParameters

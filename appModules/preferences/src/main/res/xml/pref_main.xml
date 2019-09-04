@@ -1,6 +1,6 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <androidx.preference.PreferenceCategory android:title="@string/pref_user">
-        <com.friday.ar.preference.AccountPreference
+        <com.friday.ar.preferences.ui.preference.AccountPreference
             android:key="account_main_preference"
             android:layout="@layout/account_preference_layout" />
         <androidx.preference.Preference
@@ -38,7 +38,7 @@
     <androidx.preference.PreferenceCategory
         android:icon="@drawable/twotone_brightness_medium_24"
         android:title="@string/look">
-        <com.friday.ar.preference.ThemeSelectPreference
+        <com.friday.ar.preferences.ui.preference.ThemeSelectPreference
             android:key="dialog_theme_pref"
             android:title="@string/design" />
     </androidx.preference.PreferenceCategory>

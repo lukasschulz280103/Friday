@@ -10,7 +10,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.crashlytics.android.Crashlytics
-import com.friday.ar.account.service.AccountSyncService
+import com.friday.ar.account.sync.AccountSyncService
 import com.friday.ar.auth.interfaces.OnAuthCompletedListener
 import com.friday.ar.core.Constant
 import com.friday.ar.core.util.analitycs.AnalyticUtil

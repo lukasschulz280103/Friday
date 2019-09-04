@@ -1,11 +1,11 @@
-package com.friday.ar.ui
+package com.friday.ar.preferences.ui
 
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import com.friday.ar.core.activity.FridayActivity
-import com.friday.ar.dialog.ThemeDialog
-import com.friday.ar.fragments.preferenceFragments.MainSettingsFragment
+import com.friday.ar.preferences.ui.dialog.ThemeDialog
+import com.friday.ar.preferences.ui.fragments.MainSettingsFragment
 
 class SettingsActivity : FridayActivity(), ThemeDialog.OnSelectedTheme {
     companion object {

@@ -8,7 +8,7 @@ import android.app.job.JobScheduler
 import android.content.*
 import android.os.Build
 import com.crashlytics.android.Crashlytics
-import com.friday.ar.account.service.AccountSyncService
+import com.friday.ar.account.sync.AccountSyncService
 import com.friday.ar.core.Constant
 import com.friday.ar.di.moduleList
 import com.friday.ar.pluginsystem.file.ZippedPluginFile

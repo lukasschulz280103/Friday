@@ -3,7 +3,7 @@
 
     <application>
         <service
-            android:name=".service.AccountSyncService"
+            android:name="com.friday.ar.account.sync.AccountSyncService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 </manifest>

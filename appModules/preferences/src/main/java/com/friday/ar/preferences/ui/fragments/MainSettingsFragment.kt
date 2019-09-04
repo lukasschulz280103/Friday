@@ -1,4 +1,4 @@
-package com.friday.ar.fragments.preferenceFragments
+package com.friday.ar.preferences.ui.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -16,14 +16,14 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
-import com.friday.ar.R
 import com.friday.ar.account.data.UserStore
+import com.friday.ar.account.sync.AccountDeletionFeedbackService
 import com.friday.ar.core.Constant
 import com.friday.ar.core.Theme
 import com.friday.ar.core_ui.dialog.ProgressDialog
-import com.friday.ar.dialog.ThemeDialog
-import com.friday.ar.preference.ThemeSelectPreference
-import com.friday.ar.service.FeedbackService
+import com.friday.ar.preferences.R
+import com.friday.ar.preferences.ui.dialog.ThemeDialog
+import com.friday.ar.preferences.ui.preference.ThemeSelectPreference
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
@@ -131,7 +131,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
             val extra = PersistableBundle()
             extra.putString("reason", reasonKeyword)
             extra.putString("uid", firebaseUser.uid)
-            val info = JobInfo.Builder(Constant.Jobs.JOB_FEEDBACK, ComponentName(mActivity!!, FeedbackService::class.java))
+            val info = JobInfo.Builder(Constant.Jobs.JOB_FEEDBACK, ComponentName(mActivity!!, AccountDeletionFeedbackService::class.java))
                     .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                     .setBackoffCriteria(30000, JobInfo.BACKOFF_POLICY_LINEAR)
                     .setExtras(extra)
@@ -206,7 +206,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun deleteLocalUserData() {
-        val isFileDeleted = UserStore(context!!).avatarFile.delete()
+        val isFileDeleted = UserStore(requireContext()).avatarFile.delete()
         Log.d("ProfilePage", "Account image file was deleted:$isFileDeleted")
     }
 }

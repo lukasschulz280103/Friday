@@ -28,3 +28,6 @@ project(":pluginSystem").projectDir = File(rootDir, "appModules/pluginSystem")
 
 include(":feedback")
 project(":feedback").projectDir = File(rootDir, "appModules/feedback")
+
+include(":preferences")
+project(":preferences").projectDir = File(rootDir, "appModules/preferences")

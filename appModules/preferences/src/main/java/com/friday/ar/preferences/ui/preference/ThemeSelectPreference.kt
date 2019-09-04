@@ -1,12 +1,12 @@
-package com.friday.ar.preference
+package com.friday.ar.preferences.ui.preference
 
 import android.content.Context
 import android.util.AttributeSet
 
 import androidx.preference.Preference
 
-import com.friday.ar.dialog.ThemeDialog
-import com.friday.ar.ui.SettingsActivity
+import com.friday.ar.preferences.ui.SettingsActivity
+import com.friday.ar.preferences.ui.dialog.ThemeDialog
 
 class ThemeSelectPreference(c: Context, attrs: AttributeSet) : Preference(c, attrs) {
     internal var d = ThemeDialog()

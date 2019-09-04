@@ -1,4 +1,4 @@
-package com.friday.ar.fragments.dialogFragments
+package com.friday.ar.auth.fragments
 
 import android.app.Activity
 import android.content.Context
@@ -8,9 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import com.friday.ar.R
-import com.friday.ar.auth.fragments.DefaultSignInFragment
+import com.friday.ar.auth.R
 import com.friday.ar.auth.interfaces.OnAuthCompletedListener
+import com.friday.ar.core_ui.dialog.FullscreenDialog
 import extensioneer.notNull
 import kotlinx.android.synthetic.main.signin_layout.view.*
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="module_preferences_name">preferences</string>
+    <string name="confirm_signout_title">Abmelden</string>
+    <string name="confirm_signout_message">Wollen sie sich wirklich abmelden?</string>
+    <string name="sign_out_success">Erfolgeich abgemeldet</string>
+    <string name="deletion_success">Account gelöscht</string>
+    <string name="deletion_error_canceled_title">Löschvorgang wurde unterbrochen</string>
+    <string name="deletion_error_canceled_message">Der Löschvorgang wurde unterbrochen. Dieser Fehler ist darauf zurückzuführen, dass eine Internetverindung nicht vorhanden oder instabil ist</string>
+    <string name="deletion_error_unknown_title">Account konnte nicht gelöscht werden</string>
+    <string name="delete_dialog_loading_text">Lösche Profildaten…</string>
+    <string name="delete_account">Account löschen</string>
+    <string name="confirm_deletion_title">Löschung bestätigen</string>
+    <string name="confirm_deletion_positive">Bestätigen und \"%s\" löschen</string>
+    <string name="confirm_deletion_message">Durch das Löschen dieses Accounts bestätigen sie, dass ihnen klar ist, dass jegliche Daten, die mit diesem Account verknüpft sind, gelöscht werden.</string>
+    <string name="pref_devmode">Entwicklermodus</string>
+    <string name="pref_devmode_show_changelog">Changelog beim Appstart zeigen</string>
+    <string name="pref_devmode_use_beta_channel">Beta-Kanal für Updates benutzen</string>
+    <string name="pref_header_data_sync">Account und Synchronisation</string>
+    <string name="pref_header_general">Allgemein</string>
+    <string name="pref_header_info">Info</string>
+    <string name="pref_header_notifications">Benachrichtigungen</string>
+    <string name="pref_notifs_notify_update_available">Über verfügbare Updates benachrichtigen</string>
+    <string name="pref_title_display_name">Nutzername</string>
+    <string name="pref_title_new_message_notifications">Neue Version</string>
+    <string name="pref_title_sync_frequency">Synchronisations-Frequenz</string>
+    <string name="pref_title_system_sync_settings">System-Synchronisationseinstellungen</string>
+    <string name="pref_user">Nutzer</string>
+    <string name="prefs_help_manually_check_update">Um manuell auf ausstehende Updates zu überprüfen, öffnen sie die \'Info\' Seite der App.</string>
+    <string name="reason_app_useless">Für mich ist diese App nutzlos</string>
+    <string name="reason_bad_experience">Schlechte Erfahrung mit der Software</string>
+    <string name="reason_header">Warum verlässt du uns?</string>
+    <string name="reason_login_issues">Probleme bei Anmeldeversuchen</string>
+    <string name="reason_missing_hardware">Mir fehlt die benötigte Hardware (wie zum Beispiel eine AR-Brille)</string>
+    <string name="reason_other">Andere…</string>
+</resources>

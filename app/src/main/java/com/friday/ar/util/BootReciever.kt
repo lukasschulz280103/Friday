@@ -7,7 +7,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import androidx.preference.PreferenceManager
-import com.friday.ar.account.service.AccountSyncService
+import com.friday.ar.account.sync.AccountSyncService
 import com.friday.ar.core.Constant
 import com.friday.ar.pluginsystem.service.PluginIndexer
 import com.friday.ar.pluginsystem.service.PluginLoader

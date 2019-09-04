@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="module_preferences_name">preferences</string>
+    <string name="confirm_signout_title">Déconnecte</string>
+    <string name="confirm_signout_message">Tu veux vraiment signer pour sortir ?</string>
+    <string name="sign_out_success">Déconnecté avec succès</string>
+    <string name="deletion_success">Compte supprimé</string>
+    <string name="deletion_error_canceled_title">Suppression annulée</string>
+    <string name="deletion_error_canceled_message">Le processus de suppression a été annulé. Cette erreur peut se produire parce que la connexion Internet est instable ou inexistante.</string>
+    <string name="deletion_error_unknown_title">Impossible de supprimer le compte</string>
+    <string name="delete_dialog_loading_text">Suppression du compte</string>
+    <string name="delete_account">Supprimer le compte</string>
+    <string name="confirm_deletion_title">Confirmer la suppression</string>
+    <string name="confirm_deletion_positive">Confirmer et supprimer %s</string>
+    <string name="confirm_deletion_message">En supprimant votre compte, vous acceptez que toutes les données qui font partie de ce compte seront supprimées à jamais.</string>
+    <string name="pref_devmode">Mode développeur</string>
+    <string name="pref_devmode_show_changelog">Toujours afficher le journal des modifications au démarrage de l\'appstart</string>
+    <string name="pref_devmode_use_beta_channel">Utiliser le canal bêta pour les mises à jour</string>
+    <string name="pref_header_data_sync">Compte et synchronisation</string>
+    <string name="pref_header_general">Général</string>
+    <string name="pref_header_info">Info</string>
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_notifs_notify_update_available">notification des mises à jour</string>
+    <string name="pref_title_display_name">nom d\'utilisateur</string>
+    <string name="pref_title_new_message_notifications">nouvelle version</string>
+    <string name="pref_title_sync_frequency">Fréquence de synchronisation</string>
+    <string name="pref_title_system_sync_settings">Paramètres de synchronisation du système</string>
+    <string name="pref_user">usager</string>
+    <string name="prefs_help_manually_check_update">Vous pouvez vérifier manuellement les mises à jour en ouvrant la page \'Info\' de cette application.</string>
+    <string name="reason_app_useless">L\'application est inutile pour moi</string>
+    <string name="reason_bad_experience">Mauvaise expérience avec le logiciel</string>
+    <string name="reason_header">Pourquoi tu nous quittes ?</string>
+    <string name="reason_login_issues">Problèmes lors de l\'ouverture d\'une session</string>
+    <string name="reason_missing_hardware">Je n\'ai pas le matériel nécessaire (comme des lunettes AR, etc.).</string>
+    <string name="reason_other">Autre…</string>
+</resources>

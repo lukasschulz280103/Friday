@@ -1,4 +1,4 @@
-package com.friday.ar.service
+package com.friday.ar.account.sync
 
 import android.app.job.JobParameters
 import android.app.job.JobService
@@ -7,9 +7,9 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
-class FeedbackService : JobService() {
+class AccountDeletionFeedbackService : JobService() {
     companion object {
-        private const val LOGTAG = "FeedbackService"
+        private const val LOGTAG = "AccountDeletionFeedbackService"
     }
 
     override fun onStartJob(jobParameters: JobParameters): Boolean {

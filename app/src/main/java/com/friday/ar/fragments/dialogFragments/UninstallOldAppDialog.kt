@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.friday.ar.R
+import com.friday.ar.core_ui.dialog.FullscreenDialog
 import com.google.android.material.button.MaterialButton
 
 class UninstallOldAppDialog : FullscreenDialog() {

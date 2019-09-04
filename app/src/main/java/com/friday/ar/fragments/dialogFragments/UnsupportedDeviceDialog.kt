@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.friday.ar.R
+import com.friday.ar.core_ui.dialog.FullscreenDialog
 
 class UnsupportedDeviceDialog : FullscreenDialog() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

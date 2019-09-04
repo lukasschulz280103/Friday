@@ -12,10 +12,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.friday.ar.R
 import com.friday.ar.account.data.UserStore
+import com.friday.ar.auth.fragments.AuthDialog
 import com.friday.ar.auth.interfaces.OnAuthCompletedListener
 import com.friday.ar.core.Constant
 import com.friday.ar.feedback.ui.FeedbackSenderActivity
-import com.friday.ar.fragments.dialogFragments.AuthDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_profile.*

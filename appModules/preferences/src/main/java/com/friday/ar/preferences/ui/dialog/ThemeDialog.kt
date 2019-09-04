@@ -1,4 +1,4 @@
-package com.friday.ar.dialog
+package com.friday.ar.preferences.ui.dialog
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -16,10 +16,10 @@ import androidx.annotation.LayoutRes
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.friday.ar.R
 import com.friday.ar.core.Theme
 import com.friday.ar.core.activity.FridayActivity.Companion.LOGTAG
-import com.friday.ar.ui.SettingsActivity
+import com.friday.ar.preferences.R
+import com.friday.ar.preferences.ui.SettingsActivity
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 

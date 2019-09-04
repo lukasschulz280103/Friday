@@ -32,43 +32,20 @@
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_display_name">Username</string>
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Account and sync</string>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New version</string>
 
     <string name="switch_feedback_info">Add additional info</string>
     <string name="sign_out">Sign out</string>
     <string name="more_sync_settings">Synchronization</string>
-    <string name="delete_account">Delete Account</string>
-    <string name="confirm_signout_title">Sign out</string>
-    <string name="confirm_signout_message">Do you really want to sign out?</string>
-    <string name="sign_out_success">Successfully signed out.</string>
-    <string name="confirm_deletion_title">Confirm deletion</string>
-    <string name="confirm_deletion_message">By deleting your account you agree that all data which is part of this account will be deleted forever.</string>
-    <string name="confirm_deletion_positive">Confirm and delete \"%s\"</string>
     <string name="loading_dialog_msg">Loading…</string>
-    <string name="deletion_success">Account deleted</string>
-    <string name="deletion_error_canceled_title">Deletion was canceled</string>
-    <string name="deletion_error_canceled_message">The deletion process was canceled. This error may occurs because the internet connection is unstable or not existent</string>
-    <string name="deletion_error_unknown_title">Could not delete account</string>
     <string name="warning_auto_account_creation">If no account is existent, we wil automatically create a new one.</string>
-    <string name="delete_dialog_loading_text">Deleting Account…</string>
-    <string name="pref_header_info">Info</string>
     <string name="info_phrase_love" translatable="false">© 2018 Stark Industries</string>
     <string name="made_by" translatable="false"><b>by \nLukas Konstantin Faber \nLukas Eric Schulz</b></string>
     <string name="checking_version">Checking…</string>
     <string name="feature_soon">This feature is non-existent in the current version</string>
-    <string name="pref_title_sync_frequency">Sync frequency</string>
     <string name="page_profile_header_text">Hello, %s</string>
     <string name="version_text">Version %s</string>
     <string name="info_up_to_date">Up to date</string>
@@ -101,7 +78,6 @@
     <string name="beta" translatable="false">Beta</string>
     <string name="save_success">Saved</string>
     <string name="info">Info</string>
-    <string name="prefs_help_manually_check_update">You can manually check for updates by opening the \'About\' page of this app.</string>
     <string name="look">Look &amp; Feel</string>
     <string name="low_memory_title">Low memory warning</string>
     <string name="low_memory_message">The device is running on low memory, which may causes performance lags in the VR-Mode. Please try to free up space in order to guarantee a good performance.</string>
@@ -112,12 +88,6 @@
     <string name="more">More</string>
     <string name="to_store">to store</string>
     <string name="action_createnew_account">Create account</string>
-    <string name="reason_bad_experience">Bad experience with the software</string>
-    <string name="reason_login_issues">Issues while trying to log in</string>
-    <string name="reason_app_useless">The app is useless to me</string>
-    <string name="reason_missing_hardware">I don\'t have got the required hardware (such as AR-lasses etc.)</string>
-    <string name="reason_other">Other…</string>
-    <string name="reason_header">Why are you leaving us?</string>
     <string name="leave_action_activity">Do you want to terminate this session?</string>
     <string name="help_hint_vertical_plane_detection_title">Vertical surface detection</string>
     <string name="help_hint_vertical_plane_detection_msg">This app supports vertical plane detection. To make it work, you should search for remarkable surfaces such as brick-walls, or walls with images, posterrs etc. Detected walls will show the same indicator as horizontal detected surfaces.</string>
@@ -130,8 +100,6 @@
     <string name="asset_loader_loading">Loading data…</string>
     <string name="asset_loader_loading_success">Ready</string>
     <string name="err_assets_not_loaded">Voice assistant loading in progress</string>
-    <string name="pref_devmode">Developer mode</string>
-    <string name="pref_devmode_show_changelog">Always show changelog at appstart</string>
     <string name="err_missing_permissions">Missing permissions</string>
     <string name="err_unable_to_load_speech_assets">Could not load speech assets</string>
     <string name="err_following_permissions_required">Friday requires following permissions:</string>
@@ -168,15 +136,12 @@
     <string name="more_notification_settings">More notification settings</string>
     <string name="fileSelector_wrong_file_type_selected">You must select a friday plugin file (*.fpl)</string>
     <string name="start_action_mode">Start ActionMode</string>
-    <string name="pref_devmode_use_beta_channel">Use beta channel for updates</string>
     <string name="update">Update</string>
     <string name="update_available">Update available</string>
     <string name="unsupported_device_header">We\'re sorry!</string>
     <string name="unsupported_device_tablet_subheader">Friday does not support tablets.</string>
     <string name="unsupported_device_tablet_description">But you can still get Friday on any Android device with Android 8.0 or higher!</string>
     <string name="fileSelector_permission_required">You need to grant the storage permission in order to access your files.</string>
-    <string name="pref_notifs_notify_update_available">Notify about available updates</string>
-    <string name="pref_user">User</string>
     <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. Please install ArCore and retry.</string>
     <string name="errtype_arcore_device_not_capable">Your device is not supported.</string>
     <string name="device_compatibility">Device compatibility check</string>
