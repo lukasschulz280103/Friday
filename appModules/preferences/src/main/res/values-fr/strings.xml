@@ -33,4 +33,15 @@
     <string name="reason_login_issues">Problèmes lors de l\'ouverture d\'une session</string>
     <string name="reason_missing_hardware">Je n\'ai pas le matériel nécessaire (comme des lunettes AR, etc.).</string>
     <string name="reason_other">Autre…</string>
+    <string name="note_not_signed_in">Vous n\'êtes pas connecté.</string>
+    <string name="sign_out">Déconnexion</string>
+    <string name="more_notification_settings">Autres paramètres de notification</string>
+    <string name="auto_sync">Synchronisation avec le cloud</string>
+    <string name="auto_check_update">Vérification automatique des mises à jour</string>
+    <string name="notifications">Notifications</string>
+    <string name="look">Look et Feel</string>
+    <string name="design">Design</string>
+    <string name="developer_options">options de développement</string>
+    <string name="select_theme">Choisir le thème</string>
+    <string name="more_sync_settings">Synchronisation</string>
 </resources>

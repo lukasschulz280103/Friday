@@ -7,4 +7,5 @@
     <string name="compatibility_ar">ArCore support</string>
     <string name="compatibility_ar_installed">ArCore is installed</string>
     <string name="compatibility_ar_up_to_date">ArCore is up to date</string>
+    <string name="device_compatibility">Device compatibility check</string>
 </resources>

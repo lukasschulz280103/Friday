@@ -44,4 +44,17 @@
     <string name="network_error_title">Network error</string>
     <string name="network_error_title_short">No connection</string>
     <string name="retry">Retry</string>
+    <string name="info">Info</string>
+    <string name="help">Help</string>
+    <string name="search">Search</string>
+    <string name="beta">Beta</string>
+    <string name="internal_error_message">There was an internal error while processing your request.</string>
+    <string name="grant_permission">Grant</string>
+    <string name="request_permissions">Request permissions</string>
+    <string name="req_cam_rationale">The camera permission is needed to use fridays main feature: The AR-mode</string>
+    <string name="req_cam_retionale_title">Camera</string>
+    <string name="req_files_rationale_title">File system</string>
+    <string name="req_mic_rationale">The mircophone is needed to be able to use the voice assistant.</string>
+    <string name="req_mic_rationale_title">Microphone</string>
+    <string name="smth_went_wrong">Something went wrong :(</string>
 </resources>

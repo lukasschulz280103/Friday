@@ -25,7 +25,6 @@
     <string name="app_settings">Settings</string>
     <string name="app_feedback">Feedback</string>
     <string name="warning_decline">Decline</string>
-    <string name="internal_error_title">Internal error</string>
     <string name="internal_error_message">There was an internal error while processing your request.</string>
     <string name="title_activity_settings">Settings</string>
 
@@ -38,10 +37,7 @@
     <!-- Example settings for Notifications -->
 
     <string name="switch_feedback_info">Add additional info</string>
-    <string name="sign_out">Sign out</string>
-    <string name="more_sync_settings">Synchronization</string>
     <string name="loading_dialog_msg">Loading…</string>
-    <string name="warning_auto_account_creation">If no account is existent, we wil automatically create a new one.</string>
     <string name="info_phrase_love" translatable="false">© 2018 Stark Industries</string>
     <string name="made_by" translatable="false"><b>by \nLukas Konstantin Faber \nLukas Eric Schulz</b></string>
     <string name="checking_version">Checking…</string>
@@ -51,10 +47,8 @@
     <string name="info_up_to_date">Up to date</string>
     <string name="info_update_to">Update to %s</string>
     <string name="check_update_error">Could not check for update</string>
-    <string name="note_not_signed_in">You are not signed in.</string>
     <string name="smth_went_wrong">Something went wrong :(</string>
     <string name="textwidget_exmple" translatable="false">This is an example of the TextWidget.</string>
-    <string name="retry">Retry</string>
     <string name="placeholder_add_debug_body">Add more additional debug infos</string>
     <string name="header_how_to_use" translatable="false">How to use friday?</string>
     <string name="app_welcome">Welcome to friday</string>
@@ -68,24 +62,15 @@
     <string name="uninstall_old_title">Uninstall older version</string>
     <string name="uninstall_old_body">You can\'t use this version of friday with an older version installed at the same time. \n \n <b>You only have to do this once.</b></string>
     <string name="friday_groups">Groups</string>
-    <string name="help">Help</string>
-    <string name="design">Design</string>
-    <string name="auto_sync">Synchronize with cloud</string>
-    <string name="select_theme">Select Theme</string>
     <string name="notification_channel_update_description">This channel is used to notify about new Updates.</string>
     <string name="app_update_title">friday Update</string>
     <string name="app_update_description">friday is ready to update to %s !</string>
-    <string name="beta" translatable="false">Beta</string>
-    <string name="save_success">Saved</string>
-    <string name="info">Info</string>
-    <string name="look">Look &amp; Feel</string>
     <string name="low_memory_title">Low memory warning</string>
     <string name="low_memory_message">The device is running on low memory, which may causes performance lags in the VR-Mode. Please try to free up space in order to guarantee a good performance.</string>
     <string name="energy_saver_warn_title">Energy saver is on</string>
     <string name="energy_saver_warn_msg">You should turn off the energy saver mode in order to experience a good performance when using the AR-mode</string>
     <string name="deactivate">deactivate</string>
     <string name="recommendation_picked_widgets_title">Picked Widgets</string>
-    <string name="more">More</string>
     <string name="to_store">to store</string>
     <string name="action_createnew_account">Create account</string>
     <string name="leave_action_activity">Do you want to terminate this session?</string>
@@ -107,24 +92,13 @@
     <string name="project_friday">Project friday</string>
     <string name="terms_of_use">Terms of use</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="request_permissions">Request permissions</string>
-    <string name="grant_permission">Grant</string>
-    <string name="req_cam_retionale_title">Camera</string>
-    <string name="req_cam_rationale">The camera permission is needed to use fridays main feature: The AR-mode</string>
-    <string name="req_mic_rationale_title">Microphone</string>
-    <string name="req_files_rationale_title">File system</string>
-    <string name="req_mic_rationale">The mircophone is needed to be able to use the voice assistant.</string>
-    <string name="search">Search</string>
-    <string name="auto_check_update">Automatically check for updates</string>
     <string name="unknown_error">An unknown error has occurred!</string>
-    <string name="developer_options">Developer options</string>
     <string name="submit_feedback">Submit feedback</string>
     <string name="heat_warning_BETA">Show heat warning when starting actionmode</string>
     <string name="license_activity_label">open source licenses</string>
     <string name="greet_no_name">Welcome!</string>
     <string name="add_detail_debug_info">Add additional, more detailed debug infos</string>
     <string name="manager_wishlist">Wishlist</string>
-    <string name="install_from_disk">Install from disk</string>
     <string name="open_plugin_file">Open plugin file</string>
     <string name="err_inappropriate_file_extension">Innapropriate file extension</string>
     <string name="err_inappropriate_file_extension_msg">The chosen file has an inappropriate extension and cannot be loaded.</string>
@@ -132,8 +106,6 @@
     <string name="notification_channel_update">Update check</string>
     <string name="notification_channel_plugin_installer">Plugin installation service</string>
     <string name="notification_channel_plugin_installer_description">This channel notifies you about the status of the installed plugins when, for example, the progress of an installiong plugin changes.</string>
-    <string name="notifications">Notifications</string>
-    <string name="more_notification_settings">More notification settings</string>
     <string name="fileSelector_wrong_file_type_selected">You must select a friday plugin file (*.fpl)</string>
     <string name="start_action_mode">Start ActionMode</string>
     <string name="update">Update</string>
@@ -144,7 +116,6 @@
     <string name="fileSelector_permission_required">You need to grant the storage permission in order to access your files.</string>
     <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. Please install ArCore and retry.</string>
     <string name="errtype_arcore_device_not_capable">Your device is not supported.</string>
-    <string name="device_compatibility">Device compatibility check</string>
     <string-array name="pref_language_entries">
         <item>sys</item>
         <item>de</item>

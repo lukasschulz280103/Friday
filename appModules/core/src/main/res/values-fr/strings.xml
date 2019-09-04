@@ -41,4 +41,17 @@
     <string name="network_error_title">Erreur réseau</string>
     <string name="network_error_title_short">Pas de connexion</string>
     <string name="retry">réessayer</string>
+    <string name="info">Info</string>
+    <string name="help">Aide</string>
+    <string name="search">Rechercher</string>
+    <string name="beta">Bêta</string>
+    <string name="internal_error_message">Il y a eu une erreur interne lors du traitement de votre demande.</string>
+    <string name="grant_permission">Autoriser l\'utilisation</string>
+    <string name="request_permissions">Demander des permissions</string>
+    <string name="req_cam_rationale">L\'autorisation de la caméra est nécessaire pour\'la fonction principale du friday : Le mode AR</string>
+    <string name="req_cam_retionale_title">Camera</string>
+    <string name="req_files_rationale_title">système de fichiers</string>
+    <string name="req_mic_rationale">Le mircophone est nécessaire pour pouvoir utiliser l\'assistant vocal.</string>
+    <string name="req_mic_rationale_title">Microphone</string>
+    <string name="smth_went_wrong">Quelque chose a mal tourné :(</string>
 </resources>

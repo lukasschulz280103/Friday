@@ -28,4 +28,5 @@
     <string name="exception_weak_pswd_msg">The given password couldn\'t pass the strength verification: %s</string>
     <string name="exception_weak_pswd_title">Password strength validation failed</string>
     <string name="signin_choice">or use</string>
+    <string name="warning_auto_account_creation">If no account is existent, we wil automatically create a new one.</string>
 </resources>

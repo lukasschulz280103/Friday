@@ -41,4 +41,17 @@
     <string name="network_error_title">Netzwerkfehler</string>
     <string name="network_error_title_short">Keine Verbindung</string>
     <string name="retry">Wiederhoeln</string>
+    <string name="info">Info</string>
+    <string name="help">Hilfe</string>
+    <string name="search">Suchen</string>
+    <string name="beta">Beta</string>
+    <string name="internal_error_message">Beim bearbeiten der Anfrage ist ein Fehler aufgetreten.</string>
+    <string name="grant_permission">Zugriff erlauben</string>
+    <string name="request_permissions">Berechtigungen erteilen</string>
+    <string name="req_cam_rationale">Die Kamera wird benötigt, damit das Hauptfeature, der AR-Modus, genutzt werden kann</string>
+    <string name="req_cam_retionale_title">Kamera</string>
+    <string name="req_files_rationale_title">Dateien und Speicher</string>
+    <string name="req_mic_rationale">Das Mikrofon wird genutzt, um den friday-Sprachassistenten bereitzustellen</string>
+    <string name="req_mic_rationale_title">Microphone</string>
+    <string name="smth_went_wrong">Etwas ist schief gelaufen</string>
 </resources>

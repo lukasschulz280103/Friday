@@ -33,4 +33,15 @@
     <string name="reason_login_issues">Probleme bei Anmeldeversuchen</string>
     <string name="reason_missing_hardware">Mir fehlt die benötigte Hardware (wie zum Beispiel eine AR-Brille)</string>
     <string name="reason_other">Andere…</string>
+    <string name="note_not_signed_in">Sie sind nicht angemeldet</string>
+    <string name="sign_out">Abmelden</string>
+    <string name="more_notification_settings">Benachrichtigungseinstellungen</string>
+    <string name="auto_sync">Automatisch Account synchronisieren</string>
+    <string name="auto_check_update">Automatisch nach Updates suchen</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="look">Aussehen &amp; Benutzeroberfläche</string>
+    <string name="design">Design</string>
+    <string name="developer_options">Entwickleroptionen</string>
+    <string name="select_theme">Theme auswählen</string>
+    <string name="more_sync_settings">Synchronisation</string>
 </resources>
