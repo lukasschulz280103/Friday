@@ -1,5 +1,6 @@
 package com.friday.ar.fragments.dialogFragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,5 +15,6 @@ class UnsupportedDeviceDialog : FullscreenDialog() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCancelable = false
+        requireActivity().window.statusBarColor = Color.BLACK
     }
 }

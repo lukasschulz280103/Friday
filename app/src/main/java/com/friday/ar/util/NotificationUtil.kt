@@ -17,7 +17,7 @@ object NotificationUtil {
         val nmc = NotificationManagerCompat.from(context)
         val updateAvailableNotification = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_UPDATE_ID)
                 .setSmallIcon(R.drawable.ic_file_download_black_24dp)
-                .setContentTitle(context.getString(R.string.module_store_name))
+                .setContentTitle(context.getString(R.string.module_app_name))
                 .setContentText(context.getString(R.string.app_update_description, newVersion))
                 .setContentIntent(notificationClick)
                 .setPriority(NotificationCompat.PRIORITY_LOW)

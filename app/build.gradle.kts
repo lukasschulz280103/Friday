@@ -26,12 +26,14 @@ android {
 }
 dependencies {
     implementation(project(":core"))
+    implementation(project(":core-ui"))
     implementation(project(":wizard"))
     implementation(project(":auth"))
     implementation(project(":account"))
     implementation(project(":ar"))
     implementation(project(":store"))
     implementation(project(":pluginSystem"))
+    implementation(project(":feedback"))
     implementation(project(Dependencies.pocketSphinx))
 
 

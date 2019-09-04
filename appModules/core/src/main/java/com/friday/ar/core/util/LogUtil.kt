@@ -1,9 +1,9 @@
-package com.friday.ar.util
+package com.friday.ar.core.util
 
 import android.content.Context
 import android.os.Build
 import android.util.Log
-import com.friday.ar.BuildConfig
+import com.friday.ar.core.BuildConfig
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.File

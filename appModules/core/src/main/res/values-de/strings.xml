@@ -38,4 +38,7 @@
     <string name="firebase_code_perm_denied">Zugriff verweigert. Sie Verfügen nicht über die benötigten Rechte, um auf diese Ressource zuzugreifen. Wenn sie glauben, dass dies ein Fehler ist, kontaktieren sie unseren Support.</string>
     <string name="firebase_code_unauthenticated">Sie sind nicht angemeldet. Um diese Funktion zu verwenden, melden sie sich über \">Profil >Anmelden\" an un versuchen sie es erneut.</string>
     <string name="firebase_code_unavailable">Service ist nicht erreichbar. Bitte überprüfen sie ihre Netzwerkverbindung und versuchen sie es später erneut.</string>
+    <string name="network_error_title">Netzwerkfehler</string>
+    <string name="network_error_title_short">Keine Verbindung</string>
+    <string name="retry">Wiederhoeln</string>
 </resources>

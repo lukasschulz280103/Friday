@@ -5,4 +5,7 @@
     <string name="project_friday">Projekt Friday</string>
     <string name="welcome_descriptioon">Dieser Guide führt sie durch den Setup von friday.</string>
     <string name="acceptance_of_pp_and_tou_text">Ich habe die <a>Nutzungsbedingungen</a> und die <a>Datenschutzbestimmungen</a></string>
+    <string name="compatibility_ar">ArCore unterstützt</string>
+    <string name="compatibility_ar_installed">ArCore ist installiert</string>
+    <string name="compatibility_ar_up_to_date">ArCore ist aktuell</string>
 </resources>

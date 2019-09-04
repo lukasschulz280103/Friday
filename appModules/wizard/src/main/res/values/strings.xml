@@ -4,4 +4,7 @@
     <string name="project_friday">Project Friday</string>
     <string name="welcome_descriptioon">This wizard will guide you through the setup of friday</string>
     <string name="acceptance_of_pp_and_tou_text">I have read and accept the <a>Terms of Use</a> and the <a>Privacy Policy</a>:</string>
+    <string name="compatibility_ar">ArCore support</string>
+    <string name="compatibility_ar_installed">ArCore is installed</string>
+    <string name="compatibility_ar_up_to_date">ArCore is up to date</string>
 </resources>

@@ -158,7 +158,7 @@
                 android:value="com.friday.ar.ui.mainactivity.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.FeedbackSenderActivity"
+            android:name=".feedback.ui.FeedbackSenderActivity"
             android:label="@string/app_feedback" />
         <activity
             android:name=".ui.InfoActivity"

@@ -75,31 +75,9 @@
     <string name="info_update_to">Update to %s</string>
     <string name="check_update_error">Could not check for update</string>
     <string name="note_not_signed_in">You are not signed in.</string>
-    <string name="new_file_attached">Attached file %s</string>
-    <string name="changed_attached_file">Attached file changed to %s</string>
     <string name="smth_went_wrong">Something went wrong :(</string>
-    <string name="feedback_submit_success">Submitted feedack successfully. Thank you!</string>
-    <string name="feedback_submit_image_upload">Uploading attached images…</string>
     <string name="textwidget_exmple" translatable="false">This is an example of the TextWidget.</string>
-    <string name="feedback_submit_logfiles_upload">Uploading LogFiles…</string>
-    <string name="debug_check_device_info">Device info</string>
-    <string name="debug_usage_data">Usage data</string>
-    <string name="header_usage_data_info">What usage data we can collect:</string>
-    <string name="usage_data_feature_usage_data">Usage data of features we consider causing crashes of the friday app</string>
-    <string name="usage_data_usage_time">App usage time and average usage time of certain features</string>
-    <string name="usage_data_ar_feature">Usage time and way of the AR-feature</string>
-    <string name="usage_data_necesssarity">We only collect usage data we consider to be helpful in the development and improvement of this app. All collected data will be deleted after it has been reviewed by our support.</string>
-    <string name="header_device_data_info">We collect following metadata about your device:</string>
-    <string name="device_data_info_device">The name of your device</string>
-    <string name="device_data_info_model">The device model name</string>
-    <string name="device_data_info_brand">The brand of your device</string>
-    <string name="device_data_info_sdkversion">The Android SDK Version of your device</string>
-    <string name="device_data_info_android_version">The android version your device is running on</string>
-    <string name="device_data_info_manufacturer">The manufacturer of your device</string>
-    <string name="error_network_missing_info">Please check if you entered an email address and if you are connected to a network</string>
     <string name="retry">Retry</string>
-    <string name="network_error_title">Network error</string>
-    <string name="attach_file">Attach file</string>
     <string name="placeholder_add_debug_body">Add more additional debug infos</string>
     <string name="header_how_to_use" translatable="false">How to use friday?</string>
     <string name="app_welcome">Welcome to friday</string>
@@ -109,9 +87,7 @@
     </string>
     <string name="app_language">Language</string>
     <string name="changelog">Changelog</string>
-    <string name="network_error_title_short">No connection</string>
     <string name="version_update">Update %s</string>
-    <string name="missing_inputs">You either need to allow the collection of device usage data or specify your feedback in the feedback body.</string>
     <string name="uninstall_old_title">Uninstall older version</string>
     <string name="uninstall_old_body">You can\'t use this version of friday with an older version installed at the same time. \n \n <b>You only have to do this once.</b></string>
     <string name="friday_groups">Groups</string>
@@ -122,8 +98,6 @@
     <string name="notification_channel_update_description">This channel is used to notify about new Updates.</string>
     <string name="app_update_title">friday Update</string>
     <string name="app_update_description">friday is ready to update to %s !</string>
-    <string name="lorem_ipsum_short" translatable="false">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
-    <string name="lorem_ipsum_long" translatable="false">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  --   Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.  Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.  Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.  At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.</string>
     <string name="beta" translatable="false">Beta</string>
     <string name="save_success">Saved</string>
     <string name="info">Info</string>
@@ -200,16 +174,12 @@
     <string name="unsupported_device_header">We\'re sorry!</string>
     <string name="unsupported_device_tablet_subheader">Friday does not support tablets.</string>
     <string name="unsupported_device_tablet_description">But you can still get Friday on any Android device with Android 8.0 or higher!</string>
-    <string name="feedbackSender_storageException">Could not upload feedback. Most likely you are not signed in. Please sign in first and then retry.</string>
     <string name="fileSelector_permission_required">You need to grant the storage permission in order to access your files.</string>
     <string name="pref_notifs_notify_update_available">Notify about available updates</string>
     <string name="pref_user">User</string>
     <string name="errtype_arcore_installation_declined">This application requires ArCore to be installed on this device, but the installation was declined. Please install ArCore and retry.</string>
     <string name="errtype_arcore_device_not_capable">Your device is not supported.</string>
     <string name="device_compatibility">Device compatibility check</string>
-    <string name="compatibility_ar">ArCore support</string>
-    <string name="compatibility_ar_installed">ArCore is installed</string>
-    <string name="compatibility_ar_up_to_date">ArCore is up to date</string>
     <string-array name="pref_language_entries">
         <item>sys</item>
         <item>de</item>

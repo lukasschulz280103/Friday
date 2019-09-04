@@ -1,4 +1,4 @@
-package com.friday.ar.ui
+package com.friday.ar.feedback.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,12 +12,11 @@ import android.view.View
 import android.view.Window
 import android.widget.Toast
 import androidx.preference.PreferenceManager
-import com.friday.ar.R
 import com.friday.ar.core.activity.FridayActivity
+import com.friday.ar.core.util.LogUtil
+import com.friday.ar.core.util.net.Connectivity
 import com.friday.ar.core.util.validation.Validator
-import com.friday.ar.dialog.ProgressDialog
-import com.friday.ar.util.Connectivity
-import com.friday.ar.util.LogUtil
+import com.friday.ar.feedback.R
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
@@ -40,7 +39,6 @@ class FeedbackSenderActivity : FridayActivity() {
     private var feedbackLogFolder = firebaseStorage.getReference("feedback")
 
     private lateinit var inputtemplate: SharedPreferences
-    private lateinit var fileUploadDialog: ProgressDialog
 
     private lateinit var attachedImageBitmpap: Bitmap
     private var showInfo = View.OnLongClickListener { view ->
@@ -58,12 +56,11 @@ class FeedbackSenderActivity : FridayActivity() {
     private var attachedFile: File? = null
 
     private val attachmentUpload = OnCompleteListener<UploadTask.TaskSnapshot> { task ->
-        fileUploadDialog.dismiss()
         if (task.isSuccessful) {
             Toast.makeText(this@FeedbackSenderActivity, R.string.feedback_submit_success, Toast.LENGTH_LONG).show()
             finish()
         } else {
-            Toast.makeText(this@FeedbackSenderActivity, R.string.smth_went_wrong, Toast.LENGTH_LONG).show()
+            Toast.makeText(this@FeedbackSenderActivity, R.string.unknown_error, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -106,7 +103,6 @@ class FeedbackSenderActivity : FridayActivity() {
                 } else {
                     val errorui = MaterialAlertDialogBuilder(this)
                     errorui.setTitle(R.string.network_error_title)
-                    errorui.setMessage(R.string.error_network_missing_info)
                     errorui.setPositiveButton(R.string.retry) { _, _ -> onOptionsItemSelected(item) }
                     errorui.create().show()
                 }
@@ -116,15 +112,15 @@ class FeedbackSenderActivity : FridayActivity() {
     }
 
     private fun createTimeStampString(): String {
-        val timestampcalendar = GregorianCalendar.getInstance()
-        val timestampbuilder = StringBuilder()
-                .append(timestampcalendar.get(Calendar.YEAR))
-                .append(timestampcalendar.get(Calendar.DAY_OF_MONTH))
-                .append(timestampcalendar.get(Calendar.MONTH).toString() + "_")
-                .append(timestampcalendar.get(Calendar.HOUR_OF_DAY))
-                .append(timestampcalendar.get(Calendar.MINUTE))
-                .append(timestampcalendar.get(Calendar.SECOND))
-        return timestampbuilder.toString()
+        val timeStampCalendar = GregorianCalendar.getInstance()
+        val timeStampBuilder = StringBuilder()
+                .append(timeStampCalendar.get(Calendar.YEAR))
+                .append(timeStampCalendar.get(Calendar.DAY_OF_MONTH))
+                .append(timeStampCalendar.get(Calendar.MONTH).toString() + "_")
+                .append(timeStampCalendar.get(Calendar.HOUR_OF_DAY))
+                .append(timeStampCalendar.get(Calendar.MINUTE))
+                .append(timeStampCalendar.get(Calendar.SECOND))
+        return timeStampBuilder.toString()
     }
 
     private fun submitFeedback(): Boolean {
@@ -132,8 +128,6 @@ class FeedbackSenderActivity : FridayActivity() {
             try {
                 val deviceInfoFile = LogUtil.createDebugInfoFile(this, "email", feedback_mail.text!!.toString(), "body", feedback_body.text!!.toString())
                 val folderName = createTimeStampString()
-                fileUploadDialog = ProgressDialog(this, getString(R.string.feedback_submit_logfiles_upload))
-                fileUploadDialog.show()
                 val uploadDeviceInfoFile = feedbackLogFolder.child("$folderName/device_info.json").putBytes(LogUtil.fileToString(deviceInfoFile!!).toByteArray())
                 uploadDeviceInfoFile.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -141,7 +135,6 @@ class FeedbackSenderActivity : FridayActivity() {
                             val byteStream = ByteArrayOutputStream()
                             attachedImageBitmpap.compress(Bitmap.CompressFormat.PNG, 50, byteStream)
                             attachedImageBitmpap.recycle()
-                            fileUploadDialog.setMessage(R.string.feedback_submit_image_upload)
                             val uploadImageFile = feedbackLogFolder.child("$folderName/feedback-image.jpg").putBytes(byteStream.toByteArray())
                             uploadImageFile.addOnCompleteListener(attachmentUpload)
                         } else {
@@ -150,7 +143,6 @@ class FeedbackSenderActivity : FridayActivity() {
                             finish()
                         }
                     } else {
-                        fileUploadDialog.dismiss()
                         val e = task.exception
                         Log.e(LOGTAG, e!!.localizedMessage, e)
                         val errorDialog = MaterialAlertDialogBuilder(this)

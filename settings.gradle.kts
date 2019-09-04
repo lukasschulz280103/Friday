@@ -5,6 +5,9 @@ include("pocketsphinx-android-5prealpha-release")
 include(":core")
 project(":core").projectDir = File(rootDir, "appModules/core")
 
+include(":core-ui")
+project(":core-ui").projectDir = File(rootDir, "appModules/core-ui")
+
 include(":ar")
 project(":ar").projectDir = File(rootDir, "appModules/ar")
 
@@ -22,3 +25,6 @@ project(":store").projectDir = File(rootDir, "appModules/store")
 
 include(":pluginSystem")
 project(":pluginSystem").projectDir = File(rootDir, "appModules/pluginSystem")
+
+include(":feedback")
+project(":feedback").projectDir = File(rootDir, "appModules/feedback")

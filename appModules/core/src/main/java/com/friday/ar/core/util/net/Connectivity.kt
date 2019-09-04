@@ -1,4 +1,4 @@
-package com.friday.ar.util
+package com.friday.ar.core.util.net
 
 import android.content.Context
 import android.net.ConnectivityManager

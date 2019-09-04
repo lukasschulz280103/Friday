@@ -1,0 +1,25 @@
+<resources>
+    <string name="module_feedback_name">feedback</string>
+    <string name="header_device_data_info">We collect following metadata about your device:</string>
+    <string name="header_usage_data_info">Collected usage data</string>
+    <string name="usage_data_features">Usage data of features we consider causing crashes of the friday app</string>
+    <string name="usage_data_necissity">We only collect usage data, which we consider important for the further development and improvement of our app as useful. All transmitted data will be permanently deleted after a review by employees.</string>
+    <string name="usage_data_usage_time">App usage time and average usage time of certain features</string>
+    <string name="debug_check_device_info">Device info</string>
+    <string name="debug_usage_data">Usage data</string>
+    <string name="device_data_info_android_version">The android version your device is running on</string>
+    <string name="device_data_info_brand">The brand of your device</string>
+    <string name="device_data_info_device">The name of your device</string>
+    <string name="device_data_info_manufacturer">The manufacturer of your device</string>
+    <string name="device_data_info_model">The device model name</string>
+    <string name="device_data_info_sdkversion">The Android SDK Version of your device</string>
+    <string name="feedbackSender_storageException">Could not upload feedback. Most likely you are not signed in. Please sign in first and then retry.</string>
+    <string name="feedback_submit_image_upload">Uploading attached images…</string>
+    <string name="feedback_submit_logfiles_upload">Uploading LogFiles…</string>
+    <string name="feedback_submit_success">Submitted feedack successfully. Thank you!</string>
+    <string name="new_file_attached">Attached %s</string>
+    <string name="attach_file">Attach file</string>
+    <string name="submit_feedback">Submit feedback</string>
+    <string name="missing_inputs">You either need to allow the collection of device usage data or specify your feedback in the feedback body.</string>
+    <string name="changed_attached_file">Attached file changed to %s</string>
+</resources>

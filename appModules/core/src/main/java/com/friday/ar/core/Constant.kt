@@ -100,4 +100,9 @@ class Constant {
             const val INSTALLER_SHOW_DISK_INSTALL_WARNING = "storeInstallationsManager_showSecurityWarning"
         }
     }
+
+    object OldPacakgeNames {
+        const val RBPIECLIENT = "com.code_design_camp.client.rasberrypie.rbpieclient"
+        const val HEAD_DISPLAY_CLIENT = "com.code_design_camp.client.friday.HeadDisplayClient"
+    }
 }

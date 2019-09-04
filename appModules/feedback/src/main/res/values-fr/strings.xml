@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="module_feedback_name">feedback</string>
+    <string name="header_device_data_info">Nous recueillons les métadonnées suivantes sur votre appareil:</string>
+    <string name="header_usage_data_info">Données d\'utilisation collectées</string>
+    <string name="usage_data_features">Données d\'utilisation des fonctionnalités que nous considérons comme causant les crashs de l\'application du friday.</string>
+    <string name="usage_data_necissity">Nous ne collectons que les données d\'utilisation, que nous considérons importantes pour le développement et l\'amélioration de notre application comme utiles. Toutes les données transmises seront irrévocablement effacées après examen par les employés.</string>
+    <string name="usage_data_usage_time">Temps d\'utilisation des applications et temps moyen d\'utilisation de certaines fonctionnalités</string>
+    <string name="debug_check_device_info">Information sur l\'appareil</string>
+    <string name="debug_usage_data">Donnée d\'utilisation</string>
+    <string name="device_data_info_android_version">La version androïde sur laquelle votre appareil est en cours d\'exécution</string>
+    <string name="device_data_info_brand">La marque de votre appareil</string>
+    <string name="device_data_info_device">Le nom de votre appareil</string>
+    <string name="device_data_info_manufacturer">Le fabricant de votre appareil</string>
+    <string name="device_data_info_model">Le nom du modèle de l\'appareil</string>
+    <string name="device_data_info_sdkversion">La version Android SDK de votre appareil</string>
+    <string name="feedbackSender_storageException">La rétroaction n\'a pas pu être téléchargée. Vous n\'êtes peut-être pas connecté - connectez-vous et réessayez.</string>
+    <string name="feedback_submit_image_upload">Chargement des images jointes....</string>
+    <string name="feedback_submit_logfiles_upload">Chargement des fichiers journaux</string>
+    <string name="feedback_submit_success">Les commentaires soumis ont été reçus avec succès. Je vous remercie !</string>
+    <string name="new_file_attached">Fichier %s joint</string>
+    <string name="attach_file">Joindre un fichier</string>
+    <string name="submit_feedback">Submit feedback</string>
+    <string name="missing_inputs">Vous devez soit autoriser la collecte des données d\'utilisation de l\'appareil, soit spécifier votre feedback dans le corps du feedback.</string>
+    <string name="changed_attached_file">Le fichier joint a été changé en %s</string>
+</resources>

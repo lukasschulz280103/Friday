@@ -12,8 +12,6 @@ import android.view.ViewTreeObserver
 import android.view.Window
 import android.widget.ImageButton
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
@@ -23,6 +21,7 @@ import com.friday.ar.base.ui.FullscreenActionActivity
 import com.friday.ar.core.Constant
 import com.friday.ar.core.Theme
 import com.friday.ar.core.activity.FridayActivity
+import com.friday.ar.feedback.ui.FeedbackSenderActivity
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
 import com.friday.ar.fragments.dialogFragments.changelog.ChangelogDialogFragment
@@ -30,7 +29,6 @@ import com.friday.ar.list.dashboard.DashboardAdapter
 import com.friday.ar.store.ui.StoreDetailActivity
 import com.friday.ar.store.ui.fragments.MainStoreFragment
 import com.friday.ar.store.ui.fragments.ManagerBottomSheetDialogFragment
-import com.friday.ar.ui.FeedbackSenderActivity
 import com.friday.ar.wizard.ui.WizardActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -38,6 +36,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.ar.core.ArCoreApk
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.page_main.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -54,7 +53,8 @@ class MainActivity : FridayActivity() {
 
     private var storeFragment = MainStoreFragment()
     internal lateinit var app: FridayApplication
-    private lateinit var viewModel: MainActivityViewModel
+    private val viewModel by viewModel<MainActivityViewModel>()
+
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.main_nav_dashboard -> main_view_flipper!!.displayedChild = SITE_DASHBOARD
@@ -82,33 +82,37 @@ class MainActivity : FridayActivity() {
         setContentView(R.layout.activity_main)
         app = application as FridayApplication
 
-        viewModel = ViewModelProvider.AndroidViewModelFactory(application).create(MainActivityViewModel::class.java)
 
-        viewModel.isFirstUse.observe(this, Observer { isFirstUse ->
+        if (resources.getBoolean(R.bool.isTablet)) {
+            UnsupportedDeviceDialog().show(supportFragmentManager, "UnsupportedDeviceDialog")
+            return
+        }
+
+        viewModel.getFirstUseState().observe(this, Observer { isFirstUse ->
             if (isFirstUse) {
                 val showWizard = Intent(this, WizardActivity::class.java)
                 startActivity(showWizard)
             }
         })
 
-        viewModel.energySaverActive.observe(this@MainActivity, Observer { isEnergySaverActive ->
+        viewModel.getEnergySaverState().observe(this@MainActivity, Observer { isEnergySaverActive ->
             if (isEnergySaverActive) {
-                //val builder = MaterialAlertDialogBuilder(this)
-                //builder.setTitle(R.string.energy_saver_warn_title)
-                //builder.setMessage(R.string.energy_saver_warn_msg)
-                //builder.setPositiveButton(R.string.deactivate) { _, _ -> }
-                //builder.setNegativeButton(R.string.later, null)
-                //builder.create().show()
+                val builder = MaterialAlertDialogBuilder(this)
+                builder.setTitle(R.string.energy_saver_warn_title)
+                builder.setMessage(R.string.energy_saver_warn_msg)
+                builder.setPositiveButton(R.string.deactivate) { _, _ -> }
+                builder.setNegativeButton(R.string.later, null)
+                builder.create().show()
             }
         })
-        viewModel.isUpdatedVersion.observe(this@MainActivity, Observer { isUpdatedVersion ->
+        viewModel.getIsUpdatedVersion().observe(this@MainActivity, Observer { isUpdatedVersion ->
             if (isUpdatedVersion) {
                 val changeLogDialog = ChangelogDialogFragment()
                 changeLogDialog.show(supportFragmentManager, "ChangeLogDialog")
             }
         })
 
-        viewModel.isOldVersionInstalled.observe(this@MainActivity, Observer { pair ->
+        viewModel.getOldVersionInstalledState().observe(this@MainActivity, Observer { pair ->
             val isOldVersionInstalled = pair.first
             if (isOldVersionInstalled) {
                 val dialog = UninstallOldAppDialog()
@@ -122,10 +126,6 @@ class MainActivity : FridayActivity() {
 
         //Setting up views and objects on separate thread to improve performance at startup
         Thread(Runnable {
-            if (resources.getBoolean(R.bool.isTablet)) {
-                runOnUiThread { UnsupportedDeviceDialog().show(supportFragmentManager, "UnsupportedDeviceDialog") }
-                return@Runnable
-            }
 
             //Apply padding to the main pages content frame so it fits the height of the title view
             val vto = parallaxScollView.viewTreeObserver
@@ -148,12 +148,6 @@ class MainActivity : FridayActivity() {
                 startActivityForResult(intent, FULLSCREEN_REQUEST_CODE)
                 Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
             }
-
-
-            val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this@MainActivity)
-            if (defaultSharedPreferences.getInt("theme", 0) == 0) {
-                defaultSharedPreferences.edit().putInt("theme", R.style.AppTheme).apply()
-            }
         }).start()
 
         mainPageDashboardList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -162,9 +156,9 @@ class MainActivity : FridayActivity() {
             viewModel.runRefresh()
         }
 
-        viewModel.dashboardListData.observe(this, Observer { list ->
+        viewModel.getDashBoardListData().observe(this, Observer { list ->
             mainSwipeRefreshLayout.isRefreshing = false
-            if (list.size == 0) {
+            if (list.isEmpty()) {
 
             } else {
                 mainPageDashboardList.adapter!!.notifyDataSetChanged()

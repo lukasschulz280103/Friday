@@ -38,4 +38,7 @@
     <string name="firebase_code_perm_denied">Accès refusé. Vous n\'avez pas les permissions nécessaires pour accéder à cette ressource. Si vous pensez que c\'est un bogue, contactez notre support.</string>
     <string name="firebase_code_unauthenticated">Vous n\'êtes pas connecté. Pour utiliser cette fonctionnalité, connectez-vous via \">Profil >Se connecter\" et réessayez.</string>
     <string name="firebase_code_unavailable">Service indisponible. Veuillez vérifier votre connexion réseau et réessayer plus tard.</string>
+    <string name="network_error_title">Erreur réseau</string>
+    <string name="network_error_title_short">Pas de connexion</string>
+    <string name="retry">réessayer</string>
 </resources>

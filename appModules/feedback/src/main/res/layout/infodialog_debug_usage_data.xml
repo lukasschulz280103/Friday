@@ -24,19 +24,13 @@
             style="@style/TextListItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usage_data_feature_usage_data" />
-
-        <TextView
-            style="@style/TextListItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/usage_data_usage_time" />
 
         <TextView
             style="@style/TextListItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/usage_data_ar_feature" />
+            android:text="@string/usage_data_features" />
     </LinearLayout>
 
     <TextView
@@ -44,6 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/usage_data_necesssarity" />
+        android:text="@string/usage_data_necissity" />
 
 </LinearLayout>
