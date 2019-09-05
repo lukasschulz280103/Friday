@@ -6,8 +6,9 @@ import android.media.Rating
 import android.net.Uri
 
 import com.friday.ar.pluginsystem.file.PluginFile
+import java.io.Serializable
 
-class Plugin {
+class Plugin : Serializable {
 
     var name: String? = null
     var iconURI: Uri? = null

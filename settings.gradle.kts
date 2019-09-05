@@ -31,3 +31,6 @@ project(":feedback").projectDir = File(rootDir, "appModules/feedback")
 
 include(":preferences")
 project(":preferences").projectDir = File(rootDir, "appModules/preferences")
+
+include(":dashboard")
+project(":dashboard").projectDir = File(rootDir, "appModules/dashboard")

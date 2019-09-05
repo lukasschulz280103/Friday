@@ -9,7 +9,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.friday.ar.core.Constant
-import com.friday.ar.dashboard.DashboardListItem
+import com.friday.ar.dashboard.internal.base.BaseDashboardListItem
+import com.friday.ar.pluginsystem.Plugin
 import org.koin.core.KoinComponent
 import org.koin.core.get
 
@@ -20,7 +21,7 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
 
     private val isOldVersionInstalled = MutableLiveData<Pair<Boolean, String?>>()
     private val isFirstUse = MutableLiveData<Boolean>()
-    private val dashboardListData = MutableLiveData<List<DashboardListItem>>()
+    private val dashboardListData = MutableLiveData<ArrayList<BaseDashboardListItem>>()
     fun getEnergySaverState() = energySaverActive as LiveData<Boolean>
     fun getIsUpdatedVersion() = isUpdatedVersion as LiveData<Boolean>
 
@@ -30,7 +31,7 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
     fun getOldVersionInstalledState() = isOldVersionInstalled as LiveData<Pair<Boolean, String?>>
 
     fun getFirstUseState() = isFirstUse as LiveData<Boolean>
-    fun getDashBoardListData() = dashboardListData as LiveData<List<DashboardListItem>>
+    fun getDashBoardListData() = dashboardListData as LiveData<ArrayList<BaseDashboardListItem>>
 
     init {
         val defaultSharedPreferences: SharedPreferences = get()
@@ -74,11 +75,16 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
         } else isFirstUse.postValue(false)
 
 
-        val dataList = ArrayList<DashboardListItem>()
+        val dataList = ArrayList<BaseDashboardListItem>()
+        val examplePlugin = Plugin()
+        examplePlugin.name = "TestPlugin"
+        dataList.add(BaseDashboardListItem.getInstance(examplePlugin))
         dashboardListData.postValue(dataList)
     }
 
     fun runRefresh() {
-        dashboardListData.postValue(ArrayList(0))
+        val arrayList = ArrayList<BaseDashboardListItem>()
+        arrayList.clear()
+        dashboardListData.postValue(arrayList)
     }
 }

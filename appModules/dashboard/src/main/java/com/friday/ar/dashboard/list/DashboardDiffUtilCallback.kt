@@ -1,9 +1,9 @@
-package com.friday.ar.list.dashboard
+package com.friday.ar.dashboard.list
 
 import androidx.recyclerview.widget.DiffUtil
-import com.friday.ar.dashboard.DashboardListItem
+import com.friday.ar.dashboard.internal.base.BaseDashboardListItem
 
-class DashboardDiffUtilCallback(private val oldData: ArrayList<DashboardListItem>, private val newData: ArrayList<DashboardListItem>) : DiffUtil.Callback() {
+class DashboardDiffUtilCallback(private val oldData: ArrayList<BaseDashboardListItem>, private val newData: ArrayList<BaseDashboardListItem>) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldData[oldItemPosition] == newData[newItemPosition]
     }

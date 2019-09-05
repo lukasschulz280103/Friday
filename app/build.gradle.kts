@@ -35,6 +35,7 @@ dependencies {
     implementation(project(":pluginSystem"))
     implementation(project(":feedback"))
     implementation(project(":preferences"))
+    implementation(project(":dashboard"))
     implementation(project(Dependencies.pocketSphinx))
 
 

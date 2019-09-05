@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.Window
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crashlytics.android.answers.Answers
@@ -21,11 +22,11 @@ import com.friday.ar.base.ui.FullscreenActionActivity
 import com.friday.ar.core.Constant
 import com.friday.ar.core.Theme
 import com.friday.ar.core.activity.FridayActivity
+import com.friday.ar.dashboard.list.DashboardAdapter
 import com.friday.ar.feedback.ui.FeedbackSenderActivity
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
 import com.friday.ar.fragments.dialogFragments.changelog.ChangelogDialogFragment
-import com.friday.ar.list.dashboard.DashboardAdapter
 import com.friday.ar.store.ui.StoreDetailActivity
 import com.friday.ar.store.ui.fragments.MainStoreFragment
 import com.friday.ar.store.ui.fragments.ManagerBottomSheetDialogFragment
@@ -158,10 +159,9 @@ class MainActivity : FridayActivity() {
 
         viewModel.getDashBoardListData().observe(this, Observer { list ->
             mainSwipeRefreshLayout.isRefreshing = false
+            (mainPageDashboardList.adapter!! as DashboardAdapter).onRefresh(list)
             if (list.isEmpty()) {
-
-            } else {
-                mainPageDashboardList.adapter!!.notifyDataSetChanged()
+                Toast.makeText(this, "You're done!", Toast.LENGTH_LONG).show()
             }
         })
     }
