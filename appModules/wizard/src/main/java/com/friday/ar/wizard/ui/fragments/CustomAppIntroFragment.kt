@@ -10,8 +10,9 @@ import com.github.paolorotolo.appintro.ISlidePolicy
 import kotlinx.android.synthetic.main.friday_base_appintro_fragment.view.*
 
 abstract class CustomAppIntroFragment : Fragment(), ISlidePolicy {
+    internal lateinit var fragmentBaseView: View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val fragmentBaseView = inflater.inflate(R.layout.friday_base_appintro_fragment, container, false)
+        fragmentBaseView = inflater.inflate(R.layout.friday_base_appintro_fragment, container, false)
         fragmentBaseView.pageContent.addView(createPageContent(inflater, fragmentBaseView as ViewGroup))
         fragmentBaseView.pageTitle.text = getPageTitle()
         return fragmentBaseView

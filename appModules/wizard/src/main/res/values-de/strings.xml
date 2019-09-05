@@ -11,4 +11,7 @@
     <string name="device_compatibility">Kompatibillitätstest</string>
     <string name="unlocker_hint">Schalte diese App mit dem Code frei, der der Packung deiner Friday-glasses beiliegt.</string>
     <string name="unlocker_code_edittext_hint">6-stelliger Code</string>
+    <string name="device_compatibility_illegal_error">Bitte folgen sie zuerst den Schritten zur Installation von ArCore.</string>
+    <string name="unlocker_illegal_error">bitte einen gültigen Code eingeben</string>
+    <string name="unlocker_title">Schalte deine Brille frei</string>
 </resources>

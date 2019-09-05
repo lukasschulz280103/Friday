@@ -15,7 +15,7 @@ class UnlockerFragment : CustomAppIntroFragment() {
     }
 
     override fun onUserIllegallyRequestedNextPage() {
-
+        fragmentBaseView.codeEditTextLayout.error = requireContext().getString(R.string.unlocker_illegal_error)
     }
 
     override fun createPageContent(inflater: LayoutInflater, container: ViewGroup): View {
@@ -32,7 +32,7 @@ class UnlockerFragment : CustomAppIntroFragment() {
     }
 
     override fun getPageTitle(): String {
-        return "Unlock your glasses"
+        return requireContext().getString(R.string.unlocker_title)
     }
 
 }

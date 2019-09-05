@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pageTitle">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,8 +29,8 @@
                 android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
-                android:text="@string/compatibility_ar"
-                style="@style/ARCoreCompatibilityPageTextAppearance" />
+                style="@style/ARCoreCompatibilityPageTextAppearance"
+                android:text="@string/compatibility_ar" />
 
         </LinearLayout>
 
@@ -47,8 +47,8 @@
                 android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
-                android:text="@string/compatibility_ar_installed"
-                style="@style/ARCoreCompatibilityPageTextAppearance" />
+                style="@style/ARCoreCompatibilityPageTextAppearance"
+                android:text="@string/compatibility_ar_installed" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,23 +64,10 @@
                 android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
-                android:text="@string/compatibility_ar_up_to_date"
-                style="@style/ARCoreCompatibilityPageTextAppearance" />
+                style="@style/ARCoreCompatibilityPageTextAppearance"
+                android:text="@string/compatibility_ar_up_to_date" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/pageTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center|center_horizontal"
-        android:text="@string/device_compatibility"
-        android:textAppearance="@style/AppIntroPageTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

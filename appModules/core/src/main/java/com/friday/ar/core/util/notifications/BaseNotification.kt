@@ -38,9 +38,6 @@ class BaseNotification(val id: Int, val channnelID: String) : IBaseNotification,
         return this
     }
 
-    /**
-     * sends the notification
-     */
     override fun notifyNow() {
         notificationManager.notify(id, notification.build())
     }

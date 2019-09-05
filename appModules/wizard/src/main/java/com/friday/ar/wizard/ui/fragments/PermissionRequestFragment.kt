@@ -3,39 +3,19 @@ package com.friday.ar.wizard.ui.fragments
 
 import android.Manifest
 import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.core.content.PermissionChecker
-import androidx.fragment.app.Fragment
 import com.friday.ar.wizard.R
-import com.github.paolorotolo.appintro.ISlidePolicy
+import kotlinx.android.synthetic.main.fragment_permission_request.view.*
 
-
-/**
- * A simple [Fragment] subclass.
- */
-class PermissionRequestFragment : Fragment(), ISlidePolicy {
+class PermissionRequestFragment : CustomAppIntroFragment() {
     companion object {
         private const val PERMS_REQ_CODE = 301
     }
 
     internal var permissions = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
-    private lateinit var requestPermissionsButton: Button
-    private lateinit var warning: TextView
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_permission_request, container, false)
-        requestPermissionsButton = v.findViewById(R.id.request_perm_btn)
-        warning = v.findViewById(R.id.warn)
-        requestPermissionsButton.setOnClickListener { requestPermissions() }
-        return v
-    }
 
     private fun requestPermissions() {
         requestPermissions(permissions, PERMS_REQ_CODE)
@@ -45,14 +25,14 @@ class PermissionRequestFragment : Fragment(), ISlidePolicy {
         val targetGrantResults = intArrayOf(PermissionChecker.PERMISSION_GRANTED, PermissionChecker.PERMISSION_GRANTED)
         if (requestCode == PERMS_REQ_CODE) {
             if (targetGrantResults.contentEquals(grantResults)) {
-                requestPermissionsButton.isEnabled = false
-                warning.setTextColor(Color.GREEN)
-                warning.setCompoundDrawablesWithIntrinsicBounds(activity!!.getDrawable(R.drawable.ic_check_green_24dp), null, null, null)
-                warning.setText(R.string.perms_granted)
+                fragmentBaseView.request_perm_btn.isEnabled = false
+                fragmentBaseView.warn.setTextColor(Color.GREEN)
+                fragmentBaseView.warn.setCompoundDrawablesWithIntrinsicBounds(activity!!.getDrawable(R.drawable.ic_check_green_24dp), null, null, null)
+                fragmentBaseView.warn.setText(R.string.perms_granted)
             } else {
-                warning.setTextColor(context!!.getColor(R.color.warn_red))
-                warning.setCompoundDrawables(null, null, null, null)
-                warning.setText(R.string.permissions_required)
+                fragmentBaseView.warn.setTextColor(context!!.getColor(R.color.warn_red))
+                fragmentBaseView.warn.setCompoundDrawables(null, null, null, null)
+                fragmentBaseView.warn.setText(R.string.permissions_required)
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -67,4 +47,13 @@ class PermissionRequestFragment : Fragment(), ISlidePolicy {
 
     }
 
+    override fun createPageContent(inflater: LayoutInflater, container: ViewGroup): View {
+        val v = inflater.inflate(R.layout.fragment_permission_request, container, false)
+        v.request_perm_btn.setOnClickListener { requestPermissions() }
+        return v
+    }
+
+    override fun getPageTitle(): String {
+        return requireContext().getString(R.string.request_permissions)
+    }
 }

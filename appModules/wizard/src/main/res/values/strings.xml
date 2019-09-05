@@ -12,4 +12,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="unlocker_hint">Unlock this app with the code that comes with the package of your Friday-glasses.</string>
     <string name="unlocker_code_edittext_hint">6-digit code</string>
+    <string name="device_compatibility_illegal_error">Please follow the steps to install ArCore first.</string>
+    <string name="unlocker_illegal_error">Please enter a valid code</string>
+    <string name="unlocker_title">Unlock your glasses</string>
 </resources>

@@ -7,13 +7,6 @@
     android:padding="16dp"
     tools:context=".ui.fragments.AcceptTerms">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/terms_of_use"
-        android:textAppearance="@style/AppIntroPageTitle" />
-
     <ScrollView
         android:id="@+id/tou_scroll"
         android:layout_width="match_parent"

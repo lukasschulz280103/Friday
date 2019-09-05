@@ -11,4 +11,7 @@
     <string name="device_compatibility">Vérification de la compatibilité de l\'appareil</string>
     <string name="unlocker_hint">Déverrouillez cette application avec le code fourni avec l\'emballage de vos lunettes du vendredi.</string>
     <string name="unlocker_code_edittext_hint">Code à 6 chiffres</string>
+    <string name="device_compatibility_illegal_error">Veuillez suivre les étapes pour installer ArCore en premier.</string>
+    <string name="unlocker_illegal_error">Veuillez entrer un code valide</string>
+    <string name="unlocker_title">Déverrouillez vos lunettes</string>
 </resources>
