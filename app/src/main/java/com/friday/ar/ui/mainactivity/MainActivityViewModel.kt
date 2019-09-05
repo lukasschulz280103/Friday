@@ -24,6 +24,8 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
     private val dashboardListData = MutableLiveData<ArrayList<BaseDashboardListItem>>()
     fun getEnergySaverState() = energySaverActive as LiveData<Boolean>
     fun getIsUpdatedVersion() = isUpdatedVersion as LiveData<Boolean>
+    val dataList = ArrayList<BaseDashboardListItem>()
+
 
     /**
      * @return liveData containing a pair. [Pair]<[Boolean] if old app is installed, [String] packageName of old app that is installed>
@@ -75,16 +77,17 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
         } else isFirstUse.postValue(false)
 
 
-        val dataList = ArrayList<BaseDashboardListItem>()
         val examplePlugin = Plugin()
         examplePlugin.name = "TestPlugin"
+        for (i in 1..50) {
+            dataList.add(BaseDashboardListItem.getInstance(examplePlugin))
+        }
         dataList.add(BaseDashboardListItem.getInstance(examplePlugin))
         dashboardListData.postValue(dataList)
     }
 
     fun runRefresh() {
-        val arrayList = ArrayList<BaseDashboardListItem>()
-        arrayList.clear()
-        dashboardListData.postValue(arrayList)
+        if (dataList.isNotEmpty()) dataList.remove(dataList[0])
+        dashboardListData.postValue(dataList)
     }
 }
