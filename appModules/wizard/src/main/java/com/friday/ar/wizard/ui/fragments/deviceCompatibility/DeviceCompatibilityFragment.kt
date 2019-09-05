@@ -1,4 +1,4 @@
-package com.friday.ar.wizard.fragments.deviceCompatibility
+package com.friday.ar.wizard.ui.fragments.deviceCompatibility
 
 import android.content.Context
 import android.os.Bundle

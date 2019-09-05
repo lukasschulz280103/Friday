@@ -8,5 +8,5 @@ dependencies {
     implementation(project(":core"))
     implementation(Dependencies.androidPreference)
     implementation(Dependencies.appIntro)
-    implementation(Dependencies.arCore)
+    implementation(Dependencies.arSceneformCore)
 }

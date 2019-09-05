@@ -1,4 +1,4 @@
-package com.friday.ar.wizard.fragments
+package com.friday.ar.wizard.ui.fragments
 
 
 import android.Manifest

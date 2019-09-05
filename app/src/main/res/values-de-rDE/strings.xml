@@ -89,7 +89,7 @@
     <string name="notification_channel_update">Updateüberprüfung</string>
     <string name="notification_channel_plugin_installer_description">Dieser Kanal informiert über den Status von ihren installierten Plugins. Er benachrichtigt sie z.B. darüber, wenn sich der Status einer laufenden Installaion eines Plugins ändert.</string>
     <string name="fileSelector_wrong_file_type_selected">Sie müssen eine Friday Plugindatei auswählen (*.fpl)</string>
-    <string name="start_action_mode">AcionMode starten</string>
+    <string name="start_action_mode">ActionMode starten</string>
     <string name="update">Aktualisieren</string>
     <string name="update_available">Update verfügbar</string>
     <string name="unsupported_device_header">Tut uns leid!</string>

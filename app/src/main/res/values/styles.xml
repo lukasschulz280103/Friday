@@ -1,6 +1,4 @@
 <resources>
-
-
     <style name="AppTheme.AppBarOverlay" parent="Base.Theme.MaterialComponents.Light.DarkActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
@@ -37,14 +35,9 @@
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
-
-
-
     <style name="appNameTheme">
         <item name="android:textSize">40sp</item>
         <item name="android:fontFamily">monospace</item>
         <item name="android:text">@string/module_app_name</item>
     </style>
-
-
 </resources>

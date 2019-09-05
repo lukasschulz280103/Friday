@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".fragments.AcceptTerms">
+    tools:context=".ui.fragments.AcceptTerms">
 
     <TextView
         android:layout_width="match_parent"

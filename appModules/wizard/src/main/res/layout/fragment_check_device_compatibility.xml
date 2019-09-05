@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -25,8 +24,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="end"
-                android:src="@drawable/ic_twotone_error_outline_24px"
-                android:tint="@android:color/white" />
+                android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,8 +33,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/compatibility_ar"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="@android:color/white" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
         </LinearLayout>
 
@@ -50,8 +47,7 @@
                 android:id="@+id/arcore_installed_indicator"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_twotone_error_outline_24px"
-                android:tint="@android:color/white" />
+                android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,8 +56,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/compatibility_ar_installed"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="@android:color/white" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,8 +69,7 @@
                 android:id="@+id/arcore_up_to_date_indicator"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_twotone_error_outline_24px"
-                android:tint="@android:color/white" />
+                android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -84,8 +78,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/compatibility_ar_up_to_date"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:textColor="@android:color/white" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
         </LinearLayout>
 
     </LinearLayout>

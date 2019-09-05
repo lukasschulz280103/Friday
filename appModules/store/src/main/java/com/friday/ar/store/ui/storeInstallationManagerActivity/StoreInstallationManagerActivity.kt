@@ -1,12 +1,12 @@
 package com.friday.ar.store.ui.storeInstallationManagerActivity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.lifecycle.Observer
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.friday.ar.core.Constant
 import com.friday.ar.core.activity.FridayActivity
@@ -16,6 +16,7 @@ import com.friday.ar.store.ui.adapter.PluginListAdapter
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_store_installation_manager.*
+import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class StoreInstallationManagerActivity : FridayActivity() {
@@ -68,7 +69,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
                 finishAfterTransition()
             }
             R.id.install_from_disk -> {
-                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+                val sharedPreferences: SharedPreferences = get()
                 if (sharedPreferences.getBoolean(Constant.PreferenceKeys.Store.INSTALLER_SHOW_DISK_INSTALL_WARNING, true)) {
                     val dontShowAgainCheck = MaterialCheckBox(this)
                     val contentFrame = FrameLayout(this)

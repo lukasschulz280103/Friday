@@ -9,4 +9,5 @@
     <string name="compatibility_ar_installed">ArCore est installé</string>
     <string name="compatibility_ar_up_to_date">ArCore est à jour</string>
     <string name="device_compatibility">Vérification de la compatibilité de l\'appareil</string>
+    <string name="unlocker_hint">Déverrouillez cette application avec le code fourni avec l\'emballage de vos lunettes du vendredi.</string>
 </resources>

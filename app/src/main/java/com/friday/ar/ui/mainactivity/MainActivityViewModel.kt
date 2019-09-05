@@ -1,19 +1,20 @@
 package com.friday.ar.ui.mainactivity
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager.GET_ACTIVITIES
 import android.content.pm.PackageManager.NameNotFoundException
 import android.os.PowerManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.preference.PreferenceManager
-import com.friday.ar.R
 import com.friday.ar.core.Constant
 import com.friday.ar.dashboard.DashboardListItem
+import org.koin.core.KoinComponent
+import org.koin.core.get
 
 
-class MainActivityViewModel(context: Context) : ViewModel() {
+class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
     private val energySaverActive = MutableLiveData<Boolean>()
     private val isUpdatedVersion = MutableLiveData<Boolean>()
 
@@ -32,12 +33,7 @@ class MainActivityViewModel(context: Context) : ViewModel() {
     fun getDashBoardListData() = dashboardListData as LiveData<List<DashboardListItem>>
 
     init {
-        val defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-
-
-        if (defaultSharedPreferences.getInt("theme", 0) == 0) {
-            defaultSharedPreferences.edit().putInt("theme", R.style.AppTheme).apply()
-        }
+        val defaultSharedPreferences: SharedPreferences = get()
 
         val packageManager = context.packageManager
         try {

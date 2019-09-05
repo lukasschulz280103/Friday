@@ -2,22 +2,20 @@ package com.friday.ar.util
 
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
-import android.content.BroadcastReceiver
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import androidx.preference.PreferenceManager
+import android.content.*
 import com.friday.ar.account.sync.AccountSyncService
 import com.friday.ar.core.Constant
 import com.friday.ar.pluginsystem.service.PluginIndexer
 import com.friday.ar.pluginsystem.service.PluginLoader
+import org.koin.core.KoinComponent
+import org.koin.core.get
 
-class BootReciever : BroadcastReceiver() {
+class BootReciever : BroadcastReceiver(), KoinComponent {
 
     override fun onReceive(context: Context, pIntent: Intent) {
         if (pIntent.action != Intent.ACTION_BOOT_COMPLETED) return
         val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val preferences: SharedPreferences = get()
         if (preferences.getBoolean("check_update_auto", false)) {
 
         }

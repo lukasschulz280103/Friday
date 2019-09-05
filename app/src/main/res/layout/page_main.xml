@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/app_welcome"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                android:textColor="?attr/colorOnPrimary" />
+                android:textColor="?attr/colorOnSecondary" />
 
         </LinearLayout>
     </LinearLayout>

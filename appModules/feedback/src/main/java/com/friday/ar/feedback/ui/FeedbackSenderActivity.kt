@@ -11,7 +11,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.widget.Toast
-import androidx.preference.PreferenceManager
 import com.friday.ar.core.activity.FridayActivity
 import com.friday.ar.core.util.LogUtil
 import com.friday.ar.core.util.net.Connectivity
@@ -24,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_feedback.*
+import org.koin.android.ext.android.get
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -38,7 +38,7 @@ class FeedbackSenderActivity : FridayActivity() {
     private var firebaseStorage = FirebaseStorage.getInstance()
     private var feedbackLogFolder = firebaseStorage.getReference("feedback")
 
-    private lateinit var inputtemplate: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var attachedImageBitmpap: Bitmap
     private var showInfo = View.OnLongClickListener { view ->
@@ -70,7 +70,7 @@ class FeedbackSenderActivity : FridayActivity() {
         setContentView(R.layout.activity_feedback)
         val user = FirebaseAuth.getInstance().currentUser
         setSupportActionBar(toolbar2)
-        inputtemplate = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPreferences = get()
         if (user != null) {
             feedback_mail.setText(user.email)
         }

@@ -9,4 +9,5 @@
     <string name="compatibility_ar_installed">ArCore ist installiert</string>
     <string name="compatibility_ar_up_to_date">ArCore ist aktuell</string>
     <string name="device_compatibility">Kompatibillitätstest</string>
+    <string name="unlocker_hint">Schalte diese App mit dem Code frei, der der Packung deiner Friday-glasses beiliegt.</string>
 </resources>

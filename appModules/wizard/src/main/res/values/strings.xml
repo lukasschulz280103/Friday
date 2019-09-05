@@ -8,4 +8,8 @@
     <string name="compatibility_ar_installed">ArCore is installed</string>
     <string name="compatibility_ar_up_to_date">ArCore is up to date</string>
     <string name="device_compatibility">Device compatibility check</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="unlocker_hint">Unlock this app with the code that comes with the package of your Friday-glasses.</string>
 </resources>

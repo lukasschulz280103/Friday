@@ -1,5 +1,6 @@
 package com.friday.ar.core.di
 
+import androidx.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -13,4 +14,5 @@ val coreModule = module {
     single { FirebaseAuth.getInstance() }
     single { FirebasePerformance.getInstance() }
     single { FirebaseDatabase.getInstance() }
+    single { PreferenceManager.getDefaultSharedPreferences(get()) }
 }

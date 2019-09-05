@@ -5,4 +5,12 @@
         <item name="android:textSize">@dimen/appIntroHeadingTextSize</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="AppIntroCustomPage">
+        <item name="android:textAppearance">@style/AppIntroCustomPage.TextAppearance</item>
+    </style>
+
+    <style name="AppIntroCustomPage.TextAppearance">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>
