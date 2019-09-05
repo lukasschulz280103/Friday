@@ -5,8 +5,6 @@ import java.io.File
 
 class Constant {
     companion object {
-        const val NOTIF_CHANNEL_UPDATE_ID = "channel_update"
-        const val NOTIF_CHANNEL_INSTALLER_ID = "channel_plugin_installer"
         const val LOGTAG_STORE = "FridayMarketplace"
         /**
          * get the plugin storage directory.
@@ -57,10 +55,17 @@ class Constant {
     }
 
     object Notification {
+        const val NOTIFICATION_FRIDAYACTIVITY_CRASH = 300
+        //Store
         const val NOTIFICATION_INSTALL_SUCCESS = 200
         const val NOTIFICATION_INSTALL_ERROR = 201
         const val NOTIFICATION_INSTALL_PROGRESS = 202
 
+        object Channels {
+            const val NOTIFICATION_CHANNEL_UPDATE = "channel_update"
+            const val NOTIFICATION_CHANNEL_INSTALLER = "channel_plugin_installer"
+            const val NOTIFICAITON_CHANNEL_APP_CRASH = "channel_app_crash"
+        }
         object Groups {
             const val NOTIFICATION_GROUP_INSTALLER = "NOTIF_GROUP_INSTALLER"
         }

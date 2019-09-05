@@ -79,9 +79,9 @@ class MainActivity : FridayActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.activity_main)
         app = application as FridayApplication
 
+        setContentView(R.layout.activity_main)
 
         if (resources.getBoolean(R.bool.isTablet)) {
             UnsupportedDeviceDialog().show(supportFragmentManager, "UnsupportedDeviceDialog")

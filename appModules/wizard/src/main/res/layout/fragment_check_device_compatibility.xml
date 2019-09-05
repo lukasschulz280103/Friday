@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    tools:background="@android:color/black">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -27,13 +29,8 @@
                 android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
                 android:text="@string/compatibility_ar"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                style="@style/ARCoreCompatibilityPageTextAppearance" />
 
         </LinearLayout>
 
@@ -50,13 +47,8 @@
                 android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
                 android:text="@string/compatibility_ar_installed"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                style="@style/ARCoreCompatibilityPageTextAppearance" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,13 +64,8 @@
                 android:src="@drawable/ic_twotone_error_outline_24px" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
                 android:text="@string/compatibility_ar_up_to_date"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+                style="@style/ARCoreCompatibilityPageTextAppearance" />
         </LinearLayout>
 
     </LinearLayout>

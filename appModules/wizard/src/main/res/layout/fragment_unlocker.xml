@@ -4,19 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@android:color/black"
     tools:context=".ui.fragments.unlocker.UnlockerFragment">
 
     <TextView
         android:id="@+id/unlockerhint"
-        style="?attr/textAppearanceHeadline6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:drawableTop="@drawable/google_cardboard"
+        android:drawablePadding="24dp"
+        android:drawableTint="@android:color/white"
         android:gravity="center"
         android:text="@string/unlocker_hint"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/codeEditTextLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/codeEditTextLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:defaultFocusHighlightEnabled="true"
+        android:hint="6-Stelliger Code"
+        android:textColorHint="@android:color/white"
+        app:boxBackgroundMode="outline"
+        app:helperText="Not working in current version, just enter something"
+        app:helperTextTextColor="@android:color/white"
+        app:hintTextAppearance="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog.Centered"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/codeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textColor="@android:color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

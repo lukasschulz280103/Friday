@@ -63,13 +63,13 @@ class FridayApplication : Application() {
     private fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val updateChannel = NotificationChannel(
-                    Constant.NOTIF_CHANNEL_UPDATE_ID,
+                    Constant.Notification.Channels.NOTIFICATION_CHANNEL_UPDATE,
                     getString(R.string.notification_channel_update),
                     NotificationManager.IMPORTANCE_DEFAULT
             )
             updateChannel.description = getString(R.string.notification_channel_update_description)
             val pluginInstallerChannel = NotificationChannel(
-                    Constant.NOTIF_CHANNEL_INSTALLER_ID,
+                    Constant.Notification.Channels.NOTIFICATION_CHANNEL_UPDATE,
                     getString(R.string.notification_channel_plugin_installer),
                     NotificationManager.IMPORTANCE_DEFAULT
             )

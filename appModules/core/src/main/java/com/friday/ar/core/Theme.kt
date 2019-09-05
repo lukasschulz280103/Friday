@@ -1,5 +1,6 @@
 package com.friday.ar.core
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
@@ -93,5 +94,13 @@ class Theme : KoinComponent {
      */
     fun createAppThemeGadient(): Drawable {
         return mContext.getDrawable(R.drawable.app_colors_gradient)!!
+    }
+
+    /**
+     * resets the current app theme to 0.
+     */
+    @SuppressLint("ApplySharedPref")
+    fun reset() {
+        preferences.edit().remove("theme").apply()
     }
 }

@@ -15,7 +15,7 @@ object NotificationUtil {
         val toInfoPage = Intent(context, InfoActivity::class.java)
         val notificationClick = PendingIntent.getActivity(context, 2, toInfoPage, 0)
         val nmc = NotificationManagerCompat.from(context)
-        val updateAvailableNotification = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_UPDATE_ID)
+        val updateAvailableNotification = NotificationCompat.Builder(context, Constant.Notification.Channels.NOTIFICATION_CHANNEL_UPDATE)
                 .setSmallIcon(R.drawable.ic_file_download_black_24dp)
                 .setContentTitle(context.getString(R.string.module_app_name))
                 .setContentText(context.getString(R.string.app_update_description, newVersion))

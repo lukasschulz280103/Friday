@@ -28,7 +28,7 @@ class PluginInstallerNotificationService(val context: Context) {
             }
             else -> context.getString(R.string.unknown_error)
         }
-        val notification = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
+        val notification = NotificationCompat.Builder(context, Constant.Notification.Channels.NOTIFICATION_CHANNEL_INSTALLER)
                 .setContentTitle(context.getString(R.string.pluginInstaller_error_installation_failed))
                 .setContentText(message)
                 .setPriority(NotificationManager.IMPORTANCE_HIGH)
@@ -40,7 +40,7 @@ class PluginInstallerNotificationService(val context: Context) {
     }
 
     fun notificationShowProgress(progressMessage: String) {
-        val notification = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
+        val notification = NotificationCompat.Builder(context, Constant.Notification.Channels.NOTIFICATION_CHANNEL_INSTALLER)
                 .setProgress(1, 0, true)
                 .setContentTitle(context.getString(R.string.pluginInstaller_progressMessage_installing))
                 .setContentText(progressMessage)
@@ -52,7 +52,7 @@ class PluginInstallerNotificationService(val context: Context) {
     }
 
     fun notificationShowSuccess(name: String) {
-        val notification = NotificationCompat.Builder(context, Constant.NOTIF_CHANNEL_INSTALLER_ID)
+        val notification = NotificationCompat.Builder(context, Constant.Notification.Channels.NOTIFICATION_CHANNEL_INSTALLER)
                 .setContentTitle(context.getString(R.string.pluginInstaller_success_install_title))
                 .setContentText(context.getString(R.string.pluginInstaller_success_ticker_text, name))
                 .setStyle(NotificationCompat.BigTextStyle())
