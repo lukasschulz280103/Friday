@@ -57,6 +57,8 @@ class MainActivity : FridayActivity() {
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.main_nav_dashboard -> {
+                mainPageDashboardList.smoothScrollToPosition(0)
+                mainTitleViewAppBarLayout.setExpanded(true, true)
                 main_view_flipper!!.displayedChild = SITE_DASHBOARD
                 start_actionmode.extend()
             }

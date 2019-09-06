@@ -20,11 +20,19 @@
             android:id="@+id/mainSwipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mainPageDashboardList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:clipToPadding="false"
+                android:fitsSystemWindows="false"
+                android:padding="16dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/dashboardEmptyView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -59,19 +67,11 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Your're done." />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mainPageDashboardList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:clipToPadding="false"
-                android:fitsSystemWindows="false"
-                android:padding="16dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/contentLayout"
+        android:id="@+id/mainTitleViewAppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@android:color/white"
