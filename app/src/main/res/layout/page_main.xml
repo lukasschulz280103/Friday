@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="100dp"
@@ -59,7 +59,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Your're done." />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mainPageDashboardList"
                 android:layout_width="match_parent"
@@ -67,8 +66,7 @@
                 android:background="@android:color/white"
                 android:clipToPadding="false"
                 android:fitsSystemWindows="false"
-                android:padding="16dp"
-                tools:visibility="gone" />
+                android:padding="16dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.core.widget.NestedScrollView>
 
