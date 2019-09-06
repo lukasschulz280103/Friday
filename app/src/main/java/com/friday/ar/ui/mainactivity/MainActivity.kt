@@ -10,7 +10,6 @@ import android.view.Menu
 import android.view.View
 import android.view.Window
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
@@ -155,7 +154,11 @@ class MainActivity : FridayActivity() {
             mainSwipeRefreshLayout.isRefreshing = false
             (mainPageDashboardList.adapter!! as DashboardAdapter).onRefresh(list)
             if (list.isEmpty()) {
-                Toast.makeText(this, "You're done!", Toast.LENGTH_LONG).show()
+                mainPageDashboardList.visibility = View.GONE
+                dashboardEmptyView.visibility = View.VISIBLE
+            } else {
+                mainPageDashboardList.visibility = View.VISIBLE
+                dashboardEmptyView.visibility = View.GONE
             }
         })
 
