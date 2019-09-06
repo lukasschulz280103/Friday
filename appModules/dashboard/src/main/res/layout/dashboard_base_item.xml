@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/date/hhmm" />
 
-        <com.mikhaellopez.circularimageview.CircularImageView
+        <ImageView
             android:id="@+id/itemHeaderIcon"
             android:layout_width="20dp"
             android:layout_height="20dp"

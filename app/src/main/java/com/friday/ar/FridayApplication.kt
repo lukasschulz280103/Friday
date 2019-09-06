@@ -74,8 +74,13 @@ class FridayApplication : Application() {
                     NotificationManager.IMPORTANCE_DEFAULT
             )
             pluginInstallerChannel.description = getString(R.string.notification_channel_plugin_installer_description)
+            val appCrashChannel = NotificationChannel(
+                    Constant.Notification.Channels.NOTIFICAITON_CHANNEL_APP_CRASH,
+                    "App Crash",
+                    NotificationManager.IMPORTANCE_HIGH
+            )
             val nm = getSystemService(NotificationManager::class.java)
-            nm!!.createNotificationChannels(listOf(updateChannel, pluginInstallerChannel))
+            nm!!.createNotificationChannels(listOf(updateChannel, pluginInstallerChannel, appCrashChannel))
         }
     }
 

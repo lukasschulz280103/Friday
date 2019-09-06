@@ -35,8 +35,9 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
     fun getFirstUseState() = isFirstUse as LiveData<Boolean>
     fun getDashBoardListData() = dashboardListData as LiveData<ArrayList<BaseDashboardListItem>>
 
+    val defaultSharedPreferences: SharedPreferences = get()
+
     init {
-        val defaultSharedPreferences: SharedPreferences = get()
 
         val packageManager = context.packageManager
         try {
@@ -71,12 +72,6 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
             isOldVersionInstalled.postValue(Pair(false, null))
         }
 
-
-        if (defaultSharedPreferences.getBoolean("isFirstUse", true)) {
-            isFirstUse.postValue(true)
-        } else isFirstUse.postValue(false)
-
-
         val examplePlugin = Plugin()
         examplePlugin.name = "TestPlugin"
         for (i in 1..50) {
@@ -89,5 +84,11 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
     fun runRefresh() {
         if (dataList.isNotEmpty()) dataList.remove(dataList[0])
         dashboardListData.postValue(dataList)
+    }
+
+    fun checkForFirstUse() {
+        if (defaultSharedPreferences.getBoolean("isFirstUse", true)) {
+            isFirstUse.postValue(true)
+        } else isFirstUse.postValue(false)
     }
 }

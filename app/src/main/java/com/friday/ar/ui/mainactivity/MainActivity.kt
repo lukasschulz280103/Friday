@@ -8,12 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.Window
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
 import com.friday.ar.FridayApplication
@@ -22,6 +20,7 @@ import com.friday.ar.base.ui.FullscreenActionActivity
 import com.friday.ar.core.Constant
 import com.friday.ar.core.Theme
 import com.friday.ar.core.activity.FridayActivity
+import com.friday.ar.core_ui.recyclerview.layoutmanager.ScrollableLayoutmanager
 import com.friday.ar.dashboard.list.DashboardAdapter
 import com.friday.ar.feedback.ui.FeedbackSenderActivity
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
@@ -58,13 +57,17 @@ class MainActivity : FridayActivity() {
 
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.main_nav_dashboard -> main_view_flipper!!.displayedChild = SITE_DASHBOARD
+            R.id.main_nav_dashboard -> {
+                main_view_flipper!!.displayedChild = SITE_DASHBOARD
+                start_actionmode.extend()
+            }
             R.id.main_nav_store -> {
                 if (findViewById<View>(R.id.stub_page_store) != null) {
                     stub_page_store.visibility = View.VISIBLE
                     setupSorePage()
                 }
                 main_view_flipper!!.displayedChild = SITE_STORE
+                start_actionmode.shrink()
             }
             R.id.main_nav_profile -> {
                 if (findViewById<View>(R.id.stub_page_profile) != null) {
@@ -72,6 +75,7 @@ class MainActivity : FridayActivity() {
                     setupProfilePage()
                 }
                 main_view_flipper!!.displayedChild = SITE_PROFILE
+                start_actionmode.shrink()
             }
         }
         true
@@ -127,17 +131,6 @@ class MainActivity : FridayActivity() {
 
         //Setting up views and objects on separate thread to improve performance at startup
         Thread(Runnable {
-
-            //Apply padding to the main pages content frame so it fits the height of the title view
-            val vto = parallaxScollView.viewTreeObserver
-            vto.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    mainTitleView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    val height = mainTitleView.measuredHeight
-                    runOnUiThread { parallaxScollView.setPadding(0, height, 0, 0) }
-                }
-            })
-
             val theme = Theme(this@MainActivity)
             runOnUiThread { mainTitleView.background = theme.createAppThemeGadient() }
 
@@ -151,8 +144,9 @@ class MainActivity : FridayActivity() {
             }
         }).start()
 
-        mainPageDashboardList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mainPageDashboardList.layoutManager = ScrollableLayoutmanager(this)
         mainPageDashboardList.adapter = DashboardAdapter(this, ArrayList(0))
+
         mainSwipeRefreshLayout.setOnRefreshListener {
             viewModel.runRefresh()
         }
@@ -164,6 +158,8 @@ class MainActivity : FridayActivity() {
                 Toast.makeText(this, "You're done!", Toast.LENGTH_LONG).show()
             }
         })
+
+        mainSwipeRefreshLayout.isRefreshing = true
     }
 
 
@@ -194,6 +190,7 @@ class MainActivity : FridayActivity() {
 
     public override fun onResume() {
         super.onResume()
+        viewModel.checkForFirstUse()
         if (!storeFragment.isAdded && findViewById<View>(R.id.stub_page_store) == null) {
             supportFragmentManager.beginTransaction()
                     .add(R.id.store_frag_container, storeFragment)
