@@ -1,5 +1,5 @@
 Read in [german](README.md) 
-<img src="https://lh3.googleusercontent.com/ZDoAWCWDlQGceGMVhkMzvkR1QieRteEHd5j61c-W3y6XNXPU6TbWHLFZlH0Rd6ijNHAdIprVs2KmzI2DqE2pruk24M_bbw0ymKCUaoiUlWjuUVF30pmzuYdBQap5nmIWGmRnS3Y3=w2400" alt="Banner-Werbebild" />
+<img src="https://lh3.googleusercontent.com/ZDoAWCWDlQGceGMVhkMzvkR1QieRteEHd5j61c-W3y6XNXPU6TbWHLFZlH0Rd6ijNHAdIprVs2KmzI2DqE2pruk24M_bbw0ymKCUaoiUlWjuUVF30pmzuYdBQap5nmIWGmRnS3Y3=w2400" alt="Banner-ad" />
 # Project "friday"
 Friday is an AR project that turns the mobile phone into practical AR glasses. 
 
