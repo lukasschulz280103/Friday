@@ -1,7 +1,7 @@
 # Module creation help
 Follow these steps to create a new module for Friday
 
-1. ##Create new module.
+1. ## Create new module.
 	Create new module by following these steps:
 	- select `File`->`New`->`New Module`
 	- select **Android Library**
@@ -20,6 +20,7 @@ Follow these steps to create a new module for Friday
 	### module/build.gradle
 		rename to `build.gradle.kts`
 		change the file conent to:
+		
 		  apply(from = rootProject.file("base.gradle"))
 		  
 		  plugins {

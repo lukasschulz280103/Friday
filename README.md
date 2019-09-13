@@ -1,4 +1,5 @@
-Read in [english](README.en.md) 
+Read in [english](README.en.md)
+<img src="https://lh3.googleusercontent.com/ZDoAWCWDlQGceGMVhkMzvkR1QieRteEHd5j61c-W3y6XNXPU6TbWHLFZlH0Rd6ijNHAdIprVs2KmzI2DqE2pruk24M_bbw0ymKCUaoiUlWjuUVF30pmzuYdBQap5nmIWGmRnS3Y3=w2400" alt="Banner-Werbebild" />
 # Projekt "friday"
 Friday ist ein AR-Projekt, mithilfe dessen das Handy zur praktischen AR-Brille wird. 
 
