@@ -156,11 +156,13 @@ class MainActivity : FridayActivity() {
             mainSwipeRefreshLayout.isRefreshing = false
             (mainPageDashboardList.adapter!! as DashboardAdapter).onRefresh(list)
             if (list.isEmpty()) {
-                mainPageDashboardList.visibility = View.GONE
+                Log.d(LOGTAG, "list is empty")
+                mainTitleViewAppBarLayout.setExpanded(true, true)
                 dashboardEmptyView.visibility = View.VISIBLE
+                mainPageDashboardList.visibility = View.GONE
             } else {
-                mainPageDashboardList.visibility = View.VISIBLE
                 dashboardEmptyView.visibility = View.GONE
+                mainPageDashboardList.visibility = View.VISIBLE
             }
         })
 
