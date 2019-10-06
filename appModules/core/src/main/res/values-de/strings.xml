@@ -52,7 +52,7 @@
     <string name="req_cam_retionale_title">Kamera</string>
     <string name="req_files_rationale_title">Dateien und Speicher</string>
     <string name="req_mic_rationale">Das Mikrofon wird genutzt, um den friday-Sprachassistenten bereitzustellen</string>
-    <string name="req_mic_rationale_title">Microphone</string>
+    <string name="req_mic_rationale_title">Mikrofon</string>
     <string name="smth_went_wrong">Etwas ist schief gelaufen</string>
     <string name="app_crash_recognized">Appabsturz erkannt</string>
     <string name="app_crash_theme_was_reset">Das Theme wurde in Friday zurücgesetzt</string>

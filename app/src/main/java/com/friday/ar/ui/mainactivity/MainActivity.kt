@@ -10,7 +10,6 @@ import android.view.Menu
 import android.view.View
 import android.view.Window
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
@@ -58,6 +57,8 @@ class MainActivity : FridayActivity() {
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.main_nav_dashboard -> {
+                mainPageDashboardList.smoothScrollToPosition(0)
+                mainTitleViewAppBarLayout.setExpanded(true, true)
                 main_view_flipper!!.displayedChild = SITE_DASHBOARD
                 start_actionmode.extend()
             }
@@ -155,7 +156,13 @@ class MainActivity : FridayActivity() {
             mainSwipeRefreshLayout.isRefreshing = false
             (mainPageDashboardList.adapter!! as DashboardAdapter).onRefresh(list)
             if (list.isEmpty()) {
-                Toast.makeText(this, "You're done!", Toast.LENGTH_LONG).show()
+                Log.d(LOGTAG, "list is empty")
+                mainTitleViewAppBarLayout.setExpanded(true, true)
+                dashboardEmptyView.visibility = View.VISIBLE
+                mainPageDashboardList.visibility = View.GONE
+            } else {
+                dashboardEmptyView.visibility = View.GONE
+                mainPageDashboardList.visibility = View.VISIBLE
             }
         })
 

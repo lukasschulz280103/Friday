@@ -24,7 +24,9 @@ abstract class FridayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPreferences: SharedPreferences = get()
         theme = get()
+        Log.i(LOGTAG, "theme is ${sharedPreferences.getInt("theme", 0)}")
         if (sharedPreferences.getInt("theme", 0) == 0) {
+            Log.d(LOGTAG, "initializing theme")
             sharedPreferences.edit().putInt("theme", R.style.AppTheme).apply()
         }
         setTheme(theme.getCurrentAppTheme())

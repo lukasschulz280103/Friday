@@ -74,7 +74,7 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
 
         val examplePlugin = Plugin()
         examplePlugin.name = "TestPlugin"
-        for (i in 1..50) {
+        for (i in 1..12) {
             dataList.add(BaseDashboardListItem.getInstance(examplePlugin))
         }
         dataList.add(BaseDashboardListItem.getInstance(examplePlugin))

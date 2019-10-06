@@ -93,7 +93,7 @@
     <string name="update">Aktualisieren</string>
     <string name="update_available">Update verfügbar</string>
     <string name="unsupported_device_header">Tut uns leid!</string>
-    <string name="unsupported_device_tablet_subheader">Friday wird auf Tablets icht unterstützt.</string>
+    <string name="unsupported_device_tablet_subheader">Friday wird auf Tablets nicht unterstützt.</string>
     <string name="unsupported_device_tablet_description">Aber du kannst Friday trotzdem auf jeglichem Anroid-Gerät mit Android 8.0 oder höher benutzen.</string>
     <string name="fileSelector_permission_required">Sie müssen den Speicherzugrff erlauben, um Ihre Dateien anzuzeigen</string>
     <string name="title_activity_fullscreen_action">AR-Modus</string>
@@ -102,4 +102,5 @@
     <string name="changelog_dialog_no_title">Kein Titel bereitgestellt</string>
     <string name="changelog_dialog_no_timestamp">Kein Zeitstempel bereitgestellt</string>
     <string name="changelog_dialog_no_body">Keine weitere Detailinformationen wurden bereitgestellt.</string>
+    <string name="youre_done">Alles erledigt.</string>
 </resources>
