@@ -7,7 +7,6 @@
     <string name="app_language">Langue</string>
     <string name="app_settings">Paramètres</string>
     <string name="app_update_description">friday est prêt à être mis à jour  vers un nouvelle version: %s</string>
-    <string name="app_welcome">Salut à friday!</string>
     <string name="app_update_title">friday Update</string>
     <string name="asset_loader_loading">chargement des données</string>
     <string name="asset_loader_loading_success">Prêt</string>

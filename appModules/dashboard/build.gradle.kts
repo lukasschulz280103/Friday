@@ -5,6 +5,7 @@ plugins {
 }
 dependencies {
     implementation(project(":core"))
+    implementation(project(":core-ui"))
     implementation(project(":pluginSystem"))
     implementation(Dependencies.circularImageView)
 }

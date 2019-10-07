@@ -56,4 +56,5 @@
     <string name="smth_went_wrong">Quelque chose a mal tourné :(</string>
     <string name="app_crash_recognized">Le plantage de l\'application a été reconnu</string>
     <string name="app_crash_theme_was_reset">Le thème du vendredi a été réinitialisé au thème par défaut</string>
+    <string name="app_welcome">Salut à friday!</string>
 </resources>

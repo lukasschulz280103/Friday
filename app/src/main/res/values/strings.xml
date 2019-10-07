@@ -51,7 +51,6 @@
     <string name="textwidget_exmple" translatable="false">This is an example of the TextWidget.</string>
     <string name="placeholder_add_debug_body">Add more additional debug infos</string>
     <string name="header_how_to_use" translatable="false">How to use friday?</string>
-    <string name="app_welcome">Welcome to friday</string>
     <string name="app_friday_description">friday is powerful. We turn your phone into a competent HeadUp Display Client, which is compatible with our high-qualtiy AR-glasses.
         Use \"Widgets\" to convert friday into an assistant - display every info you need from simple text to google calendar events without even touching your device.
 

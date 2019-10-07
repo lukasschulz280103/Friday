@@ -9,8 +9,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.friday.ar.core.Constant
-import com.friday.ar.dashboard.internal.base.BaseDashboardListItem
-import com.friday.ar.pluginsystem.Plugin
 import org.koin.core.KoinComponent
 import org.koin.core.get
 
@@ -21,10 +19,8 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
 
     private val isOldVersionInstalled = MutableLiveData<Pair<Boolean, String?>>()
     private val isFirstUse = MutableLiveData<Boolean>()
-    private val dashboardListData = MutableLiveData<ArrayList<BaseDashboardListItem>>()
     fun getEnergySaverState() = energySaverActive as LiveData<Boolean>
     fun getIsUpdatedVersion() = isUpdatedVersion as LiveData<Boolean>
-    val dataList = ArrayList<BaseDashboardListItem>()
 
 
     /**
@@ -33,7 +29,6 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
     fun getOldVersionInstalledState() = isOldVersionInstalled as LiveData<Pair<Boolean, String?>>
 
     fun getFirstUseState() = isFirstUse as LiveData<Boolean>
-    fun getDashBoardListData() = dashboardListData as LiveData<ArrayList<BaseDashboardListItem>>
 
     val defaultSharedPreferences: SharedPreferences = get()
 
@@ -71,20 +66,8 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
         } catch (e: NameNotFoundException) {
             isOldVersionInstalled.postValue(Pair(false, null))
         }
-
-        val examplePlugin = Plugin()
-        examplePlugin.name = "TestPlugin"
-        for (i in 1..12) {
-            dataList.add(BaseDashboardListItem.getInstance(examplePlugin))
-        }
-        dataList.add(BaseDashboardListItem.getInstance(examplePlugin))
-        dashboardListData.postValue(dataList)
     }
 
-    fun runRefresh() {
-        if (dataList.isNotEmpty()) dataList.remove(dataList[0])
-        dashboardListData.postValue(dataList)
-    }
 
     fun checkForFirstUse() {
         if (defaultSharedPreferences.getBoolean("isFirstUse", true)) {

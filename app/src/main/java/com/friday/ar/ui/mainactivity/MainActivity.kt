@@ -19,8 +19,6 @@ import com.friday.ar.base.ui.FullscreenActionActivity
 import com.friday.ar.core.Constant
 import com.friday.ar.core.Theme
 import com.friday.ar.core.activity.FridayActivity
-import com.friday.ar.core_ui.recyclerview.layoutmanager.ScrollableLayoutmanager
-import com.friday.ar.dashboard.list.DashboardAdapter
 import com.friday.ar.feedback.ui.FeedbackSenderActivity
 import com.friday.ar.fragments.dialogFragments.UninstallOldAppDialog
 import com.friday.ar.fragments.dialogFragments.UnsupportedDeviceDialog
@@ -34,10 +32,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.ar.core.ArCoreApk
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.page_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Suppress("unused")
 class MainActivity : FridayActivity() {
@@ -57,9 +53,7 @@ class MainActivity : FridayActivity() {
     private var navselected: BottomNavigationView.OnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.main_nav_dashboard -> {
-                mainPageDashboardList.smoothScrollToPosition(0)
-                mainTitleViewAppBarLayout.setExpanded(true, true)
-                main_view_flipper!!.displayedChild = SITE_DASHBOARD
+                main_view_flipper.displayedChild = SITE_DASHBOARD
                 start_actionmode.extend()
             }
             R.id.main_nav_store -> {
@@ -67,7 +61,7 @@ class MainActivity : FridayActivity() {
                     stub_page_store.visibility = View.VISIBLE
                     setupSorePage()
                 }
-                main_view_flipper!!.displayedChild = SITE_STORE
+                main_view_flipper.displayedChild = SITE_STORE
                 start_actionmode.shrink()
             }
             R.id.main_nav_profile -> {
@@ -75,7 +69,7 @@ class MainActivity : FridayActivity() {
                     stub_page_profile.visibility = View.VISIBLE
                     setupProfilePage()
                 }
-                main_view_flipper!!.displayedChild = SITE_PROFILE
+                main_view_flipper.displayedChild = SITE_PROFILE
                 start_actionmode.shrink()
             }
         }
@@ -130,43 +124,13 @@ class MainActivity : FridayActivity() {
             }
         })
 
-        //Setting up views and objects on separate thread to improve performance at startup
-        Thread(Runnable {
-            val theme = Theme(this@MainActivity)
-            runOnUiThread { mainTitleView.background = theme.createAppThemeGadient() }
+        main_bottom_nav.setOnNavigationItemSelectedListener(navselected)
 
-
-            main_bottom_nav.setOnNavigationItemSelectedListener(navselected)
-
-            start_actionmode.setOnClickListener {
-                val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
-                startActivityForResult(intent, FULLSCREEN_REQUEST_CODE)
-                Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
-            }
-        }).start()
-
-        mainPageDashboardList.layoutManager = ScrollableLayoutmanager(this)
-        mainPageDashboardList.adapter = DashboardAdapter(this, ArrayList(0))
-
-        mainSwipeRefreshLayout.setOnRefreshListener {
-            viewModel.runRefresh()
+        start_actionmode.setOnClickListener {
+            val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
+            startActivityForResult(intent, FULLSCREEN_REQUEST_CODE)
+            Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
         }
-
-        viewModel.getDashBoardListData().observe(this, Observer { list ->
-            mainSwipeRefreshLayout.isRefreshing = false
-            (mainPageDashboardList.adapter!! as DashboardAdapter).onRefresh(list)
-            if (list.isEmpty()) {
-                Log.d(LOGTAG, "list is empty")
-                mainTitleViewAppBarLayout.setExpanded(true, true)
-                dashboardEmptyView.visibility = View.VISIBLE
-                mainPageDashboardList.visibility = View.GONE
-            } else {
-                dashboardEmptyView.visibility = View.GONE
-                mainPageDashboardList.visibility = View.VISIBLE
-            }
-        })
-
-        mainSwipeRefreshLayout.isRefreshing = true
     }
 
 

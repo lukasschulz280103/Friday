@@ -56,4 +56,5 @@
     <string name="smth_went_wrong">Etwas ist schief gelaufen</string>
     <string name="app_crash_recognized">Appabsturz erkannt</string>
     <string name="app_crash_theme_was_reset">Das Theme wurde in Friday zurücgesetzt</string>
+    <string name="app_welcome">Willkommen bei Friday</string>
 </resources>
