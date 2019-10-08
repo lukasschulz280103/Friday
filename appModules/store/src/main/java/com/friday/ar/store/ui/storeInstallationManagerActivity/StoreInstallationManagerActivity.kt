@@ -3,6 +3,7 @@ package com.friday.ar.store.ui.storeInstallationManagerActivity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -40,6 +41,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
 
         viewModel.pluginListData.observe(this, Observer { pluginList ->
             (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginList)
+            Log.d(LOGTAG, "length of plugin list: ${pluginList.size}")
             setEmptyViewVisibleByInt(pluginList.size)
         })
 

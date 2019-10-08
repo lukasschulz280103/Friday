@@ -18,7 +18,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 /**
  * A simple [Fragment] subclass.
  */
-class DashboardFramgent : Fragment() {
+class DashboardFragment : Fragment() {
     companion object {
         const val LOGTAG = "DashboardFragment"
     }
@@ -48,10 +48,14 @@ class DashboardFramgent : Fragment() {
             if (list.isEmpty()) {
                 Log.d(LOGTAG, "list is empty")
                 fragmentView.mainTitleViewAppBarLayout.setExpanded(true, true)
+                fragmentView.mainPageDashboardList.animate().alpha(0f).setDuration(200).start()
                 fragmentView.dashboardEmptyView.visibility = View.VISIBLE
+                fragmentView.dashboardEmptyView.animate().alpha(1f).setDuration(200).start()
                 fragmentView.mainPageDashboardList.visibility = View.GONE
             } else {
+                fragmentView.dashboardEmptyView.animate().alpha(0f).setDuration(200).start()
                 fragmentView.dashboardEmptyView.visibility = View.GONE
+                fragmentView.mainPageDashboardList.animate().alpha(1f).setDuration(200).start()
                 fragmentView.mainPageDashboardList.visibility = View.VISIBLE
             }
         })

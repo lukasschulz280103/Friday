@@ -48,7 +48,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:src="@drawable/twotone_done_outline_24"
-                        app:layout_constraintBottom_toTopOf="@+id/textView"
+                        app:layout_constraintBottom_toTopOf="@+id/done_hint"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.4"
                         app:layout_constraintStart_toStartOf="parent"
@@ -58,14 +58,14 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:src="@drawable/twotone_done_outline_24"
-                        app:layout_constraintBottom_toTopOf="@+id/textView"
+                        app:layout_constraintBottom_toTopOf="@+id/done_hint"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.6"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/done_hint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/youre_done"

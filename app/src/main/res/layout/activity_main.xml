@@ -33,7 +33,7 @@
 
             <fragment
                 android:id="@+id/dashboard_fragment"
-                android:name="com.friday.ar.dashboard.ui.dashboardFragment.DashboardFramgent"
+                android:name="com.friday.ar.dashboard.ui.dashboardFragment.DashboardFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_dashboard_framgent" />
