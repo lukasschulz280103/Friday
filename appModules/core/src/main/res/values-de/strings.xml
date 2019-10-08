@@ -57,4 +57,5 @@
     <string name="app_crash_recognized">Appabsturz erkannt</string>
     <string name="app_crash_theme_was_reset">Das Theme wurde in Friday zurücgesetzt</string>
     <string name="app_welcome">Willkommen bei Friday</string>
+    <string name="app_name">friday</string>
 </resources>

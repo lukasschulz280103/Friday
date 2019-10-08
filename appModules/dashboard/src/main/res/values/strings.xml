@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dashboard</string>
+    <string name="module_dashboard_name">dashboard</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="youre_done">Youre\'done</string>

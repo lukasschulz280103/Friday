@@ -57,8 +57,9 @@
     <string name="req_mic_rationale">The mircophone is needed to be able to use the voice assistant.</string>
     <string name="req_mic_rationale_title">Microphone</string>
     <string name="smth_went_wrong">Something went wrong :(</string>
-    <string name="app_name" translatable="false">friday</string>
+    <string name="module_dashboard_name" translatable="false">friday</string>
     <string name="app_crash_recognized">App crash was recognized</string>
     <string name="app_crash_theme_was_reset">Your app theme was reset to default.</string>
     <string name="app_welcome">Welcome to friday!</string>
+    <string name="app_name">friday</string>
 </resources>
