@@ -6,13 +6,14 @@ import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
-import android.content.*
+import android.content.ComponentName
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import com.crashlytics.android.Crashlytics
 import com.friday.ar.account.sync.AccountSyncService
 import com.friday.ar.core.Constant
 import com.friday.ar.di.moduleList
-import com.friday.ar.pluginsystem.file.ZippedPluginFile
 import com.friday.ar.pluginsystem.service.PluginIndexer
 import com.friday.ar.pluginsystem.service.PluginLoader
 import io.fabric.sdk.android.Fabric
@@ -29,16 +30,8 @@ import java.io.File
 class FridayApplication : Application() {
     companion object{
         lateinit var pluginLoader: PluginLoader
-        lateinit var indexedPlugins: ArrayList<ZippedPluginFile>
     }
 
-    val pluginIndexerReciever = object: BroadcastReceiver(){
-        override fun onReceive(p0: Context?, p1: Intent?) {
-            if(p1 != null && p1.extras != null){
-                indexedPlugins = p1.extras!!.getSerializable("indexList") as ArrayList<ZippedPluginFile>
-            }
-        }
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -55,7 +48,6 @@ class FridayApplication : Application() {
         }
         Constant.getPluginDir(this).delete()
         Thread {
-            registerReceiver(pluginIndexerReciever, IntentFilter(Constant.BroadcastReceiverActions.BROADCAST_PLUGINS_INDEXED))
             runServices()
             createNotificationChannels()
         }.start()
@@ -128,7 +120,5 @@ class FridayApplication : Application() {
                 .build()
         jobScheduler.schedule(jobIndexerInfo)
 
-        pluginLoader = PluginLoader(this)
-        pluginLoader.startLoading()
     }
 }
