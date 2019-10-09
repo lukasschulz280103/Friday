@@ -45,7 +45,7 @@ abstract class FridayActivity : AppCompatActivity() {
         } catch (e: InflateException) {
             Log.e(LOGTAG, "could not inflate contentView for activity $this! [${e.message}]", e)
             theme.reset()
-            val errNotif = BaseNotification(Constant.Notification.NOTIFICATION_FRIDAYACTIVITY_CRASH, Constant.Notification.Channels.NOTIFICAITON_CHANNEL_APP_CRASH)
+            BaseNotification(Constant.Notification.NOTIFICATION_FRIDAYACTIVITY_CRASH, Constant.Notification.Channels.NOTIFICAITON_CHANNEL_APP_CRASH)
                     .set(R.string.app_crash_recognized, R.string.app_crash_theme_was_reset, R.drawable.twotone_failure_24dp)
                     .notifyNow()
         }

@@ -2,9 +2,9 @@ package com.friday.ar.base.ui
 
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.friday.ar.base.R
+import com.friday.ar.core.activity.FridayActivity
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
 import com.google.ar.core.Session
@@ -13,7 +13,7 @@ import extensioneer.notNull
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class FullscreenActionActivity : AppCompatActivity() {
+class FullscreenActionActivity : FridayActivity() {
     companion object {
         const val LOGTAG = "ARMode"
     }
