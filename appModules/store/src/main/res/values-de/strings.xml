@@ -26,4 +26,5 @@
     <string name="manager_wishlist">Wunschliste</string>
     <string name="loading_err_title">:Code %s:</string>
     <string name="install_from_disk">Von Speicher installieren</string>
+    <string name="store_not_available">Der Shop ist derzeit nicht verfügbar. Gib uns etwas Zeit und der Shop wird in einem viel besseren Look verfügbar sein.</string>
 </resources>

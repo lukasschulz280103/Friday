@@ -26,4 +26,5 @@
     <string name="manager_wishlist">Liste de souhaits</string>
     <string name="loading_err_title">:Code %s:</string>
     <string name="install_from_disk">Installer à partir du disque</string>
+    <string name="store_not_available">La boutique est actuellement indisponible. Donnez-nous un peu de temps et la boutique sera disponible dans un bien meilleur look.</string>
 </resources>
