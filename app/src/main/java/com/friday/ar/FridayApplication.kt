@@ -2,6 +2,7 @@ package com.friday.ar
 
 import android.app.Application
 import android.app.NotificationChannel
+import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
@@ -62,25 +63,50 @@ class FridayApplication : Application() {
 
     private fun createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val appRelatedNotifChannelgroup = NotificationChannelGroup(
+                    Constant.Notification.ChannelGroups.NOTIFICATION_CHANNEL_GROUP_APP_RELATED,
+                    getString(R.string.notification_channel_group_app_related)
+            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                appRelatedNotifChannelgroup.description = getString(R.string.notification_channel_group_app_related_description)
+            }
+
+            val storeNotifChannelGroup = NotificationChannelGroup(
+                    Constant.Notification.ChannelGroups.NOTIFICATION_CHANNEL_GROUP_STORE,
+                    getString(R.string.notification_channel_group_store)
+            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                storeNotifChannelGroup.description = getString(R.string.notification_channel_group_store_description)
+            }
+
+            val nm = getSystemService(NotificationManager::class.java)
+            nm!!.createNotificationChannelGroups(listOf(appRelatedNotifChannelgroup, storeNotifChannelGroup))
+
             val updateChannel = NotificationChannel(
                     Constant.Notification.Channels.NOTIFICATION_CHANNEL_UPDATE,
                     getString(R.string.notification_channel_update),
                     NotificationManager.IMPORTANCE_DEFAULT
             )
             updateChannel.description = getString(R.string.notification_channel_update_description)
+            updateChannel.group = Constant.Notification.ChannelGroups.NOTIFICATION_CHANNEL_GROUP_APP_RELATED
+
+            val appCrashChannel = NotificationChannel(
+                    Constant.Notification.Channels.NOTIFICAITON_CHANNEL_APP_CRASH,
+                    getString(R.string.notification_channel_app_crash),
+                    NotificationManager.IMPORTANCE_HIGH
+            )
+            appCrashChannel.description = getString(R.string.notification_channel_app_crash_description)
+            appCrashChannel.group = Constant.Notification.ChannelGroups.NOTIFICATION_CHANNEL_GROUP_APP_RELATED
+
             val pluginInstallerChannel = NotificationChannel(
-                    Constant.Notification.Channels.NOTIFICATION_CHANNEL_UPDATE,
+                    Constant.Notification.Channels.NOTIFICATION_CHANNEL_INSTALLER,
                     getString(R.string.notification_channel_plugin_installer),
                     NotificationManager.IMPORTANCE_DEFAULT
             )
             pluginInstallerChannel.description = getString(R.string.notification_channel_plugin_installer_description)
-            val appCrashChannel = NotificationChannel(
-                    Constant.Notification.Channels.NOTIFICAITON_CHANNEL_APP_CRASH,
-                    "App Crash",
-                    NotificationManager.IMPORTANCE_HIGH
-            )
-            val nm = getSystemService(NotificationManager::class.java)
-            nm!!.createNotificationChannels(listOf(updateChannel, pluginInstallerChannel, appCrashChannel))
+            appCrashChannel.group = Constant.Notification.ChannelGroups.NOTIFICATION_CHANNEL_GROUP_STORE
+
+            nm.createNotificationChannels(listOf(updateChannel, pluginInstallerChannel, appCrashChannel))
         }
     }
 

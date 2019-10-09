@@ -138,4 +138,10 @@
     <string name="changelog_dialog_no_timestamp">No timestamp provided</string>
     <string name="changelog_dialog_no_body">No detailed information provided.</string>
     <string name="youre_done">You\'re done.</string>
+    <string name="notification_channel_app_crash">App Crash</string>
+    <string name="notification_channel_app_crash_description">This notification channel notifies about auto-detected app-crashes. It will inform you about further actions to be done in order to make friday work properly again. May you never encounter any problems though!</string>
+    <string name="notification_channel_group_app_related">App-related notifications</string>
+    <string name="notification_channel_group_app_related_description">These notifications will notifiy you about changes related to friday, such as updates or app crashes.</string>
+    <string name="notification_channel_group_store">Store</string>
+    <string name="notification_channel_group_store_description">These notification groups will notify you about fridays plugin marketplace and will provide information like download or install progress.</string>
 </resources>

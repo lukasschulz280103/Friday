@@ -98,4 +98,10 @@
     <string name="changelog_dialog_no_timestamp">Pas d\'horodatage fourni.</string>
     <string name="changelog_dialog_no_title">Aucun titre fourni</string>
     <string name="youre_done">Tout est fait.</string>
+    <string name="notification_channel_app_crash">Crash d\'application</string>
+    <string name="notification_channel_app_crash_description">This notification channel informs you of automatically detected application crashes. He will inform you about the actions to be taken to make Friday work properly again. May you never encounter any problems!</string>
+    <string name="notification_channel_group_app_related">Notifications relatives aux application</string>
+    <string name="notification_channel_group_app_related_description">Ces notifications vous informeront des changements liés au vendredi, tels que les mises à jour ou les pannes de l\'application.</string>
+    <string name="notification_channel_group_store">Store</string>
+    <string name="notification_channel_group_store_description">Ces groupes de notification vous informeront sur le marché des plugins du vendredi et vous fourniront des informations telles que le téléchargement ou la progression de l\'installation.</string>
 </resources>

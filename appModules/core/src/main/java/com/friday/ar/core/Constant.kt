@@ -66,6 +66,11 @@ class Constant {
             const val NOTIFICATION_CHANNEL_INSTALLER = "channel_plugin_installer"
             const val NOTIFICAITON_CHANNEL_APP_CRASH = "channel_app_crash"
         }
+
+        object ChannelGroups {
+            const val NOTIFICATION_CHANNEL_GROUP_APP_RELATED = "channel_group_app"
+            const val NOTIFICATION_CHANNEL_GROUP_STORE = "channel_group_store"
+        }
         object Groups {
             const val NOTIFICATION_GROUP_INSTALLER = "NOTIF_GROUP_INSTALLER"
         }

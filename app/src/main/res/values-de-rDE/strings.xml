@@ -102,4 +102,10 @@
     <string name="changelog_dialog_no_timestamp">Kein Zeitstempel bereitgestellt</string>
     <string name="changelog_dialog_no_body">Keine weitere Detailinformationen wurden bereitgestellt.</string>
     <string name="youre_done">Alles erledigt.</string>
+    <string name="notification_channel_app_crash">App-Absturz</string>
+    <string name="notification_channel_app_crash_description">Dieser Benachrichtigungskanal informiert sie über automatisch erkannte App-Abstürze. Sollte dies der Fall sein, werden sie hier über weitere Schritte informiert, um Friday wieder zum laufen zu bringen. Möge diese Benachrichtigung Sie niemals erreichen!</string>
+    <string name="notification_channel_group_app_related">App-bezogene Benachrichtigungen</string>
+    <string name="notification_channel_group_app_related_description">Diese Benachrichtigungsgruppen sind für App-bezogene Informationen zuständig, wie verfügbare updates oder App-Abstürze.</string>
+    <string name="notification_channel_group_store">Store</string>
+    <string name="notification_channel_group_store_description">Diese Benachrichtigungsgruppen informieren Sie über den Freitags-Pluginstores und stellen Informationen wie Download-oder Installationsfortschritt zur Verfügung.</string>
 </resources>
