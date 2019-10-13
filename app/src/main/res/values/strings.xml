@@ -144,4 +144,5 @@
     <string name="notification_channel_group_app_related_description">These notifications will notifiy you about changes related to friday, such as updates or app crashes.</string>
     <string name="notification_channel_group_store">Store</string>
     <string name="notification_channel_group_store_description">These notification groups will notify you about fridays plugin marketplace and will provide information like download or install progress.</string>
+    <string name="ar_disabled_message">Ar mode is currently disabled. Please try again later.</string>
 </resources>

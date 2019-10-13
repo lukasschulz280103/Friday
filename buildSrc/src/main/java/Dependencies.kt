@@ -1,34 +1,35 @@
 private object Versions {
     const val buildToolsVersion = "3.5.0"
-    const val kotlinVersion = "1.3.41"
-    const val kotlinCoroutines = "1.3.0-M2"
-    const val arCoreVersion = "1.11.0"
+    const val kotlinVersion = "1.3.50"
+    const val kotlinCoroutines = "1.3.2"
+    const val arCoreVersion = "1.12.0"
 
     const val zip4j = "1.3.3"
 
-    const val jetpack = "1.1.0-rc01"
+    const val jetpack = "1.1.0"
     const val constraintLayout = "1.1.3"
     const val gridLayout = "1.0.0"
     const val ktx = "1.1.0-alpha05"
-    const val guava = "28.0-jre"
+    const val guava = "28.1-jre"
     const val palette = "1.0.0"
     const val legacy = "1.0.0"
 
     const val play = "17.0.0"
 
-    const val androidArch = "2.0.0"
+    const val androidArch = "2.1.0"
 
-    const val navigation = "2.0.0"
-    const val room = "2.1.0"
+    const val navigation = "2.1.0"
+    const val room = "2.2.0"
     const val recyclerView = "1.0.0"
     const val material = "1.0.0"
     const val materialAlpha = "1.1.0-alpha09"
-    const val CIV = "3.2.0"
+    const val CIV = "4.0.2"
     const val SUP = "3.4.0"
     const val appIntro = "5.1.0"
 
-    const val firebaseCore = "17.1.0"
-    const val firebaseFeatures = "19.0.0"
+    const val firebaseCore = "17.2.0"
+    const val firebaseFeatures = "19.1.0"
+    const val firebasePerformance = "19.0.0"
     const val firebaseFirestore = "21.0.0"
     const val firebaseMl = "23.0.0"
     const val crashlytics = "2.10.1"
@@ -39,9 +40,9 @@ private object Versions {
 
     // Testing
     const val junitGradle = "1.4.2.1"
-    const val junit = "5.4.2"
-    const val mockitoKotlin = "2.1.0"
-    const val kotlinTest = "3.3.2"
+    const val junit = "5.5.2"
+    const val mockitoKotlin = "2.2.0"
+    const val kotlinTest = "3.4.2"
 }
 
 object BuildPlugins {
@@ -78,6 +79,7 @@ object Dependencies {
     const val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
     const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
     const val legacy = "androidx.legacy:legacy-support-v4:${Versions.legacy}"
+    const val room = "androidx.room:room-runtime:${Versions.room}"
 
     //fileManagement
     const val zip4j = "net.lingala.zip4j:zip4j:${Versions.zip4j}"
@@ -116,7 +118,7 @@ object Dependencies {
     const val firebaseDatabase = "com.google.firebase:firebase-database:${Versions.firebaseFeatures}"
     const val firebaseStorage = "com.google.firebase:firebase-storage:${Versions.firebaseFeatures}"
     const val firebaseAuth = "com.google.firebase:firebase-auth:${Versions.firebaseFeatures}"
-    const val firebasePerformance = "com.google.firebase:firebase-perf:${Versions.firebaseFeatures}"
+    const val firebasePerformance = "com.google.firebase:firebase-perf:${Versions.firebasePerformance}"
     const val firebaseFirestore = "com.google.firebase:firebase-firestore:${Versions.firebaseFirestore}"
     const val firebaseMLVision = "com.google.firebase:firebase-ml-vision:${Versions.firebaseMl}"
     const val crashlytics = "com.crashlytics.sdk.android:crashlytics:${Versions.crashlytics}"

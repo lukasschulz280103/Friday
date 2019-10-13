@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/google_cardboard"
+        android:shortcutDisabledMessage="@string/ar_disabled_message"
+        android:shortcutId="startActionModeSC"
+        android:shortcutLongLabel="@string/start_action_mode"
+        android:shortcutShortLabel="@string/module_ar_name">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.friday.ar.base.ui.FullscreenActionActivity"
+            android:targetPackage="com.friday.ar" />
+        <categories android:name="android.shortcut.xml" />
+    </shortcut>
+</shortcuts>

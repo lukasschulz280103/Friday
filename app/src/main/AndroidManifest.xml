@@ -141,6 +141,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".preferences.ui.SettingsActivity"
@@ -188,13 +191,11 @@
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="ocr" />
 
+
         <service
             android:name="com.friday.ar.account.sync.AccountDeletionFeedbackService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <service
-            android:name=".pluginsystem.service.PluginIndexer"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

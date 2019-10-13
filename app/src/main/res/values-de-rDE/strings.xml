@@ -108,4 +108,5 @@
     <string name="notification_channel_group_app_related_description">Diese Benachrichtigungsgruppen sind für App-bezogene Informationen zuständig, wie verfügbare updates oder App-Abstürze.</string>
     <string name="notification_channel_group_store">Store</string>
     <string name="notification_channel_group_store_description">Diese Benachrichtigungsgruppen informieren Sie über den Freitags-Pluginstores und stellen Informationen wie Download-oder Installationsfortschritt zur Verfügung.</string>
+    <string name="ar_disabled_message">Der AR-Modus ist derzeit deaktiviert. Bitte versuchen sie es zu einem späteren Zeitpunkt nocheinmal</string>
 </resources>

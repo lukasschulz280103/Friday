@@ -8,7 +8,6 @@ import com.friday.ar.pluginsystem.Plugin
 import com.friday.ar.pluginsystem.service.PluginLoader
 import com.friday.ar.pluginsystem.service.installer.PluginInstaller
 import org.koin.core.KoinComponent
-import org.koin.core.get
 import java.io.InputStream
 
 class StoreInstallationsManagerViewModel(val context: Context) : ViewModel(), KoinComponent {
@@ -19,10 +18,9 @@ class StoreInstallationsManagerViewModel(val context: Context) : ViewModel(), Ko
     val pluginListData = MutableLiveData<List<Plugin>>()
 
     init {
-        val pluginLoader = get<PluginLoader>()
-        Log.d(LOGTAG, "indexed installed plugins: ${pluginLoader.indexedPlugins}")
+        Log.d(LOGTAG, "indexed installed plugins: ${PluginLoader.indexedPlugins}")
 
-        pluginListData.postValue(pluginLoader.indexedPlugins)
+        pluginListData.postValue(PluginLoader.indexedPlugins)
     }
 
 

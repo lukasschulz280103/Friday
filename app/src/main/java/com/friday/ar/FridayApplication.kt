@@ -14,7 +14,6 @@ import com.crashlytics.android.Crashlytics
 import com.friday.ar.account.sync.AccountSyncService
 import com.friday.ar.core.Constant
 import com.friday.ar.di.moduleList
-import com.friday.ar.pluginsystem.service.PluginIndexer
 import com.friday.ar.pluginsystem.service.PluginLoader
 import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.get
@@ -23,15 +22,11 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import java.io.File
 
-//TODO remove data handling from application class to sperate models
+//TODO remove data handling from application class to seperate models
 /**
  * Application class
  */
 class FridayApplication : Application() {
-    companion object{
-        lateinit var pluginLoader: PluginLoader
-    }
-
 
     override fun onCreate() {
         super.onCreate()
@@ -96,7 +91,7 @@ class FridayApplication : Application() {
                     NotificationManager.IMPORTANCE_DEFAULT
             )
             pluginInstallerChannel.description = getString(R.string.notification_channel_plugin_installer_description)
-            appCrashChannel.group = Constant.Notification.ChannelGroups.NOTIFICATION_CHANNEL_GROUP_STORE
+            pluginInstallerChannel.group = Constant.Notification.ChannelGroups.NOTIFICATION_CHANNEL_GROUP_STORE
 
             nm.createNotificationChannels(listOf(updateChannel, pluginInstallerChannel, appCrashChannel))
         }
@@ -114,11 +109,15 @@ class FridayApplication : Application() {
             jobScheduler.schedule(info)
         }
 
-        val jobIndexerInfo = JobInfo.Builder(Constant.Jobs.JOB_INDEX_PLUGINS, ComponentName(this, PluginIndexer::class.java))
-                .setBackoffCriteria((30 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
+        val jobPluginloaderInfo = JobInfo.Builder(Constant.Jobs.JOB_INDEX_INSTALLED_PLUGINS, ComponentName(this, PluginLoader::class.java))
+                .setBackoffCriteria(60000, JobInfo.BACKOFF_POLICY_LINEAR)
                 .setOverrideDeadline(0)
-                .build()
-        jobScheduler.schedule(jobIndexerInfo)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            jobPluginloaderInfo
+                    .setImportantWhileForeground(true)
+                    .setPrefetch(true)
+        }
+        jobScheduler.schedule(jobPluginloaderInfo.build())
 
     }
 }

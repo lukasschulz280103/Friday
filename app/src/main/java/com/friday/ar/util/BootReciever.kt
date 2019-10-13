@@ -3,9 +3,9 @@ package com.friday.ar.util
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.*
+import android.os.Build
 import com.friday.ar.account.sync.AccountSyncService
 import com.friday.ar.core.Constant
-import com.friday.ar.pluginsystem.service.PluginIndexer
 import com.friday.ar.pluginsystem.service.PluginLoader
 import org.koin.core.KoinComponent
 import org.koin.core.get
@@ -26,15 +26,15 @@ class BootReciever : BroadcastReceiver(), KoinComponent {
                     .build()
             jobScheduler.schedule(info)
         }
-        val pluginLoader = PluginLoader(context)
-        if (pluginLoader.startLoading()) {
 
-        }
-
-        val jobIndexerInfo = JobInfo.Builder(Constant.Jobs.JOB_INDEX_PLUGINS, ComponentName(context, PluginIndexer::class.java))
+        val jobPluginloaderInfo = JobInfo.Builder(Constant.Jobs.JOB_INDEX_INSTALLED_PLUGINS, ComponentName(context, PluginLoader::class.java))
+                .setBackoffCriteria(60000, JobInfo.BACKOFF_POLICY_LINEAR)
                 .setOverrideDeadline(0)
-                .setBackoffCriteria((30 * 60000).toLong(), JobInfo.BACKOFF_POLICY_LINEAR)
-                .build()
-        jobScheduler.schedule(jobIndexerInfo)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            jobPluginloaderInfo
+                    .setImportantWhileForeground(true)
+                    .setPrefetch(true)
+        }
+        jobScheduler.schedule(jobPluginloaderInfo.build())
     }
 }

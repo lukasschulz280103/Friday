@@ -89,15 +89,16 @@ class Constant {
          * Use this broadcast receiver action to always be notified when the PluginIndexer service is done indexing plugins.
          *
          * @see android.content.BroadcastReceiver
-         * @see com.friday.ar.service.plugin.PluginIndexer
+         * @see com.friday.ar.service.plugin.PluginLoader
          */
-        const val BROADCAST_PLUGINS_INDEXED = "PLUGINS_INDEXED"
+        const val BROADCAST_PLUGINS_LOADED = "PLUGINS_LOADED"
     }
 
     object Jobs {
         const val JOB_SYNC_ACCOUNT = 8000
         const val JOB_FEEDBACK = 8001
         const val JOB_INDEX_PLUGINS = 8002
+        const val JOB_INDEX_INSTALLED_PLUGINS = 8003
     }
 
     object AnalyticEvent {

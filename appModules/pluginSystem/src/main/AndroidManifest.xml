@@ -1,1 +1,9 @@
-<manifest package="com.friday.ar.pluginsystem" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.friday.ar.pluginsystem">
+
+    <application>
+        <service
+            android:name="com.friday.ar.pluginsystem.service.PluginLoader"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+    </application>
+</manifest>

@@ -95,16 +95,6 @@ class MainActivity : FridayActivity() {
             }
         })
 
-        viewModel.getEnergySaverState().observe(this@MainActivity, Observer { isEnergySaverActive ->
-            if (isEnergySaverActive) {
-                val builder = MaterialAlertDialogBuilder(this)
-                builder.setTitle(R.string.energy_saver_warn_title)
-                builder.setMessage(R.string.energy_saver_warn_msg)
-                builder.setPositiveButton(R.string.deactivate) { _, _ -> }
-                builder.setNegativeButton(R.string.later, null)
-                builder.create().show()
-            }
-        })
         viewModel.getIsUpdatedVersion().observe(this@MainActivity, Observer { isUpdatedVersion ->
             if (isUpdatedVersion) {
                 val changeLogDialog = ChangelogDialogFragment()
