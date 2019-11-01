@@ -3,15 +3,14 @@ package com.friday.ar.store.ui.storeInstallationManagerActivity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.friday.ar.core.Constant
 import com.friday.ar.core.activity.FridayActivity
 import com.friday.ar.core.util.DisplayUtil
+import com.friday.ar.pluginsystem.db.LocalPluginsDB
 import com.friday.ar.store.R
 import com.friday.ar.store.ui.adapter.PluginListAdapter
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -37,17 +36,14 @@ class StoreInstallationManagerActivity : FridayActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        appList.adapter = PluginListAdapter(this, null)
+        appList.adapter = PluginListAdapter(this)
+        appList.layoutManager = LinearLayoutManager(this)
 
-        viewModel.pluginListData.observe(this, Observer { pluginList ->
-            (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginList)
-            Log.d(LOGTAG, "length of plugin list: ${pluginList.size}")
-            setEmptyViewVisibleByInt(pluginList.size)
-        })
+        setEmptyViewVisibleByInt(LocalPluginsDB.getInstance(this).indexedPluginsDAO().getCurrentInstalledPlugins().size)
+        (appList.adapter as PluginListAdapter).onRecieveUpdatedData(LocalPluginsDB.getInstance(this).indexedPluginsDAO().getCurrentInstalledPlugins())
 
         registerForContextMenu(appList)
 
-        appList.layoutManager = LinearLayoutManager(this)
     }
 
     private fun setEmptyViewVisibleByInt(dataSize: Int) {

@@ -8,14 +8,35 @@ import com.friday.ar.pluginsystem.R
 import com.friday.ar.pluginsystem.security.VerificationSecurityException
 import org.json.JSONException
 import java.io.IOException
+import java.nio.file.DirectoryNotEmptyException
 import java.util.zip.ZipException
 
 class PluginInstallerNotificationService(val context: Context) {
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    init {
+        installerNotifId++
+        val summaryNotification = NotificationCompat.Builder(context, Constant.Notification.Channels.NOTIFICATION_CHANNEL_INSTALLER)
+                .setSmallIcon(R.drawable.ic_twotone_store_24px)
+                //build summary info into InboxStyle template
+                //specify which group this notification belongs to
+                .setGroup(Constant.Notification.Groups.NOTIFICATION_GROUP_INSTALLER)
+                //set this notification as the summary for the group
+                .setGroupSummary(true)
+                .build()
+        notificationManager.notify(installerNotifId + 2, summaryNotification)
+    }
+
+    companion object {
+        var installerNotifId = 0
+    }
     fun notificationShowError(exception: Exception) {
         val message = when (exception) {
             is ZipException -> {
                 context.getString(R.string.pluginInstaller_error_invalid_zip_file)
+            }
+            is DirectoryNotEmptyException -> {
+                context.getString(R.string.pluginInstaller_error_plugin_already_is_installed)
             }
             is IOException -> {
                 context.getString(R.string.pluginInstaller_error_io_exception)
@@ -36,7 +57,7 @@ class PluginInstallerNotificationService(val context: Context) {
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setGroup(Constant.Notification.Groups.NOTIFICATION_GROUP_INSTALLER)
                 .build()
-        notificationManager.notify(Constant.Notification.NOTIFICATION_INSTALL_PROGRESS, notification)
+        notificationManager.notify(installerNotifId, notification)
     }
 
     fun notificationShowProgress(progressMessage: String) {
@@ -47,8 +68,9 @@ class PluginInstallerNotificationService(val context: Context) {
                 .setOngoing(true)
                 .setGroup(Constant.Notification.Groups.NOTIFICATION_GROUP_INSTALLER)
                 .setSmallIcon(R.drawable.ic_twotone_archive_24px)
+                .setPriority(NotificationManager.IMPORTANCE_LOW)
                 .build()
-        notificationManager.notify(Constant.Notification.NOTIFICATION_INSTALL_PROGRESS, notification)
+        notificationManager.notify(installerNotifId, notification)
     }
 
     fun notificationShowSuccess(name: String) {
@@ -59,7 +81,7 @@ class PluginInstallerNotificationService(val context: Context) {
                 .setSmallIcon(R.drawable.ic_twotone_archive_24px)
                 .setGroup(Constant.Notification.Groups.NOTIFICATION_GROUP_INSTALLER)
                 .build()
-        notificationManager.notify(Constant.Notification.NOTIFICATION_INSTALL_PROGRESS, notification)
+        notificationManager.notify(installerNotifId, notification)
 
     }
 }

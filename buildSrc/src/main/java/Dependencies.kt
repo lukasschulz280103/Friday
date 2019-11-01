@@ -80,7 +80,7 @@ object Dependencies {
     const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
     const val legacy = "androidx.legacy:legacy-support-v4:${Versions.legacy}"
     const val room = "androidx.room:room-runtime:${Versions.room}"
-
+    const val roomAnnotationProcessor = "android.arch.persistence.room:compiler:${Versions.room}"
     //fileManagement
     const val zip4j = "net.lingala.zip4j:zip4j:${Versions.zip4j}"
 

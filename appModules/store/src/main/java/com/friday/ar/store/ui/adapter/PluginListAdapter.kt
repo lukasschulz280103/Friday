@@ -5,23 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.friday.ar.pluginsystem.Plugin
+import com.friday.ar.pluginsystem.file.PluginFile
 import com.friday.ar.pluginsystem.service.installer.PluginInstaller
 import com.friday.ar.store.R
 import com.friday.ar.store.ui.StoreDetailActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import extensioneer.isNull
 
 
-class PluginListAdapter(private val context: Context, private var dataList: MutableList<Plugin>?) : RecyclerView.Adapter<SimplePluginListItemHolder>() {
+class PluginListAdapter(private val context: Context) : RecyclerView.Adapter<SimplePluginListItemHolder>() {
     companion object {
         private const val LOGTAG = "PluginListAdapter"
     }
+
+    private var dataList = emptyList<Plugin>()
     
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimplePluginListItemHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.listitem_app_item, parent, false)
@@ -30,14 +31,8 @@ class PluginListAdapter(private val context: Context, private var dataList: Muta
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SimplePluginListItemHolder, position: Int) {
-        val plugin = dataList!![position]
-        holder.iconView.setImageURI(plugin.iconURI)
+        val plugin = dataList[position]
         holder.title.text = plugin.name
-        if (plugin.rating != null) {
-            holder.ratingBar.rating = plugin.rating!!.starRating
-        } else {
-            holder.ratingBar.visibility = View.GONE
-        }
         holder.installStatus.setText(R.string.store_plugin_status_installed)
         holder.overflowMenu.setOnClickListener { v ->
             val menu = PopupMenu(context, v, Gravity.START)
@@ -64,20 +59,18 @@ class PluginListAdapter(private val context: Context, private var dataList: Muta
         holder.rootView.setOnClickListener {
             context.startActivity(Intent(context, StoreDetailActivity::class.java))
         }
-        holder.size.text = plugin.pluginFile!!.length().toString()
+        holder.size.text = PluginFile(plugin.pluginFileUri).length().toString()
     }
 
     override fun getItemCount(): Int {
-        return dataList?.size ?: 0
+        return dataList.size
     }
 
     fun onRecieveUpdatedData(updatedData: List<Plugin>) {
-        dataList.isNull { dataList = updatedData as MutableList<Plugin> }
-        val diffResult = DiffUtil.calculateDiff(PluginListDiffUtilCallback(updatedData, dataList!!))
+        val diffResult = DiffUtil.calculateDiff(PluginListDiffUtilCallback(updatedData, dataList))
 
-        this.dataList!!.clear()
-
-        this.dataList!!.addAll(updatedData)
         diffResult.dispatchUpdatesTo(this)
+
+        dataList = updatedData
     }
 }

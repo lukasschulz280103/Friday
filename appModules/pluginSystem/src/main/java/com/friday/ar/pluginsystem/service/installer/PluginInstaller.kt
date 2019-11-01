@@ -6,11 +6,11 @@ import com.friday.ar.core.Constant
 import com.friday.ar.pluginsystem.Plugin
 import com.friday.ar.pluginsystem.R
 import com.friday.ar.pluginsystem.cache.PluginFileCacheUtil
+import com.friday.ar.pluginsystem.file.PluginFile
 import com.friday.ar.pluginsystem.file.ZippedPluginFile
 import com.friday.ar.pluginsystem.security.PluginVerifier
 import com.friday.ar.pluginsystem.security.VerificationSecurityException
 import extensioneer.files.toFile
-import extensioneer.notNull
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import java.io.IOException
@@ -92,7 +92,7 @@ class PluginInstaller(private val context: Context) {
 
     fun uninstallPlugin(plugin: Plugin) {
         Log.i(LOGTAG, "uninstalling plugin:${plugin.name}")
-        plugin.pluginFile.notNull { deleteRecursively() }
+        plugin.pluginFileUri.apply { PluginFile(this).deleteRecursively() }
         //TODO remove plugin from list
     }
 

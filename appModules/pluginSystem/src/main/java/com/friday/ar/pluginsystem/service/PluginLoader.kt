@@ -6,18 +6,21 @@ import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.friday.ar.core.Constant
-import com.friday.ar.pluginsystem.Plugin
+import com.friday.ar.pluginsystem.db.LocalPluginsDB
 import com.friday.ar.pluginsystem.file.PluginFile
 import com.friday.ar.pluginsystem.security.PluginVerifier
 import com.friday.ar.pluginsystem.security.VerificationSecurityException
 import extensioneer.notNull
+import extensioneer.notNullWithResult
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
 import org.koin.core.KoinComponent
 import org.koin.core.get
+import org.koin.core.inject
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 /**
  * This class loads all plugins when the app starts.
@@ -26,14 +29,10 @@ class PluginLoader : JobService(), KoinComponent {
 
     companion object {
         private const val LOGTAG = "PluginLoader"
-
-        /**
-         * @return List of all installed Plugins
-         */
-        val indexedPlugins = ArrayList<Plugin>()
     }
 
     private val pluginDir: File = Constant.getPluginDir(get())
+    private val localInstalledPluginsDB: LocalPluginsDB by inject()
 
     init {
         pluginDir.mkdirs()
@@ -47,14 +46,12 @@ class PluginLoader : JobService(), KoinComponent {
      */
     private fun startLoading(): Boolean {
         Log.d(LOGTAG, "starting to load plugins...")
-        indexedPlugins.clear()
         if (pluginDir.exists()) {
             for (pluginFile in pluginDir.listFiles()) {
                 try {
                     val plugin = PluginFile(pluginFile.path)
                     Log.d(LOGTAG, "Loading " + plugin.name)
                     loadPackage(plugin)
-                    Log.d(LOGTAG, "Loaded plugins:$indexedPlugins")
                 } catch (e: IOException) {
                     Log.e(LOGTAG, e.message, e)
                 } catch (e: JSONException) {
@@ -65,6 +62,9 @@ class PluginLoader : JobService(), KoinComponent {
                 }
 
             }
+            GlobalScope.launch {
+                Log.d(LOGTAG, "Loaded plugins:${localInstalledPluginsDB.indexedPluginsDAO().getCurrentInstalledPlugins()}")
+            }
             return true
         }
         return false
@@ -74,10 +74,10 @@ class PluginLoader : JobService(), KoinComponent {
         val verifier = PluginVerifier()
         verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
             override fun onSuccess() {
-                val pluginManifest = packageDir.manifest
-                pluginManifest.notNull {
-                    indexedPlugins.add(this.toPlugin())
-                    Log.d(LOGTAG, "plugin found:${author}/${pluginName}.${version}")
+                packageDir.manifest.notNullWithResult {
+                    toPlugin()
+                }.notNull {
+                    localInstalledPluginsDB.indexedPluginsDAO().insertPlugin(this)
                 }
             }
 
@@ -102,9 +102,13 @@ class PluginLoader : JobService(), KoinComponent {
 
     override fun onStartJob(params: JobParameters?): Boolean {
         Log.d(LOGTAG, "starting PluginLoader...")
-        startLoading()
-        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(Constant.BroadcastReceiverActions.BROADCAST_PLUGINS_LOADED))
-        jobFinished(params, false)
+        Log.d(LOGTAG, "clearing local plugin database")
+        GlobalScope.launch {
+            localInstalledPluginsDB.indexedPluginsDAO().clear()
+            startLoading()
+            LocalBroadcastManager.getInstance(this@PluginLoader).sendBroadcast(Intent(Constant.BroadcastReceiverActions.BROADCAST_PLUGINS_LOADED))
+            jobFinished(params, false)
+        }
         return true
     }
 

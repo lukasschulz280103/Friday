@@ -2,19 +2,20 @@
 
 package com.friday.ar.pluginsystem
 
-import android.media.Rating
-import android.net.Uri
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-import com.friday.ar.pluginsystem.file.PluginFile
 import java.io.Serializable
 
+@Entity(tableName = "localInstalledPlugins")
 class Plugin : Serializable {
 
-    var name: String? = null
-    var iconURI: Uri? = null
+    @PrimaryKey
+    var dbID: Int = 0
+
+    lateinit var name: String
     var authorName: String? = null
     var authorId: String? = null
-    var versionName: String? = null
-    var rating: Rating? = null
-    var pluginFile: PluginFile? = null
+    lateinit var versionName: String
+    lateinit var pluginFileUri: String
 }

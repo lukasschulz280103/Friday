@@ -5,7 +5,7 @@ import com.friday.ar.pluginsystem.Plugin
 
 class PluginListDiffUtilCallback(private val newData: List<Plugin>, private val oldData: List<Plugin>) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return true
+        return newData[newItemPosition] == oldData[oldItemPosition]
     }
 
     override fun getOldListSize(): Int {

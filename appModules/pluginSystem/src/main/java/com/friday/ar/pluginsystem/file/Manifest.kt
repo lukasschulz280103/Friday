@@ -3,13 +3,14 @@ package com.friday.ar.pluginsystem.file
 
 import com.friday.ar.pluginsystem.Plugin
 import com.friday.ar.pluginsystem.security.VerificationSecurityException
+import extensioneer.notNullWithResult
 import org.json.JSONObject
 
 class Manifest(
         /**
          * * source file of the plugin
          * */
-        private var sourceFile: PluginFile?, var pluginName: String, var author: String?, var version: String?) {
+        private var sourceFile: PluginFile?, var pluginName: String, var author: String?, var version: String) {
     companion object {
         @Throws(ManifestSecurityException.MissingFieldException::class)
         fun fromJSON(jsonObject: JSONObject): Manifest {
@@ -24,7 +25,7 @@ class Manifest(
         returnPlugin.name = pluginName
         returnPlugin.authorName = author
         returnPlugin.versionName = version
-        returnPlugin.pluginFile = sourceFile
+        returnPlugin.pluginFileUri = sourceFile.notNullWithResult { path }!!
         return returnPlugin
     }
 

@@ -61,8 +61,6 @@ dependencies {
     implementation(Dependencies.slidingUpPanel)
     implementation(Dependencies.zip4j)
     implementation(Dependencies.guava)
-    testImplementation(Testing.junitJupiterApi)
-    testImplementation(Testing.junitJupiterEngine)
     testImplementation(Testing.koin)
     implementation(Dependencies.navigationFragment)
     implementation(Dependencies.navigationUi)

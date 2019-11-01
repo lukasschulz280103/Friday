@@ -1,11 +1,7 @@
 package com.friday.ar.store.ui.storeInstallationManagerActivity
 
 import android.content.Context
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.friday.ar.pluginsystem.Plugin
-import com.friday.ar.pluginsystem.service.PluginLoader
 import com.friday.ar.pluginsystem.service.installer.PluginInstaller
 import org.koin.core.KoinComponent
 import java.io.InputStream
@@ -15,13 +11,6 @@ class StoreInstallationsManagerViewModel(val context: Context) : ViewModel(), Ko
         const val LOGTAG = "StoreInstallations"
     }
 
-    val pluginListData = MutableLiveData<List<Plugin>>()
-
-    init {
-        Log.d(LOGTAG, "indexed installed plugins: ${PluginLoader.indexedPlugins}")
-
-        pluginListData.postValue(PluginLoader.indexedPlugins)
-    }
 
 
 
