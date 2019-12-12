@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="module_wizard_name">account</string>
+    <string name="account_email_not_verified_warning">Deine Email ist nicht verifiziert.</string>
+</resources>

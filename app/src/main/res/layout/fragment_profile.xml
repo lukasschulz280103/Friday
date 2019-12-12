@@ -77,6 +77,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/page_profile_header" />
 
+            <LinearLayout
+                android:id="@+id/account_additional_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/page_profile_email" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ViewSwitcher>

@@ -2,12 +2,15 @@ package com.friday.ar.fragments.profileFragment
 
 import android.app.Activity
 import android.content.*
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.friday.ar.R
@@ -117,6 +120,18 @@ class ProfileFragment : Fragment() {
             }
             page_profile_email.text = firebaseUser!!.email
             page_profile_header.text = if (firebaseUser!!.displayName != null && firebaseUser!!.displayName != "") getString(R.string.page_profile_header_text, firebaseUser!!.displayName) else getString(R.string.greet_no_name)
+
+            if (!firebaseUser!!.isEmailVerified) {
+                val warningIcon = ImageView(context)
+                warningIcon.setImageDrawable(context!!.getDrawable(R.drawable.ic_warning_black_24dp))
+                warningIcon.imageTintList = ColorStateList.valueOf(context!!.getColor(R.color.highlight_orange))
+
+                val emailConfirmationMissingText = TextView(context)
+                emailConfirmationMissingText.text = context!!.getString(R.string.account_email_not_verified_warning)
+
+                account_additional_info.addView(warningIcon)
+                account_additional_info.addView(emailConfirmationMissingText)
+            }
         }
     }
 

@@ -125,7 +125,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
         attachmentText.visibility = View.VISIBLE
         confirmDeletionDialog.setView(R.layout.deletion_dialog_feedback)
         confirmDeletionDialog.setPositiveButton(getString(R.string.confirm_deletion_positive, if (firebaseUser!!.displayName != null) firebaseUser.displayName else firebaseUser.email)) { _, _ ->
-            loadingDialog = ProgressDialog(activity!!, getString(R.string.delete_dialog_loading_text))
+            loadingDialog = ProgressDialog(activity!!, requireContext().getString(R.string.delete_dialog_loading_text))
             loadingDialog!!.show()
             val scheduler = activity!!.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
             val extra = PersistableBundle()

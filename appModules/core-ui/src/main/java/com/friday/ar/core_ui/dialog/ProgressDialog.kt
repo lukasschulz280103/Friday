@@ -5,7 +5,7 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.friday.ar.core_ui.R
-import kotlinx.android.synthetic.main.loading_dialog.*
+import kotlinx.android.synthetic.main.loading_dialog.view.*
 
 /**
  * A custom ProgressDialog.
@@ -19,18 +19,18 @@ class ProgressDialog(internal var context: Activity, private var msg: String) : 
     internal var v: View = (context).layoutInflater.inflate(R.layout.loading_dialog, null)
 
     init {
-        msg_text.text = msg
         super.setView(v)
         super.setCancelable(false)
+        v.msg_text.text = msg
     }
 
     fun setMessage(message: String) {
         this.msg = message
-        msg_text.text = message
+        v.msg_text.text = message
     }
 
     fun setMessage(@StringRes stringResource: Int) {
         this.msg = getContext().getString(stringResource)
-        msg_text.text = msg
+        v.msg_text.text = msg
     }
 }
