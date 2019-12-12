@@ -17,4 +17,8 @@
     <string name="pluginInstaller_uninstall_dialog_msg">Wollen sie %s wirklich deinstallieren?</string>
     <string name="pluginInstaller_uninstall_dialog_title">Plugin deinstallieren</string>
     <string name="pluginInstaller_error_plugin_already_is_installed">Konnte Plugin nicht installieren, da ein Plugin mit dem selben Paketnamen bereits vorhanden ist.</string>
+    <string name="pluginInstaller_error_uninstall_failed">Fehler beim deinstallieren</string>
+    <string name="pluginInstaller_uninstall_progress_title">Deinstallieren...</string>
+    <string name="pluginInstaller_success_uninstall_title">Plugin deinstalliert</string>
+    <string name="pluginInstaller_uninstall_success_ticker_text">Plugin %s wurde erfolgreich deinstalliert.</string>
 </resources>

@@ -26,7 +26,7 @@ constructor(pathname: String) : File(pathname) {
     var manifest: Manifest? = null
 
     init {
-        if (!isDirectory) {
+        if (!isDirectory && isFile) {
             throw IllegalArgumentException("The given path points to a file")
         }
         val manifestFile = File("$path/meta/manifest.json")

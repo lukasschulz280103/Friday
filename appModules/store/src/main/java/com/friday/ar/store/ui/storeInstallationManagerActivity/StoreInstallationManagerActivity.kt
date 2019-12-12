@@ -17,6 +17,7 @@ import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_store_installation_manager.*
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class StoreInstallationManagerActivity : FridayActivity() {
@@ -26,6 +27,7 @@ class StoreInstallationManagerActivity : FridayActivity() {
     }
 
     private val viewModel by viewModel<StoreInstallationsManagerViewModel>()
+    private val pluginsDB by inject<LocalPluginsDB>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +41,8 @@ class StoreInstallationManagerActivity : FridayActivity() {
         appList.adapter = PluginListAdapter(this)
         appList.layoutManager = LinearLayoutManager(this)
 
-        setEmptyViewVisibleByInt(LocalPluginsDB.getInstance(this).indexedPluginsDAO().getCurrentInstalledPlugins().size)
-        (appList.adapter as PluginListAdapter).onRecieveUpdatedData(LocalPluginsDB.getInstance(this).indexedPluginsDAO().getCurrentInstalledPlugins())
+        setEmptyViewVisibleByInt(pluginsDB.indexedPluginsDAO().getCurrentInstalledPlugins().size)
+        (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginsDB.indexedPluginsDAO().getCurrentInstalledPlugins())
 
         registerForContextMenu(appList)
 

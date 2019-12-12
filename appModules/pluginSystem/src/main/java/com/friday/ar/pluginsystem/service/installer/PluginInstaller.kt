@@ -1,11 +1,14 @@
 package com.friday.ar.pluginsystem.service.installer
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.friday.ar.core.Constant
 import com.friday.ar.pluginsystem.Plugin
 import com.friday.ar.pluginsystem.R
 import com.friday.ar.pluginsystem.cache.PluginFileCacheUtil
+import com.friday.ar.pluginsystem.db.LocalPluginsDB
 import com.friday.ar.pluginsystem.file.PluginFile
 import com.friday.ar.pluginsystem.file.ZippedPluginFile
 import com.friday.ar.pluginsystem.security.PluginVerifier
@@ -13,6 +16,8 @@ import com.friday.ar.pluginsystem.security.VerificationSecurityException
 import extensioneer.files.toFile
 import net.lingala.zip4j.exception.ZipException
 import org.json.JSONException
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.io.IOException
 import java.io.InputStream
 import java.nio.file.Files
@@ -20,12 +25,13 @@ import java.nio.file.StandardCopyOption
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PluginInstaller(private val context: Context) {
+class PluginInstaller(private val context: Context) : KoinComponent {
     companion object {
         private const val LOGTAG = "PluginInstaller"
     }
 
     private var onInstallationStateChangedListenerList: ArrayList<OnInstallationStateChangedListener> = ArrayList()
+    private val pluginsDB by inject<LocalPluginsDB>()
 
     /**
      * Determines whether the installation service will show a notification or not. Is false by default.
@@ -71,11 +77,15 @@ class PluginInstaller(private val context: Context) {
                 notifyInstallationFailed(e)
             }
         })
-        if (!isSilent) notificationService.notificationShowProgress(context.getString(R.string.pluginInstaller_progressMessage_verifying))
+        if (!isSilent) notificationService.notificationUpdateProgress(context.getString(R.string.pluginInstaller_progressMessage_verifying))
         notifyInstallProgressChange(context.getString(R.string.pluginInstaller_progressMessage_verifying))
         verifier.verify(cachedPluginFile, true)
     }
 
+    /**
+     * request installation of a plugin from an [InputStream]
+     * @param inputStream source stream to decode
+     */
     fun requestInstallFromInputStream(inputStream: InputStream) {
         val installer = PluginInstaller(context)
         installer.isSilent = false
@@ -90,10 +100,28 @@ class PluginInstaller(private val context: Context) {
         }
     }
 
+    /**
+     * Uninstall specific plugin
+     * @param plugin specififed plugin to uninstall
+     */
     fun uninstallPlugin(plugin: Plugin) {
         Log.i(LOGTAG, "uninstalling plugin:${plugin.name}")
-        plugin.pluginFileUri.apply { PluginFile(this).deleteRecursively() }
-        //TODO remove plugin from list
+        val notificationService = UninstallNotificationHelper(context)
+        if (!isSilent) notificationService.notificationUpdateProgress(context.getString(R.string.pluginInstaller_uninstall_progress_title))
+        try {
+            pluginsDB.indexedPluginsDAO().removePlugin(plugin)
+            plugin.pluginFileUri.apply { PluginFile(this).deleteRecursively() }
+
+            if (!isSilent) notificationService.notificationShowSuccess(context.getString(R.string.pluginInstaller_uninstall_success_ticker_text, plugin.name))
+
+            val broadcastManager = LocalBroadcastManager.getInstance(context)
+            val uninstallBroadCastIntent = Intent(Constant.BroadcastReceiverActions.BROADCAST_PLUGIN_UNINSTALLED)
+            uninstallBroadCastIntent.putExtra("pluginId", plugin.dbID)
+            broadcastManager.sendBroadcast(uninstallBroadCastIntent)
+
+        } catch (e: Exception) {
+            if (!isSilent) notificationService.notificationShowError(e)
+        }
     }
 
     fun addOnInstallationProgressChangedListener(onInstallationStateChangedListener: OnInstallationStateChangedListener) {

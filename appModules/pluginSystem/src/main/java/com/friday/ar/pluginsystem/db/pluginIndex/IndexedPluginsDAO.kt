@@ -1,6 +1,7 @@
 package com.friday.ar.pluginsystem.db.pluginIndex
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.friday.ar.pluginsystem.Plugin
@@ -15,4 +16,7 @@ interface IndexedPluginsDAO {
 
     @Query("DELETE FROM localInstalledPlugins")
     fun clear()
+
+    @Delete
+    fun removePlugin(plugin: Plugin)
 }

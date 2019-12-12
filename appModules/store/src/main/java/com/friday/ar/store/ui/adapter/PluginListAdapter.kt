@@ -46,7 +46,6 @@ class PluginListAdapter(private val context: Context) : RecyclerView.Adapter<Sim
                                 .setNegativeButton(android.R.string.cancel, null)
                                 .setPositiveButton(R.string.store_plugin_uninstall) { _, _ ->
                                     PluginInstaller(context).uninstallPlugin(plugin)
-                                    notifyItemRemoved(position)
                                 }
                                 .create()
                         confirmationDialog.show()

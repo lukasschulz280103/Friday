@@ -73,6 +73,7 @@ class Constant {
         }
         object Groups {
             const val NOTIFICATION_GROUP_INSTALLER = "NOTIF_GROUP_INSTALLER"
+            const val NOTIFICATION_GROUP_UNINSTALLER = "NOTIF_GROUP_UNINSTALLER"
         }
     }
 
@@ -92,6 +93,8 @@ class Constant {
          * @see com.friday.ar.service.plugin.PluginLoader
          */
         const val BROADCAST_PLUGINS_LOADED = "PLUGINS_LOADED"
+
+        const val BROADCAST_PLUGIN_UNINSTALLED = "PLUGIN_UNINSTALLED"
     }
 
     object Jobs {

@@ -11,8 +11,7 @@ import java.io.IOException
 import java.nio.file.DirectoryNotEmptyException
 import java.util.zip.ZipException
 
-class PluginInstallerNotificationService(val context: Context) {
-    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+open class PluginInstallerNotificationService(context: Context) : IPluginInstallerNotificationManager(context) {
 
     init {
         installerNotifId++
@@ -24,14 +23,15 @@ class PluginInstallerNotificationService(val context: Context) {
                 //set this notification as the summary for the group
                 .setGroupSummary(true)
                 .build()
-        notificationManager.notify(installerNotifId + 2, summaryNotification)
+        pluginNotificationManager.notify(installerNotifId + 2, summaryNotification)
     }
 
     companion object {
         var installerNotifId = 0
     }
-    fun notificationShowError(exception: Exception) {
-        val message = when (exception) {
+
+    override fun notificationShowError(e: Exception) {
+        val message = when (e) {
             is ZipException -> {
                 context.getString(R.string.pluginInstaller_error_invalid_zip_file)
             }
@@ -57,23 +57,23 @@ class PluginInstallerNotificationService(val context: Context) {
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setGroup(Constant.Notification.Groups.NOTIFICATION_GROUP_INSTALLER)
                 .build()
-        notificationManager.notify(installerNotifId, notification)
+        pluginNotificationManager.notify(installerNotifId, notification)
     }
 
-    fun notificationShowProgress(progressMessage: String) {
+    override fun notificationUpdateProgress(message: String) {
         val notification = NotificationCompat.Builder(context, Constant.Notification.Channels.NOTIFICATION_CHANNEL_INSTALLER)
                 .setProgress(1, 0, true)
                 .setContentTitle(context.getString(R.string.pluginInstaller_progressMessage_installing))
-                .setContentText(progressMessage)
+                .setContentText(message)
                 .setOngoing(true)
                 .setGroup(Constant.Notification.Groups.NOTIFICATION_GROUP_INSTALLER)
                 .setSmallIcon(R.drawable.ic_twotone_archive_24px)
                 .setPriority(NotificationManager.IMPORTANCE_LOW)
                 .build()
-        notificationManager.notify(installerNotifId, notification)
+        pluginNotificationManager.notify(installerNotifId, notification)
     }
 
-    fun notificationShowSuccess(name: String) {
+    override fun notificationShowSuccess(name: String) {
         val notification = NotificationCompat.Builder(context, Constant.Notification.Channels.NOTIFICATION_CHANNEL_INSTALLER)
                 .setContentTitle(context.getString(R.string.pluginInstaller_success_install_title))
                 .setContentText(context.getString(R.string.pluginInstaller_success_ticker_text, name))
@@ -81,7 +81,7 @@ class PluginInstallerNotificationService(val context: Context) {
                 .setSmallIcon(R.drawable.ic_twotone_archive_24px)
                 .setGroup(Constant.Notification.Groups.NOTIFICATION_GROUP_INSTALLER)
                 .build()
-        notificationManager.notify(installerNotifId, notification)
+        pluginNotificationManager.notify(installerNotifId, notification)
 
     }
 }
