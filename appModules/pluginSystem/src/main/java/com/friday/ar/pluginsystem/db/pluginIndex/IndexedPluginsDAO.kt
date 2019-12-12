@@ -1,5 +1,6 @@
 package com.friday.ar.pluginsystem.db.pluginIndex
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +10,7 @@ import com.friday.ar.pluginsystem.Plugin
 @Dao
 interface IndexedPluginsDAO {
     @Query("SELECT * FROM localInstalledPlugins")
-    fun getCurrentInstalledPlugins(): List<Plugin>
+    fun getCurrentInstalledPlugins(): LiveData<List<Plugin>>
 
     @Insert
     fun insertPlugin(plugin: Plugin)

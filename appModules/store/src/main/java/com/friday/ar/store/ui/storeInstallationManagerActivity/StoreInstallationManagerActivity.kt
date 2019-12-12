@@ -6,20 +6,22 @@ import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.friday.ar.core.Constant
 import com.friday.ar.core.activity.FridayActivity
 import com.friday.ar.core.util.DisplayUtil
-import com.friday.ar.pluginsystem.db.LocalPluginsDB
 import com.friday.ar.store.R
 import com.friday.ar.store.ui.adapter.PluginListAdapter
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_store_installation_manager.*
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * Manages installed plugins for the user.
+ */
 class StoreInstallationManagerActivity : FridayActivity() {
     companion object {
         private const val LOGTAG = "StoreInstallations"
@@ -27,7 +29,6 @@ class StoreInstallationManagerActivity : FridayActivity() {
     }
 
     private val viewModel by viewModel<StoreInstallationsManagerViewModel>()
-    private val pluginsDB by inject<LocalPluginsDB>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +42,12 @@ class StoreInstallationManagerActivity : FridayActivity() {
         appList.adapter = PluginListAdapter(this)
         appList.layoutManager = LinearLayoutManager(this)
 
-        setEmptyViewVisibleByInt(pluginsDB.indexedPluginsDAO().getCurrentInstalledPlugins().size)
-        (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginsDB.indexedPluginsDAO().getCurrentInstalledPlugins())
-
         registerForContextMenu(appList)
 
+        viewModel.getPluginList().observe(this, Observer { list ->
+            setEmptyViewVisibleByInt(list.size)
+            (appList.adapter as PluginListAdapter).onRecieveUpdatedData(list)
+        })
     }
 
     private fun setEmptyViewVisibleByInt(dataSize: Int) {
