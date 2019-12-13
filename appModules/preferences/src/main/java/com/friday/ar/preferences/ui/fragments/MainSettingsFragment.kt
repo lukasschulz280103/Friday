@@ -122,6 +122,7 @@ class MainSettingsFragment : PreferenceFragmentCompat() {
                 }
             }
         }
+
         attachmentText.visibility = View.VISIBLE
         confirmDeletionDialog.setView(R.layout.deletion_dialog_feedback)
         confirmDeletionDialog.setPositiveButton(getString(R.string.confirm_deletion_positive, if (firebaseUser!!.displayName != null) firebaseUser.displayName else firebaseUser.email)) { _, _ ->

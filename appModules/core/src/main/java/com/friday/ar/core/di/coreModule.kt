@@ -1,6 +1,7 @@
 package com.friday.ar.core.di
 
 import android.app.NotificationManager
+import android.app.job.JobScheduler
 import android.content.Context
 import androidx.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
@@ -19,4 +20,5 @@ val coreModule = module {
     single { FirebaseDatabase.getInstance() }
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
     single { androidApplication().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
+    single { androidApplication().getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler }
 }

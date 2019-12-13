@@ -49,6 +49,9 @@ class PluginInstaller(private val context: Context) : KoinComponent {
                 if (!isSilent) notificationService.notificationShowSuccess(cachedPluginFile.manifest!!.pluginName)
                 notifyInstallProgressChange(context.getString(R.string.pluginInstaller_progressMessage_installing))
                 Files.move(cachedPluginFile.toPath(), Constant.getPluginDir(context, cachedPluginFile.name).toPath(), StandardCopyOption.REPLACE_EXISTING)
+
+                DatabaseUpdateHelper().updatePlugins()
+
                 notifyInstallSuccess()
                 cachedPluginFile.deleteRecursively()
             }
@@ -109,7 +112,7 @@ class PluginInstaller(private val context: Context) : KoinComponent {
         val notificationService = UninstallNotificationHelper(context)
         if (!isSilent) notificationService.notificationUpdateProgress(context.getString(R.string.pluginInstaller_uninstall_progress_title))
         try {
-            pluginsDB.indexedPluginsDAO().removePlugin(plugin)
+            DatabaseUpdateHelper().remove(plugin)
             plugin.pluginFileUri.apply { PluginFile(this).deleteRecursively() }
 
             if (!isSilent) notificationService.notificationShowSuccess(context.getString(R.string.pluginInstaller_uninstall_success_ticker_text, plugin.name))
