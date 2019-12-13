@@ -104,8 +104,10 @@ object Dependencies {
     const val andoridArchLifecycleKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.androidArch}"
 
     //navigation
-    const val navigationUi = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
-    const val navigationFragment = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
+    const val navigationFragment = "androidx.navigation:navigation-fragment:${Versions.navigation}"
+    const val navigationUi = "androidx.navigation:navigation-ui:${Versions.navigation}"
+    const val navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    const val navigationUiKtx = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
 
     // AR
     const val arCore = "com.google.ar:core:${Versions.arCoreVersion}"

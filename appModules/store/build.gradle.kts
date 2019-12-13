@@ -9,6 +9,10 @@ plugins {
 dependencies {
     implementation(project(":core"))
     implementation(Dependencies.room)
+    implementation(Dependencies.navigationFragment)
+    implementation(Dependencies.navigationUi)
+    implementation(Dependencies.navigationFragmentKtx)
+    implementation(Dependencies.navigationUiKtx)
     kapt(Dependencies.roomAnnotationProcessor)
     implementation(project(":pluginSystem"))
     implementation(Dependencies.zip4j)
