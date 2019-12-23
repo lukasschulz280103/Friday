@@ -35,14 +35,13 @@
             app:srcCompat="@drawable/ic_twotone_more_vert_24px" />
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/store_frag_container"
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title">
-    </FrameLayout>
+
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navigation_store_main" />
 
 </LinearLayout>

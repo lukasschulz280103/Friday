@@ -29,9 +29,6 @@ class StoreFeaturedFragment : ConnectionFragment() {
 
     private lateinit var mContext: Context
 
-
-
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         this.mContext = context

@@ -2,9 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_store_main"
-    app:startDestination="@id/storeFeaturedFragment">
+    app:startDestination="@id/mainStoreFragment">
     <fragment
-        android:id="@+id/storeFeaturedFragment"
-        android:name="com.friday.ar.store.ui.fragments.storeFeaturedFragment.StoreFeaturedFragment"
-        android:label="StoreFeaturedFragment" />
+        android:id="@+id/mainStoreFragment"
+        android:name="com.friday.ar.store.ui.fragments.MainStoreFragment"
+        android:label="MainStoreFragment" />
 </navigation>

@@ -130,9 +130,6 @@ class MainActivity : FridayActivity() {
             val managerDialog = ManagerBottomSheetDialogFragment()
             managerDialog.show(supportFragmentManager, "ManagerBottomSheet")
         }
-        supportFragmentManager.beginTransaction()
-                .add(R.id.store_frag_container, storeFragment)
-                .commit()
     }
 
     private fun setupProfilePage() {
@@ -152,11 +149,6 @@ class MainActivity : FridayActivity() {
     public override fun onResume() {
         super.onResume()
         viewModel.checkForFirstUse()
-        if (!storeFragment.isAdded && findViewById<View>(R.id.stub_page_store) == null) {
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.store_frag_container, storeFragment)
-                    .commit()
-        }
     }
 
     override fun onBackPressed() {

@@ -119,4 +119,12 @@ class Constant {
         const val RBPIECLIENT = "com.code_design_camp.client.rasberrypie.rbpieclient"
         const val HEAD_DISPLAY_CLIENT = "com.code_design_camp.client.friday.HeadDisplayClient"
     }
+
+    object Server {
+        object Database {
+            const val STORE_REFERENCE = "/store"
+            const val STORE_GENERATED_REFERENCE = STORE_REFERENCE + "/generated"
+            const val STORE_FEED_BASE_STRUCTURE_REFERENCE = STORE_GENERATED_REFERENCE + "/structure-base"
+        }
+    }
 }

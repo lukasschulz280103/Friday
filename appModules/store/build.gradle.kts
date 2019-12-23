@@ -13,7 +13,10 @@ dependencies {
     implementation(Dependencies.navigationUi)
     implementation(Dependencies.navigationFragmentKtx)
     implementation(Dependencies.navigationUiKtx)
+    implementation("com.github.bumptech.glide:glide:4.8.0")
+    implementation("com.firebaseui:firebase-ui-storage:6.2.0")
     kapt(Dependencies.roomAnnotationProcessor)
+    kapt("com.github.bumptech.glide:compiler:4.8.0")
     implementation(project(":pluginSystem"))
     implementation(Dependencies.zip4j)
 
