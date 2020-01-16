@@ -127,4 +127,13 @@ class Constant {
             const val STORE_FEED_BASE_STRUCTURE_REFERENCE = STORE_GENERATED_REFERENCE + "/structure-base"
         }
     }
+
+    object Account {
+
+        /**
+         * Returns URI of users avatar file
+         * <i>This URI may not be valid if the user does not exist.</i>
+         */
+        const val AVATAR_FILE_URI = "profile/avatar.jpg"
+    }
 }

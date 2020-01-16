@@ -47,9 +47,9 @@ class AccountSyncService : JobService() {
         override fun onReceive(context: Context, intent: Intent) {
             context.unregisterReceiver(this)
             val avatarFile = userStore.avatarFile
-            Log.d(LOGTAG, "synchronized account avatar")
+            Log.d(LOGTAG, "Synchronized account avatar")
             try {
-                Files.move(getExternalFilesDir("profile/avatar.jpg")!!.toPath(), avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
+                Files.move(getExternalFilesDir(Constant.Account.AVATAR_FILE_URI)!!.toPath(), avatarFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
                 val avatarSyncedIntent = Intent()
                 avatarSyncedIntent.action = Constant.BroadcastReceiverActions.BROADCAST_ACCOUNT_SYNCED
                 sendBroadcast(avatarSyncedIntent)

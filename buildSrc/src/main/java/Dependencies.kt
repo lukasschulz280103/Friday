@@ -2,7 +2,7 @@ private object Versions {
     const val buildToolsVersion = "3.5.0"
     const val kotlinVersion = "1.3.50"
     const val kotlinCoroutines = "1.3.2"
-    const val arCoreVersion = "1.12.0"
+    const val arCoreVersion = "1.14.0"
 
     const val zip4j = "1.3.3"
 
@@ -43,6 +43,8 @@ private object Versions {
     const val junit = "5.5.2"
     const val mockitoKotlin = "2.2.0"
     const val kotlinTest = "3.4.2"
+
+    const val glide = "4.8.0"
 }
 
 object BuildPlugins {
@@ -124,10 +126,14 @@ object Dependencies {
     const val firebaseFirestore = "com.google.firebase:firebase-firestore:${Versions.firebaseFirestore}"
     const val firebaseMLVision = "com.google.firebase:firebase-ml-vision:${Versions.firebaseMl}"
     const val crashlytics = "com.crashlytics.sdk.android:crashlytics:${Versions.crashlytics}"
+    const val firebaseUiStorage = "com.firebaseui:firebase-ui-storage:6.2.0"
 
     //speech assistant
     const val dialogFlowAlpha = "com.google.cloud:google-cloud-dialogflow:${Versions.gcloudDialogFlow}"
     const val pocketSphinx = ":pocketsphinx-android-5prealpha-release"
+
+    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
 }
 
 object Testing {
