@@ -1,13 +1,17 @@
 package com.friday.ar.base.ui
 
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.Observer
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.friday.ar.base.R
+import com.friday.ar.core.Constant
 import com.friday.ar.core.activity.FridayActivity
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.sceneform.ux.ArFragment
+import extensioneer.notNull
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -19,9 +23,10 @@ class FullscreenActionActivity : FridayActivity() {
     private lateinit var mArCoreSession: Session
     private val viewModel by viewModel<FullscreenActionActivityViewModel>()
 
+    private var arFragment: ArFragment? = null
+
     override fun onStart() {
         super.onStart()
-        var arFragment: ArFragment?
         viewModel.isArCoreSupported.observe(this, Observer { arCoreAvailability ->
             Log.d(LOGTAG, "observed change. availability: $arCoreAvailability")
             when (arCoreAvailability) {
@@ -65,6 +70,8 @@ class FullscreenActionActivity : FridayActivity() {
                     config.updateMode = Config.UpdateMode.LATEST_CAMERA_IMAGE
                     config.focusMode = Config.FocusMode.AUTO
                     mArCoreSession.configure(config)
+
+                    onReady()
                 }
                 ArCoreApk.Availability.UNKNOWN_CHECKING -> {
                 }
@@ -77,5 +84,16 @@ class FullscreenActionActivity : FridayActivity() {
             }
         })
         viewModel.checkAvailability()
+    }
+
+    private fun onReady() {
+        arFragment.notNull {
+            arSceneView.scene.addOnUpdateListener { frameTime ->
+                Log.d(LOGTAG, "onUpdate")
+                val planeUpdateIntent = Intent(Constant.AR.SystemBroadcast.AR_SCENE_UPDATED)
+                arSceneView.arFrame.notNull { viewModel.onARFrame(frameTime) }
+                LocalBroadcastManager.getInstance(this@FullscreenActionActivity).sendBroadcast(planeUpdateIntent)
+            }
+        }
     }
 }

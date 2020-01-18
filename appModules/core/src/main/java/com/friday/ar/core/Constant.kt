@@ -136,4 +136,10 @@ class Constant {
          */
         const val AVATAR_FILE_URI = "profile/avatar.jpg"
     }
+
+    object AR {
+        object SystemBroadcast {
+            const val AR_SCENE_UPDATED = "AR_PLANE_UPDATED"
+        }
+    }
 }

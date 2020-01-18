@@ -2,11 +2,14 @@ package com.friday.ar.core.util.ar
 
 import android.content.Context
 import android.os.Handler
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.ar.core.ArCoreApk
 
 class ArCoreCompatibilityUtil(val context: Context) {
-    val isArCoreSupported = MutableLiveData<ArCoreApk.Availability>()
+    private val isArCoreSupported = MutableLiveData<ArCoreApk.Availability>()
+
+    fun isArCoreSupported() = isArCoreSupported as LiveData<ArCoreApk.Availability>
 
     fun checkAvailability() {
         val apk = ArCoreApk.getInstance()
