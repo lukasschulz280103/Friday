@@ -9,6 +9,7 @@ import com.friday.ar.core.Constant
 import com.friday.ar.core.activity.FridayActivity
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
+import com.google.ar.core.Plane
 import com.google.ar.core.Session
 import com.google.ar.sceneform.ux.ArFragment
 import extensioneer.notNull
@@ -91,7 +92,7 @@ class FullscreenActionActivity : FridayActivity() {
             arSceneView.scene.addOnUpdateListener { frameTime ->
                 Log.d(LOGTAG, "onUpdate")
                 val planeUpdateIntent = Intent(Constant.AR.SystemBroadcast.AR_SCENE_UPDATED)
-                arSceneView.arFrame.notNull { viewModel.onARFrame(frameTime) }
+                arSceneView.arFrame.notNull { viewModel.onARFrame(frameTime, getUpdatedTrackables(Plane::class.java)) }
                 LocalBroadcastManager.getInstance(this@FullscreenActionActivity).sendBroadcast(planeUpdateIntent)
             }
         }
