@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 53
+        versionCode 57
         versionName "1.3.1-alpha04"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,6 +24,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    useLibrary 'android.test.runner'
+
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 dependencies {
     implementation fileTree(dir: rootProject.name+'libs', include: ['*.jar','*.aar'])
@@ -58,11 +62,17 @@ dependencies {
     implementation Dependencies.koinAndroidViewModel
 
     // Testing
-    testImplementation Testing.junitJupiterApi
-    testRuntimeOnly Testing.junitJupiterEngine
-    testImplementation Testing.mockitoKotlin
-    testImplementation Testing.lifecycle
-    testImplementation Testing.kotlinTestAssertions
-    testImplementation Testing.kotlinCoroutines
     testImplementation Testing.koin
+    testImplementation Testing.kotlinTestKoinExtensions
+    testImplementation Testing.kotlinTestJunitRunner
+    testImplementation Testing.kotlinCoroutines
+    testImplementation Testing.kotlinTestAssertions
+
+    testImplementation Testing.junitJupiterApi
+    testImplementation Testing.junitJupiterEngine
+    testImplementation Testing.mockitoKotlin
+    androidTestImplementation 'androidx.test:core:1.2.0'
+
+    testImplementation Testing.room
+    testImplementation Testing.lifecycle
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager.GET_ACTIVITIES
 import android.content.pm.PackageManager.NameNotFoundException
+import android.nfc.NfcAdapter
 import android.os.PowerManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,12 +14,13 @@ import org.koin.core.KoinComponent
 import org.koin.core.get
 
 
-class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
+class MainActivityViewModel(val context: Context) : ViewModel(), KoinComponent {
     private val energySaverActive = MutableLiveData<Boolean>()
     private val isUpdatedVersion = MutableLiveData<Boolean>()
 
     private val isOldVersionInstalled = MutableLiveData<Pair<Boolean, String?>>()
     private val isFirstUse = MutableLiveData<Boolean>()
+
     fun getEnergySaverState() = energySaverActive as LiveData<Boolean>
     fun getIsUpdatedVersion() = isUpdatedVersion as LiveData<Boolean>
 
@@ -73,5 +75,23 @@ class MainActivityViewModel(context: Context) : ViewModel(), KoinComponent {
         if (defaultSharedPreferences.getBoolean("isFirstUse", true)) {
             isFirstUse.postValue(true)
         } else isFirstUse.postValue(false)
+    }
+
+    enum class NFCState {
+        NFC_DISABLED,
+        NFC_ENABLED,
+        NFC_NOT_AVAILABLE;
+
+        companion object {
+            fun toState(bool: Boolean): NFCState {
+                return if (bool) NFC_ENABLED else NFC_DISABLED
+            }
+        }
+    }
+
+    fun checkNFC(): NFCState {
+        val nfcAdapter = NfcAdapter.getDefaultAdapter(context)
+
+        return if (nfcAdapter == null) return NFCState.NFC_NOT_AVAILABLE else NFCState.toState(nfcAdapter.isEnabled)
     }
 }

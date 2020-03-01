@@ -5,11 +5,13 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.view.Window
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
@@ -117,9 +119,25 @@ class MainActivity : FridayActivity() {
         main_bottom_nav.setOnNavigationItemSelectedListener(navselected)
 
         start_actionmode.setOnClickListener {
-            val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
-            startActivityForResult(intent, FULLSCREEN_REQUEST_CODE)
-            Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
+            when {
+                viewModel.checkNFC() == MainActivityViewModel.NFCState.NFC_ENABLED -> {
+                    val intent = Intent(this@MainActivity, FullscreenActionActivity::class.java)
+                    startActivityForResult(intent, FULLSCREEN_REQUEST_CODE)
+                    Answers.getInstance().logCustom(CustomEvent(Constant.AnalyticEvent.CUSTOM_EVENT_ACTIONMODE))
+                }
+                viewModel.checkNFC() == MainActivityViewModel.NFCState.NFC_DISABLED -> {
+                    Toast.makeText(this, getString(R.string.armode_requiements_enable_nfc), Toast.LENGTH_LONG).show()
+                    startActivity(Intent(Settings.ACTION_NFC_SETTINGS))
+                }
+                else -> {
+                    MaterialAlertDialogBuilder(this)
+                            .setTitle(R.string.armode_req_nfc_not_available)
+                            .setMessage(R.string.armode_rew_nfc_not_available_msg)
+                            .setIcon(R.drawable.ic_nfc_black_24dp)
+                            .setPositiveButton(android.R.string.ok) { _, _ -> }
+                            .create().show()
+                }
+            }
         }
     }
 

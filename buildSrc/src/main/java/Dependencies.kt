@@ -40,7 +40,7 @@ private object Versions {
 
     // Testing
     const val junitGradle = "1.4.2.1"
-    const val junit = "5.5.2"
+    const val junit = "5.6.0"
     const val mockitoKotlin = "2.2.0"
     const val kotlinTest = "3.4.2"
 
@@ -144,6 +144,8 @@ object Testing {
 
     // Kotlin
     const val kotlinTestAssertions = "io.kotlintest:kotlintest-assertions:${Versions.kotlinTest}"
+    const val kotlinTestJunitRunner = "io.kotlintest:kotlintest-runner-junit5:${Versions.kotlinTest}"
+    const val kotlinTestKoinExtensions = "io.kotlintest:kotlintest-extensions-koin:${Versions.kotlinTest}"
     const val kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
 
     // Android X

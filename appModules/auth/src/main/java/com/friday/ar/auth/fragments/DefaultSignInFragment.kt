@@ -32,6 +32,7 @@ import extensioneer.notNull
 import kotlinx.android.synthetic.main.default_signin_fragment_layout.*
 import kotlinx.android.synthetic.main.default_signin_fragment_layout.view.*
 import kotlinx.android.synthetic.main.reset_password_dialog.view.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -194,8 +195,10 @@ class DefaultSignInFragment : Fragment() {
 
     }
 
+    val validator by inject<Validator>()
+
     private fun submitForm() {
-        if (!Validator.validateEmail(email_input_signin.text.toString())) {
+        if (!validator.validateEmail(email_input_signin.text.toString())) {
             fragmentView.email_input_layout.error = getString(R.string.mail_invalid_error)
         } else if (email_password.text.toString().isEmpty()) {
             fragmentView.passwordInputWrapper.error = getString(R.string.auth_pswd_empty_error)
@@ -214,7 +217,7 @@ class DefaultSignInFragment : Fragment() {
     }
 
     private fun resetPassword() {
-        if (email_input_signin.text.isNullOrEmpty() || !Validator.validateEmail(email_input_signin.text.toString())) {
+        if (email_input_signin.text.isNullOrEmpty() || !validator.validateEmail(email_input_signin.text.toString())) {
             Toast.makeText(requireContext(), R.string.mail_invalid_error, Toast.LENGTH_SHORT).show()
             return
         }
@@ -233,7 +236,7 @@ class DefaultSignInFragment : Fragment() {
             val negative = askResetPasswordDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
             positive.setOnClickListener {
                 askResetPasswordDialog.setCancelable(false)
-                if (Validator.validateEmail(email_input_signin.text.toString())) {
+                if (validator.validateEmail(email_input_signin.text.toString())) {
                     viewModel.onPasswordResetCompleted.observe(this, Observer { task ->
                         positive.isEnabled = true
                         flipper.showNext()

@@ -7,5 +7,7 @@ import org.koin.dsl.module
 
 val arModule = module {
     viewModel { FullscreenActionActivityViewModel(get()) }
+
+    //
     single { EnvironmentManager.SurfaceFrameCallback() }
 }

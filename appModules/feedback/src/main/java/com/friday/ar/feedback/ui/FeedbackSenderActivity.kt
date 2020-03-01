@@ -94,7 +94,7 @@ class FeedbackSenderActivity : FridayActivity() {
             }
             R.id.feedback_submit -> {
                 if (Connectivity.isConnected(this)) {
-                    if (Validator.validateEmail(feedback_mail.text.toString())) {
+                    if (get<Validator>().validateEmail(feedback_mail.text.toString())) {
                         feedback_mail.error = null
                         return submitFeedback()
                     } else {

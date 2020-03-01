@@ -109,4 +109,7 @@
     <string name="notification_channel_group_store">Store</string>
     <string name="notification_channel_group_store_description">Diese Benachrichtigungsgruppen informieren Sie über den Freitags-Pluginstores und stellen Informationen wie Download-oder Installationsfortschritt zur Verfügung.</string>
     <string name="ar_disabled_message">Der AR-Modus ist derzeit deaktiviert. Bitte versuchen sie es zu einem späteren Zeitpunkt nocheinmal</string>
+    <string name="armode_requiements_enable_nfc">Bitte schalte NFC ein, um den ActionMode zu nutzen.</string>
+    <string name="armode_req_nfc_not_available">NFC nicht verfügbar</string>
+    <string name="armode_rew_nfc_not_available_msg">Zugriff auf NFC nicht möglich. NFC wird für den Datenaustausch zwischen Brille und Handy benötigt.</string>
 </resources>

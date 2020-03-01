@@ -145,4 +145,7 @@
     <string name="notification_channel_group_store">Store</string>
     <string name="notification_channel_group_store_description">These notification groups will notify you about fridays plugin marketplace and will provide information like download or install progress.</string>
     <string name="ar_disabled_message">Ar mode is currently disabled. Please try again later.</string>
+    <string name="armode_requiements_enable_nfc">Please enable NFC in order to use the ActionMode.</string>
+    <string name="armode_req_nfc_not_available">NFC not available</string>
+    <string name="armode_rew_nfc_not_available_msg">Could not access NFC on this device. NFC is required to communicate with Friday\'s ar glasses.</string>
 </resources>

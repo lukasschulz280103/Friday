@@ -11,10 +11,6 @@ import com.friday.ar.core.Theme
 import com.friday.ar.core.util.notifications.BaseNotification
 import org.koin.android.ext.android.get
 
-
-/*
-This file is necessary for analytics, in order to record usage statistics.
- */
 abstract class FridayActivity : AppCompatActivity() {
     lateinit var theme: Theme
     companion object {

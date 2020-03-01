@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.app.job.JobScheduler
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.friday.ar.core.util.validation.Validator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,4 +22,5 @@ val coreModule = module {
     single { PreferenceManager.getDefaultSharedPreferences(get()) }
     single { androidApplication().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager }
     single { androidApplication().getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler }
+    single { Validator() }
 }

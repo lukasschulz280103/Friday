@@ -105,4 +105,7 @@
     <string name="notification_channel_group_store">Store</string>
     <string name="notification_channel_group_store_description">Ces groupes de notification vous informeront sur le marché des plugins du vendredi et vous fourniront des informations telles que le téléchargement ou la progression de l\'installation.</string>
     <string name="ar_disabled_message">Le mode Ar est actuellement désactivé. Veuillez réessayer plus tard.</string>
+    <string name="armode_requiements_enable_nfc">Veuillez activer le NFC afin d\'utiliser le ActionMode.</string>
+    <string name="armode_req_nfc_not_available">NFC non disponible</string>
+    <string name="armode_rew_nfc_not_available_msg">Impossible d\'accéder au NFC sur cet appareil. Le NFC est nécessaire pour communiquer avec les lunettes de l\'ar du Friday.</string>
 </resources>
