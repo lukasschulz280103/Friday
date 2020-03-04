@@ -5,10 +5,13 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager.GET_ACTIVITIES
 import android.content.pm.PackageManager.NameNotFoundException
 import android.nfc.NfcAdapter
+import android.os.Build
 import android.os.PowerManager
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.friday.ar.core.BuildConfig
 import com.friday.ar.core.Constant
 import org.koin.core.KoinComponent
 import org.koin.core.get
@@ -72,6 +75,7 @@ class MainActivityViewModel(val context: Context) : ViewModel(), KoinComponent {
 
 
     fun checkForFirstUse() {
+        //checking for first use to show wizard if user has done a fresh install
         if (defaultSharedPreferences.getBoolean("isFirstUse", true)) {
             isFirstUse.postValue(true)
         } else isFirstUse.postValue(false)
@@ -90,6 +94,11 @@ class MainActivityViewModel(val context: Context) : ViewModel(), KoinComponent {
     }
 
     fun checkNFC(): NFCState {
+        Log.d(Constant.AR.LOGTAG_PREPARATION, "checking build type(returned '${Build.TYPE}')")
+
+        //Emulators do not support NFC, so we mock this value
+        if (BuildConfig.DEBUG) return NFCState.NFC_ENABLED
+
         val nfcAdapter = NfcAdapter.getDefaultAdapter(context)
 
         return if (nfcAdapter == null) return NFCState.NFC_NOT_AVAILABLE else NFCState.toState(nfcAdapter.isEnabled)

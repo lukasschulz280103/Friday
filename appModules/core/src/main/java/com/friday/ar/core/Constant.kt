@@ -138,6 +138,7 @@ class Constant {
     }
 
     object AR {
+        const val LOGTAG_PREPARATION = "ArModePreperation"
         object SystemBroadcast {
             const val AR_SCENE_UPDATED = "AR_PLANE_UPDATED"
         }
