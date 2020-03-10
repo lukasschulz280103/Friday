@@ -24,6 +24,7 @@ import java.io.IOException
 
 /**
  * This class loads all plugins when the app starts.
+ * This is not a model class but a android service which regularly updates the plugin-database if any change to the installed plugins occurs.
  */
 class PluginLoader : JobService(), KoinComponent {
 

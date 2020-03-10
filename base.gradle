@@ -13,8 +13,12 @@ android {
     }
     buildTypes {
         release {
+            versionNameSuffix = "-release"
             minifyEnabled = false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        presentation {
+            versionNameSuffix = "-presentation"
         }
     }
     dataBinding {
@@ -60,6 +64,7 @@ dependencies {
     implementation Dependencies.koinAndroid
     implementation Dependencies.koinAndroidScope
     implementation Dependencies.koinAndroidViewModel
+
 
     // Testing
     testImplementation Testing.koin

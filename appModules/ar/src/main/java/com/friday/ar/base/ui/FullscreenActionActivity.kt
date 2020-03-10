@@ -16,7 +16,7 @@ import extensioneer.notNull
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class FullscreenActionActivity : FridayActivity() {
+open class FullscreenActionActivity : FridayActivity() {
     companion object {
         const val LOGTAG = "ARMode"
     }

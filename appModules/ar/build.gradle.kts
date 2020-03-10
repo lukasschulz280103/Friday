@@ -1,11 +1,13 @@
 apply(from = rootProject.file("base.gradle"))
 
+
 plugins {
     id("com.android.library")
     id(Dependencies.Modules.sceneFromPLugin)
 }
 dependencies {
     implementation(project(":core"))
+    implementation(project(":pluginSystem"))
     implementation(Dependencies.arCore)
     implementation(Dependencies.arSceneformCore)
     implementation(Dependencies.arSceneformUx)

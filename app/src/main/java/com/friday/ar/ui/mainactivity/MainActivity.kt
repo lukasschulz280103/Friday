@@ -38,7 +38,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
 @Suppress("unused")
-class MainActivity : FridayActivity() {
+open class MainActivity : FridayActivity() {
     companion object {
         const val FULLSCREEN_REQUEST_CODE = 22
         private const val REQUEST_PERMISSIONS_CODE = 900

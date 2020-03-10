@@ -12,6 +12,9 @@ import org.koin.core.get
 
 class FullscreenActionActivityViewModel(application: Application) : ViewModel(), KoinComponent {
 
+    init {
+    }
+
     companion object {
         const val LOGTAG = "ARActivity"
     }
