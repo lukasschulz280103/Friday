@@ -8,7 +8,7 @@ plugins {
 
 dependencies {
     implementation(project(":core"))
-    implementation(Dependencies.room)
+    api(Dependencies.room)
     kapt(Dependencies.roomAnnotationProcessor)
     implementation(Dependencies.zip4j)
     testImplementation("org.json:json:20190722")
