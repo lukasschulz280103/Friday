@@ -15,7 +15,7 @@ abstract class LocalPluginsDB : RoomDatabase() {
 
         fun getInstance(context: Context): LocalPluginsDB {
             return if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context.applicationContext, LocalPluginsDB::class.java, "localPluginDB").allowMainThreadQueries().build()
+                INSTANCE = Room.databaseBuilder(context.applicationContext, LocalPluginsDB::class.java, "localPluginDB").build()
                 INSTANCE!!
             } else {
                 INSTANCE!!

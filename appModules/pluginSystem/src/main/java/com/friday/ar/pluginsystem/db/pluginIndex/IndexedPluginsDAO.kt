@@ -15,9 +15,6 @@ interface IndexedPluginsDAO {
     @Insert
     fun insertPlugin(plugin: Plugin)
 
-    @Query("DELETE FROM localInstalledPlugins")
-    fun clear()
-
     @Delete
     fun removePlugin(plugin: Plugin)
 }

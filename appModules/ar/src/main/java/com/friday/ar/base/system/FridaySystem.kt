@@ -6,5 +6,6 @@ import org.koin.core.KoinComponent
 open class FridaySystem(context: Context) : KoinComponent {
 
     open fun runSystem() {
+
     }
 }

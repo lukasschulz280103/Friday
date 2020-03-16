@@ -6,6 +6,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.friday.ar.core.Constant
+import com.friday.ar.pluginsystem.Plugin
 import com.friday.ar.pluginsystem.db.LocalPluginsDB
 import com.friday.ar.pluginsystem.file.PluginFile
 import com.friday.ar.pluginsystem.security.PluginVerifier
@@ -34,6 +35,7 @@ class PluginLoader : JobService(), KoinComponent {
 
     private val pluginDir: File = Constant.getPluginDir(get())
     private val localInstalledPluginsDB: LocalPluginsDB by inject()
+    private val newLoadedPlugins = ArrayList<Plugin>()
 
     init {
         pluginDir.mkdirs()
@@ -50,6 +52,7 @@ class PluginLoader : JobService(), KoinComponent {
         if (pluginDir.exists()) {
             for (pluginFile in pluginDir.listFiles()) {
                 try {
+                    //Load plugin directory
                     val plugin = PluginFile(pluginFile.path)
                     Log.d(LOGTAG, "Loading " + plugin.name)
                     loadPackage(plugin)
@@ -64,7 +67,12 @@ class PluginLoader : JobService(), KoinComponent {
 
             }
             GlobalScope.launch {
-                Log.d(LOGTAG, "Loaded plugins:${localInstalledPluginsDB.indexedPluginsDAO().getCurrentInstalledPlugins()}")
+                //Check if a plugin, which is still in the database, really is installed
+                for (plugin in newLoadedPlugins) {
+                    localInstalledPluginsDB.indexedPluginsDAO().getCurrentInstalledPlugins().value.notNull {
+                        if (!contains(plugin)) localInstalledPluginsDB.indexedPluginsDAO().removePlugin(plugin)
+                    }
+                }
             }
             return true
         }
@@ -75,10 +83,13 @@ class PluginLoader : JobService(), KoinComponent {
         val verifier = PluginVerifier()
         verifier.setOnVerificationCompleteListener(object : PluginVerifier.OnVerificationCompleteListener {
             override fun onSuccess() {
-                packageDir.manifest.notNullWithResult {
-                    toPlugin()
-                }.notNull {
-                    localInstalledPluginsDB.indexedPluginsDAO().insertPlugin(this)
+                val plugin = packageDir.manifest.notNullWithResult { toPlugin() }
+                plugin.notNull plugin@{
+                    newLoadedPlugins.add(this)
+                    val currentLoadedPluginsList = localInstalledPluginsDB.indexedPluginsDAO().getCurrentInstalledPlugins().value
+                    currentLoadedPluginsList.notNull {
+                        if (!contains(this@plugin)) localInstalledPluginsDB.indexedPluginsDAO().insertPlugin(this@plugin)
+                    }
                 }
             }
 
@@ -103,9 +114,7 @@ class PluginLoader : JobService(), KoinComponent {
 
     override fun onStartJob(params: JobParameters?): Boolean {
         Log.d(LOGTAG, "starting PluginLoader...")
-        Log.d(LOGTAG, "clearing local plugin database")
         GlobalScope.launch {
-            localInstalledPluginsDB.indexedPluginsDAO().clear()
             startLoading()
             LocalBroadcastManager.getInstance(this@PluginLoader).sendBroadcast(Intent(Constant.BroadcastReceiverActions.BROADCAST_PLUGINS_LOADED))
             jobFinished(params, false)
