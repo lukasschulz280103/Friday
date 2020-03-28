@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:text="@string/update_available"
+        android:text="Update verfügbar"
         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     <com.google.android.material.button.MaterialButton
@@ -18,5 +18,5 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="@string/update" />
+        android:text="Mehr" />
 </LinearLayout>

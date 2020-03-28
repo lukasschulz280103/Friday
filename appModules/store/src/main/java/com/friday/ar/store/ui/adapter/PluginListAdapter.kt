@@ -2,7 +2,6 @@ package com.friday.ar.store.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,9 +10,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.friday.ar.pluginsystem.Plugin
 import com.friday.ar.pluginsystem.file.PluginFile
+import com.friday.ar.pluginsystem.launcher.PluginLauncher
 import com.friday.ar.pluginsystem.service.installer.PluginInstaller
 import com.friday.ar.store.R
-import com.friday.ar.store.ui.StoreDetailActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -56,7 +55,8 @@ class PluginListAdapter(private val context: Context) : RecyclerView.Adapter<Sim
             menu.show()
         }
         holder.rootView.setOnClickListener {
-            context.startActivity(Intent(context, StoreDetailActivity::class.java))
+            //Launch plugin
+            PluginLauncher(context).launch(plugin)
         }
         holder.size.text = PluginFile(plugin.pluginFileUri).length().toString()
     }

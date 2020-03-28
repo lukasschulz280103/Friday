@@ -15,14 +15,14 @@ class PermissionRequestFragment : CustomAppIntroFragment() {
         private const val PERMS_REQ_CODE = 301
     }
 
-    internal var permissions = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
+    internal var permissions = arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     private fun requestPermissions() {
         requestPermissions(permissions, PERMS_REQ_CODE)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        val targetGrantResults = intArrayOf(PermissionChecker.PERMISSION_GRANTED, PermissionChecker.PERMISSION_GRANTED)
+        val targetGrantResults = intArrayOf(PermissionChecker.PERMISSION_GRANTED, PermissionChecker.PERMISSION_GRANTED, PermissionChecker.PERMISSION_GRANTED, PermissionChecker.PERMISSION_GRANTED)
         if (requestCode == PERMS_REQ_CODE) {
             if (targetGrantResults.contentEquals(grantResults)) {
                 fragmentBaseView.request_perm_btn.isEnabled = false
@@ -40,7 +40,10 @@ class PermissionRequestFragment : CustomAppIntroFragment() {
     }
 
     override fun isPolicyRespected(): Boolean {
-        return PermissionChecker.checkSelfPermission(activity!!, Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED || PermissionChecker.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PermissionChecker.PERMISSION_GRANTED
+        return PermissionChecker.checkSelfPermission(activity!!, Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED
+                && PermissionChecker.checkSelfPermission(activity!!, Manifest.permission.RECORD_AUDIO) == PermissionChecker.PERMISSION_GRANTED
+                && PermissionChecker.checkSelfPermission(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED
+                && PermissionChecker.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED
     }
 
     override fun onUserIllegallyRequestedNextPage() {

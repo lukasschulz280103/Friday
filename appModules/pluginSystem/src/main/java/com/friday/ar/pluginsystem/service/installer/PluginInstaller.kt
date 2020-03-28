@@ -25,6 +25,10 @@ import java.nio.file.StandardCopyOption
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * This class is used to install plugins.
+ * @see isSilent
+ */
 class PluginInstaller(private val context: Context) : KoinComponent {
     companion object {
         private const val LOGTAG = "PluginInstaller"
@@ -38,6 +42,13 @@ class PluginInstaller(private val context: Context) : KoinComponent {
      */
     var isSilent = false
 
+    /**
+     * Install a archived pluginfile ([ZippedPluginFile])
+     * @param pluginDir the plugin archive to install
+     *
+     * @see PluginFile
+     * @see Plugin
+     */
     @Throws(IOException::class, ZipException::class)
     fun installFrom(pluginDir: ZippedPluginFile) {
         if (!pluginDir.isValidZipFile) throw ZipException("Zip file is invalid")
@@ -127,26 +138,49 @@ class PluginInstaller(private val context: Context) : KoinComponent {
         }
     }
 
+    /**
+     * register a custom [OnInstallationStateChangedListener] callback
+     */
     fun addOnInstallationProgressChangedListener(onInstallationStateChangedListener: OnInstallationStateChangedListener) {
         onInstallationStateChangedListenerList.add(onInstallationStateChangedListener)
     }
 
+    /**
+     * remove a custom, already added [OnInstallationStateChangedListener] callback
+     */
     fun removeOnInstallationStateChangedListener(onInstallationStateChangedListener: OnInstallationStateChangedListener) {
         onInstallationStateChangedListenerList.remove(onInstallationStateChangedListener)
     }
 
+    /**
+     * update the installation notification
+     */
     private fun notifyInstallProgressChange(msg: String) {
         onInstallationStateChangedListenerList.forEach { listener ->
             listener.onProgressChanged(msg)
         }
     }
 
+    /**
+     * notify the listeners that the installation was succesful
+     *
+     * @see OnInstallationStateChangedListener
+     * @see addOnInstallationProgressChangedListener
+     * @see removeOnInstallationStateChangedListener
+     */
     private fun notifyInstallSuccess() {
         onInstallationStateChangedListenerList.forEach { listener ->
             listener.onSuccess()
         }
     }
 
+    /**
+     * notifiy the listeners that the installlation failed
+     *
+     * @see OnInstallationStateChangedListener
+     * @see addOnInstallationProgressChangedListener
+     * @see removeOnInstallationStateChangedListener
+     */
     private fun notifyInstallationFailed(e: Exception) {
         onInstallationStateChangedListenerList.forEach { listener ->
             listener.onFailure(e)

@@ -3,6 +3,7 @@ package com.friday.ar.base.ui
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.friday.ar.base.system.FridaySystem
 import com.friday.ar.base.system.environment.EnvironmentManager
 import com.friday.ar.core.util.ar.ArCoreCompatibilityUtil
 import com.google.ar.core.Plane
@@ -13,6 +14,8 @@ import org.koin.core.get
 class FullscreenActionActivityViewModel(application: Application) : ViewModel(), KoinComponent {
 
     init {
+        val fridaySystem: FridaySystem = get()
+        fridaySystem.runSystem()
     }
 
     companion object {
