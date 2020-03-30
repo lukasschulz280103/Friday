@@ -49,10 +49,10 @@ dependencies {
     implementation(Dependencies.firebaseStorage)
     implementation(Dependencies.firebaseDatabase)
     implementation(Dependencies.firebaseFirestore)
-    implementation(Dependencies.dialogFlowAlpha) {
-        exclude("com.google.api.grpc")
-        exclude("com.google.protobuf")
-    }
+    //implementation(Dependencies.dialogFlowAlpha) {
+    //    exclude("com.google.api.grpc")
+    //    exclude("com.google.protobuf")
+    //}
     implementation(Dependencies.firebaseMLVision)
     implementation(Dependencies.circularImageView)
     implementation(Dependencies.arCore)
@@ -67,5 +67,4 @@ dependencies {
 }
 
 ant.importBuild("assets.xml")
-//GoogleServicesPlugin.config.disableVersionCheck = true
 

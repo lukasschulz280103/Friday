@@ -3,10 +3,10 @@ package com.friday.ar.store.ui.storeInstallationManagerActivity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.friday.ar.core.Constant
 import com.friday.ar.core.activity.FridayActivity
@@ -44,10 +44,11 @@ class StoreInstallationManagerActivity : FridayActivity() {
 
         registerForContextMenu(appList)
 
-        viewModel.getPluginList().observe(this, Observer { list ->
-            setEmptyViewVisibleByInt(list.size)
-            (appList.adapter as PluginListAdapter).onRecieveUpdatedData(list)
-        })
+        val pluginList = viewModel.getPluginList()
+        Log.d(LOGTAG, "pluginList recieved: length is ${pluginList.size}")
+        setEmptyViewVisibleByInt(pluginList.size)
+        (appList.adapter as PluginListAdapter).onRecieveUpdatedData(pluginList)
+
     }
 
     private fun setEmptyViewVisibleByInt(dataSize: Int) {

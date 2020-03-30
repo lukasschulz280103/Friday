@@ -1,8 +1,6 @@
 package com.friday.ar.pluginsystem.db.pluginIndex
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.friday.ar.pluginsystem.Plugin
@@ -10,11 +8,11 @@ import com.friday.ar.pluginsystem.Plugin
 @Dao
 interface IndexedPluginsDAO {
     @Query("SELECT * FROM localInstalledPlugins")
-    fun getCurrentInstalledPlugins(): LiveData<List<Plugin>>
+    fun getCurrentInstalledPlugins(): List<Plugin>
 
     @Insert
     fun insertPlugin(plugin: Plugin)
 
-    @Delete
-    fun removePlugin(plugin: Plugin)
+    @Query("DELETE FROM localInstalledPlugins WHERE dbID = :databaseId")
+    fun removePlugin(databaseId: Int)
 }

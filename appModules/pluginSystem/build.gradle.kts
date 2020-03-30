@@ -12,4 +12,5 @@ dependencies {
     kapt(Dependencies.roomAnnotationProcessor)
     implementation(Dependencies.zip4j)
     testImplementation("org.json:json:20190722")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 }

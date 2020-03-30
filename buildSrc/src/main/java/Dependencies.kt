@@ -1,16 +1,17 @@
 private object Versions {
     const val buildToolsVersion = "3.5.0"
-    const val kotlinVersion = "1.3.50"
-    const val kotlinCoroutines = "1.3.2"
-    const val arCoreVersion = "1.14.0"
+    const val kotlinVersion = "1.3.70"
+    const val kotlinCoroutines = "1.3.5"
+    const val arCoreVersion = "1.16.0"
+    const val sceneformVersion = "1.15.0"
 
     const val zip4j = "1.3.3"
 
     const val jetpack = "1.1.0"
     const val constraintLayout = "1.1.3"
     const val gridLayout = "1.0.0"
-    const val ktx = "1.1.0-alpha05"
-    const val guava = "28.1-jre"
+    const val ktx = "1.2.0"
+    const val guava = "28.2-jre"
     const val palette = "1.0.0"
     const val legacy = "1.0.0"
 
@@ -18,25 +19,25 @@ private object Versions {
 
     const val androidArch = "2.1.0"
 
-    const val navigation = "2.1.0"
-    const val room = "2.2.0"
+    const val navigation = "2.2.1"
+    const val room = "2.2.5"
     const val recyclerView = "1.0.0"
     const val material = "1.0.0"
-    const val materialAlpha = "1.1.0-alpha09"
-    const val CIV = "4.0.2"
+    const val materialAlpha = "1.2.0-alpha05"
+    const val CIV = "4.2.0"
     const val SUP = "3.4.0"
     const val appIntro = "5.1.0"
 
     const val firebaseCore = "17.2.0"
     const val firebaseFeatures = "19.1.0"
-    const val firebasePerformance = "19.0.0"
-    const val firebaseFirestore = "21.0.0"
-    const val firebaseMl = "23.0.0"
+    const val firebasePerformance = "19.0.5"
+    const val firebaseFirestore = "21.4.1"
+    const val firebaseMl = "24.0.1"
     const val crashlytics = "2.10.1"
 
-    const val gcloudDialogFlow = "0.103.0-alpha"
+    const val gcloudDialogFlow = "1.0.0"
 
-    const val koin = "2.0.1"
+    const val koin = "2.1.5"
 
     // Testing
     const val junitGradle = "1.4.2.1"
@@ -44,15 +45,15 @@ private object Versions {
     const val mockitoKotlin = "2.2.0"
     const val kotlinTest = "3.4.2"
 
-    const val glide = "4.8.0"
+    const val glide = "4.11.0"
 }
 
 object BuildPlugins {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:${Versions.buildToolsVersion}"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
-    const val arCoreSceneformPlugin = "com.google.ar.sceneform:plugin:${Versions.arCoreVersion}"
-    const val gmsServices = "com.google.gms:google-services:4.3.0"
+    const val arCoreSceneformPlugin = "com.google.ar.sceneform:plugin:1.15.0"
+    const val gmsServices = "com.google.gms:google-services:4.3.3"
 
     const val kotlinAndroid = "kotlin-android"
     const val kotlinAndroidExtensions = "kotlin-android-extensions"
@@ -113,9 +114,8 @@ object Dependencies {
 
     // AR
     const val arCore = "com.google.ar:core:${Versions.arCoreVersion}"
-    const val arSceneformUx = "com.google.ar.sceneform.ux:sceneform-ux:${Versions.arCoreVersion}"
-    const val arSceneformCore = "com.google.ar.sceneform:core:${Versions.arCoreVersion}"
-    const val arCoreSceneformPlugin = "com.google.ar.sceneform:plugin:${Versions.arCoreVersion}"
+    const val arSceneformUx = "com.google.ar.sceneform.ux:sceneform-ux:${Versions.sceneformVersion}"
+    const val arSceneformCore = "com.google.ar.sceneform:core:${Versions.sceneformVersion}"
 
     //firebase
     const val firebaseCore = "com.google.firebase:firebase-core:${Versions.firebaseCore}"

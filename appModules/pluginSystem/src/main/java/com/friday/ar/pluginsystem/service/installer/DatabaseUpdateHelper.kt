@@ -29,6 +29,6 @@ class DatabaseUpdateHelper : KoinComponent {
     }
 
     fun remove(plugin: Plugin) {
-        pluginDB.indexedPluginsDAO().removePlugin(plugin)
+        pluginDB.indexedPluginsDAO().removePlugin(plugin.dbID)
     }
 }

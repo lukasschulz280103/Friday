@@ -12,6 +12,7 @@ import com.friday.ar.store.R
 import java.io.File
 import java.util.*
 
+//TODO: remove this file including layouts
 class PluginFileListVerticalAdapter(private val context: Activity, private val dataList: ArrayList<ZippedPluginFile>) : RecyclerView.Adapter<PluginViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PluginViewHolder {
